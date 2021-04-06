@@ -1,0 +1,14 @@
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.vbprojAssemblyReference.cache
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.Resources.resources
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.vbproj.GenerateResource.cache
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.vbproj.CoreCompileInputs.cache
+C:\Users\E-Corp\source\repos\auxiliar\bin\Debug\auxiliar.exe.config
+C:\Users\E-Corp\source\repos\auxiliar\bin\Debug\auxiliar.exe
+C:\Users\E-Corp\source\repos\auxiliar\bin\Debug\auxiliar.pdb
+C:\Users\E-Corp\source\repos\auxiliar\bin\Debug\auxiliar.xml
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.exe
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.xml
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.pdb
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.principal.resources
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.cadAfazer.resources
+C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.verAfazer.resources
