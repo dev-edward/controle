@@ -12,3 +12,17 @@ C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.pdb
 C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.principal.resources
 C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.cadAfazer.resources
 C:\Users\E-Corp\source\repos\auxiliar\obj\Debug\auxiliar.verAfazer.resources
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.vbprojAssemblyReference.cache
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.principal.resources
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.cadAfazer.resources
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.Resources.resources
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.verAfazer.resources
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.vbproj.GenerateResource.cache
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.vbproj.CoreCompileInputs.cache
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.exe
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.xml
+C:\Users\edward.huayta\source\repos\auxiliar\obj\Debug\auxiliar.pdb
+C:\Users\edward.huayta\source\repos\auxiliar\bin\Debug\auxiliar.exe.config
+C:\Users\edward.huayta\source\repos\auxiliar\bin\Debug\auxiliar.exe
+C:\Users\edward.huayta\source\repos\auxiliar\bin\Debug\auxiliar.pdb
+C:\Users\edward.huayta\source\repos\auxiliar\bin\Debug\auxiliar.xml
