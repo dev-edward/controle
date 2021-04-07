@@ -140,8 +140,8 @@ Public Class verAfazer
     Private resultado As String
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Create a Connection object.
-        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
-        'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
+        'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
+        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
 
         'Create a Command object.
         consulta = conexao.CreateCommand

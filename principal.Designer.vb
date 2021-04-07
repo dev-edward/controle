@@ -63,15 +63,16 @@ Partial Class principal
         Me.PessoasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CadastrarToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConsultarToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SoftwareToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AfazerToolStripMenuItem, Me.EventosToolStripMenuItem, Me.DispositivosToolStripMenuItem, Me.ImpressoraToolStripMenuItem, Me.NobreakToolStripMenuItem, Me.ProjetorToolStripMenuItem, Me.CameraToolStripMenuItem, Me.ContasToolStripMenuItem, Me.PessoasToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AfazerToolStripMenuItem, Me.EventosToolStripMenuItem, Me.DispositivosToolStripMenuItem, Me.ImpressoraToolStripMenuItem, Me.NobreakToolStripMenuItem, Me.ProjetorToolStripMenuItem, Me.CameraToolStripMenuItem, Me.ContasToolStripMenuItem, Me.PessoasToolStripMenuItem, Me.SoftwareToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(687, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(915, 24)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -85,13 +86,13 @@ Partial Class principal
         'CadastrarToolStripMenuItem
         '
         Me.CadastrarToolStripMenuItem.Name = "CadastrarToolStripMenuItem"
-        Me.CadastrarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CadastrarToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.CadastrarToolStripMenuItem.Text = "Cadastrar"
         '
         'VerListaToolStripMenuItem
         '
         Me.VerListaToolStripMenuItem.Name = "VerListaToolStripMenuItem"
-        Me.VerListaToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.VerListaToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
         Me.VerListaToolStripMenuItem.Text = "Ver lista"
         '
         'EventosToolStripMenuItem
@@ -320,20 +321,26 @@ Partial Class principal
         'CadastrarToolStripMenuItem11
         '
         Me.CadastrarToolStripMenuItem11.Name = "CadastrarToolStripMenuItem11"
-        Me.CadastrarToolStripMenuItem11.Size = New System.Drawing.Size(125, 22)
+        Me.CadastrarToolStripMenuItem11.Size = New System.Drawing.Size(180, 22)
         Me.CadastrarToolStripMenuItem11.Text = "Cadastrar"
         '
         'ConsultarToolStripMenuItem9
         '
         Me.ConsultarToolStripMenuItem9.Name = "ConsultarToolStripMenuItem9"
-        Me.ConsultarToolStripMenuItem9.Size = New System.Drawing.Size(125, 22)
+        Me.ConsultarToolStripMenuItem9.Size = New System.Drawing.Size(180, 22)
         Me.ConsultarToolStripMenuItem9.Text = "Consultar"
+        '
+        'SoftwareToolStripMenuItem
+        '
+        Me.SoftwareToolStripMenuItem.Name = "SoftwareToolStripMenuItem"
+        Me.SoftwareToolStripMenuItem.Size = New System.Drawing.Size(65, 20)
+        Me.SoftwareToolStripMenuItem.Text = "Software"
         '
         'principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(687, 499)
+        Me.ClientSize = New System.Drawing.Size(915, 421)
         Me.Controls.Add(Me.MenuStrip1)
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStrip1
@@ -388,4 +395,5 @@ Partial Class principal
     Friend WithEvents PessoasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CadastrarToolStripMenuItem11 As ToolStripMenuItem
     Friend WithEvents ConsultarToolStripMenuItem9 As ToolStripMenuItem
+    Friend WithEvents SoftwareToolStripMenuItem As ToolStripMenuItem
 End Class
