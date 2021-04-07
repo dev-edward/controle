@@ -82,9 +82,6 @@ Public Class verAfazer
             'lbl_detalhes.BackColor = New Color().FromArgb(255, 215, 0, 0)
             txt_detalhes.Size = New Size(640, 60)
 
-
-
-
             'posição dos controles
             panel.Location = New Point(40, 50)
             panelx = panel.Location.X
@@ -116,10 +113,23 @@ Public Class verAfazer
             cbx_estado.Enabled = False
 
 
+
             frm.Controls.Add(panel)
+
+            AddHandler btn_modificar.Click, AddressOf Me.btn_modificar_Click
+
+        End Sub
+
+        Public Sub modificar()
 
 
         End Sub
+
+        Private Sub btn_modificar_Click()
+            MsgBox("deu certo")
+
+        End Sub
+
 
     End Class
 
