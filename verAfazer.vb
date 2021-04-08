@@ -2,6 +2,11 @@
 
 Public Class verAfazer
     Class Afazer
+        'Create ADO.NET objects.
+        Private conexao As SqlConnection
+        Private consulta As SqlCommand
+        Private myReader As SqlDataReader
+
         Dim panel As New Panel()
         Dim lbl_dataCadastro As New Label()
         Dim lbl_dataCadastroValor As New Label()
@@ -11,8 +16,9 @@ Public Class verAfazer
         Dim dtp_prazo As New DateTimePicker()
         Dim lbl_estado As New Label()
         Dim cbx_estado As New ComboBox()
-        Dim btn_modificar As New Button()
         Dim btn_addnotas As New Button()
+        Dim btn_modificar As New Button()
+        Dim btn_salvar As New Button()
         Dim lbl_detalhes As New Label()
         Dim txt_detalhes As New TextBox()
         Dim panelx As New Integer
@@ -20,7 +26,7 @@ Public Class verAfazer
         'fonte padrão 
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
-        Friend Sub New(ByVal frm As verAfazer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String)
+        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String)
             'adicionando controles no panel
             panel.Controls.Add(lbl_dataCadastro)
             panel.Controls.Add(lbl_dataCadastroValor)
@@ -30,8 +36,9 @@ Public Class verAfazer
             panel.Controls.Add(dtp_prazo)
             panel.Controls.Add(lbl_estado)
             panel.Controls.Add(cbx_estado)
-            panel.Controls.Add(btn_modificar)
             panel.Controls.Add(btn_addnotas)
+            panel.Controls.Add(btn_modificar)
+            panel.Controls.Add(btn_salvar)
             panel.Controls.Add(lbl_detalhes)
             panel.Controls.Add(txt_detalhes)
 
@@ -44,8 +51,9 @@ Public Class verAfazer
             dtp_prazo.Font = fonte
             lbl_estado.Font = fonte
             cbx_estado.Font = fonte
-            btn_modificar.Font = fonte
             btn_addnotas.Font = fonte
+            btn_modificar.Font = fonte
+            btn_salvar.Font = fonte
             lbl_detalhes.Font = fonte
             txt_detalhes.Font = New Font("Microsoft Sans Serif", 8)
 
@@ -55,10 +63,11 @@ Public Class verAfazer
             lbl_prazo.Text = "Prazo"
             lbl_estado.Text = "Estado"
             lbl_detalhes.Text = "Detalhes"
-            btn_modificar.Text = "Editar"
             btn_addnotas.Text = "add. notas"
+            btn_modificar.Text = "Editar"
+            btn_salvar.Text = "Salvar"
 
-            'conteudo dos controles
+            'conteudo dos controles vindo do BD
             lbl_dataCadastroValor.Text = _dataCadastro
             txt_titulo.Text = _titulo
             dtp_prazo.Value = _prazo
@@ -76,8 +85,9 @@ Public Class verAfazer
             dtp_prazo.Size = New Size(110, 26)
             lbl_estado.Size = New Size(140, 20)
             cbx_estado.Size = New Size(140, 20)
-            btn_modificar.Size = New Size(100, 30)
             btn_addnotas.Size = New Size(100, 30)
+            btn_modificar.Size = New Size(100, 30)
+            btn_salvar.Size = New Size(100, 30)
             lbl_detalhes.Size = New Size(640, 20)
             'lbl_detalhes.BackColor = New Color().FromArgb(255, 215, 0, 0)
             txt_detalhes.Size = New Size(640, 60)
@@ -97,6 +107,7 @@ Public Class verAfazer
             cbx_estado.Location = New Point(400, 48)
             btn_addnotas.Location = New Point(550, 16)
             btn_modificar.Location = New Point(550, 47)
+            btn_salvar.Location = New Point(550, 47)
             lbl_detalhes.Location = New Point(10, 80)
             txt_detalhes.Location = New Point(10, 100)
 
@@ -112,22 +123,39 @@ Public Class verAfazer
             dtp_prazo.Enabled = False
             cbx_estado.Enabled = False
 
+            AddHandler btn_addnotas.Click, AddressOf Me.btn_addnotas_Click
+            AddHandler btn_modificar.Click, AddressOf Me.btn_modificar_Click
+            AddHandler btn_salvar.Click, AddressOf Me.btn_salvar_Click
 
+            btn_salvar.Visible = False
 
             frm.Controls.Add(panel)
 
-            AddHandler btn_modificar.Click, AddressOf Me.btn_modificar_Click
 
         End Sub
 
-        Public Sub modificar()
-
+        Private Sub btn_addnotas_Click()
+            MsgBox("add notas")
 
         End Sub
 
         Private Sub btn_modificar_Click()
-            MsgBox("deu certo")
+            btn_salvar.Visible = True
+            btn_modificar.Visible = False
 
+        End Sub
+
+        Private Sub btn_salvar_Click()
+            btn_modificar.Visible = True
+            btn_salvar.Visible = False
+
+            'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
+            conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
+
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;"
+
+            conexao.Close()
         End Sub
 
 
@@ -137,7 +165,7 @@ Public Class verAfazer
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-    Private resultado As String
+
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Create a Connection object.
         'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
@@ -145,7 +173,7 @@ Public Class verAfazer
 
         'Create a Command object.
         consulta = conexao.CreateCommand
-        consulta.CommandText = "select afazer_dataatual,afazer_titulo,afazer_detalhes ,afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
+        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes ,afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
 
         'Open the connection.
         conexao.Open()
@@ -157,7 +185,7 @@ Public Class verAfazer
         y = 10
 
         Do While myReader.Read()
-
+            Dim id As Integer
             Dim dataCadastro As DateTime
             Dim titulo As String
             Dim detalhes As String
@@ -165,20 +193,16 @@ Public Class verAfazer
             Dim estado As String
 
 
+            id = myReader.GetInt32(0)
+            dataCadastro = myReader.GetDateTime(1)
+            titulo = myReader.GetString(2)
+            detalhes = myReader.GetString(3)
+            prazo = myReader.GetDateTime(4)
+            estado = myReader.GetByte(5)
 
-            dataCadastro = myReader.GetDateTime(0)
-            titulo = myReader.GetString(1)
-            detalhes = myReader.GetString(2)
-            prazo = myReader.GetDateTime(3)
-            estado = myReader.GetByte(4)
-
-            Dim a1 As New Afazer(Me, dataCadastro, titulo, prazo, estado, detalhes)
+            Dim a1 As New Afazer(Me, id, dataCadastro, titulo, prazo, estado, detalhes)
 
         Loop
-
-
-
-        'MsgBox(estado)
 
         myReader.Close()
         conexao.Close()
