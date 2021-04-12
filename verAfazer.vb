@@ -140,20 +140,32 @@ Public Class verAfazer
         End Sub
 
         Private Sub btn_modificar_Click()
-            btn_salvar.Visible = True
             btn_modificar.Visible = False
+            btn_salvar.Visible = True
+
+            txt_titulo.ReadOnly = False
+            dtp_prazo.Enabled = True
+            cbx_estado.Enabled = True
+            txt_detalhes.ReadOnly = False
 
         End Sub
 
         Private Sub btn_salvar_Click()
-            btn_modificar.Visible = True
             btn_salvar.Visible = False
+            btn_modificar.Visible = True
 
-            'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
-            conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
+            conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
+            'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;"
+            consulta.CommandText = "UPDATE tb_afazer SET afazer_titulo = '
+                                   teste 33',
+                                   afazer_prazo = '2021-04-07',
+                                   afazer_status = 2,
+                                   afazer_detalhes = 'detalhes 33' 
+                                   WHERE afazer_id = 3"
+
+            myReader = consulta.ExecuteReader()
 
             conexao.Close()
         End Sub
@@ -168,12 +180,12 @@ Public Class verAfazer
 
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Create a Connection object.
-        'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
-        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
+        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
+        'conexao = New SqlConnection("Initial Catalog=controle;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
 
         'Create a Command object.
         consulta = conexao.CreateCommand
-        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes ,afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
+        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
 
         'Open the connection.
         conexao.Open()
