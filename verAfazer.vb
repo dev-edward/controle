@@ -8,6 +8,7 @@ Public Class verAfazer
         Private myReader As SqlDataReader
 
         Dim panel As New Panel()
+        Dim lbl_id As New Label()
         Dim lbl_dataCadastro As New Label()
         Dim lbl_dataCadastroValor As New Label()
         Dim lbl_titulo As New Label()
@@ -28,6 +29,7 @@ Public Class verAfazer
 
         Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String)
             'adicionando controles no panel
+            panel.Controls.Add(lbl_id)
             panel.Controls.Add(lbl_dataCadastro)
             panel.Controls.Add(lbl_dataCadastroValor)
             panel.Controls.Add(lbl_titulo)
@@ -43,6 +45,7 @@ Public Class verAfazer
             panel.Controls.Add(txt_detalhes)
 
             'colocando fonte 12 para todos os itens
+            lbl_id.Font = fonte
             lbl_dataCadastro.Font = fonte
             lbl_dataCadastroValor.Font = fonte
             lbl_titulo.Font = fonte
@@ -68,6 +71,7 @@ Public Class verAfazer
             btn_salvar.Text = "Salvar"
 
             'conteudo dos controles vindo do BD
+            lbl_id.Text = _id
             lbl_dataCadastroValor.Text = _dataCadastro
             txt_titulo.Text = _titulo
             dtp_prazo.Value = _prazo
@@ -77,6 +81,7 @@ Public Class verAfazer
 
             'tamanho dos controles
             panel.Size = New Size(660, 170)
+            lbl_id.Size = New Size(40, 20)
             lbl_dataCadastro.Size = New Size(140, 20)
             lbl_dataCadastroValor.Size = New Size(110, 20)
             lbl_titulo.Size = New Size(260, 20)
@@ -97,6 +102,7 @@ Public Class verAfazer
             panelx = panel.Location.X
             panely = panel.Location.Y
 
+            lbl_id.Location = New Point(10, 10)
             lbl_dataCadastro.Location = New Point(panel.Width / 2 - (lbl_dataCadastro.Width), 2)
             lbl_dataCadastroValor.Location = New Point(panel.Width / 2, 2)
             lbl_titulo.Location = New Point(10, 26)
@@ -154,16 +160,14 @@ Public Class verAfazer
             btn_salvar.Visible = False
             btn_modificar.Visible = True
 
-            conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
-            'conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "UPDATE tb_afazer SET afazer_titulo = '
-                                   teste 33',
-                                   afazer_prazo = '2021-04-07',
-                                   afazer_status = 2,
-                                   afazer_detalhes = 'detalhes 33' 
-                                   WHERE afazer_id = 3"
+            consulta.CommandText = "UPDATE tb_afazer SET afazer_titulo = '" & txt_titulo.Text & "',
+                                   afazer_prazo = '" & dtp_prazo.Value & "',
+                                   afazer_status = " & cbx_estado.SelectedIndex & ",
+                                   afazer_detalhes = '" & txt_detalhes.Text & "' 
+                                   WHERE afazer_id = " & lbl_id.Text
 
             myReader = consulta.ExecuteReader()
 
@@ -179,20 +183,16 @@ Public Class verAfazer
     Private myReader As SqlDataReader
 
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Create a Connection object.
-        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
-        'conexao = New SqlConnection("Initial Catalog=controle;" & "Data Source=VM-CPD3\DBTESTE;Integrated Security=SSPI;")
 
-        'Create a Command object.
+        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+
         consulta = conexao.CreateCommand
         consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
 
-        'Open the connection.
         conexao.Open()
 
         myReader = consulta.ExecuteReader()
 
-        'Concatenate the query result into a string.
         Dim y As Integer
         y = 10
 

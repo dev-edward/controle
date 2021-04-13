@@ -10,18 +10,15 @@ Public Class cadAfazer
     End Sub
 
     Private Sub btn_salvar_Click(sender As Object, e As EventArgs) Handles btn_salvar.Click
-        conexao = New SqlConnection("Initial Catalog=auxiliar;" & "Data Source=localhost;Integrated Security=SSPI;")
+        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
         consulta = conexao.CreateCommand
 
         consulta.CommandText = "insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('" & txt_titulo.Text & "','" & txt_detalhes.Text & "','" & dtp_prazo.Value & "'," & cbx_estado.SelectedIndex + 1 & ")"
-        'Dim var As String = "insert into tb_afazer(afazer_titulo,afazer_descricao,afazer_prazo,afazer_status) VALUES('" & txt_titulo.Text & "','" & txt_detalhes.Text & "','" & dtp_prazo.Value & "'," & cbx_estado.SelectedIndex + 1 & ")"
 
         conexao.Open()
         myReader = consulta.ExecuteReader()
 
         MsgBox(resultado)
-
-        'MsgBox(var)
 
         myReader.Close()
         conexao.Close()
