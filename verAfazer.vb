@@ -22,12 +22,10 @@ Public Class verAfazer
         Dim btn_salvar As New Button()
         Dim lbl_detalhes As New Label()
         Dim txt_detalhes As New TextBox()
-        Dim panelx As New Integer
-        Dim panely As New Integer
         'fonte padrão 
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
-        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String)
+        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
             'adicionando controles no panel
             panel.Controls.Add(lbl_id)
             panel.Controls.Add(lbl_dataCadastro)
@@ -98,9 +96,7 @@ Public Class verAfazer
             txt_detalhes.Size = New Size(640, 60)
 
             'posição dos controles
-            panel.Location = New Point(40, 50)
-            panelx = panel.Location.X
-            panely = panel.Location.Y
+            panel.Location = New Point(40, _panelY)
 
             lbl_id.Location = New Point(10, 10)
             lbl_dataCadastro.Location = New Point(panel.Width / 2 - (lbl_dataCadastro.Width), 2)
@@ -128,10 +124,12 @@ Public Class verAfazer
             txt_detalhes.ReadOnly = True
             dtp_prazo.Enabled = False
             cbx_estado.Enabled = False
+            cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
 
-            AddHandler btn_addnotas.Click, AddressOf Me.btn_addnotas_Click
-            AddHandler btn_modificar.Click, AddressOf Me.btn_modificar_Click
-            AddHandler btn_salvar.Click, AddressOf Me.btn_salvar_Click
+            'vinculando funções aos botões
+            AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
+            AddHandler btn_modificar.Click, AddressOf btn_modificar_Click
+            AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
 
             btn_salvar.Visible = False
 
@@ -192,17 +190,19 @@ Public Class verAfazer
 
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.AutoScroll = True
+
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
         consulta = conexao.CreateCommand
-        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY"
+        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
 
         conexao.Open()
 
         myReader = consulta.ExecuteReader()
 
-        Dim y As Integer
-        y = 10
+        Dim panelY As Integer
+        panelY = 10
 
         Do While myReader.Read()
             Dim id As Integer
@@ -220,8 +220,8 @@ Public Class verAfazer
             prazo = myReader.GetDateTime(4)
             estado = myReader.GetByte(5)
 
-            Dim a1 As New Afazer(Me, id, dataCadastro, titulo, prazo, estado, detalhes)
-
+            Dim a1 As New Afazer(Me, id, dataCadastro, titulo, prazo, estado, detalhes, panelY)
+            panelY += 180
         Loop
 
         myReader.Close()
