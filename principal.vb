@@ -18,8 +18,7 @@ Public Class principal
     Private Sub VerListaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VerListaToolStripMenuItem.Click
         Dim verAfazer As New verAfazer
         verAfazer.MdiParent = Me
-        verAfazer.Width = ParentForm.ClientSize.Width
-        verAfazer.Height = ParentForm.ClientSize.Height
+        verAfazer.WindowState = FormWindowState.Maximized
         verAfazer.Show()
 
     End Sub
