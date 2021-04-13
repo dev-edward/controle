@@ -165,13 +165,21 @@ Public Class verAfazer
             consulta = conexao.CreateCommand
             consulta.CommandText = "UPDATE tb_afazer SET afazer_titulo = '" & txt_titulo.Text & "',
                                    afazer_prazo = '" & dtp_prazo.Value & "',
-                                   afazer_status = " & cbx_estado.SelectedIndex & ",
+                                   afazer_status = " & cbx_estado.SelectedIndex + 1 & ",
                                    afazer_detalhes = '" & txt_detalhes.Text & "' 
                                    WHERE afazer_id = " & lbl_id.Text
+
+            conexao.Open()
 
             myReader = consulta.ExecuteReader()
 
             conexao.Close()
+
+            txt_titulo.ReadOnly = True
+            dtp_prazo.Enabled = False
+            cbx_estado.Enabled = False
+            txt_detalhes.ReadOnly = True
+
         End Sub
 
 

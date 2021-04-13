@@ -1,0 +1,16 @@
+panel  790x250
+
+lblcadastro 		(136,20)
+dtpcadastro		(121,26)
+lbltitulo 	96,60
+lblprazo 	295,60
+lblestado 	443,60
+
+txttitulo	20,90	(200,*26)
+dtpprazo	260,90  (format = short)
+cbxestado	410,90
+
+btnmod		540,90
+btnadd		630,90
+lbldetalhes	364,135
+txtdetalhes	20,150

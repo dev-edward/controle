@@ -1,0 +1,119 @@
+========== auxiliar ==========
+#afazer
+  - data cadastro
+  - titulo
+  - descrição
+  - prazo
+  - status
+  - data ultima modificação
+
+#evento
+  - data
+  - descrição
+
+#objeto
+  - tipo
+  - tabela
+
+#estoque
+  - objeto
+  - quantidade
+  - localização
+
+#sala
+  - nome
+  - bloco
+  - descrição
+
+#pessoa
+  - nome
+  - sala
+
+#dispositivo
+  - tipo
+  - posto?
+  - marca
+  - modelo
+  - nome
+  - ip
+  - macadress
+  - sistema operacional(OS)
+  - quantidade de memoria ram
+  - processador
+  - armazenamento
+  - bateria
+
+#impressora
+  - marca
+  - modelo
+  - toner
+
+#nobreak
+  - marca
+  - modelo
+  - bateria
+
+#projetor
+  - sala
+  - modelo
+  - conexão
+  - limpeza
+  - tempo de lampada
+
+#camera
+  - marca/modelo
+  - resolução
+  - local
+
+#pessoa <> objeto
+  - fkpessoa
+  - fkobjeto
+
+#infextra <> item
+  - infextra_id
+  - fkobjeto
+  - nota
+
+#sala <> objeto
+  - fksala
+  - fkobjeto
+
+-----------------------------------------
+tb_afazer > afazer_status:
+1 - Não feito
+2 - Feito
+3 - Em andamento
+
+tb_objeto > objeto_tipo:
+1 - Computador
+2 - Notebook
+3 - Chromebook
+4 - Tablet
+5 - Celular
+6 - Impressora
+7 - No-break
+8 - Projetor
+9 - Camera
+
+tb_dispositivo > dispositivo_tipo:
+1 - computador
+2 - notebook
+3 - chromebook
+4 - tablet
+5 - celular
+
+tb_dispositivo > dispositivo_posto:
+1 - posto informático
+2 - da instituição
+
+tb_impressora impressora_toner:
+1 - ?
+2 - ?
+3 - ?
+
+tb_projetor > projetor_conexao:
+1 - HDMI
+2 - VGA
+---------------------------------
+tarefas(afazer)
+tela com lista de afazeres com seus respectivos status e prazos
