@@ -9,7 +9,7 @@ CREATE TABLE tb_afazer
 	afazer_status TINYINT,
 	afazer_prazo DATETIME,
 	afazer_titulo NVARCHAR(30),
-	afazer_detalhes NVARCHAR(90)
+	afazer_detalhes NVARCHAR(90),
 	afazer_ultalteracao DATETIME DEFAULT GETDATE(),
 )
 
@@ -20,17 +20,17 @@ CREATE TABLE tb_evento
 	evento_descricao NVARCHAR(256)
 )
 
-CREATE TABLE tb_objeto
+CREATE TABLE tb_item
 (
-	objeto_id INT PRIMARY KEY IDENTITY,
-	objeto_tipo INT,
-	objeto_tabela VARCHAR(16)
+	item_id INT PRIMARY KEY IDENTITY,
+	item_tipo INT,
+	item_tabela VARCHAR(16)
 )
 
 CREATE TABLE tb_estoque
 (
 	estoque_id INT PRIMARY KEY IDENTITY,
-	estoque_fkobjeto INT FOREIGN KEY REFERENCES tb_objeto(objeto_id) NOT NULL,
+	estoque_fkobjeto INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	estoque_quantidade INT,
 	estoque_localizacao NVARCHAR(30)
 )
@@ -47,7 +47,7 @@ CREATE TABLE tb_pessoa
 (
 	pessoa_id INT PRIMARY KEY IDENTITY,
 	pessoa_nome NVARCHAR(30),
-	pessoa_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
+	pessoa_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id)
 )
 
 CREATE TABLE tb_dispositivo
@@ -55,7 +55,7 @@ CREATE TABLE tb_dispositivo
 	dispositivo_id INT PRIMARY KEY IDENTITY,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
-	dispositivo_fkobjeto INT FOREIGN KEY REFERENCES tb_objeto(objeto_id) NOT NULL,
+	dispositivo_fkobjeto INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_marcamodelo NVARCHAR(30),
 	dispositivo_nome NVARCHAR(20),
 	dispositivo_ip NVARCHAR(16),
@@ -96,3 +96,31 @@ CREATE TABLE tb_camera
 	camera_resolucao NVARCHAR(16),
 	camera_local NVARCHAR(20)
 )
+CREATE TABLE tb_notaitem
+(
+	notaitem_id INT PRIMARY KEY IDENTITY,
+	notaitem_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	notaitem_nota NVARCHAR(256)
+)
+CREATE TABLE tb_historico
+(
+	historico_id INT PRIMARY KEY IDENTITY,
+	historico_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	historico_descricao NVARCHAR(256)
+)
+
+use controle
+go
+select * from tb_afazer
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 1','detalhes 1','11/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 2','detalhes 2','12/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 3','detalhes 3','13/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 4','detalhes 4','14/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 5','detalhes 5','15/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 6','detalhes 6','16/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 7','detalhes 7','17/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 8','detalhes 8','18/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 9','detalhes 9','19/04/2021',1)
+insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 10','detalhes 10','20/04/2021',1)
+
+

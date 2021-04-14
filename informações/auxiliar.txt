@@ -65,18 +65,25 @@
   - resolução
   - local
 
-#pessoa <> objeto
-  - fkpessoa
-  - fkobjeto
 
-#infextra <> item
+#notas <> item
   - infextra_id
   - fkobjeto
   - nota
 
-#sala <> objeto
+#historico <> item
+  - historico_id
+  - historico_fkitem
+  - historico_descricao
+
+#pessoa <> item
+  - fkpessoa
+  - fkobjeto
+
+#sala <> item
   - fksala
   - fkobjeto
+
 
 -----------------------------------------
 tb_afazer > afazer_status:
