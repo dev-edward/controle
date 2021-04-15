@@ -65,6 +65,7 @@ CREATE TABLE tb_dispositivo
 	dispositivo_processador NVARCHAR(20),
 	dispositivo_armazenamento NVARCHAR(30),
 	dispositivo_bateria NVARCHAR(30)
+	dispositivo_fkpessoa 
 )
 CREATE TABLE tb_impressora
 (
@@ -99,7 +100,7 @@ CREATE TABLE tb_camera
 CREATE TABLE tb_notaitem
 (
 	notaitem_id INT PRIMARY KEY IDENTITY,
-	notaitem_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	notaitem_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL UNIQUE,
 	notaitem_nota NVARCHAR(256)
 )
 CREATE TABLE tb_historico
