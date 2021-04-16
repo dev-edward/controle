@@ -87,7 +87,12 @@
   - fksala
   - fkobjeto
 
-
+#sofware
+  - nome
+  - descrição
+  - instalação
+  - atualização
+  -
 
 -----------------------------------------
 tb_afazer > afazer_status:

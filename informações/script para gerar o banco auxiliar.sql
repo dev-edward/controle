@@ -30,7 +30,7 @@ CREATE TABLE tb_item
 CREATE TABLE tb_estoque
 (
 	estoque_id INT PRIMARY KEY IDENTITY,
-	estoque_fkobjeto INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	estoque_quantidade INT,
 	estoque_localizacao NVARCHAR(30)
 )
@@ -53,9 +53,11 @@ CREATE TABLE tb_pessoa
 CREATE TABLE tb_dispositivo
 (
 	dispositivo_id INT PRIMARY KEY IDENTITY,
+	dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_item(item_id),
+	dispositivo_fksala INT FOREIGN KEY REFERENCES tb_item(item_id),
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
-	dispositivo_fkobjeto INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_marcamodelo NVARCHAR(30),
 	dispositivo_nome NVARCHAR(20),
 	dispositivo_ip NVARCHAR(16),
@@ -65,7 +67,7 @@ CREATE TABLE tb_dispositivo
 	dispositivo_processador NVARCHAR(20),
 	dispositivo_armazenamento NVARCHAR(30),
 	dispositivo_bateria NVARCHAR(30)
-	dispositivo_fkpessoa 
+	
 )
 CREATE TABLE tb_impressora
 (
