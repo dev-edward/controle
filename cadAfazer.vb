@@ -13,7 +13,7 @@ Public Class cadAfazer
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
         consulta = conexao.CreateCommand
 
-        consulta.CommandText = "insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('" & txt_titulo.Text & "','" & txt_detalhes.Text & "','" & dtp_prazo.Value & "'," & cbx_estado.SelectedIndex + 1 & ")"
+        consulta.CommandText = "insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem, afazer_titulo, afazer_detalhes, afazer_prazo, afazer_status) VALUES(scope_identity(),'" & txt_titulo.Text & "','" & txt_detalhes.Text & "','" & dtp_prazo.Value & "'," & cbx_estado.SelectedIndex + 1 & ")"
 
         conexao.Open()
         myReader = consulta.ExecuteReader()

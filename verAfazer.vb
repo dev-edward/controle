@@ -1,6 +1,11 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class verAfazer
+    'Create ADO.NET objects.
+    Private conexao As SqlConnection
+    Private consulta As SqlCommand
+    Private myReader As SqlDataReader
+
     Class Afazer
         'Create ADO.NET objects.
         Private conexao As SqlConnection
@@ -9,6 +14,7 @@ Public Class verAfazer
 
         Dim panel As New Panel()
         Dim lbl_id As New Label()
+        Dim lbl_fkitem As New Label()
         Dim lbl_dataCadastro As New Label()
         Dim lbl_dataCadastroValor As New Label()
         Dim lbl_titulo As New Label()
@@ -25,9 +31,10 @@ Public Class verAfazer
         'fonte padrão 
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
-        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
+        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
             'adicionando controles no panel
             panel.Controls.Add(lbl_id)
+            panel.Controls.Add(lbl_fkitem)
             panel.Controls.Add(lbl_dataCadastro)
             panel.Controls.Add(lbl_dataCadastroValor)
             panel.Controls.Add(lbl_titulo)
@@ -44,6 +51,7 @@ Public Class verAfazer
 
             'colocando fonte 12 para todos os itens
             lbl_id.Font = fonte
+            lbl_fkitem.Font = fonte
             lbl_dataCadastro.Font = fonte
             lbl_dataCadastroValor.Font = fonte
             lbl_titulo.Font = fonte
@@ -70,6 +78,7 @@ Public Class verAfazer
 
             'conteudo dos controles vindo do BD
             lbl_id.Text = _id
+            lbl_fkitem.Text = _fkitem
             lbl_dataCadastroValor.Text = _dataCadastro
             txt_titulo.Text = _titulo
             dtp_prazo.Value = _prazo
@@ -79,7 +88,8 @@ Public Class verAfazer
 
             'tamanho dos controles
             panel.Size = New Size(660, 170)
-            lbl_id.Size = New Size(40, 20)
+            lbl_id.Size = New Size(30, 20)
+            lbl_fkitem.Size = New Size(30, 20)
             lbl_dataCadastro.Size = New Size(140, 20)
             lbl_dataCadastroValor.Size = New Size(110, 20)
             lbl_titulo.Size = New Size(260, 20)
@@ -92,13 +102,14 @@ Public Class verAfazer
             btn_modificar.Size = New Size(100, 30)
             btn_salvar.Size = New Size(100, 30)
             lbl_detalhes.Size = New Size(640, 20)
-            'lbl_detalhes.BackColor = New Color().FromArgb(255, 215, 0, 0)
+            'lbl_titulo.BackColor = New Color().FromArgb(255, 215, 0, 0)
             txt_detalhes.Size = New Size(640, 60)
 
             'posição dos controles
             panel.Location = New Point(40, _panelY)
 
             lbl_id.Location = New Point(10, 10)
+            lbl_fkitem.Location = New Point(40, 10)
             lbl_dataCadastro.Location = New Point(panel.Width / 2 - (lbl_dataCadastro.Width), 2)
             lbl_dataCadastroValor.Location = New Point(panel.Width / 2, 2)
             lbl_titulo.Location = New Point(10, 26)
@@ -139,9 +150,14 @@ Public Class verAfazer
         End Sub
 
         Private Sub btn_addnotas_Click()
-            MsgBox("add notas")
+            'conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            'consulta = conexao.CreateCommand
+            'consulta.CommandText = "insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values("& lbl_id.Text &","&  &")"
 
+            Dim frm_addNotas As New addNotas(lbl_fkitem.Text)
+            'addNotas.MdiParent =
+            frm_addNotas.Show()
         End Sub
 
         Private Sub btn_modificar_Click()
@@ -184,10 +200,7 @@ Public Class verAfazer
 
     End Class
 
-    'Create ADO.NET objects.
-    Private conexao As SqlConnection
-    Private consulta As SqlCommand
-    Private myReader As SqlDataReader
+
 
     Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -196,7 +209,7 @@ Public Class verAfazer
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
         consulta = conexao.CreateCommand
-        consulta.CommandText = "select afazer_id, afazer_dataatual,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
+        consulta.CommandText = "select afazer_id, afazer_fkitem, afazer_datacadastro,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
 
         conexao.Open()
 
@@ -207,21 +220,22 @@ Public Class verAfazer
 
         Do While myReader.Read()
             Dim id As Integer
+            Dim fkitem As Integer
             Dim dataCadastro As DateTime
             Dim titulo As String
             Dim detalhes As String
             Dim prazo As DateTime
             Dim estado As String
 
-
             id = myReader.GetInt32(0)
-            dataCadastro = myReader.GetDateTime(1)
-            titulo = myReader.GetString(2)
-            detalhes = myReader.GetString(3)
-            prazo = myReader.GetDateTime(4)
-            estado = myReader.GetByte(5)
+            fkitem = myReader.GetInt32(1)
+            dataCadastro = myReader.GetDateTime(2)
+            titulo = myReader.GetString(3)
+            detalhes = myReader.GetString(4)
+            prazo = myReader.GetDateTime(5)
+            estado = myReader.GetByte(6)
 
-            Dim a1 As New Afazer(Me, id, dataCadastro, titulo, prazo, estado, detalhes, panelY)
+            Dim a1 As New Afazer(Me, id, fkitem, dataCadastro, titulo, prazo, estado, detalhes, panelY)
             panelY += 180
         Loop
 

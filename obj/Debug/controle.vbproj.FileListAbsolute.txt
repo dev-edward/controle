@@ -26,3 +26,4 @@ C:\Users\E-Corp\source\repos\controle\obj\Debug\controle.vbproj.CoreCompileInput
 C:\Users\E-Corp\source\repos\controle\obj\Debug\auxiliar.exe
 C:\Users\E-Corp\source\repos\controle\obj\Debug\auxiliar.xml
 C:\Users\E-Corp\source\repos\controle\obj\Debug\auxiliar.pdb
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.addNotas.resources

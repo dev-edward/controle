@@ -2,15 +2,21 @@ CREATE DATABASE controle
 GO
 USE controle
 
+CREATE TABLE tb_item
+(
+	item_id INT PRIMARY KEY IDENTITY,
+	item_tipo INT
+)
 CREATE TABLE tb_afazer
 (
 	afazer_id INT PRIMARY KEY IDENTITY,
+	afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	afazer_datacadastro DATETIME DEFAULT GETDATE(),
 	afazer_status TINYINT,
 	afazer_prazo DATETIME,
 	afazer_titulo NVARCHAR(30),
 	afazer_detalhes NVARCHAR(90),
-	afazer_ultalteracao DATETIME DEFAULT GETDATE(),
+	afazer_ultalteracao DATETIME DEFAULT GETDATE()
 )
 
 CREATE TABLE tb_evento
@@ -20,12 +26,7 @@ CREATE TABLE tb_evento
 	evento_descricao NVARCHAR(256)
 )
 
-CREATE TABLE tb_item
-(
-	item_id INT PRIMARY KEY IDENTITY,
-	item_tipo INT,
-	item_tabela VARCHAR(16)
-)
+
 
 CREATE TABLE tb_estoque
 (
@@ -53,11 +54,11 @@ CREATE TABLE tb_pessoa
 CREATE TABLE tb_dispositivo
 (
 	dispositivo_id INT PRIMARY KEY IDENTITY,
-	dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_item(item_id),
-	dispositivo_fksala INT FOREIGN KEY REFERENCES tb_item(item_id),
+	dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
+	dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
+	dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
-	dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_marcamodelo NVARCHAR(30),
 	dispositivo_nome NVARCHAR(20),
 	dispositivo_ip NVARCHAR(16),
@@ -115,15 +116,21 @@ CREATE TABLE tb_historico
 use controle
 go
 select * from tb_afazer
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 1','detalhes 1','11/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 2','detalhes 2','12/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 3','detalhes 3','13/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 4','detalhes 4','14/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 5','detalhes 5','15/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 6','detalhes 6','16/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 7','detalhes 7','17/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 8','detalhes 8','18/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 9','detalhes 9','19/04/2021',1)
-insert into tb_afazer(afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES('titulo 10','detalhes 10','20/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 1','detalhes 1','11/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 2','detalhes 2','12/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 3','detalhes 3','13/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 4','detalhes 4','14/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 5','detalhes 5','15/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 6','detalhes 6','16/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 7','detalhes 7','17/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 8','detalhes 8','18/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 9','detalhes 9','19/04/2021',1)
+insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
 
+
+insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(,)
+
+
+
+insert into tb_item default values insert into tb_afazer(afazer_fkitem) values(scope_identity())
 
