@@ -23,7 +23,7 @@ Partial Class addNotas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txt_nota = New System.Windows.Forms.TextBox()
         Me.btn_adicionar = New System.Windows.Forms.Button()
         Me.btn_cancelar = New System.Windows.Forms.Button()
         Me.SuspendLayout()
@@ -38,14 +38,14 @@ Partial Class addNotas
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Adicione uma nota para este item"
         '
-        'TextBox1
+        'txt_nota
         '
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(12, 29)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(300, 60)
-        Me.TextBox1.TabIndex = 1
+        Me.txt_nota.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txt_nota.Location = New System.Drawing.Point(12, 29)
+        Me.txt_nota.Multiline = True
+        Me.txt_nota.Name = "txt_nota"
+        Me.txt_nota.Size = New System.Drawing.Size(300, 60)
+        Me.txt_nota.TabIndex = 1
         '
         'btn_adicionar
         '
@@ -72,7 +72,7 @@ Partial Class addNotas
         Me.ClientSize = New System.Drawing.Size(329, 138)
         Me.Controls.Add(Me.btn_cancelar)
         Me.Controls.Add(Me.btn_adicionar)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txt_nota)
         Me.Controls.Add(Me.Label1)
         Me.Name = "addNotas"
         Me.Text = "Notas"
@@ -82,7 +82,7 @@ Partial Class addNotas
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txt_nota As TextBox
     Friend WithEvents btn_adicionar As Button
     Friend WithEvents btn_cancelar As Button
 End Class

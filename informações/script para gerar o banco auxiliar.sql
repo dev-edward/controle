@@ -128,9 +128,9 @@ insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afa
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
 
 
-insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(,)
-
-
 
 insert into tb_item default values insert into tb_afazer(afazer_fkitem) values(scope_identity())
+
+insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(1,'teste nota')
+select * from tb_notaitem
 

@@ -4,6 +4,7 @@ Public Class addNotas
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
+    Dim lbl_fkitem As New Label
 
     Friend Sub New(ByVal _fkitem As Integer)
 
@@ -11,9 +12,10 @@ Public Class addNotas
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        Dim lbl_fkitem As New Label
+
         lbl_fkitem.Text = _fkitem
         lbl_fkitem.Location = New Point(0, 0)
+        lbl_fkitem.Size = New Size(30, 10)
         Me.Controls.Add(lbl_fkitem)
 
         AddHandler btn_adicionar.Click, AddressOf btn_adicionar_Click
@@ -22,7 +24,21 @@ Public Class addNotas
     End Sub
 
     Private Sub btn_adicionar_Click()
-        MsgBox(lbl_fkitem.Text)
+        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+
+        consulta = conexao.CreateCommand
+        consulta.CommandText = "insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(" & lbl_fkitem.Text & ",'" & txt_nota.Text & "')"
+
+        conexao.Open()
+        myReader = consulta.ExecuteReader()
+
+        myReader.Close()
+        conexao.Close()
+
+        MsgBox("Nota adicionanda")
+
+        Me.Close()
+
     End Sub
 
     Private Sub btn_cancelar_Click()

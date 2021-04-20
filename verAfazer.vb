@@ -150,10 +150,6 @@ Public Class verAfazer
         End Sub
 
         Private Sub btn_addnotas_Click()
-            'conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
-
-            'consulta = conexao.CreateCommand
-            'consulta.CommandText = "insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values("& lbl_id.Text &","&  &")"
 
             Dim frm_addNotas As New addNotas(lbl_fkitem.Text)
             'addNotas.MdiParent =
