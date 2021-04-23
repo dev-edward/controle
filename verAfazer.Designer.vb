@@ -29,6 +29,7 @@ Partial Class verAfazer
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(911, 555)
+        Me.ControlBox = False
         Me.Name = "verAfazer"
         Me.Text = "Lista de Afazeres"
         Me.ResumeLayout(False)

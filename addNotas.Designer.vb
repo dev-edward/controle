@@ -74,8 +74,10 @@ Partial Class addNotas
         Me.Controls.Add(Me.btn_adicionar)
         Me.Controls.Add(Me.txt_nota)
         Me.Controls.Add(Me.Label1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "addNotas"
         Me.Text = "Notas"
+        Me.TopMost = True
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
