@@ -5,6 +5,20 @@ Public Class cadAfazer
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
     Private resultado As String
+
+    Dim panel As New Panel()
+    Dim lbl_cadastro As New Label()
+    Dim lbl_titulo As New Label()
+    Dim txt_titulo As New TextBox()
+    Dim lbl_detalhes As New Label()
+    Dim txt_detalhes As New TextBox()
+    Dim lbl_prazo As New Label()
+    Dim dtp_prazo As New DateTimePicker()
+    Dim lbl_estado As New Label()
+    Dim cbx_estado As New ComboBox()
+    Dim btn_salvar As New Button()
+
+
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cbx_estado.SelectedIndex = 0
     End Sub

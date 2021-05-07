@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class principal
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class principal
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.AfazerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -64,6 +64,7 @@ Partial Class principal
         Me.CadastrarToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConsultarToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SoftwareToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -72,7 +73,7 @@ Partial Class principal
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AfazerToolStripMenuItem, Me.EventosToolStripMenuItem, Me.DispositivosToolStripMenuItem, Me.ImpressoraToolStripMenuItem, Me.NobreakToolStripMenuItem, Me.ProjetorToolStripMenuItem, Me.CameraToolStripMenuItem, Me.ContasToolStripMenuItem, Me.PessoasToolStripMenuItem, Me.SoftwareToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(944, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(803, 24)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -226,7 +227,7 @@ Partial Class principal
         'CadastrarToolStripMenuItem6
         '
         Me.CadastrarToolStripMenuItem6.Name = "CadastrarToolStripMenuItem6"
-        Me.CadastrarToolStripMenuItem6.Size = New System.Drawing.Size(125, 22)
+        Me.CadastrarToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
         Me.CadastrarToolStripMenuItem6.Text = "Cadastrar"
         '
         'ConsultarToolStripMenuItem5
@@ -336,11 +337,20 @@ Partial Class principal
         Me.SoftwareToolStripMenuItem.Size = New System.Drawing.Size(65, 20)
         Me.SoftwareToolStripMenuItem.Text = "Software"
         '
+        'Splitter1
+        '
+        Me.Splitter1.Location = New System.Drawing.Point(0, 24)
+        Me.Splitter1.Name = "Splitter1"
+        Me.Splitter1.Size = New System.Drawing.Size(3, 397)
+        Me.Splitter1.TabIndex = 3
+        Me.Splitter1.TabStop = False
+        '
         'principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(944, 421)
+        Me.ClientSize = New System.Drawing.Size(803, 421)
+        Me.Controls.Add(Me.Splitter1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStrip1
@@ -396,4 +406,5 @@ Partial Class principal
     Friend WithEvents CadastrarToolStripMenuItem11 As ToolStripMenuItem
     Friend WithEvents ConsultarToolStripMenuItem9 As ToolStripMenuItem
     Friend WithEvents SoftwareToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Splitter1 As Splitter
 End Class

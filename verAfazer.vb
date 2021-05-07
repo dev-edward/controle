@@ -153,7 +153,7 @@ Public Class verAfazer
 
             Dim frm_addNotas As New addNotas(lbl_fkitem.Text)
             'addNotas.MdiParent =
-            frm_addNotas.Show()
+            frm_addNotas.ShowDialog()
         End Sub
 
         Private Sub btn_modificar_Click()

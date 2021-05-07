@@ -79,6 +79,12 @@
     <Compile Include="addNotas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="cadImpressora.Designer.vb">
+      <DependentUpon>cadImpressora.vb</DependentUpon>
+    </Compile>
+    <Compile Include="cadImpressora.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="conexao.vb" />
     <Compile Include="principal.vb">
       <SubType>Form</SubType>
@@ -118,6 +124,9 @@
   <ItemGroup>
     <EmbeddedResource Include="addNotas.resx">
       <DependentUpon>addNotas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cadImpressora.resx">
+      <DependentUpon>cadImpressora.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="principal.resx">
       <DependentUpon>principal.vb</DependentUpon>
