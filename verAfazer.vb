@@ -6,6 +6,23 @@ Public Class verAfazer
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
 
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        Const WM_SYSCOMMAND As Integer = 274
+        Const SC_MOVE As Integer = 61456
+
+        Select Case m.Msg
+            Case WM_SYSCOMMAND
+                Command = Message.WParam.ToInt32() & 0xfff0
+            If (Command() == SC_MOVE)
+                    Return;
+                    break;
+                        'https://pt.stackoverflow.com/questions/71584/movimenta%C3%A7%C3%A3o-de-forms-c
+        End Select
+
+
+        MyBase.WndProc(m)
+    End Sub
+
     Class Afazer
         'Create ADO.NET objects.
         Private conexao As SqlConnection
@@ -76,7 +93,7 @@ Public Class verAfazer
             btn_modificar.Text = "Editar"
             btn_salvar.Text = "Salvar"
 
-            'conteudo dos controles vindo do BD
+            'conteudo dos controles extraido do BD
             lbl_id.Text = _id
             lbl_fkitem.Text = _fkitem
             lbl_dataCadastroValor.Text = _dataCadastro
@@ -212,7 +229,7 @@ Public Class verAfazer
         myReader = consulta.ExecuteReader()
 
         Dim panelY As Integer
-        panelY = 10
+        panelY = 50
 
         Do While myReader.Read()
             Dim id As Integer
@@ -239,5 +256,17 @@ Public Class verAfazer
         conexao.Close()
     End Sub
 
-
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If (Application.OpenForms.OfType(Of cadAfazer).Any()) Then
+            Application.OpenForms.OfType(Of cadAfazer).First().BringToFront()
+        Else
+            Dim cadAfazer = New cadAfazer
+            cadAfazer.MdiParent = principal
+            cadAfazer.ShowIcon = False
+            cadAfazer.MaximizeBox = False
+            cadAfazer.Dock = DockStyle.Right
+            cadAfazer.Show()
+            'principal.LayoutMdi(MdiLayout.TileVertical)
+        End If
+    End Sub
 End Class
