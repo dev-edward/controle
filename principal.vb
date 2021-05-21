@@ -27,7 +27,9 @@ Public Class principal
         Else
             Dim cadImpressora = New cadImpressora
             cadImpressora.MdiParent = Me
-            'cadImpressora.WindowState = FormWindowState.Maximized
+            cadImpressora.Dock = DockStyle.Left
+            cadImpressora.ShowIcon = False
+            cadImpressora.MaximizeBox = False
             cadImpressora.Show()
         End If
     End Sub

@@ -21,8 +21,6 @@ Public Class cadAfazer
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
-
         'adicionando controles ao panel
         panel.Controls.Add(lbl_cadastro)
         panel.Controls.Add(lbl_titulo)

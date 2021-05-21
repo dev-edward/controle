@@ -7,20 +7,20 @@ Public Class verAfazer
     Private myReader As SqlDataReader
 
     Protected Overrides Sub WndProc(ByRef m As Message)
-        Const WM_SYSCOMMAND As Integer = 274
-        Const SC_MOVE As Integer = 61456
+        Const WM_SYSCOMMAND As Integer = &H112
+        Const SC_MOVE As Integer = &HF010
 
         Select Case m.Msg
             Case WM_SYSCOMMAND
-                Command = Message.WParam.ToInt32() & 0xfff0
-            If (Command() == SC_MOVE)
-                    Return;
-                    break;
-                        'https://pt.stackoverflow.com/questions/71584/movimenta%C3%A7%C3%A3o-de-forms-c
+                Dim command As Int64 = m.WParam.ToInt32() + &HFFF0
+                If (command = SC_MOVE) Then
+                    Return
+                End If
+
         End Select
 
-
         MyBase.WndProc(m)
+
     End Sub
 
     Class Afazer

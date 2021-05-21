@@ -81,11 +81,13 @@
 
 #pessoa <> item
   - fkpessoa
-  - fkobjeto
+  - fkitem
+  - dtatribuicao
 
 #sala <> item
   - fksala
-  - fkobjeto
+  - fkitem
+  - dtatribuicao
 
 #sofware
   - nome
@@ -99,6 +101,8 @@ tb_afazer > afazer_status:
 1 - Não feito
 2 - Feito
 3 - Em andamento
+*no combobox do visualstudio o indice começa em 0
+*então quando armazeno no BD acrescento 1 e quando recupero do BD diminuo 1
 
 tb_objeto > objeto_tipo:
 1 - Computador
