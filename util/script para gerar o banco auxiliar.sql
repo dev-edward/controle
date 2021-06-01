@@ -79,11 +79,13 @@ CREATE TABLE tb_impressora
 	impressora_id INT PRIMARY KEY IDENTITY,
 	impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	impressora_marcamodelo NVARCHAR(20),
-	impressora_corimpressão
 	impressora_serie NVARCHAR(12),
 	impressora_ip NVARCHAR(15),
+	impressora_toner TINYINT,
+	impressora_corimpressão tinyint,
+	impressora_estado TINYINT,
 	impressora_dtentrada DATETIME,
-	impressora_toner TINYINT
+	impressora_dtsaida DATETIME
 )
 CREATE TABLE tb_nobreak
 (

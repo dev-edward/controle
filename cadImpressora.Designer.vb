@@ -36,20 +36,22 @@ Partial Class cadImpressora
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(45, 31)
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(397, 36)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(84, 13)
+        Me.Label1.Size = New System.Drawing.Size(110, 17)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Marca && Modelo"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(48, 48)
+        Me.TextBox1.Location = New System.Drawing.Point(400, 53)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 1
@@ -57,7 +59,7 @@ Partial Class cadImpressora
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(48, 79)
+        Me.Label2.Location = New System.Drawing.Point(400, 84)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(59, 13)
         Me.Label2.TabIndex = 2
@@ -65,7 +67,7 @@ Partial Class cadImpressora
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(53, 102)
+        Me.TextBox2.Location = New System.Drawing.Point(405, 107)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 3
@@ -73,7 +75,7 @@ Partial Class cadImpressora
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(51, 137)
+        Me.Label3.Location = New System.Drawing.Point(403, 142)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(17, 13)
         Me.Label3.TabIndex = 4
@@ -81,7 +83,7 @@ Partial Class cadImpressora
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(54, 153)
+        Me.TextBox3.Location = New System.Drawing.Point(406, 158)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 5
@@ -89,7 +91,7 @@ Partial Class cadImpressora
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(54, 177)
+        Me.Label4.Location = New System.Drawing.Point(406, 182)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(84, 13)
         Me.Label4.TabIndex = 6
@@ -98,7 +100,7 @@ Partial Class cadImpressora
         'DateTimePicker1
         '
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(54, 200)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(406, 205)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(200, 20)
         Me.DateTimePicker1.TabIndex = 7
@@ -106,7 +108,7 @@ Partial Class cadImpressora
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(51, 241)
+        Me.Label5.Location = New System.Drawing.Point(403, 246)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(70, 13)
         Me.Label5.TabIndex = 8
@@ -115,7 +117,7 @@ Partial Class cadImpressora
         'ComboBox1
         '
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(55, 256)
+        Me.ComboBox1.Location = New System.Drawing.Point(407, 261)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(121, 21)
         Me.ComboBox1.TabIndex = 9
@@ -123,7 +125,7 @@ Partial Class cadImpressora
         'RadioButton1
         '
         Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Location = New System.Drawing.Point(53, 302)
+        Me.RadioButton1.Location = New System.Drawing.Point(405, 307)
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.Size = New System.Drawing.Size(96, 17)
         Me.RadioButton1.TabIndex = 10
@@ -134,7 +136,7 @@ Partial Class cadImpressora
         'RadioButton2
         '
         Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(155, 302)
+        Me.RadioButton2.Location = New System.Drawing.Point(507, 307)
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.Size = New System.Drawing.Size(63, 17)
         Me.RadioButton2.TabIndex = 11
@@ -146,7 +148,7 @@ Partial Class cadImpressora
         '
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Items.AddRange(New Object() {"Ativo", "Inativo", "Substituido", "Realocado", "Devolvido"})
-        Me.ComboBox2.Location = New System.Drawing.Point(55, 373)
+        Me.ComboBox2.Location = New System.Drawing.Point(407, 378)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(121, 21)
         Me.ComboBox2.TabIndex = 12
@@ -154,17 +156,27 @@ Partial Class cadImpressora
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(54, 357)
+        Me.Label6.Location = New System.Drawing.Point(406, 362)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(40, 13)
         Me.Label6.TabIndex = 13
         Me.Label6.Text = "Estado"
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(414, 430)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 14
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'cadImpressora
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 528)
+        Me.ClientSize = New System.Drawing.Size(643, 490)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.ComboBox2)
         Me.Controls.Add(Me.RadioButton2)
@@ -200,4 +212,5 @@ Partial Class cadImpressora
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents ComboBox2 As ComboBox
     Friend WithEvents Label6 As Label
+    Friend WithEvents Button1 As Button
 End Class
