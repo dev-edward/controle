@@ -29,8 +29,6 @@ CREATE TABLE tb_evento
 	evento_descricao NVARCHAR(256)
 )
 
-
-
 CREATE TABLE tb_estoque
 (
 	estoque_id INT PRIMARY KEY IDENTITY,
@@ -81,8 +79,8 @@ CREATE TABLE tb_impressora
 	impressora_marcamodelo NVARCHAR(20),
 	impressora_serie NVARCHAR(12),
 	impressora_ip NVARCHAR(15),
-	impressora_toner TINYINT,
-	impressora_corimpressão tinyint,
+	impressora_suprimento TINYINT,
+	impressora_corimpressão TINYINT,
 	impressora_estado TINYINT,
 	impressora_dtentrada DATETIME,
 	impressora_dtsaida DATETIME
