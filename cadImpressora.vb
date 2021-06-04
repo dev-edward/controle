@@ -136,7 +136,7 @@ Public Class cadImpressora
             cor_selecionada = 2
         End If
 
-        consulta.CommandText = "insert into tb_item(item_tipo) values(2) insert into tb_impressora(impressora_fkitem, impressora_marcamodelo, impressora_serie, impressora_ip, impressora_suprimento, impressora_corimpressao, impressora_estado, impressora_dtentrada, impressora_dtsaida)  values(scope_identity(),'" & txt_modelo.Text & "','" & txt_nserie.Text & "','" & txt_ip.Text & "'," & cbx_suprimento.SelectedIndex + 1 & "," & cor_selecionada & "," & cbx_estado.SelectedIndex + 1 & "," & dtp_dtentrada.Value & "," & dtp_dtsaida.Value & ")"
+        consulta.CommandText = "insert into tb_item(item_tipo) values(2) insert into tb_impressora(impressora_fkitem, impressora_marcamodelo, impressora_serie, impressora_ip, impressora_suprimento, impressora_corimpressao, impressora_estado, impressora_dtentrada, impressora_dtsaida)  values(scope_identity(),'" & txt_modelo.Text & "','" & txt_nserie.Text & "','" & txt_ip.Text & "'," & cbx_suprimento.SelectedIndex + 1 & "," & cor_selecionada & "," & cbx_estado.SelectedIndex + 1 & ",'" & dtp_dtentrada.Value & "','" & dtp_dtsaida.Value & "')"
         'consulta.CommandText = "select * from tb_impressora"
 
         conexao.Open()
