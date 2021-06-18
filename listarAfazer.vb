@@ -1,27 +1,10 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class verAfazer
+Public Class listarAfazer
     'Create ADO.NET objects.
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-
-    Protected Overrides Sub WndProc(ByRef m As Message)
-        Const WM_SYSCOMMAND As Integer = &H112
-        Const SC_MOVE As Integer = &HF010
-
-        Select Case m.Msg
-            Case WM_SYSCOMMAND
-                Dim command As Int64 = m.WParam.ToInt32() + &HFFF0
-                If (command = SC_MOVE) Then
-                    Return
-                End If
-
-        End Select
-
-        MyBase.WndProc(m)
-
-    End Sub
 
     Class Afazer
         'Create ADO.NET objects.
@@ -45,10 +28,11 @@ Public Class verAfazer
         Dim btn_salvar As New Button()
         Dim lbl_detalhes As New Label()
         Dim txt_detalhes As New TextBox()
+
         'fonte padrão 
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
-        Friend Sub New(ByVal frm As verAfazer, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
+        Friend Sub New(ByVal frm As listarAfazer, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
             'adicionando controles no panel
             panel.Controls.Add(lbl_id)
             panel.Controls.Add(lbl_fkitem)
@@ -215,7 +199,7 @@ Public Class verAfazer
 
 
 
-    Private Sub verAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub listarAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.AutoScroll = True
 

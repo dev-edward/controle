@@ -14,12 +14,15 @@ CREATE TABLE tb_afazer
 (
 	afazer_id INT PRIMARY KEY IDENTITY,
 	afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	afazer_datacadastro DATETIME DEFAULT GETDATE(),
+	afazer_dtcadastro DATETIME DEFAULT GETDATE(),
+	afazer_usercadastro TINYINT,
+	afazer_ultalteracao DATETIME,
+	afazer_useralteracao TINYINT,
 	afazer_status TINYINT,
 	afazer_prazo DATETIME,
 	afazer_titulo NVARCHAR(30),
-	afazer_detalhes NVARCHAR(90),
-	afazer_ultalteracao DATETIME DEFAULT GETDATE()
+	afazer_detalhes NVARCHAR(90)
+
 )
 
 CREATE TABLE tb_evento
@@ -76,6 +79,9 @@ CREATE TABLE tb_impressora
 (
 	impressora_id INT PRIMARY KEY IDENTITY,
 	impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
+	impressora_usercadastro TINYINT,
+	impressora_dtultalteracao DATETIME,
 	impressora_marcamodelo NVARCHAR(20),
 	impressora_serie NVARCHAR(12),
 	impressora_ip NVARCHAR(15),

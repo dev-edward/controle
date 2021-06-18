@@ -9,10 +9,10 @@ Public Class principal
     End Sub
 
     Private Sub AfazerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AfazerToolStripMenuItem.Click
-        If (Application.OpenForms.OfType(Of verAfazer).Any()) Then
-            Application.OpenForms.OfType(Of verAfazer).First().BringToFront()
+        If (Application.OpenForms.OfType(Of listarAfazer).Any()) Then
+            Application.OpenForms.OfType(Of listarAfazer).First().BringToFront()
         Else
-            Dim verAfazer = New verAfazer
+            Dim verAfazer = New listarAfazer
             verAfazer.MdiParent = Me
             verAfazer.Dock = DockStyle.Left
             verAfazer.ShowIcon = False
@@ -22,15 +22,23 @@ Public Class principal
     End Sub
 
     Private Sub ImpressoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImpressoraToolStripMenuItem.Click
-        If (Application.OpenForms.OfType(Of cadImpressora).Any()) Then
-            Application.OpenForms.OfType(Of cadImpressora).First().BringToFront()
-        Else
-            Dim cadImpressora = New cadImpressora
-            cadImpressora.MdiParent = Me
-            cadImpressora.Dock = DockStyle.Left
-            cadImpressora.ShowIcon = False
-            cadImpressora.MaximizeBox = False
-            cadImpressora.Show()
-        End If
+
+        Dim listarImpressora = New listarImpressora
+        listarImpressora.MdiParent = Me
+        listarImpressora.Dock = DockStyle.Left
+        listarImpressora.ShowIcon = False
+        listarImpressora.MaximizeBox = False
+        listarImpressora.Show()
+
+        'If (Application.OpenForms.OfType(Of cadImpressora).Any()) Then
+        '    Application.OpenForms.OfType(Of cadImpressora).First().BringToFront()
+        'Else
+        '    Dim cadImpressora = New cadImpressora
+        '    cadImpressora.MdiParent = Me
+        '    cadImpressora.Dock = DockStyle.Left
+        '    cadImpressora.ShowIcon = False
+        '    cadImpressora.MaximizeBox = False
+        '    cadImpressora.Show()
+        'End If
     End Sub
 End Class

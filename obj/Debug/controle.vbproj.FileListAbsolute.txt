@@ -6,7 +6,6 @@ C:\Users\edward.huayta\source\repos\controle\obj\Debug\controle.vbprojAssemblyRe
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.principal.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.cadAfazer.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.Resources.resources
-C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.verAfazer.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\controle.vbproj.GenerateResource.cache
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\controle.vbproj.CoreCompileInputs.cache
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.exe
@@ -28,3 +27,5 @@ C:\Users\E-Corp\source\repos\controle\obj\Debug\auxiliar.xml
 C:\Users\E-Corp\source\repos\controle\obj\Debug\auxiliar.pdb
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.addNotas.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.cadImpressora.resources
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.listarAfazer.resources
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.listarImpressora.resources

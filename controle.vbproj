@@ -86,6 +86,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="conexao.vb" />
+    <Compile Include="listarImpressora.Designer.vb">
+      <DependentUpon>listarImpressora.vb</DependentUpon>
+    </Compile>
+    <Compile Include="listarImpressora.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="principal.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -114,10 +120,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="verAfazer.Designer.vb">
-      <DependentUpon>verAfazer.vb</DependentUpon>
+    <Compile Include="listarAfazer.Designer.vb">
+      <DependentUpon>listarAfazer.vb</DependentUpon>
     </Compile>
-    <Compile Include="verAfazer.vb">
+    <Compile Include="listarAfazer.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cadImpressora.resx">
       <DependentUpon>cadImpressora.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="listarImpressora.resx">
+      <DependentUpon>listarImpressora.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="principal.resx">
       <DependentUpon>principal.vb</DependentUpon>
@@ -140,8 +149,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="verAfazer.resx">
-      <DependentUpon>verAfazer.vb</DependentUpon>
+    <EmbeddedResource Include="listarAfazer.resx">
+      <DependentUpon>listarAfazer.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

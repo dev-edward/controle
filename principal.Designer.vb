@@ -52,7 +52,7 @@ Partial Class principal
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AfazerToolStripMenuItem, Me.EventosToolStripMenuItem, Me.DispositivosToolStripMenuItem, Me.ImpressoraToolStripMenuItem, Me.NobreakToolStripMenuItem, Me.ProjetorToolStripMenuItem, Me.CameraToolStripMenuItem, Me.ContasToolStripMenuItem, Me.PessoasToolStripMenuItem, Me.EstoqueToolStripMenuItem, Me.SoftwareToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(88, 421)
+        Me.MenuStrip1.Size = New System.Drawing.Size(126, 421)
         Me.MenuStrip1.TabIndex = 1
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -108,25 +108,25 @@ Partial Class principal
         'ImpressoraToolStripMenuItem
         '
         Me.ImpressoraToolStripMenuItem.Name = "ImpressoraToolStripMenuItem"
-        Me.ImpressoraToolStripMenuItem.Size = New System.Drawing.Size(75, 19)
+        Me.ImpressoraToolStripMenuItem.Size = New System.Drawing.Size(113, 19)
         Me.ImpressoraToolStripMenuItem.Text = "Impressora"
         '
         'NobreakToolStripMenuItem
         '
         Me.NobreakToolStripMenuItem.Name = "NobreakToolStripMenuItem"
-        Me.NobreakToolStripMenuItem.Size = New System.Drawing.Size(75, 19)
+        Me.NobreakToolStripMenuItem.Size = New System.Drawing.Size(113, 19)
         Me.NobreakToolStripMenuItem.Text = "Nobreak"
         '
         'ProjetorToolStripMenuItem
         '
         Me.ProjetorToolStripMenuItem.Name = "ProjetorToolStripMenuItem"
-        Me.ProjetorToolStripMenuItem.Size = New System.Drawing.Size(75, 19)
+        Me.ProjetorToolStripMenuItem.Size = New System.Drawing.Size(113, 19)
         Me.ProjetorToolStripMenuItem.Text = "Projetor"
         '
         'CameraToolStripMenuItem
         '
         Me.CameraToolStripMenuItem.Name = "CameraToolStripMenuItem"
-        Me.CameraToolStripMenuItem.Size = New System.Drawing.Size(75, 19)
+        Me.CameraToolStripMenuItem.Size = New System.Drawing.Size(113, 19)
         Me.CameraToolStripMenuItem.Text = "Camera"
         '
         'ContasToolStripMenuItem
@@ -151,7 +151,7 @@ Partial Class principal
         'PessoasToolStripMenuItem
         '
         Me.PessoasToolStripMenuItem.Name = "PessoasToolStripMenuItem"
-        Me.PessoasToolStripMenuItem.Size = New System.Drawing.Size(75, 19)
+        Me.PessoasToolStripMenuItem.Size = New System.Drawing.Size(113, 19)
         Me.PessoasToolStripMenuItem.Text = "Pessoas"
         '
         'EstoqueToolStripMenuItem
@@ -168,7 +168,7 @@ Partial Class principal
         '
         'Splitter1
         '
-        Me.Splitter1.Location = New System.Drawing.Point(88, 0)
+        Me.Splitter1.Location = New System.Drawing.Point(126, 0)
         Me.Splitter1.Name = "Splitter1"
         Me.Splitter1.Size = New System.Drawing.Size(3, 421)
         Me.Splitter1.TabIndex = 3
@@ -176,9 +176,9 @@ Partial Class principal
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Location = New System.Drawing.Point(91, 399)
+        Me.StatusStrip1.Location = New System.Drawing.Point(129, 399)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(712, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(674, 22)
         Me.StatusStrip1.TabIndex = 5
         Me.StatusStrip1.Text = "StatusStrip1"
         '
