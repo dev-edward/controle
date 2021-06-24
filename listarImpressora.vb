@@ -22,6 +22,8 @@ Public Class listarImpressora
         Dim lbl_dtentrada As New Label()
         Dim lbl_dtsaida As New Label()
 
+        'fonte padrão 
+        Dim fonte As New Font("Microsoft Sans Serif", 12)
 
         Friend Sub New()
             'adicionando controles ao panel

@@ -1,28 +1,52 @@
 --use master
---drop database controle
+--rop database controle
 
 CREATE DATABASE controle
 GO
 USE controle
 
-CREATE TABLE tb_item
+CREATE TABLE meta_dicionario
+(/*informações da tabela inseridas*/
+	dic_tabela NVARCHAR(30),
+	dic_coluna NVARCHAR(30),
+	dic_descricao NVARCHAR(120),
+	dic_inclusao NVARCHAR(10)
+)
+CREATE TABLE meta_valor
+(/*informações da tabela inseridas*/
+	valor_tabela NVARCHAR(30),
+	valor_coluna NVARCHAR(30),
+	valor_numero TINYINT,
+	valor_valor NVARCHAR(30)
+)
+CREATE TABLE meta_tabela
+(/*informações da tabela inseridas*/
+	tabela_nome NVARCHAR(30),
+	tabela_numero TINYINT
+)
+CREATE TABLE tb_usuario
 (
+	usuario_id INT PRIMARY KEY IDENTITY,
+	usuario_user VARCHAR(),
+	usuario_
+)
+CREATE TABLE tb_item
+(/*informações da tabela inseridas*/
 	item_id INT PRIMARY KEY IDENTITY,
 	item_tipo INT
 )
 CREATE TABLE tb_afazer
-(
+(/*informações da tabela inseridas*/
 	afazer_id INT PRIMARY KEY IDENTITY,
 	afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	afazer_dtcadastro DATETIME DEFAULT GETDATE(),
 	afazer_usercadastro TINYINT,
-	afazer_ultalteracao DATETIME,
+	afazer_dtalteracao DATETIME,
 	afazer_useralteracao TINYINT,
 	afazer_status TINYINT,
 	afazer_prazo DATETIME,
 	afazer_titulo NVARCHAR(30),
 	afazer_detalhes NVARCHAR(90)
-
 )
 
 CREATE TABLE tb_evento
@@ -75,15 +99,17 @@ CREATE TABLE tb_dispositivo
 	dispositivo_bateria NVARCHAR(30)
 	
 )
+
 CREATE TABLE tb_impressora
-(
+(/*informações da tabela inseridas*/
 	impressora_id INT PRIMARY KEY IDENTITY,
 	impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
 	impressora_usercadastro TINYINT,
-	impressora_dtultalteracao DATETIME,
+	impressora_dtalteracao DATETIME,
+	impressora_useralteracao TINYINT,
 	impressora_marcamodelo NVARCHAR(20),
-	impressora_serie NVARCHAR(12),
+	impressora_nserie NVARCHAR(12),
 	impressora_ip NVARCHAR(15),
 	impressora_suprimento TINYINT,
 	impressora_corimpressão TINYINT,
@@ -155,9 +181,84 @@ CREATE TABLE tb_historico
 
 
 
-use controle
-go
-select * from tb_afazer
+/******************************************/
+/* inclusões para a tabela de dicionario */
+/****************************************/
+
+/** Tabela dicionario **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_dicionario','#','Armazena uma descrição das colunas de todas as tabelas do banco de dados para ser consultado','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_dicionario','dic_tabela','Nome da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_dicionario','dic_coluna','Nome da coluna da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_dicionario','dic_descricao','Descrição da coluna, seu uso ou proposito','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_dicionario','dic_inclusao','Indica em qual versão foi incluida a coluna, só para ter algum controle no futuro','1')
+
+/** Tabela valor **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_valor','#','Armazena os valores das colunas que são representadas com números','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_valor','valor_tabela','Nome da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_valor','valor_coluna','Nome da coluna','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_valor','valor_numero','Numero representativo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_valor','valor_valor','Valor do numero (ex 1:sim 2:não)','1')
+
+/** Tabela tabela **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','#','Guarda o nome das tabelas e atribui um numero a ela, para ser usado na tabela item por exemplo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','tabela_nome','Nome da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','tabela_numero','Número atribuído à tabela','1')
+
+/** Tabela item **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','#','Esta tabela serve para catrastrar todos os itens, para que possam se relacionar com outras tabelas, ex:tb_notas','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_id','Chave primaria da tabela, que será usada como FK em outras tabelas','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_tipo','FK do tipo do item ou seja em que tabela está cadastrada','1')
+
+/** Tabela afazer **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','#','Armazena afazeres, tarefas, atividades, para lembrar e consultar','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_dtcadastro','Data em que a tarefa foi cadastrada pela primeira vez','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_usercadastro','FK do usuario que cadastrou a tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_dtalteracao','Data da ultima alteração das informações','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_useralteracao','FK do usuario que alterou por ultimo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_status','FK do estado que se encontra a tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_prazo','Data em que precisa ser concluída a tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_titulo','O titulo que se deu para a tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_detalhes','A descrição e os detalhes da tarefa','1')
+
+/** Tabela impressora **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','#','Guarda informações das impressoras','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtcadastro','Data em que a impressora foi cadastrada pela primeira vez','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_usercadastro','FK do usuario que cadastrou a impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtalteracao','Data da ultima alteração das informações','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_useralteracao','FK do usuario que alterou por ultimo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_marcamodelo','Marca e modelo da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nserie','Número de serie da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco ou colorido','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
+
+/** Tabela dispositivos **/
+insert into meta_dicionario (meta_tabela,meta_coluna,meta_descricao,meta_inclusao)values('')
+
+/** Tabelas e seus números **/
+insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)
+insert into meta_tabela(tabela_nome,tabela_numero) values('meta_valor',2)
+insert into meta_tabela(tabela_nome,tabela_numero) values('meta_tabela',3)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_item',4)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_notaitem',5)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_item',6)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_pessoaitem',7)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_salaitem',8)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_historico',9)
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
+
+
+/**************************************/
+/* inclusões para proposito de teste */
+/************************************/
+
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 1','detalhes 1','11/04/2021',1)
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 2','detalhes 2','12/04/2021',1)
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 3','detalhes 3','13/04/2021',1)
@@ -168,9 +269,8 @@ insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afa
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 8','detalhes 8','18/04/2021',1)
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 9','detalhes 9','19/04/2021',1)
 insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
-
-
-select * from tb_item
+--select * from tb_afazer
+--select * from tb_item
 
 insert into tb_item default values insert into tb_afazer(afazer_fkitem) values(scope_identity())
 
@@ -178,3 +278,4 @@ insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(1,'teste nota')
 select * from tb_notaitem
 
 select * from tb_impressora
+select * from meta_dicionario

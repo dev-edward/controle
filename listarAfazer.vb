@@ -29,7 +29,7 @@ Public Class listarAfazer
         Dim lbl_detalhes As New Label()
         Dim txt_detalhes As New TextBox()
 
-        'fonte padrão 
+        'fonte padrão
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
         Friend Sub New(ByVal frm As listarAfazer, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
