@@ -259,16 +259,16 @@ insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
 /* inclusões para proposito de teste */
 /************************************/
 
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 1','detalhes 1','11/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 2','detalhes 2','12/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 3','detalhes 3','13/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 4','detalhes 4','14/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 5','detalhes 5','15/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 6','detalhes 6','16/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 7','detalhes 7','17/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 8','detalhes 8','18/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 9','detalhes 9','19/04/2021',1)
-insert into tb_item(item_tipo) values(1) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 1','detalhes 1','11/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 2','detalhes 2','12/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 3','detalhes 3','13/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 4','detalhes 4','14/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 5','detalhes 5','15/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 6','detalhes 6','16/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 7','detalhes 7','17/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 8','detalhes 8','18/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 9','detalhes 9','19/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
 --select * from tb_afazer
 --select * from tb_item
 
