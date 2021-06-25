@@ -27,9 +27,11 @@ CREATE TABLE meta_tabela
 CREATE TABLE tb_usuario
 (
 	usuario_id INT PRIMARY KEY IDENTITY,
-	usuario_user VARCHAR(),
-	usuario_
+	usuario_user VARCHAR(15),
+	usuario_nome VARCHAR(30),
+	usuario_senha VARCHAR(35)
 )
+PAULO.HENRIQUE.DOS.SANTOS
 CREATE TABLE tb_item
 (/*informações da tabela inseridas*/
 	item_id INT PRIMARY KEY IDENTITY,
@@ -208,6 +210,21 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','#','Esta tabela serve para catrastrar todos os itens, para que possam se relacionar com outras tabelas, ex:tb_notas','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_id','Chave primaria da tabela, que será usada como FK em outras tabelas','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_tipo','FK do tipo do item ou seja em que tabela está cadastrada','1')
+
+/** Tabela usuario **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','#','Armazena dados dos usuarios que usam o software','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_id','Chave primaria da tabela, usada como FK em outras tabelas','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_user','Nome de usuario da pessoa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_nome','Nome real da pessoa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_senha','Senha que foi definida','1')
+
+CREATE TABLE 
+(
+	usuario_id INT PRIMARY KEY IDENTITY,
+	usuario_user VARCHAR(15),
+	usuario_nome VARCHAR(30),
+	usuario_senha VARCHAR(35)
+)
 
 /** Tabela afazer **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','#','Armazena afazeres, tarefas, atividades, para lembrar e consultar','1')
