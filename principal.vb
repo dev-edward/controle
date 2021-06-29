@@ -5,6 +5,8 @@ Public Class principal
 
     Private Sub principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Me.ShowInTaskbar = False
+        Dim frm_login As New Login()
+        Login.ShowDialog()
 
     End Sub
 
@@ -40,5 +42,9 @@ Public Class principal
         '    cadImpressora.MaximizeBox = False
         '    cadImpressora.Show()
         'End If
+    End Sub
+
+    Private Sub ComputadorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ComputadorToolStripMenuItem.Click
+
     End Sub
 End Class

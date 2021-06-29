@@ -206,7 +206,7 @@ Public Class listarAfazer
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
         consulta = conexao.CreateCommand
-        consulta.CommandText = "select afazer_id, afazer_fkitem, afazer_datacadastro,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
+        consulta.CommandText = "select afazer_id, afazer_fkitem, afazer_dtcadastro,afazer_titulo,afazer_detalhes, afazer_prazo,afazer_status from tb_afazer ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
 
         conexao.Open()
 

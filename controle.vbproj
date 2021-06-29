@@ -79,6 +79,7 @@
     <Compile Include="addNotas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="cadImpressora.Designer.vb">
       <DependentUpon>cadImpressora.vb</DependentUpon>
     </Compile>
@@ -90,6 +91,12 @@
       <DependentUpon>listarImpressora.vb</DependentUpon>
     </Compile>
     <Compile Include="listarImpressora.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Login.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="principal.vb">
@@ -109,6 +116,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -136,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="listarImpressora.resx">
       <DependentUpon>listarImpressora.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="principal.resx">
       <DependentUpon>principal.vb</DependentUpon>

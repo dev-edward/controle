@@ -25,13 +25,12 @@ CREATE TABLE meta_tabela
 	tabela_numero TINYINT
 )
 CREATE TABLE tb_usuario
-(
+(/*informações da tabela inseridas*/
 	usuario_id INT PRIMARY KEY IDENTITY,
 	usuario_user VARCHAR(15),
 	usuario_nome VARCHAR(30),
 	usuario_senha VARCHAR(35)
 )
-PAULO.HENRIQUE.DOS.SANTOS
 CREATE TABLE tb_item
 (/*informações da tabela inseridas*/
 	item_id INT PRIMARY KEY IDENTITY,
@@ -155,9 +154,9 @@ CREATE TABLE tb_software
 
 CREATE TABLE tb_notaitem
 (
-	notaitem_id INT PRIMARY KEY IDENTITY,
-	notaitem_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	notaitem_nota NVARCHAR(256)
+	nota_id INT PRIMARY KEY IDENTITY,
+	nota_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	nota_nota NVARCHAR(256)
 )
 CREATE TABLE tb_pessoaitem
 (
@@ -218,14 +217,6 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_nome','Nome real da pessoa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_senha','Senha que foi definida','1')
 
-CREATE TABLE 
-(
-	usuario_id INT PRIMARY KEY IDENTITY,
-	usuario_user VARCHAR(15),
-	usuario_nome VARCHAR(30),
-	usuario_senha VARCHAR(35)
-)
-
 /** Tabela afazer **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','#','Armazena afazeres, tarefas, atividades, para lembrar e consultar','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_id','Chave primaria da tabela','1')
@@ -255,9 +246,6 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
-
-/** Tabela dispositivos **/
-insert into meta_dicionario (meta_tabela,meta_coluna,meta_descricao,meta_inclusao)values('')
 
 /** Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)
@@ -291,8 +279,10 @@ insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,af
 
 insert into tb_item default values insert into tb_afazer(afazer_fkitem) values(scope_identity())
 
-insert into tb_notaitem(notaitem_fkitem,notaitem_nota) values(1,'teste nota')
+insert into tb_notaitem(nota_fkitem,nota_nota) values(1,'teste nota')
 select * from tb_notaitem
 
 select * from tb_impressora
 select * from meta_dicionario
+
+insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
