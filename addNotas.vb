@@ -45,8 +45,7 @@ Public Class addNotas
         Me.Close()
     End Sub
 
+    Private Sub addNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
-
-
+    End Sub
 End Class

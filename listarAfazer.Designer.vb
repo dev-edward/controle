@@ -31,16 +31,16 @@ Partial Class listarAfazer
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Button1"
+        Me.Button1.Text = "+"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'verAfazer
+        'listarAfazer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(734, 555)
         Me.Controls.Add(Me.Button1)
-        Me.Name = "verAfazer"
+        Me.Name = "listarAfazer"
         Me.Text = "Lista de Afazeres"
         Me.ResumeLayout(False)
 

@@ -30,7 +30,6 @@ C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.cadImpressora.re
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.listarAfazer.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.listarImpressora.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\auxiliar.Login.resources
-C:\Users\edward.huayta\source\repos\controle-0\obj\Debug\controle.vbprojAssemblyReference.cache
 C:\Users\edward.huayta\source\repos\controle-0\obj\Debug\auxiliar.addNotas.resources
 C:\Users\edward.huayta\source\repos\controle-0\obj\Debug\auxiliar.cadImpressora.resources
 C:\Users\edward.huayta\source\repos\controle-0\obj\Debug\auxiliar.listarImpressora.resources
@@ -48,3 +47,4 @@ C:\Users\edward.huayta\source\repos\controle-0\bin\Debug\auxiliar.exe.config
 C:\Users\edward.huayta\source\repos\controle-0\bin\Debug\auxiliar.exe
 C:\Users\edward.huayta\source\repos\controle-0\bin\Debug\auxiliar.pdb
 C:\Users\edward.huayta\source\repos\controle-0\bin\Debug\auxiliar.xml
+C:\Users\edward.huayta\source\repos\controle-0\obj\Debug\controle.vbproj.AssemblyReference.cache
