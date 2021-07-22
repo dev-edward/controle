@@ -2,30 +2,32 @@
 
 Public Class Principal
     Dim atualWindowState As FormWindowState = FormWindowState.Maximized
-    Dim LateralEsquerda = New Form With {
+    Dim LateralEsquerda As New Form With {
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
     .StartPosition = FormStartPosition.Manual
         }
-    Dim FormCentral = New Form With {
+    Dim WithEvents FormCentral As New Form With {
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
-            .StartPosition = FormStartPosition.Manual
+            .StartPosition = FormStartPosition.Manual,
+            .AutoScroll = True
         }
-    Dim LateralDireita = New Form With {
+    Dim LateralDireita As New Form With {
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
             .StartPosition = FormStartPosition.Manual
         }
     Dim redimensionando = New Panel
+    Dim splitconteiner = New SplitContainer
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
         LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
         FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
 
-        LateralEsquerda.Width = 200
-        LateralDireita.Width = 300
+        'LateralEsquerda.Width = 200
+        'LateralDireita.Width = 200
         FormCentral.Width = Me.ClientSize.Width - (LateralDireita.Width + LateralEsquerda.Width) - 4
 
         LateralEsquerda.Location = New Point(0, 0)
@@ -44,6 +46,9 @@ Public Class Principal
         FormCentral.show()
         LateralDireita.show()
         Me.Controls.Remove(redimensionando)
+    End Sub
+    Private Sub FormCentral_SizeChanged(sender As Object, e As EventArgs) Handles FormCentral.SizeChanged
+
     End Sub
 
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -125,7 +130,7 @@ Public Class Principal
         FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
 
         LateralEsquerda.Width = 200
-        LateralDireita.Width = 300
+        LateralDireita.Width = 200
         FormCentral.Width = Me.ClientSize.Width - (LateralDireita.Width + LateralEsquerda.Width) - 4
 
         LateralEsquerda.Location = New Point(0, 0)
@@ -142,6 +147,13 @@ Public Class Principal
         LateralEsquerda.Show()
         FormCentral.Show()
         LateralDireita.Show()
+
+        splitconteiner.orientation = System.Windows.Forms.Orientation.Horizontal
+        Dim txt_teste As New TextBox()
+        splitconteiner.dock = DockStyle.Fill
+        splitconteiner.Panel2.controls.add(txt_teste)
+        splitconteiner.spliterwidth = 6
+        LateralEsquerda.Controls.Add(splitconteiner)
 
         'MsgBox(Me.ClientSize.Height & "\n" & Me.Height & "\n" & LateralEsquerda.Height)
         'MsgBox(MenuStrip.Height & "\n" & StatusStrip.Height & "\n")

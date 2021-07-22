@@ -32,7 +32,7 @@ Public Class listarAfazer
         'fonte padrão
         Dim fonte As New Font("Microsoft Sans Serif", 12)
 
-        Friend Sub New(ByVal _form As Form, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
+        Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _dataCadastro As DateTime, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _detalhes As String, ByVal _panelY As Integer)
             'adicionando controles no panel
             panel.Controls.Add(lbl_id)
             panel.Controls.Add(lbl_fkitem)
@@ -107,7 +107,7 @@ Public Class listarAfazer
             txt_detalhes.Size = New Size(640, 60)
 
             'posição dos controles
-            panel.Location = New Point((_form.Width - panel.Width) / 2, _panelY)
+            panel.Location = New Point(0, _panelY)
 
             lbl_id.Location = New Point(10, 10)
             lbl_fkitem.Location = New Point(40, 10)
@@ -145,7 +145,7 @@ Public Class listarAfazer
 
             btn_salvar.Visible = False
 
-            _form.Controls.Add(panel)
+            _conteiner.Controls.Add(panel)
             'Principal.TableLayoutPanel.ColumnStyles(2).SizeType = SizeType.Absolute
             'Principal.TableLayoutPanel.ColumnStyles(2).Width = 320
 
@@ -204,7 +204,7 @@ Public Class listarAfazer
         Dim panel_ferramentas As New Panel()
         Dim btn_cadastrar As New Button()
         Dim btn_atualizar As New Button()
-
+        Dim conteiner = New Panel
 
         AddHandler btn_cadastrar.Click, AddressOf btn_cadastrar_Click
         AddHandler btn_atualizar.Click, AddressOf btn_atualizar_Click
@@ -220,7 +220,7 @@ Public Class listarAfazer
         panel_ferramentas.Controls.Add(btn_cadastrar)
         panel_ferramentas.Controls.Add(btn_atualizar)
 
-        _form.Controls.Add(panel_ferramentas)
+        conteiner.Controls.Add(panel_ferramentas)
 
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
@@ -243,6 +243,7 @@ Public Class listarAfazer
             Dim prazo As DateTime
             Dim estado As String
 
+
             id = myReader.GetInt32(0)
             fkitem = myReader.GetInt32(1)
             dataCadastro = myReader.GetDateTime(2)
@@ -251,9 +252,13 @@ Public Class listarAfazer
             prazo = myReader.GetDateTime(5)
             estado = myReader.GetByte(6)
 
-            Dim a1 As New Afazer(_form, id, fkitem, dataCadastro, titulo, prazo, estado, detalhes, panelY)
+            Dim a1 As New Afazer(conteiner, id, fkitem, dataCadastro, titulo, prazo, estado, detalhes, panelY)
             panelY += 180
         Loop
+        conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 2)
+        conteiner.AutoSize = True
+        conteiner.BackColor = New Color().FromArgb(255, 0, 0, 150)
+        _form.Controls.Add(conteiner)
 
         myReader.Close()
         conexao.Close()

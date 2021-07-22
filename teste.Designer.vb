@@ -23,8 +23,10 @@ Partial Class teste
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.SuspendLayout()
         Me.SuspendLayout()
         '
         'FileSystemWatcher1
@@ -32,12 +34,16 @@ Partial Class teste
         Me.FileSystemWatcher1.EnableRaisingEvents = True
         Me.FileSystemWatcher1.SynchronizingObject = Me
         '
-        'Panel1
+        'SplitContainer1
         '
-        Me.Panel1.Location = New System.Drawing.Point(104, 154)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(200, 100)
-        Me.Panel1.TabIndex = 0
+        Me.SplitContainer1.Cursor = System.Windows.Forms.Cursors.HSplit
+        Me.SplitContainer1.Location = New System.Drawing.Point(79, 78)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        Me.SplitContainer1.Size = New System.Drawing.Size(150, 100)
+        Me.SplitContainer1.SplitterDistance = 25
+        Me.SplitContainer1.SplitterIncrement = 2
+        Me.SplitContainer1.TabIndex = 0
         '
         'teste
         '
@@ -45,16 +51,18 @@ Partial Class teste
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(327, 264)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "teste"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "teste"
         CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents FileSystemWatcher1 As IO.FileSystemWatcher
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents SplitContainer1 As SplitContainer
 End Class
