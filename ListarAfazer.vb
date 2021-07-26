@@ -87,67 +87,66 @@ Public Class listarAfazer
             cbx_estado.SelectedIndex = _estado - 1
             txt_detalhes.Text = _detalhes
 
-            'tamanho dos controles
-            panel.Size = New Size(660, 170)
-            lbl_id.Size = New Size(30, 20)
-            lbl_fkitem.Size = New Size(30, 20)
-            lbl_dataCadastro.Size = New Size(140, 20)
-            lbl_dataCadastroValor.Size = New Size(110, 20)
-            lbl_titulo.Size = New Size(260, 20)
-            txt_titulo.Size = New Size(260, 26)
-            lbl_prazo.Size = New Size(110, 20)
-            dtp_prazo.Size = New Size(110, 26)
-            lbl_estado.Size = New Size(140, 20)
-            cbx_estado.Size = New Size(140, 20)
-            btn_addnotas.Size = New Size(100, 30)
-            btn_modificar.Size = New Size(100, 30)
-            btn_salvar.Size = New Size(100, 30)
-            lbl_detalhes.Size = New Size(640, 20)
-            'lbl_titulo.BackColor = New Color().FromArgb(255, 215, 0, 0)
-            txt_detalhes.Size = New Size(640, 60)
+
+            ''tamanho dos controles
+            'panel.Size = New Size(660, 170)
+            'lbl_id.Size = New Size(30, 20)
+            'lbl_fkitem.Size = New Size(30, 20)
+            'lbl_dataCadastro.Size = New Size(140, 20)
+            'lbl_dataCadastroValor.Size = New Size(110, 20)
+            'lbl_titulo.Size = New Size(260, 20)
+            'txt_titulo.Size = New Size(260, 26)
+            'lbl_prazo.Size = New Size(110, 20)
+            'dtp_prazo.Size = New Size(110, 26)
+            'lbl_estado.Size = New Size(140, 20)
+            'cbx_estado.Size = New Size(140, 20)
+            'btn_addnotas.Size = New Size(100, 30)
+            'btn_modificar.Size = New Size(100, 30)
+            'btn_salvar.Size = New Size(100, 30)
+            'lbl_detalhes.Size = New Size(640, 20)
+            ''lbl_titulo.BackColor = New Color().FromArgb(255, 215, 0, 0)
+            'txt_detalhes.Size = New Size(640, 60)
 
             'posição dos controles
             panel.Location = New Point(0, _panelY)
 
-            lbl_id.Location = New Point(10, 10)
-            lbl_fkitem.Location = New Point(40, 10)
-            lbl_dataCadastro.Location = New Point(panel.Width / 2 - (lbl_dataCadastro.Width), 2)
-            lbl_dataCadastroValor.Location = New Point(panel.Width / 2, 2)
-            lbl_titulo.Location = New Point(10, 26)
-            txt_titulo.Location = New Point(10, 48)
-            lbl_prazo.Location = New Point(280, 26)
-            dtp_prazo.Location = New Point(280, 48)
-            lbl_estado.Location = New Point(400, 26)
-            cbx_estado.Location = New Point(400, 48)
-            btn_addnotas.Location = New Point(550, 16)
-            btn_modificar.Location = New Point(550, 47)
-            btn_salvar.Location = New Point(550, 47)
-            lbl_detalhes.Location = New Point(10, 80)
-            txt_detalhes.Location = New Point(10, 100)
+            'lbl_id.Location = New Point(10, 10)
+            'lbl_fkitem.Location = New Point(40, 10)
+            'lbl_dataCadastro.Location = New Point(panel.Width / 2 - (lbl_dataCadastro.Width), 2)
+            'lbl_dataCadastroValor.Location = New Point(panel.Width / 2, 2)
+            'lbl_titulo.Location = New Point(10, 26)
+            'txt_titulo.Location = New Point(10, 48)
+            'lbl_prazo.Location = New Point(280, 26)
+            'dtp_prazo.Location = New Point(280, 48)
+            'lbl_estado.Location = New Point(400, 26)
+            'cbx_estado.Location = New Point(400, 48)
+            'btn_addnotas.Location = New Point(550, 16)
+            'btn_modificar.Location = New Point(550, 47)
+            'btn_salvar.Location = New Point(550, 47)
+            'lbl_detalhes.Location = New Point(10, 80)
+            'txt_detalhes.Location = New Point(10, 100)
 
-            'configurações especificas
-            panel.BorderStyle = BorderStyle.FixedSingle
-            dtp_prazo.Format = DateTimePickerFormat.Short
-            lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
-            lbl_prazo.TextAlign = ContentAlignment.MiddleCenter
-            lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
-            txt_detalhes.Multiline = True
-            txt_titulo.ReadOnly = True
-            txt_detalhes.ReadOnly = True
-            dtp_prazo.Enabled = False
-            cbx_estado.Enabled = False
-            cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
+            ''configurações especificas
+            'panel.BorderStyle = BorderStyle.FixedSingle
+            'dtp_prazo.Format = DateTimePickerFormat.Short
+            'lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
+            'lbl_prazo.TextAlign = ContentAlignment.MiddleCenter
+            'lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
+            'txt_detalhes.Multiline = True
+            'txt_titulo.ReadOnly = True
+            'txt_detalhes.ReadOnly = True
+            'dtp_prazo.Enabled = False
+            'cbx_estado.Enabled = False
+            'cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
 
-            'vinculando funções aos botões
-            AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
-            AddHandler btn_modificar.Click, AddressOf btn_modificar_Click
-            AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
+            ''vinculando funções aos botões
+            'AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
+            'AddHandler btn_modificar.Click, AddressOf btn_modificar_Click
+            'AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
 
             btn_salvar.Visible = False
 
             _conteiner.Controls.Add(panel)
-            'Principal.TableLayoutPanel.ColumnStyles(2).SizeType = SizeType.Absolute
-            'Principal.TableLayoutPanel.ColumnStyles(2).Width = 320
 
 
         End Sub

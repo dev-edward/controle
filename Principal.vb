@@ -152,7 +152,6 @@ Public Class Principal
         Dim txt_teste As New TextBox()
         splitconteiner.dock = DockStyle.Fill
         splitconteiner.Panel2.controls.add(txt_teste)
-        splitconteiner.spliterwidth = 6
         LateralEsquerda.Controls.Add(splitconteiner)
 
         'MsgBox(Me.ClientSize.Height & "\n" & Me.Height & "\n" & LateralEsquerda.Height)

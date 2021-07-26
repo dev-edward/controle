@@ -27,3 +27,4 @@ C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.g
 C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.addNotas.resources
 C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.teste.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.Resources.resources
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.DetalhesAfazer.resources
