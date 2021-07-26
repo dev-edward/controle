@@ -57,10 +57,11 @@ CREATE TABLE tb_afazer
 	afazer_usercadastro TINYINT,
 	afazer_dtalteracao DATETIME,
 	afazer_useralteracao TINYINT,
-	afazer_status TINYINT,
-	afazer_prazo DATETIME,
 	afazer_titulo NVARCHAR(30),
-	afazer_detalhes NVARCHAR(90)
+	afazer_detalhes NVARCHAR(90),
+	afazer_prazo DATETIME,
+	afazer_status TINYINT
+	
 )
 
 CREATE TABLE tb_evento
