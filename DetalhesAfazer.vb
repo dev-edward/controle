@@ -54,18 +54,21 @@ Public Class DetalhesAfazer
 
         Dim id As Integer
         Dim fkitem As Integer
-        Dim dataCadastro As DateTime
+        Dim dtCadastro As DateTime
+        Dim userCadastro As Integer
+        Dim dtAlteracao As DateTime
+        Dim userAlteracao As Integer
         Dim titulo As String
         Dim detalhes As String
         Dim prazo As DateTime
         Dim estado As String
 
         id = myReader.GetInt32(0)
-        fkitem = myReader.GetInt32(0)
-        dataCadastro = myReader.GetInt32(0)
-        titulo = myReader.GetInt32(0)
-        detalhes = myReader.GetInt32(0)
-        prazo = myReader.GetInt32(0)
+        fkitem = myReader.GetInt32(1)
+        dtCadastro = myReader.GetDateTime(2)
+        titulo = myReader.GetString(0)
+        detalhes = myReader.GetString(0)
+        prazo = myReader.GetDateTime(0)
         estado = myReader.GetInt32(0)
 
         'texto dos labels
@@ -136,9 +139,6 @@ Public Class DetalhesAfazer
         panel.Controls.Add(btn_salvar)
         panel.Controls.Add(lbl_detalhes)
         panel.Controls.Add(txt_detalhes)
-
-
-
 
 
         myReader.Close()
