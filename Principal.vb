@@ -160,7 +160,9 @@ Public Class Principal
 
 
     Private Sub mi_afazer_Click()
-        Dim verAfazer = New listarAfazer(FormCentral)
+        'Dim verAfazer = New listarAfazer(FormCentral)
+        Dim verAfazer = New DetalhesAfazer(1016)
+        verAfazer.Show()
 
         'If (Application.OpenForms.OfType(Of listarAfazer).Any()) Then
         '    Application.OpenForms.OfType(Of listarAfazer).First().BringToFront()

@@ -28,7 +28,7 @@ Partial Class DetalhesAfazer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(328, 361)
+        Me.ClientSize = New System.Drawing.Size(244, 381)
         Me.Name = "DetalhesAfazer"
         Me.Text = "DetalhesAfazer"
         Me.ResumeLayout(False)

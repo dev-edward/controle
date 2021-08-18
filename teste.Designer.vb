@@ -24,6 +24,7 @@ Partial Class teste
     Private Sub InitializeComponent()
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.SuspendLayout()
@@ -45,12 +46,22 @@ Partial Class teste
         Me.SplitContainer1.SplitterIncrement = 2
         Me.SplitContainer1.TabIndex = 0
         '
+        'Label1
+        '
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.Label1.Location = New System.Drawing.Point(105, 29)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(100, 30)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Data Alteração"
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(327, 264)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SplitContainer1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "teste"
@@ -65,4 +76,5 @@ Partial Class teste
 
     Friend WithEvents FileSystemWatcher1 As IO.FileSystemWatcher
     Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents Label1 As Label
 End Class
