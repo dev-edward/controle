@@ -3,7 +3,13 @@
 
 CREATE DATABASE controle
 GO
+
 USE controle
+GO
+
+-- IDENTITY_CACHE = OFF, para não reservar 1000 valores de identidade durante uma transação
+ALTER DATABASE SCOPED CONFIGURATION SET IDENTITY_CACHE = OFF
+GO
 
 CREATE TABLE meta_dicionario
 (/*informações da tabela inseridas*/
@@ -35,7 +41,6 @@ CREATE TABLE meta_sistema
 	usuario_id INT PRIMARY KEY IDENTITY,
 	sistema_menunome varchar(15),
 	sistema_submenunome varchar(15)
-
 )
 CREATE TABLE tb_usuario
 (/*informações da tabela inseridas*/
@@ -61,7 +66,6 @@ CREATE TABLE tb_afazer
 	afazer_detalhes NVARCHAR(90),
 	afazer_prazo DATETIME,
 	afazer_status TINYINT
-	
 )
 
 CREATE TABLE tb_evento

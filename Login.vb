@@ -6,10 +6,11 @@ Public Class Login
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
 
-
     Private Sub btn_sair_Click(sender As Object, e As EventArgs) Handles btn_sair.Click
-        Me.Close()
-        Principal.Close()
+        End
+        'Environment.Exit(0)
+        'Me.Close()
+        'Principal.Close()
     End Sub
 
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load

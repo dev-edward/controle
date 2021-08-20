@@ -25,6 +25,7 @@ Partial Class teste
         Me.FileSystemWatcher1 = New System.IO.FileSystemWatcher()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         CType(Me.FileSystemWatcher1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.SuspendLayout()
@@ -55,12 +56,21 @@ Partial Class teste
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Data Alteração"
         '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(83, 185)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(121, 23)
+        Me.ComboBox1.TabIndex = 2
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(327, 264)
         Me.ControlBox = False
+        Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SplitContainer1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -77,4 +87,5 @@ Partial Class teste
     Friend WithEvents FileSystemWatcher1 As IO.FileSystemWatcher
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents Label1 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 End Class

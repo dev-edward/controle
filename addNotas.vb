@@ -46,6 +46,7 @@ Public Class addNotas
     End Sub
 
     Private Sub addNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.FormBorderStyle = FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
     End Sub
 End Class
