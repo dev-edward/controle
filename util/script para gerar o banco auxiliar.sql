@@ -37,7 +37,7 @@ CREATE TABLE meta_permissao
 	perm_submenu INT
 )
 CREATE TABLE meta_sistema
-(
+(/*-- não lembro o objeti --*/
 	usuario_id INT PRIMARY KEY IDENTITY,
 	sistema_menunome varchar(15),
 	sistema_submenunome varchar(15)
@@ -64,6 +64,7 @@ CREATE TABLE tb_afazer
 	afazer_useralteracao TINYINT,
 	afazer_titulo NVARCHAR(30),
 	afazer_detalhes NVARCHAR(90),
+	afazer_temprazo TINYINT,
 	afazer_prazo DATETIME,
 	afazer_status TINYINT
 )
@@ -243,10 +244,11 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_usercadastro','FK do usuario que cadastrou a tarefa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_dtalteracao','Data da ultima alteração das informações','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_useralteracao','FK do usuario que alterou por ultimo','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_status','FK do estado que se encontra a tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_prazo','Data em que precisa ser concluída a tarefa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_titulo','O titulo que se deu para a tarefa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_detalhes','A descrição e os detalhes da tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_temprazo','Indica se tem prazo ou uma previsão para a realização da tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_prazo','Data em que precisa ser concluída a tarefa','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_status','FK do estado que se encontra a tarefa','1')
 
 /** Tabela impressora **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','#','Guarda informações das impressoras','1')
@@ -282,27 +284,33 @@ insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
 /* inclusões para proposito de teste */
 /************************************/
 
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 1','detalhes 1','11/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 2','detalhes 2','12/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 3','detalhes 3','13/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 4','detalhes 4','14/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 5','detalhes 5','15/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 6','detalhes 6','16/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 7','detalhes 7','17/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 8','detalhes 8','18/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 9','detalhes 9','19/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_titulo,afazer_detalhes,afazer_prazo,afazer_status) VALUES(scope_identity(),'titulo 10','detalhes 10','20/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 10','detalhes 10',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 11','detalhes 11',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 12','detalhes 12',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 13','detalhes 13',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 14','detalhes 14',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 15','detalhes 15',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 16','detalhes 16',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 17','detalhes 17',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 18','detalhes 18',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 19','detalhes 19',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 20','detalhes 20',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 21','detalhes 21',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 22','detalhes 22',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 23','detalhes 23',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 24','detalhes 24',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 25','detalhes 25',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 26','detalhes 26',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 27','detalhes 27',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 28','detalhes 28',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 29','detalhes 29',1,'25/04/2021',1)
+insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprazo,afazer_prazo,afazer_status) VALUES(scope_identity(),1,'titulo 30','detalhes 30',1,'25/04/2021',1)
 --select * from tb_afazer
 --select * from tb_item
-
-insert into tb_item default values insert into tb_afazer(afazer_fkitem) values(scope_identity())
 
 insert into tb_notaitem(nota_fkitem,nota_nota) values(1,'teste nota')
 select * from tb_notaitem
 
 insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_fkitem) values('canon teste','dfsas',11)
-select * from tb_impressora
-select * from meta_dicionario
 
 insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
-select * from tb_afazer
