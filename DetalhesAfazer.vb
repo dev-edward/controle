@@ -7,6 +7,7 @@ Public Class DetalhesAfazer
 
     Dim fk As Integer
     Dim pk As Integer
+    Dim semprazo As Integer
     Dim panel As New Panel()
     Dim lbl_id As New Label()
     Dim lbl_fkitem As New Label()
@@ -23,6 +24,7 @@ Public Class DetalhesAfazer
     Dim lbl_detalhes As New Label()
     Dim txt_detalhes As New TextBox()
     Dim lbl_prazo As New Label()
+    Dim lbl_semprazo As New Label()
     Dim dtp_prazo As New DateTimePicker()
     Dim lbl_estado As New Label()
     Dim cbx_estado As New ComboBox()
@@ -49,6 +51,7 @@ Public Class DetalhesAfazer
         lbl_useralteracao.Text = "Usuário que alterou"
         lbl_titulo.Text = "Título"
         lbl_prazo.Text = "Prazo"
+        lbl_semprazo.Text = "Indeterminado"
         lbl_estado.Text = "Estado"
         lbl_detalhes.Text = "Detalhes"
         btn_addnotas.Text = "add. notas"
@@ -72,6 +75,7 @@ Public Class DetalhesAfazer
         lbl_detalhes.Font = fonte
         txt_detalhes.Font = fontemenor
         lbl_prazo.Font = fonte
+        lbl_semprazo.Font = fonte
         dtp_prazo.Font = fonte
         lbl_estado.Font = fonte
         cbx_estado.Font = fonte
@@ -104,6 +108,7 @@ Public Class DetalhesAfazer
         lbl_detalhes.Size = New Size(largura2, altura1)
         txt_detalhes.Size = New Size(largura2, 50)
         lbl_prazo.Size = New Size(largura2, altura1)
+        lbl_semprazo.Size = New Size(largura2, altura1)
         dtp_prazo.Size = New Size(largura2, altura1)
         lbl_estado.Size = New Size(largura2, altura1)
         cbx_estado.Size = New Size(largura2, altura1)
@@ -129,6 +134,7 @@ Public Class DetalhesAfazer
         lbl_detalhes.Location = New Point(posicao, txt_titulo.Location.Y + altura1)
         txt_detalhes.Location = New Point(posicao, lbl_detalhes.Location.Y + altura1)
         lbl_prazo.Location = New Point(posicao, txt_detalhes.Location.Y + 50)
+        lbl_semprazo.Location = New Point(posicao, lbl_prazo.Location.Y + altura1)
         dtp_prazo.Location = New Point(posicao, lbl_prazo.Location.Y + altura1)
         lbl_estado.Location = New Point(posicao, dtp_prazo.Location.Y + altura1)
         cbx_estado.Location = New Point(posicao, lbl_estado.Location.Y + altura1)
@@ -151,10 +157,12 @@ Public Class DetalhesAfazer
         lbl_useralteracaoValor.TextAlign = ContentAlignment.MiddleCenter
         lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
         lbl_prazo.TextAlign = ContentAlignment.MiddleCenter
+        lbl_semprazo.TextAlign = ContentAlignment.MiddleCenter
         lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
         lbl_estado.TextAlign = ContentAlignment.MiddleCenter
         cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento"})
         dtp_prazo.Format = DateTimePickerFormat.Short
+        dtp_prazo.Visible = False
         txt_detalhes.Multiline = True
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
@@ -186,6 +194,7 @@ Public Class DetalhesAfazer
         panel.Controls.Add(lbl_detalhes)
         panel.Controls.Add(txt_detalhes)
         panel.Controls.Add(lbl_prazo)
+        panel.Controls.Add(lbl_semprazo)
         panel.Controls.Add(dtp_prazo)
         panel.Controls.Add(lbl_estado)
         panel.Controls.Add(cbx_estado)
@@ -211,6 +220,7 @@ Public Class DetalhesAfazer
                                         afazer_useralteracao, 
                                         afazer_titulo, 
                                         afazer_detalhes, 
+                                        afazer_temprazo, 
                                         afazer_prazo, 
                                         afazer_status 
                                 from tb_afazer where afazer_id=" & pk
@@ -229,8 +239,13 @@ Public Class DetalhesAfazer
         lbl_useralteracaoValor.Text = If(myReader.IsDBNull(5), "", myReader.GetValue(5))
         txt_titulo.Text = If(myReader.IsDBNull(6), "", myReader.GetString(6))
         txt_detalhes.Text = If(myReader.IsDBNull(7), "", myReader.GetString(7))
-        dtp_prazo.Value = If(myReader.IsDBNull(8), "", myReader.GetDateTime(8))
-        cbx_estado.SelectedIndex = If(myReader.IsDBNull(5), 0, myReader.GetValue(9) - 1)
+        semprazo = If(myReader.IsDBNull(8), 0, myReader.GetValue(8))
+        If semprazo > 0 Then
+            lbl_semprazo.Visible = False
+            dtp_prazo.Visible = True
+            dtp_prazo.Value = If(myReader.IsDBNull(8), "", myReader.GetDateTime(9))
+        End If
+        cbx_estado.SelectedIndex = If(myReader.IsDBNull(5), 0, myReader.GetValue(10) - 1)
 
         myReader.Close()
         conexao.Close()

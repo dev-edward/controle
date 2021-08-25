@@ -17,7 +17,7 @@ Public Class listaAfazer
 
         'fonte padrão
         Dim fonte As New Font("Microsoft Sans Serif", 12)
-        Dim cor_botao = New Color().FromArgb(255, 77, 80, 87)
+        Dim cor_botao = New Color().FromArgb(255, 26, 147, 111)
 
         Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
             'adicionando controles no panel
@@ -54,6 +54,12 @@ Public Class listaAfazer
             btn_vermais.BackColor = cor_botao
             btn_notas.BackColor = cor_botao
             btn_estado.BackColor = cor_botao
+            btn_vermais.FlatStyle = FlatStyle.Popup
+            btn_notas.FlatStyle = FlatStyle.Popup
+            btn_estado.FlatStyle = FlatStyle.Popup
+            btn_vermais.Text = "Mais"
+            btn_notas.Text = "Notas"
+            btn_estado.Text = "Estado"
 
             'vinculando funções aos botões
             AddHandler btn_vermais.Click, AddressOf btn_vermais_Click
@@ -64,6 +70,15 @@ Public Class listaAfazer
 
         End Sub
         Private Sub btn_vermais_Click()
+            'Dim verDetalhes = New DetalhesAfazer(id)
+            'verDetalhes.Show()
+
+            If Application.OpenForms.OfType(Of DetalhesAfazer).Any() Then
+                Application.OpenForms.OfType(Of DetalhesAfazer).First().Close()
+            End If
+            Dim verDetalhes = New DetalhesAfazer(id)
+            verDetalhes.ShowIcon = False
+            verDetalhes.Show()
 
         End Sub
         Private Sub btn_notas_Click()
