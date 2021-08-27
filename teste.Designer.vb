@@ -28,6 +28,7 @@ Partial Class teste
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.SuspendLayout()
         Me.SuspendLayout()
@@ -91,8 +92,32 @@ Partial Class teste
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.DateTimePicker1.Location = New System.Drawing.Point(106, 148)
         Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.ShowCheckBox = True
+        Me.DateTimePicker1.ShowUpDown = True
         Me.DateTimePicker1.Size = New System.Drawing.Size(200, 23)
         Me.DateTimePicker1.TabIndex = 6
+        Me.DateTimePicker1.Value = New Date(2000, 1, 1, 0, 0, 0, 0)
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox1.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue
+        Me.CheckBox1.FlatAppearance.BorderSize = 5
+        Me.CheckBox1.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
+        Me.CheckBox1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.CheckBox1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.CheckBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.CheckBox1.ForeColor = System.Drawing.Color.Coral
+        Me.CheckBox1.Location = New System.Drawing.Point(283, 81)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.CheckBox1.Size = New System.Drawing.Size(12, 46)
+        Me.CheckBox1.TabIndex = 7
+        Me.CheckBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'teste
         '
@@ -101,6 +126,7 @@ Partial Class teste
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(327, 264)
         Me.ControlBox = False
+        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.DateTimePicker1)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
@@ -122,4 +148,5 @@ Partial Class teste
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

@@ -11,6 +11,7 @@ Public Class listaAfazer
         Dim fk As Integer
         Dim panel As New Panel()
         Dim txt_titulo As New TextBox()
+        Dim lbl_previsao As New Label()
         Dim btn_vermais As New Button()
         Dim btn_notas As New Button()
         Dim btn_estado As New Button()
@@ -19,9 +20,10 @@ Public Class listaAfazer
         Dim fonte As New Font("Microsoft Sans Serif", 12)
         Dim cor_botao = New Color().FromArgb(255, 26, 147, 111)
 
-        Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _prazo As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
+        Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
             'adicionando controles no panel
             panel.Controls.Add(txt_titulo)
+            panel.Controls.Add(lbl_previsao)
             panel.Controls.Add(btn_vermais)
             panel.Controls.Add(btn_notas)
             panel.Controls.Add(btn_estado)
@@ -33,24 +35,28 @@ Public Class listaAfazer
             id = _id
             fk = _fkitem
             txt_titulo.Text = _titulo
+            lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
 
             'tamanho dos controles
             panel.Size = New Size(280, 60)
             txt_titulo.Size = New Size(274, 26)
-            btn_vermais.Size = New Size(60, 30)
-            btn_notas.Size = New Size(60, 30)
-            btn_estado.Size = New Size(60, 30)
+            lbl_previsao.Size = New Size(94, 26)
+            btn_vermais.Size = New Size(60, 26)
+            btn_notas.Size = New Size(60, 26)
+            btn_estado.Size = New Size(60, 26)
 
             'posição dos controles
             panel.Location = New Point(0, _panelY)
             txt_titulo.Location = New Point(4, 0)
-            btn_vermais.Location = New Point(25, 26)
-            btn_notas.Location = New Point(115, 26)
-            btn_estado.Location = New Point(205, 26)
+            lbl_previsao.Location = New Point(4, 26)
+            btn_vermais.Location = New Point(98, 26)
+            btn_notas.Location = New Point(158, 26)
+            btn_estado.Location = New Point(218, 26)
 
             'configurações especificas
             'panel.BorderStyle = BorderStyle.FixedSingle
             txt_titulo.ReadOnly = True
+            lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
             btn_vermais.BackColor = cor_botao
             btn_notas.BackColor = cor_botao
             btn_estado.BackColor = cor_botao
@@ -105,9 +111,9 @@ Public Class listaAfazer
 
         Dim conteiner As New Panel
         Dim pagina = 0
-        Dim sql = "select afazer_id, afazer_fkitem, afazer_titulo, afazer_prazo, afazer_status from tb_afazer "
+        Dim sql = "select afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status from tb_afazer "
         Dim ordem_recentes = "ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
-        Dim ordem_prazo = "ORDER BY afazer_prazo asc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
+        Dim ordem_previsao = "ORDER BY afazer_previsao asc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
 
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
@@ -124,17 +130,19 @@ Public Class listaAfazer
             Dim id As Integer
             Dim fkitem As Integer
             Dim titulo As String
-            Dim prazo As DateTime
+            Dim temprevisao As Integer
+            Dim previsao As DateTime
             Dim estado As String
             Dim panel As New Panel()
 
             id = myReader.GetInt32(0)
             fkitem = myReader.GetInt32(1)
-            titulo = myReader.GetString(2)
-            prazo = myReader.GetDateTime(3)
-            estado = myReader.GetByte(4)
+            titulo = If(myReader.IsDBNull(2), "", myReader.GetString(2))
+            temprevisao = If(myReader.IsDBNull(3), 0, myReader.GetValue(3))
+            previsao = If(myReader.IsDBNull(4), 0, myReader.GetValue(4))
+            estado = If(myReader.IsDBNull(5), 0, myReader.GetValue(5))
 
-            Dim afazeres As New Afazer(conteiner, id, fkitem, titulo, prazo, estado, panelY)
+            Dim afazeres As New Afazer(conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
             panelY += 60
         Loop
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)

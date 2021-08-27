@@ -7,7 +7,7 @@ Public Class DetalhesAfazer
 
     Dim fk As Integer
     Dim pk As Integer
-    Dim semprazo As Integer
+    Dim temprevisao As Integer
     Dim panel As New Panel()
     Dim lbl_id As New Label()
     Dim lbl_fkitem As New Label()
@@ -23,9 +23,10 @@ Public Class DetalhesAfazer
     Dim txt_titulo As New TextBox()
     Dim lbl_detalhes As New Label()
     Dim txt_detalhes As New TextBox()
-    Dim lbl_prazo As New Label()
-    Dim lbl_semprazo As New Label()
-    Dim dtp_prazo As New DateTimePicker()
+    Dim lbl_previsao As New Label()
+    Dim WithEvents cbx_previsao As New CheckBox()
+    Dim lbl_semprevisao As New Label()
+    Dim dtp_previsao As New DateTimePicker()
     Dim lbl_estado As New Label()
     Dim cbx_estado As New ComboBox()
     Dim btn_addnotas As New Button()
@@ -50,8 +51,8 @@ Public Class DetalhesAfazer
         lbl_dataAlteracao.Text = "Data da última alteração"
         lbl_useralteracao.Text = "Usuário que alterou"
         lbl_titulo.Text = "Título"
-        lbl_prazo.Text = "Prazo"
-        lbl_semprazo.Text = "Indeterminado"
+        lbl_previsao.Text = "Previsao"
+        lbl_semprevisao.Text = "Indeterminado"
         lbl_estado.Text = "Estado"
         lbl_detalhes.Text = "Detalhes"
         btn_addnotas.Text = "add. notas"
@@ -74,9 +75,10 @@ Public Class DetalhesAfazer
         txt_titulo.Font = fonte
         lbl_detalhes.Font = fonte
         txt_detalhes.Font = fontemenor
-        lbl_prazo.Font = fonte
-        lbl_semprazo.Font = fonte
-        dtp_prazo.Font = fonte
+        lbl_previsao.Font = fonte
+        cbx_previsao.Font = fonte
+        lbl_semprevisao.Font = fonte
+        dtp_previsao.Font = fonte
         lbl_estado.Font = fonte
         cbx_estado.Font = fonte
         btn_addnotas.Font = fonte
@@ -107,9 +109,10 @@ Public Class DetalhesAfazer
         txt_titulo.Size = New Size(largura2, altura1)
         lbl_detalhes.Size = New Size(largura2, altura1)
         txt_detalhes.Size = New Size(largura2, 50)
-        lbl_prazo.Size = New Size(largura2, altura1)
-        lbl_semprazo.Size = New Size(largura2, altura1)
-        dtp_prazo.Size = New Size(largura2, altura1)
+        lbl_previsao.Size = New Size(largura2 - 12, altura1)
+        cbx_previsao.Size = New Size(12, altura1)
+        lbl_semprevisao.Size = New Size(largura2, altura1)
+        dtp_previsao.Size = New Size(largura2, altura1)
         lbl_estado.Size = New Size(largura2, altura1)
         cbx_estado.Size = New Size(largura2, altura1)
         btn_addnotas.Size = New Size(largura1, altura3)
@@ -133,10 +136,11 @@ Public Class DetalhesAfazer
         txt_titulo.Location = New Point(posicao, lbl_titulo.Location.Y + altura1)
         lbl_detalhes.Location = New Point(posicao, txt_titulo.Location.Y + altura1)
         txt_detalhes.Location = New Point(posicao, lbl_detalhes.Location.Y + altura1)
-        lbl_prazo.Location = New Point(posicao, txt_detalhes.Location.Y + 50)
-        lbl_semprazo.Location = New Point(posicao, lbl_prazo.Location.Y + altura1)
-        dtp_prazo.Location = New Point(posicao, lbl_prazo.Location.Y + altura1)
-        lbl_estado.Location = New Point(posicao, dtp_prazo.Location.Y + altura1)
+        lbl_previsao.Location = New Point(posicao, txt_detalhes.Location.Y + 50)
+        cbx_previsao.Location = New Point(posicao + 248, txt_detalhes.Location.Y + 50)
+        dtp_previsao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
+        lbl_semprevisao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
+        lbl_estado.Location = New Point(posicao, dtp_previsao.Location.Y + altura1)
         cbx_estado.Location = New Point(posicao, lbl_estado.Location.Y + altura1)
         btn_addnotas.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_cancelar.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
@@ -156,21 +160,24 @@ Public Class DetalhesAfazer
         lbl_dataAlteracaoValor.TextAlign = ContentAlignment.MiddleCenter
         lbl_useralteracaoValor.TextAlign = ContentAlignment.MiddleCenter
         lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
-        lbl_prazo.TextAlign = ContentAlignment.MiddleCenter
-        lbl_semprazo.TextAlign = ContentAlignment.MiddleCenter
+        lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
+        cbx_previsao.CheckAlign = ContentAlignment.MiddleCenter
+        lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
         lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
         lbl_estado.TextAlign = ContentAlignment.MiddleCenter
         cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento"})
-        dtp_prazo.Format = DateTimePickerFormat.Short
-        dtp_prazo.Visible = False
+        dtp_previsao.Format = DateTimePickerFormat.Short
+        dtp_previsao.Visible = False
         txt_detalhes.Multiline = True
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
-        dtp_prazo.Enabled = False
+        cbx_previsao.Enabled = False
+        dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
         cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
         btn_salvar.Visible = False
         btn_cancelar.Visible = False
+        cbx_previsao.FlatStyle = FlatStyle.Flat
 
         'vinculando funções aos botões
         AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
@@ -193,9 +200,10 @@ Public Class DetalhesAfazer
         panel.Controls.Add(txt_titulo)
         panel.Controls.Add(lbl_detalhes)
         panel.Controls.Add(txt_detalhes)
-        panel.Controls.Add(lbl_prazo)
-        panel.Controls.Add(lbl_semprazo)
-        panel.Controls.Add(dtp_prazo)
+        panel.Controls.Add(lbl_previsao)
+        panel.Controls.Add(cbx_previsao)
+        panel.Controls.Add(lbl_semprevisao)
+        panel.Controls.Add(dtp_previsao)
         panel.Controls.Add(lbl_estado)
         panel.Controls.Add(cbx_estado)
         panel.Controls.Add(btn_addnotas)
@@ -220,8 +228,8 @@ Public Class DetalhesAfazer
                                         afazer_useralteracao, 
                                         afazer_titulo, 
                                         afazer_detalhes, 
-                                        afazer_temprazo, 
-                                        afazer_prazo, 
+                                        afazer_temprevisao, 
+                                        afazer_previsao, 
                                         afazer_status 
                                 from tb_afazer where afazer_id=" & pk
         conexao.Open()
@@ -239,21 +247,38 @@ Public Class DetalhesAfazer
         lbl_useralteracaoValor.Text = If(myReader.IsDBNull(5), "", myReader.GetValue(5))
         txt_titulo.Text = If(myReader.IsDBNull(6), "", myReader.GetString(6))
         txt_detalhes.Text = If(myReader.IsDBNull(7), "", myReader.GetString(7))
-        semprazo = If(myReader.IsDBNull(8), 0, myReader.GetValue(8))
-        If semprazo > 0 Then
-            lbl_semprazo.Visible = False
-            dtp_prazo.Visible = True
-            dtp_prazo.Value = If(myReader.IsDBNull(8), "", myReader.GetDateTime(9))
-        End If
-        cbx_estado.SelectedIndex = If(myReader.IsDBNull(5), 0, myReader.GetValue(10) - 1)
+        temprevisao = If(myReader.IsDBNull(8), 0, myReader.GetValue(8))
+        dtp_previsao.Value = If(myReader.IsDBNull(9), "", myReader.GetDateTime(9))
+        cbx_estado.SelectedIndex = If(myReader.IsDBNull(10), 0, myReader.GetValue(10) - 1)
 
         myReader.Close()
         conexao.Close()
+
+        If temprevisao > 0 Then
+            lbl_semprevisao.Visible = False
+            dtp_previsao.Visible = True
+            cbx_previsao.Checked = True
+        Else
+            lbl_semprevisao.Visible = True
+            dtp_previsao.Visible = False
+            cbx_previsao.Checked = False
+        End If
+
     End Sub
     Private Sub DetalhesAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.ClientSize = New Size(320, 420)
+
+    End Sub
+    Private Sub cbx_previsao_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_previsao.CheckedChanged
+        If cbx_previsao.Checked Then
+            lbl_semprevisao.Visible = False
+            dtp_previsao.Visible = True
+        ElseIf cbx_previsao.Checked = False Then
+            lbl_semprevisao.Visible = True
+            dtp_previsao.Visible = False
+        End If
 
     End Sub
 
@@ -269,7 +294,8 @@ Public Class DetalhesAfazer
         btn_cancelar.Visible = True
         btn_salvar.Visible = True
         txt_titulo.ReadOnly = False
-        dtp_prazo.Enabled = True
+        cbx_previsao.Enabled = True
+        dtp_previsao.Enabled = True
         cbx_estado.Enabled = True
         txt_detalhes.ReadOnly = False
 
@@ -281,7 +307,8 @@ Public Class DetalhesAfazer
         btn_modificar.Visible = True
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
-        dtp_prazo.Enabled = False
+        cbx_previsao.Enabled = False
+        dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
         atualizarDados()
 
@@ -292,31 +319,45 @@ Public Class DetalhesAfazer
         btn_addnotas.Visible = True
         btn_modificar.Visible = True
 
-        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-        consulta = conexao.CreateCommand
-        consulta.CommandText = "UPDATE tb_afazer SET 
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "UPDATE tb_afazer SET 
                                 afazer_dtalteracao = GETDATE(),
-                                afazer_useralteracao ='" & usuario.usuario_id & "',
-                                afazer_titulo = '" & txt_titulo.Text & "',
-                                afazer_prazo = '" & dtp_prazo.Value & "',
-                                afazer_status = " & cbx_estado.SelectedIndex + 1 & ",
-                                afazer_detalhes = '" & txt_detalhes.Text & "' 
-                                WHERE afazer_id = " & pk
+                                afazer_useralteracao = @useralteracao,
+                                afazer_titulo = @titulo,
+                                afazer_temprevisao = @temprevisao,
+                                afazer_previsao = @previsao,
+                                afazer_status = @status,
+                                afazer_detalhes = @detalhes 
+                                WHERE afazer_id = @id"
 
-        conexao.Open()
+            consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@titulo", txt_titulo.Text)
+            consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
+            consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@detalhes", txt_detalhes.Text)
+            consulta.Parameters.AddWithValue("@id", pk)
 
-        myReader = consulta.ExecuteReader()
+            conexao.Open()
 
-        conexao.Close()
+            consulta.ExecuteNonQuery()
+
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
+        Finally
+            conexao.Close()
+        End Try
 
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
-        dtp_prazo.Enabled = False
+        cbx_previsao.Enabled = False
+        dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
         atualizarDados()
     End Sub
-
-
 
 End Class
