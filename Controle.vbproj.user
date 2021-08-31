@@ -7,6 +7,9 @@
     <Compile Update="DetalhesAfazer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="estadoAfazer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Login.vb">
       <SubType>Form</SubType>
     </Compile>

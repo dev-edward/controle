@@ -38,20 +38,20 @@ Public Class listaAfazer
             lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
 
             'tamanho dos controles
-            panel.Size = New Size(280, 60)
+            panel.Size = New Size(280, 54)
             txt_titulo.Size = New Size(274, 26)
-            lbl_previsao.Size = New Size(94, 26)
-            btn_vermais.Size = New Size(60, 26)
-            btn_notas.Size = New Size(60, 26)
-            btn_estado.Size = New Size(60, 26)
+            lbl_previsao.Size = New Size(98, 26)
+            btn_vermais.Size = New Size(56, 26)
+            btn_notas.Size = New Size(56, 26)
+            btn_estado.Size = New Size(56, 26)
 
             'posição dos controles
             panel.Location = New Point(0, _panelY)
             txt_titulo.Location = New Point(4, 0)
-            lbl_previsao.Location = New Point(4, 26)
-            btn_vermais.Location = New Point(98, 26)
-            btn_notas.Location = New Point(158, 26)
-            btn_estado.Location = New Point(218, 26)
+            lbl_previsao.Location = New Point(4, 27)
+            btn_vermais.Location = New Point(98, 27)
+            btn_notas.Location = New Point(158, 27)
+            btn_estado.Location = New Point(218, 27)
 
             'configurações especificas
             'panel.BorderStyle = BorderStyle.FixedSingle
@@ -60,12 +60,21 @@ Public Class listaAfazer
             btn_vermais.BackColor = cor_botao
             btn_notas.BackColor = cor_botao
             btn_estado.BackColor = cor_botao
+            btn_notas.Text = id
+            btn_notas.ForeColor = New Color().FromArgb(255, 255, 255, 255)
+            btn_notas.TextAlign = ContentAlignment.TopRight
+            btn_notas.Font = New Font("Impact", 10)
+            btn_vermais.BackgroundImage = img.vermais
+            btn_vermais.BackgroundImageLayout = ImageLayout.Zoom
+            btn_notas.BackgroundImage = img.notas
+            btn_notas.BackgroundImageLayout = ImageLayout.Zoom
+            btn_estado.BackgroundImage = img.estado
+            btn_estado.BackgroundImageLayout = ImageLayout.Zoom
+
             btn_vermais.FlatStyle = FlatStyle.Popup
             btn_notas.FlatStyle = FlatStyle.Popup
             btn_estado.FlatStyle = FlatStyle.Popup
-            btn_vermais.Text = "Mais"
-            btn_notas.Text = "Notas"
-            btn_estado.Text = "Estado"
+
 
             'vinculando funções aos botões
             AddHandler btn_vermais.Click, AddressOf btn_vermais_Click
@@ -143,7 +152,7 @@ Public Class listaAfazer
             estado = If(myReader.IsDBNull(5), 0, myReader.GetValue(5))
 
             Dim afazeres As New Afazer(conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
-            panelY += 60
+            panelY += 56
         Loop
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
         conteiner.Location = New Point(0, 2)

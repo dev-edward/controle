@@ -55,6 +55,7 @@ Public Class Principal
         If usuario.usuario_logado = False Then
             Dim Login = New Login
             Login.ShowDialog()
+            'teste.ShowDialog()
         End If
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
