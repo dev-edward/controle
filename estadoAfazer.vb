@@ -26,9 +26,7 @@ Public Class estadoAfazer
     Private Sub btn_alterar_Click(sender As Object, e As EventArgs) Handles btn_alterar.Click
         pk = 1
 
-        Dim cbx_checked = Me.Controls
-        .OfType(Of RadioButton)
-       .FirstOrDefault(Function(r) r.Checked = True)
+
 
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
