@@ -7,7 +7,7 @@ Public Class listaAfazer
     Private myReader As SqlDataReader
 
     Class Afazer
-        Dim id As Integer
+        Dim pk As Integer
         Dim fk As Integer
         Dim panel As New Panel()
         Dim txt_titulo As New TextBox()
@@ -18,7 +18,7 @@ Public Class listaAfazer
 
         'fonte padrão
         Dim fonte As New Font("Microsoft Sans Serif", 12)
-        Dim cor_botao = New Color().FromArgb(255, 26, 147, 111)
+        Dim cor_botao = Color.FromArgb(255, 26, 147, 111)
 
         Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
             'adicionando controles no panel
@@ -32,7 +32,7 @@ Public Class listaAfazer
             txt_titulo.Font = fonte
 
             'conteudo dos controles extraido do BD
-            id = _id
+            pk = _id
             fk = _fkitem
             txt_titulo.Text = _titulo
             lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
@@ -60,7 +60,7 @@ Public Class listaAfazer
             btn_vermais.BackColor = cor_botao
             btn_notas.BackColor = cor_botao
             btn_estado.BackColor = cor_botao
-            btn_notas.Text = id
+            btn_notas.Text = pk
             btn_notas.ForeColor = New Color().FromArgb(255, 255, 255, 255)
             btn_notas.TextAlign = ContentAlignment.TopRight
             btn_notas.Font = New Font("Impact", 10)
@@ -68,7 +68,16 @@ Public Class listaAfazer
             btn_vermais.BackgroundImageLayout = ImageLayout.Zoom
             btn_notas.BackgroundImage = img.notas
             btn_notas.BackgroundImageLayout = ImageLayout.Zoom
-            btn_estado.BackgroundImage = img.estado
+            Select Case _estado
+                Case 1
+                    btn_estado.BackgroundImage = img.aguardando
+                Case 2
+                    btn_estado.BackgroundImage = img.andamento
+                Case 3
+                    btn_estado.BackgroundImage = img.feito
+                Case 4
+                    btn_estado.BackgroundImage = img.descartado
+            End Select
             btn_estado.BackgroundImageLayout = ImageLayout.Zoom
 
             btn_vermais.FlatStyle = FlatStyle.Popup
@@ -91,7 +100,7 @@ Public Class listaAfazer
             If Application.OpenForms.OfType(Of DetalhesAfazer).Any() Then
                 Application.OpenForms.OfType(Of DetalhesAfazer).First().Close()
             End If
-            Dim verDetalhes = New DetalhesAfazer(id)
+            Dim verDetalhes = New DetalhesAfazer(pk)
             verDetalhes.ShowIcon = False
             verDetalhes.Show()
 
@@ -100,7 +109,8 @@ Public Class listaAfazer
 
         End Sub
         Private Sub btn_estado_Click()
-
+            Dim status As New estadoAfazer(pk)
+            status.ShowDialog()
         End Sub
     End Class
 
@@ -111,7 +121,6 @@ Public Class listaAfazer
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
-
 
         buscaTarefa(_spanel)
 

@@ -23,78 +23,70 @@ Partial Class estadoAfazer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(estadoAfazer))
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton4 = New System.Windows.Forms.RadioButton()
+        Me.rdb_aguardando = New System.Windows.Forms.RadioButton()
+        Me.rdb_andamento = New System.Windows.Forms.RadioButton()
+        Me.rdb_feito = New System.Windows.Forms.RadioButton()
+        Me.rdb_descartado = New System.Windows.Forms.RadioButton()
         Me.btn_cancelar = New System.Windows.Forms.Button()
         Me.btn_alterar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'RadioButton1
+        'rdb_aguardando
         '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Image = CType(resources.GetObject("RadioButton1.Image"), System.Drawing.Image)
-        Me.RadioButton1.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.RadioButton1.Location = New System.Drawing.Point(20, 38)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(95, 83)
-        Me.RadioButton1.TabIndex = 0
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Sem resposta"
-        Me.RadioButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.rdb_aguardando.FlatAppearance.BorderColor = System.Drawing.Color.Red
+        Me.rdb_aguardando.FlatAppearance.CheckedBackColor = System.Drawing.Color.Yellow
+        Me.rdb_aguardando.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.rdb_aguardando.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.rdb_aguardando.Image = CType(resources.GetObject("rdb_aguardando.Image"), System.Drawing.Image)
+        Me.rdb_aguardando.Location = New System.Drawing.Point(20, 38)
+        Me.rdb_aguardando.Name = "rdb_aguardando"
+        Me.rdb_aguardando.Size = New System.Drawing.Size(110, 83)
+        Me.rdb_aguardando.TabIndex = 0
+        Me.rdb_aguardando.Text = "Aguardando"
+        Me.rdb_aguardando.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rdb_aguardando.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.rdb_aguardando.UseVisualStyleBackColor = True
         '
-        'RadioButton2
+        'rdb_andamento
         '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Image = CType(resources.GetObject("RadioButton2.Image"), System.Drawing.Image)
-        Me.RadioButton2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.RadioButton2.Location = New System.Drawing.Point(120, 38)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(106, 83)
-        Me.RadioButton2.TabIndex = 1
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Em andamento"
-        Me.RadioButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.rdb_andamento.Image = CType(resources.GetObject("rdb_andamento.Image"), System.Drawing.Image)
+        Me.rdb_andamento.Location = New System.Drawing.Point(130, 38)
+        Me.rdb_andamento.Name = "rdb_andamento"
+        Me.rdb_andamento.Size = New System.Drawing.Size(110, 83)
+        Me.rdb_andamento.TabIndex = 1
+        Me.rdb_andamento.Text = "Em andamento"
+        Me.rdb_andamento.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rdb_andamento.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.rdb_andamento.UseVisualStyleBackColor = True
         '
-        'RadioButton3
+        'rdb_feito
         '
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.Image = CType(resources.GetObject("RadioButton3.Image"), System.Drawing.Image)
-        Me.RadioButton3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.RadioButton3.Location = New System.Drawing.Point(220, 38)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(78, 83)
-        Me.RadioButton3.TabIndex = 2
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "Feito"
-        Me.RadioButton3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.RadioButton3.UseVisualStyleBackColor = True
+        Me.rdb_feito.Image = CType(resources.GetObject("rdb_feito.Image"), System.Drawing.Image)
+        Me.rdb_feito.Location = New System.Drawing.Point(240, 38)
+        Me.rdb_feito.Name = "rdb_feito"
+        Me.rdb_feito.Size = New System.Drawing.Size(110, 83)
+        Me.rdb_feito.TabIndex = 2
+        Me.rdb_feito.Text = "Feito"
+        Me.rdb_feito.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rdb_feito.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.rdb_feito.UseVisualStyleBackColor = True
         '
-        'RadioButton4
+        'rdb_descartado
         '
-        Me.RadioButton4.AutoSize = True
-        Me.RadioButton4.Image = CType(resources.GetObject("RadioButton4.Image"), System.Drawing.Image)
-        Me.RadioButton4.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.RadioButton4.Location = New System.Drawing.Point(320, 38)
-        Me.RadioButton4.Name = "RadioButton4"
-        Me.RadioButton4.Size = New System.Drawing.Size(84, 83)
-        Me.RadioButton4.TabIndex = 3
-        Me.RadioButton4.TabStop = True
-        Me.RadioButton4.Text = "Descartado"
-        Me.RadioButton4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.RadioButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.RadioButton4.UseVisualStyleBackColor = True
+        Me.rdb_descartado.Image = CType(resources.GetObject("rdb_descartado.Image"), System.Drawing.Image)
+        Me.rdb_descartado.Location = New System.Drawing.Point(350, 38)
+        Me.rdb_descartado.Name = "rdb_descartado"
+        Me.rdb_descartado.Size = New System.Drawing.Size(110, 83)
+        Me.rdb_descartado.TabIndex = 3
+        Me.rdb_descartado.Text = "Descartado"
+        Me.rdb_descartado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rdb_descartado.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.rdb_descartado.UseVisualStyleBackColor = True
         '
         'btn_cancelar
         '
-        Me.btn_cancelar.Location = New System.Drawing.Point(110, 146)
+        Me.btn_cancelar.Location = New System.Drawing.Point(135, 146)
         Me.btn_cancelar.Name = "btn_cancelar"
         Me.btn_cancelar.Size = New System.Drawing.Size(90, 30)
         Me.btn_cancelar.TabIndex = 4
@@ -103,7 +95,7 @@ Partial Class estadoAfazer
         '
         'btn_alterar
         '
-        Me.btn_alterar.Location = New System.Drawing.Point(240, 146)
+        Me.btn_alterar.Location = New System.Drawing.Point(270, 146)
         Me.btn_alterar.Name = "btn_alterar"
         Me.btn_alterar.Size = New System.Drawing.Size(90, 30)
         Me.btn_alterar.TabIndex = 5
@@ -113,7 +105,7 @@ Partial Class estadoAfazer
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label1.Location = New System.Drawing.Point(98, 9)
+        Me.Label1.Location = New System.Drawing.Point(147, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(200, 26)
         Me.Label1.TabIndex = 6
@@ -124,25 +116,27 @@ Partial Class estadoAfazer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(424, 191)
+        Me.ClientSize = New System.Drawing.Size(479, 191)
+        Me.ControlBox = False
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btn_alterar)
         Me.Controls.Add(Me.btn_cancelar)
-        Me.Controls.Add(Me.RadioButton4)
-        Me.Controls.Add(Me.RadioButton3)
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
+        Me.Controls.Add(Me.rdb_descartado)
+        Me.Controls.Add(Me.rdb_feito)
+        Me.Controls.Add(Me.rdb_andamento)
+        Me.Controls.Add(Me.rdb_aguardando)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
         Me.Name = "estadoAfazer"
-        Me.Text = "estadoAfazer"
+        Me.Text = "Alterar Status"
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
-    Friend WithEvents RadioButton3 As RadioButton
-    Friend WithEvents RadioButton4 As RadioButton
+    Friend WithEvents rdb_aguardando As RadioButton
+    Friend WithEvents rdb_andamento As RadioButton
+    Friend WithEvents rdb_feito As RadioButton
+    Friend WithEvents rdb_descartado As RadioButton
     Friend WithEvents btn_cancelar As Button
     Friend WithEvents btn_alterar As Button
     Friend WithEvents Label1 As Label

@@ -165,7 +165,7 @@ Public Class DetalhesAfazer
         lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
         lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
         lbl_estado.TextAlign = ContentAlignment.MiddleCenter
-        cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento"})
+        cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento", "Descartado"})
         dtp_previsao.Format = DateTimePickerFormat.Short
         dtp_previsao.Visible = False
         txt_detalhes.Multiline = True
