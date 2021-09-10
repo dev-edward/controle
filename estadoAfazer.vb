@@ -6,20 +6,33 @@ Public Class estadoAfazer
     Dim pk As Integer
     Dim estado As Integer
     Dim btn As Button
+    Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
 
-    Friend Sub New(ByRef _btn As Button, ByVal _pk As Integer)
+    Friend Sub New(ByRef _btn As Button, ByVal _pk As Integer, ByVal _estado As Integer)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
 
         pk = _pk
         btn = _btn
+        estadoAtual = _estado
 
     End Sub
     Private Sub estadoAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         btn_alterar.Enabled = False
+        Select Case estadoAtual
+            Case 1
+                rdb_aguardando.BackColor = selecionado
+            Case 2
+                rdb_andamento.BackColor = selecionado
+            Case 3
+                rdb_feito.BackColor = selecionado
+            Case 4
+                rdb_descartado.BackColor = selecionado
+        End Select
+
     End Sub
 
     Private Sub btn_cancelar_Click(sender As Object, e As EventArgs) Handles btn_cancelar.Click
@@ -27,43 +40,41 @@ Public Class estadoAfazer
     End Sub
 
     Private Sub btn_alterar_Click(sender As Object, e As EventArgs) Handles btn_alterar.Click
-        If (estado <> 0) Then
-            Try
-                conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-                consulta = conexao.CreateCommand
-                consulta.CommandText = "UPDATE tb_afazer SET 
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "UPDATE tb_afazer SET 
                                 afazer_dtalteracao = GETDATE(),
                                 afazer_useralteracao = @useralteracao,
                                 afazer_status = @status
                                 WHERE afazer_id = @id"
 
-                consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
-                consulta.Parameters.AddWithValue("@status", estado)
-                consulta.Parameters.AddWithValue("@id", pk)
+            consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@status", estado)
+            consulta.Parameters.AddWithValue("@id", pk)
 
-                conexao.Open()
+            conexao.Open()
 
-                consulta.ExecuteNonQuery()
+            consulta.ExecuteNonQuery()
 
-                Select Case estado
-                    Case 1
-                        btn.BackgroundImage = img.aguardando
-                    Case 2
-                        btn.BackgroundImage = img.andamento
-                    Case 3
-                        btn.BackgroundImage = img.feito
-                    Case 4
-                        btn.BackgroundImage = img.descartado
-                End Select
+            Select Case estado
+                Case 1
+                    btn.BackgroundImage = img.aguardando
+                Case 2
+                    btn.BackgroundImage = img.andamento
+                Case 3
+                    btn.BackgroundImage = img.feito
+                Case 4
+                    btn.BackgroundImage = img.descartado
+            End Select
 
-            Catch ex As Exception
-                MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
-            Finally
-                conexao.Close()
-            End Try
-            Me.Close()
-        End If
+        Catch ex As Exception
+            MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
+        Finally
+            conexao.Close()
+        End Try
+        Me.Close()
     End Sub
 
     Private Sub rdb_aguardando_CheckedChanged(sender As Object, e As EventArgs) Handles rdb_aguardando.CheckedChanged
@@ -89,8 +100,10 @@ Public Class estadoAfazer
         rdb_descartado.BackColor = deselecionado
         _radio.BackColor = selecionado
 
-        If Not btn_alterar.Enabled Then
+        If estado <> estadoAtual Then
             btn_alterar.Enabled = True
+        Else
+            btn_alterar.Enabled = False
         End If
     End Sub
 End Class

@@ -170,12 +170,12 @@ CREATE TABLE tb_software
 	software_dtinstalacao DATETIME,
 	software_ultatualizacao DATETIME
 )
-
 CREATE TABLE tb_notaitem
 (
 	nota_id INT PRIMARY KEY IDENTITY,
 	nota_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	nota_nota NVARCHAR(256)
+	nota_nota NVARCHAR(256),
+	nota_excluido TINYINT
 )
 CREATE TABLE tb_pessoaitem
 (
@@ -266,6 +266,13 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
+
+/** Tabela de notas **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','#','Armazena as notas de itens(anotações relevantes, especifica do item)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_fkitem','Chave extrangeira correspondente ao item que a nota pertenca','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_nota','A anotação','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
 /** Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)

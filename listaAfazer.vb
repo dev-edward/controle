@@ -10,6 +10,7 @@ Public Class listaAfazer
         Dim pk As Integer
         Dim fk As Integer
         Dim panel As New Panel()
+        Dim estado As Integer
         Dim txt_titulo As New TextBox()
         Dim lbl_previsao As New Label()
         Dim btn_vermais As New Button()
@@ -35,6 +36,7 @@ Public Class listaAfazer
             'conteudo dos controles extraido do BD
             pk = _id
             fk = _fkitem
+            estado = _estado
             txt_titulo.Text = _titulo
             lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
 
@@ -107,10 +109,11 @@ Public Class listaAfazer
 
         End Sub
         Private Sub btn_notas_Click()
-
+            Dim notas = New notas(fk)
+            notas.Show()
         End Sub
         Private Sub btn_estado_Click()
-            Dim status As New estadoAfazer(btn_estado, pk)
+            Dim status As New estadoAfazer(btn_estado, pk, estado)
             status.ShowDialog()
         End Sub
     End Class

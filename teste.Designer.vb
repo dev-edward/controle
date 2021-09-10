@@ -29,6 +29,7 @@ Partial Class teste
         Me.DateTimePicker3 = New System.Windows.Forms.DateTimePicker()
         Me.DateTimePicker4 = New System.Windows.Forms.DateTimePicker()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.SuspendLayout()
         Me.SuspendLayout()
@@ -97,6 +98,15 @@ Partial Class teste
         Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(303, 85)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(41, 15)
+        Me.Label1.TabIndex = 6
+        Me.Label1.Text = "Label1"
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -104,6 +114,7 @@ Partial Class teste
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(541, 329)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.DateTimePicker4)
         Me.Controls.Add(Me.DateTimePicker3)
@@ -117,6 +128,7 @@ Partial Class teste
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents SplitContainer1 As SplitContainer
@@ -125,4 +137,5 @@ Partial Class teste
     Friend WithEvents DateTimePicker3 As DateTimePicker
     Friend WithEvents DateTimePicker4 As DateTimePicker
     Friend WithEvents Button1 As Button
+    Friend WithEvents Label1 As Label
 End Class
