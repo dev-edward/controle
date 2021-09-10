@@ -122,7 +122,7 @@ Public Class Principal
         AddHandler mi_desconectar.Click, AddressOf mi_desconectar_Click
         Me.MenuStrip.Items.Add(mi_desconectar)
 
-        redimensionando.BackgroundImage = Image.FromFile("C:\Users\edward.huayta\source\repos\controle\util\rezise-icon2.png")
+        redimensionando.BackgroundImage = Image.FromFile("..\..\..\util\rezise-icon2.png")
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 

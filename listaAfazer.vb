@@ -21,6 +21,7 @@ Public Class listaAfazer
         Dim cor_botao = Color.FromArgb(255, 26, 147, 111)
 
         Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
+
             'adicionando controles no panel
             panel.Controls.Add(txt_titulo)
             panel.Controls.Add(lbl_previsao)
@@ -61,7 +62,7 @@ Public Class listaAfazer
             btn_notas.BackColor = cor_botao
             btn_estado.BackColor = cor_botao
             btn_notas.Text = pk
-            btn_notas.ForeColor = New Color().FromArgb(255, 255, 255, 255)
+            btn_notas.ForeColor = Color.FromArgb(255, 255, 255, 255)
             btn_notas.TextAlign = ContentAlignment.TopRight
             btn_notas.Font = New Font("Impact", 10)
             btn_vermais.BackgroundImage = img.vermais
@@ -109,7 +110,7 @@ Public Class listaAfazer
 
         End Sub
         Private Sub btn_estado_Click()
-            Dim status As New estadoAfazer(pk)
+            Dim status As New estadoAfazer(btn_estado, pk)
             status.ShowDialog()
         End Sub
     End Class

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class estadoAfazer
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class estadoAfazer
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(estadoAfazer))
         Me.rdb_aguardando = New System.Windows.Forms.RadioButton()
@@ -29,7 +29,6 @@ Partial Class estadoAfazer
         Me.rdb_descartado = New System.Windows.Forms.RadioButton()
         Me.btn_cancelar = New System.Windows.Forms.Button()
         Me.btn_alterar = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'rdb_aguardando
@@ -39,7 +38,7 @@ Partial Class estadoAfazer
         Me.rdb_aguardando.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.rdb_aguardando.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.rdb_aguardando.Image = CType(resources.GetObject("rdb_aguardando.Image"), System.Drawing.Image)
-        Me.rdb_aguardando.Location = New System.Drawing.Point(20, 38)
+        Me.rdb_aguardando.Location = New System.Drawing.Point(20, 10)
         Me.rdb_aguardando.Name = "rdb_aguardando"
         Me.rdb_aguardando.Size = New System.Drawing.Size(110, 83)
         Me.rdb_aguardando.TabIndex = 0
@@ -51,7 +50,7 @@ Partial Class estadoAfazer
         'rdb_andamento
         '
         Me.rdb_andamento.Image = CType(resources.GetObject("rdb_andamento.Image"), System.Drawing.Image)
-        Me.rdb_andamento.Location = New System.Drawing.Point(130, 38)
+        Me.rdb_andamento.Location = New System.Drawing.Point(130, 10)
         Me.rdb_andamento.Name = "rdb_andamento"
         Me.rdb_andamento.Size = New System.Drawing.Size(110, 83)
         Me.rdb_andamento.TabIndex = 1
@@ -63,7 +62,7 @@ Partial Class estadoAfazer
         'rdb_feito
         '
         Me.rdb_feito.Image = CType(resources.GetObject("rdb_feito.Image"), System.Drawing.Image)
-        Me.rdb_feito.Location = New System.Drawing.Point(240, 38)
+        Me.rdb_feito.Location = New System.Drawing.Point(240, 10)
         Me.rdb_feito.Name = "rdb_feito"
         Me.rdb_feito.Size = New System.Drawing.Size(110, 83)
         Me.rdb_feito.TabIndex = 2
@@ -75,7 +74,7 @@ Partial Class estadoAfazer
         'rdb_descartado
         '
         Me.rdb_descartado.Image = CType(resources.GetObject("rdb_descartado.Image"), System.Drawing.Image)
-        Me.rdb_descartado.Location = New System.Drawing.Point(350, 38)
+        Me.rdb_descartado.Location = New System.Drawing.Point(350, 10)
         Me.rdb_descartado.Name = "rdb_descartado"
         Me.rdb_descartado.Size = New System.Drawing.Size(110, 83)
         Me.rdb_descartado.TabIndex = 3
@@ -86,7 +85,7 @@ Partial Class estadoAfazer
         '
         'btn_cancelar
         '
-        Me.btn_cancelar.Location = New System.Drawing.Point(135, 146)
+        Me.btn_cancelar.Location = New System.Drawing.Point(135, 110)
         Me.btn_cancelar.Name = "btn_cancelar"
         Me.btn_cancelar.Size = New System.Drawing.Size(90, 30)
         Me.btn_cancelar.TabIndex = 4
@@ -95,30 +94,19 @@ Partial Class estadoAfazer
         '
         'btn_alterar
         '
-        Me.btn_alterar.Location = New System.Drawing.Point(270, 146)
+        Me.btn_alterar.Location = New System.Drawing.Point(270, 110)
         Me.btn_alterar.Name = "btn_alterar"
         Me.btn_alterar.Size = New System.Drawing.Size(90, 30)
         Me.btn_alterar.TabIndex = 5
         Me.btn_alterar.Text = "Alterar"
         Me.btn_alterar.UseVisualStyleBackColor = True
         '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label1.Location = New System.Drawing.Point(147, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(200, 26)
-        Me.Label1.TabIndex = 6
-        Me.Label1.Text = "Alterar status do afazer para:"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'estadoAfazer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(479, 191)
+        Me.ClientSize = New System.Drawing.Size(479, 161)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btn_alterar)
         Me.Controls.Add(Me.btn_cancelar)
         Me.Controls.Add(Me.rdb_descartado)
@@ -128,7 +116,7 @@ Partial Class estadoAfazer
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.Name = "estadoAfazer"
-        Me.Text = "Alterar Status"
+        Me.Text = "Alterar status do afazer para:"
         Me.ResumeLayout(False)
 
     End Sub
@@ -139,5 +127,4 @@ Partial Class estadoAfazer
     Friend WithEvents rdb_descartado As RadioButton
     Friend WithEvents btn_cancelar As Button
     Friend WithEvents btn_alterar As Button
-    Friend WithEvents Label1 As Label
 End Class
