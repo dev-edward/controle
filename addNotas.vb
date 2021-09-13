@@ -49,4 +49,5 @@ Public Class addNotas
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
     End Sub
+
 End Class

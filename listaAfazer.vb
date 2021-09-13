@@ -109,7 +109,7 @@ Public Class listaAfazer
 
         End Sub
         Private Sub btn_notas_Click()
-            Dim notas = New notas(fk)
+            Dim notas = New listarNotas(fk)
             notas.Show()
         End Sub
         Private Sub btn_estado_Click()
@@ -118,7 +118,7 @@ Public Class listaAfazer
         End Sub
     End Class
 
-    Friend Sub New(ByVal _spanel As Panel)
+    Friend Sub New(ByRef _spanel As Panel)
 
         Dim btn_adicionar As New Button
         Dim cbx_filtro As New ComboBox

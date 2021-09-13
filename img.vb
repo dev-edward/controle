@@ -8,5 +8,6 @@
     Public Shared descartado = Image.FromFile("..\..\..\img\64x64\descarte.png")
     Public Shared xis = Image.FromFile("..\..\..\img\64x64\xis.png")
     Public Shared certo = Image.FromFile("..\..\..\img\64x64\certo.png")
+    Public Shared mais = Image.FromFile("..\..\..\img\64x64\mais.png")
 
 End Class

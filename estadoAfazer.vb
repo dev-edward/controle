@@ -10,7 +10,7 @@ Public Class estadoAfazer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
 
-    Friend Sub New(ByRef _btn As Button, ByVal _pk As Integer, ByVal _estado As Integer)
+    Friend Sub New(ByRef _btn As Button, ByVal _pk As Integer, ByRef _estado As Integer)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
@@ -68,6 +68,7 @@ Public Class estadoAfazer
                 Case 4
                     btn.BackgroundImage = img.descartado
             End Select
+            estadoAtual = 
 
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")

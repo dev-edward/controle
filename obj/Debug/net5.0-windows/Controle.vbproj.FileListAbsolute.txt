@@ -61,3 +61,4 @@ C:\Users\E-Corp\source\repos\controle\bin\Debug\net5.0-windows\runtimes\win\lib\
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.vbproj.CopyComplete
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.genruntimeconfig.cache
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.notas.resources
+C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.listarNotas.resources
