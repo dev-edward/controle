@@ -9,8 +9,9 @@ Public Class estadoAfazer
     Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
+    Dim lista As AfazerLista
 
-    Friend Sub New(ByRef _btn As Button, ByVal _pk As Integer, ByRef _estado As Integer)
+    Friend Sub New(ByRef _lista As AfazerLista, ByRef _btn As Button, ByVal _pk As Integer, ByRef _estado As Integer)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
@@ -18,6 +19,7 @@ Public Class estadoAfazer
         pk = _pk
         btn = _btn
         estadoAtual = _estado
+        lista = _lista
 
     End Sub
     Private Sub estadoAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -25,18 +27,21 @@ Public Class estadoAfazer
         Select Case estadoAtual
             Case 1
                 rdb_aguardando.BackColor = selecionado
+                rdb_aguardando.Checked = True
             Case 2
                 rdb_andamento.BackColor = selecionado
+                rdb_andamento.Checked = True
             Case 3
                 rdb_feito.BackColor = selecionado
+                rdb_feito.Checked = True
             Case 4
-                rdb_descartado.BackColor = selecionado
+                rdb_descartado.Checked = True
         End Select
 
     End Sub
 
     Private Sub btn_cancelar_Click(sender As Object, e As EventArgs) Handles btn_cancelar.Click
-        Me.Close()
+        Me.Dispose()
     End Sub
 
     Private Sub btn_alterar_Click(sender As Object, e As EventArgs) Handles btn_alterar.Click
@@ -58,24 +63,16 @@ Public Class estadoAfazer
 
             consulta.ExecuteNonQuery()
 
-            Select Case estado
-                Case 1
-                    btn.BackgroundImage = img.aguardando
-                Case 2
-                    btn.BackgroundImage = img.andamento
-                Case 3
-                    btn.BackgroundImage = img.feito
-                Case 4
-                    btn.BackgroundImage = img.descartado
-            End Select
-            estadoAtual = 
+            lista.atualizarLista()
+
+            'System.Diagnostics.Debug.WriteLine(estado)
 
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
         Finally
             conexao.Close()
         End Try
-        Me.Close()
+        Me.Dispose()
     End Sub
 
     Private Sub rdb_aguardando_CheckedChanged(sender As Object, e As EventArgs) Handles rdb_aguardando.CheckedChanged

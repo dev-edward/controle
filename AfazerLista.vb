@@ -1,16 +1,19 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class listaAfazer
+Public Class AfazerLista
     'Create ADO.NET objects.
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
+    Dim conteiner As New Panel
+    Dim spanel As Panel
 
     Class Afazer
         Dim pk As Integer
         Dim fk As Integer
+        Dim lista As AfazerLista
         Dim panel As New Panel()
-        Dim estado As Integer
+        Dim estado As New Integer()
         Dim txt_titulo As New TextBox()
         Dim lbl_previsao As New Label()
         Dim btn_vermais As New Button()
@@ -21,7 +24,9 @@ Public Class listaAfazer
         Dim fonte As New Font("Microsoft Sans Serif", 12)
         Dim cor_botao = Color.FromArgb(255, 26, 147, 111)
 
-        Friend Sub New(ByVal _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
+        Friend Sub New(ByRef _lista As AfazerLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
+
+            lista = _lista
 
             'adicionando controles no panel
             panel.Controls.Add(txt_titulo)
@@ -113,8 +118,9 @@ Public Class listaAfazer
             notas.Show()
         End Sub
         Private Sub btn_estado_Click()
-            Dim status As New estadoAfazer(btn_estado, pk, estado)
+            Dim status As New estadoAfazer(lista, btn_estado, pk, estado)
             status.ShowDialog()
+
         End Sub
     End Class
 
@@ -125,13 +131,21 @@ Public Class listaAfazer
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
+        spanel = _spanel
 
-        buscaTarefa(_spanel)
+        'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
+        conteiner.Location = New Point(0, 2)
+        conteiner.AutoSize = True
+
+        atualizarLista()
 
     End Sub
-    Private Sub buscaTarefa(_spanel As Panel)
+    Friend Sub atualizarLista()
+        conteiner.Controls.Clear()
+        For Each ctrl As Control In conteiner.Controls
+            ctrl.Dispose()
+        Next
 
-        Dim conteiner As New Panel
         Dim pagina = 0
         Dim sql = "select afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status from tb_afazer "
         Dim ordem_recentes = "ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
@@ -164,14 +178,12 @@ Public Class listaAfazer
             previsao = If(myReader.IsDBNull(4), 0, myReader.GetValue(4))
             estado = If(myReader.IsDBNull(5), 0, myReader.GetValue(5))
 
-            Dim afazeres As New Afazer(conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
+            Dim afazeres As New Afazer(Me, conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
             panelY += 56
         Loop
-        'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
-        conteiner.Location = New Point(0, 2)
-        conteiner.AutoSize = True
+
         'conteiner.BackColor = New Color().FromArgb(255, 0, 0, 150)
-        _spanel.Controls.Add(conteiner)
+        spanel.Controls.Add(conteiner)
 
         myReader.Close()
         conexao.Close()

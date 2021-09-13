@@ -4,6 +4,9 @@
     <Compile Update="addNotas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="AfazerCadastro.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DetalhesAfazer.vb">
       <SubType>Form</SubType>
     </Compile>

@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 
 Public Class Principal
+
     Dim atualWindowState As FormWindowState = FormWindowState.Maximized
     Dim LateralEsquerda As New Form With {
             .ControlBox = False,
@@ -38,16 +39,16 @@ Public Class Principal
         LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
     End Sub
     Private Sub Principal_ResizeBegin(sender As Object, e As EventArgs) Handles MyBase.ResizeBegin
-        LateralEsquerda.hide()
-        FormCentral.hide()
-        LateralDireita.hide()
+        LateralEsquerda.Hide()
+        FormCentral.Hide()
+        LateralDireita.Hide()
         Me.Controls.Add(redimensionando)
     End Sub
 
     Private Sub Principal_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
-        LateralEsquerda.show()
-        FormCentral.show()
-        LateralDireita.show()
+        LateralEsquerda.Show()
+        FormCentral.Show()
+        LateralDireita.Show()
         Me.Controls.Remove(redimensionando)
     End Sub
 
@@ -160,7 +161,7 @@ Public Class Principal
         splitconteiner.panel2.autoscroll = True
 
         LateralEsquerda.Controls.Add(splitconteiner)
-        Dim listarAfazer = New listaAfazer(splitconteiner.Panel1)
+        Dim listarAfazer = New AfazerLista(splitconteiner.Panel1)
 
     End Sub
 
