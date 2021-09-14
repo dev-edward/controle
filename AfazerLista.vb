@@ -7,6 +7,7 @@ Public Class AfazerLista
     Private myReader As SqlDataReader
     Dim conteiner As New Panel
     Dim spanel As Panel
+    Dim Vbarra
 
     Class Afazer
         Dim pk As Integer
@@ -92,7 +93,6 @@ Public Class AfazerLista
             btn_notas.FlatStyle = FlatStyle.Popup
             btn_estado.FlatStyle = FlatStyle.Popup
 
-
             'vinculando funções aos botões
             AddHandler btn_vermais.Click, AddressOf btn_vermais_Click
             AddHandler btn_notas.Click, AddressOf btn_notas_Click
@@ -120,7 +120,6 @@ Public Class AfazerLista
         Private Sub btn_estado_Click()
             Dim status As New estadoAfazer(lista, btn_estado, pk, estado)
             status.ShowDialog()
-
         End Sub
     End Class
 
@@ -180,6 +179,7 @@ Public Class AfazerLista
 
             Dim afazeres As New Afazer(Me, conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
             panelY += 56
+
         Loop
 
         'conteiner.BackColor = New Color().FromArgb(255, 0, 0, 150)
@@ -187,5 +187,13 @@ Public Class AfazerLista
 
         myReader.Close()
         conexao.Close()
+    End Sub
+    Private Sub HandleScroll(sender As Object, e As ScrollEventArgs) b
+        Vbarra = spanel.VerticalScroll.Value
+        System.Diagnostics.Debug.WriteLine(Vbarra)
+    End Sub
+    Friend Sub ajustarBarra()
+        spanel.VerticalScroll.Value = Vbarra
+        System.Diagnostics.Debug.WriteLine(Vbarra)
     End Sub
 End Class

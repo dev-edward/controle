@@ -64,6 +64,7 @@ Public Class estadoAfazer
             consulta.ExecuteNonQuery()
 
             lista.atualizarLista()
+            lista.ajustarBarra()
 
             'System.Diagnostics.Debug.WriteLine(estado)
 
