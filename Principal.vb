@@ -139,10 +139,10 @@ Public Class Principal
         FormCentral.Location = New Point(LateralEsquerda.Width, 0)
         LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
 
-        splitconteiner.panel1.BackColor = New Color().FromArgb(255, 137, 189, 158)
-        splitconteiner.panel2.BackColor = New Color().FromArgb(255, 240, 201, 135)
-        FormCentral.BackColor = New Color().FromArgb(255, 255, 255, 255)
-        LateralDireita.BackColor = New Color().FromArgb(255, 255, 133, 82)
+        splitconteiner.panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
+        splitconteiner.panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        FormCentral.BackColor = Color.FromArgb(255, 255, 255, 255)
+        LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
 
         LateralEsquerda.MdiParent = Me
         FormCentral.MdiParent = Me
