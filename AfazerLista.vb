@@ -9,6 +9,7 @@ Public Class AfazerLista
     Dim spanel As Panel
     Dim Vbarra
 
+<<<<<<< HEAD
     Class Afazer
         Dim pk As Integer
         Dim fk As Integer
@@ -123,6 +124,8 @@ Public Class AfazerLista
         End Sub
     End Class
 
+=======
+>>>>>>> 31d9d10526f9f248f1aa1ca772d026aecff88a22
     Friend Sub New(ByRef _spanel As Panel)
 
         Dim btn_adicionar As New Button
@@ -188,6 +191,7 @@ Public Class AfazerLista
         myReader.Close()
         conexao.Close()
     End Sub
+<<<<<<< HEAD
     Private Sub HandleScroll(sender As Object, e As ScrollEventArgs) b
         Vbarra = spanel.VerticalScroll.Value
         System.Diagnostics.Debug.WriteLine(Vbarra)
@@ -196,4 +200,8 @@ Public Class AfazerLista
         spanel.VerticalScroll.Value = Vbarra
         System.Diagnostics.Debug.WriteLine(Vbarra)
     End Sub
+=======
+
+
+>>>>>>> 31d9d10526f9f248f1aa1ca772d026aecff88a22
 End Class

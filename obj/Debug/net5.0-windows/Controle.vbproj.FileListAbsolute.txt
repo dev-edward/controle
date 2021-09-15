@@ -63,3 +63,4 @@ C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.genrunti
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.listarNotas.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.listarNotas.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerCadastro.resources
+C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerCadastro.resources

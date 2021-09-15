@@ -5,19 +5,17 @@ Public Class estadoAfazer
 
     Dim pk As Integer
     Dim estado As Integer
-    Dim btn As Button
     Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
-    Dim lista As AfazerLista
+    Dim lista As Afazer
 
-    Friend Sub New(ByRef _lista As AfazerLista, ByRef _btn As Button, ByVal _pk As Integer, ByRef _estado As Integer)
+    Friend Sub New(ByRef _lista As Afazer, ByVal _pk As Integer, ByRef _estado As Integer)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
 
         pk = _pk
-        btn = _btn
         estadoAtual = _estado
         lista = _lista
 
@@ -63,10 +61,15 @@ Public Class estadoAfazer
 
             consulta.ExecuteNonQuery()
 
+<<<<<<< HEAD
             lista.atualizarLista()
             lista.ajustarBarra()
+=======
+>>>>>>> 31d9d10526f9f248f1aa1ca772d026aecff88a22
 
-            'System.Diagnostics.Debug.WriteLine(estado)
+            lista.setEstado(estado)
+
+            System.Diagnostics.Debug.WriteLine(estadoAtual)
 
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
