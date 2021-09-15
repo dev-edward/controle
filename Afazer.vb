@@ -96,7 +96,7 @@
         notas.Show()
     End Sub
     Private Sub btn_estado_Click()
-        Dim status As New estadoAfazer(Me, pk, estado)
+        Dim status As New AfazerEstado(Me, pk, estado)
         status.ShowDialog()
     End Sub
     Friend Sub setEstado(ByVal _estado As Integer)

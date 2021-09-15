@@ -25,4 +25,6 @@
 
         'newImage.Save("newImg.jpg")
     End Sub
+
+
 End Class

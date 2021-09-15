@@ -23,7 +23,7 @@ Public Class Principal
             .AutoScroll = True
         }
     Dim redimensionando = New Panel
-    Dim splitconteiner = New SplitContainer
+    Public WithEvents splitconteiner As New SplitContainer
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
@@ -164,7 +164,6 @@ Public Class Principal
         Dim listarAfazer = New AfazerLista(splitconteiner.Panel1)
 
     End Sub
-
 
     Private Sub mi_afazer_Click()
 

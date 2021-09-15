@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Public Class estadoAfazer
+Public Class AfazerEstado
     Private conexao As SqlConnection
     Private consulta As SqlCommand
 
@@ -61,13 +61,9 @@ Public Class estadoAfazer
 
             consulta.ExecuteNonQuery()
 
-<<<<<<< HEAD
-            lista.atualizarLista()
-            lista.ajustarBarra()
-=======
->>>>>>> 31d9d10526f9f248f1aa1ca772d026aecff88a22
-
             lista.setEstado(estado)
+
+            'AfazerLista.ajustarBarra()
 
             System.Diagnostics.Debug.WriteLine(estadoAtual)
 

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class estadoAfazer
+Partial Class AfazerEstado
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
@@ -22,7 +22,7 @@ Partial Class estadoAfazer
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(estadoAfazer))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AfazerEstado))
         Me.rdb_aguardando = New System.Windows.Forms.RadioButton()
         Me.rdb_andamento = New System.Windows.Forms.RadioButton()
         Me.rdb_feito = New System.Windows.Forms.RadioButton()

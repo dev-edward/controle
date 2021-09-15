@@ -10,13 +10,13 @@
     <Compile Update="DetalhesAfazer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="estadoAfazer.vb">
+    <Compile Update="AfazerEstado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Login.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="notas.vb">
+    <Compile Update="NotaLista.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Principal.vb">
