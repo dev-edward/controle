@@ -7,7 +7,7 @@
     <Compile Update="AfazerCadastro.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="DetalhesAfazer.vb">
+    <Compile Update="AfazerDetalhes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="AfazerEstado.vb">

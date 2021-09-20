@@ -570,7 +570,7 @@
         FU2NeIo4omo65QsZj1XOW5y1UoU1zslvGMrpyymu0xxEDIuIIwERCirYQAk2orTqpFhI0r7Uxj/g+hPk
         Usi1AUaOeZShQXb94G/wu1srPznhJYUkoPPFcT6GgcAuUK86zvex49RPAP8zcKU3/eUaMPNJerWpRY6A
         nm3g4rqpKXvA5Q7Q/2TIpuxKfppCPg+8n9EzZYG+W6Br1eutsY/TByBNXS3dAAeHwEiBstfa3DvY2tuf
-        /7j9QfoBs7tywV9PgVQAAAAJcEhZcwAACw8AAAsPAZL5A6UAAAAHdElNRQflCB8SLSJYv0CMAAAJ3UlE
+        /7j9QfoBs7tywV9PgVQAAAAJcEhZcwAACw4AAAsOAUC+4UEAAAAHdElNRQflCB8SLSJYv0CMAAAJ3UlE
         QVR4Xu2aCVBV1xnHH1JrYptMNJnGMZ1pnWhqTcUqOklUFINAAhYjUVZ5LLJvorJWFNlFkbCIRhYTEBUk
         ahBcARU1bqBoio2mLjXGJBijAgLyWL5+37nc53uPy/4ukM77Zn4DnHPufef/P9t370OiCU1oQhOa0IQm
         NKGmsEWuI98PMN8ijsighhZS5/t3Y8g0dlMiw9gVUg0cYct8pw51ilCb1G7a0D2oHd0zc5Y9ZE63gRVv
@@ -615,6 +615,12 @@
         QGQDQgkW/WNWA6JkEC0xreULQBJrBxKTqVRWgvxfB31fMRuhL0KDkXikFKlCriL0hY4mNKEJTWhCE12G
         RPI/681pXJC4jXAAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="RichTextBox1.Text" xml:space="preserve">
+    <value>As informações contidas nesta mensagem e no(s) arquivo(s) anexo(s) são endereçadas exclusivamente à(s) pessoa(s) e/ou instituição(ões) acima indicada(s) e podem conter informações confidenciais e/ou privilegiadas. Se você não for o destinatário ou a pessoa autorizada a recebê-la, queira, por favor, retorná-la ao remetente e em seguida apagá-la definitivamente. Qualquer uso, cópia ou divulgação das informações nela contidas, na íntegra ou parcialmente, são proibidas e serão tratadas conforme legislação vigente.</value>
+  </data>
+  <data name="TextBox2.Text" xml:space="preserve">
+    <value>As informações contidas nesta mensagem e no(s) arquivo(s) anexo(s) são endereçadas exclusivamente à(s) pessoa(s) e/ou instituição(ões) acima indicada(s) e podem conter informações confidenciais e/ou privilegiadas. Se você não for o destinatário ou a pessoa autorizada a recebê-la, queira, por favor, retorná-la ao remetente e em seguida apagá-la definitivamente. Qualquer uso, cópia ou divulgação das informações nela contidas, na íntegra ou parcialmente, são proibidas e serão tratadas conforme legislação vigente.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>56</value>

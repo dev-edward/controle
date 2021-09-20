@@ -27,14 +27,14 @@ Partial Class teste
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
-        Me.DateTimePicker4 = New System.Windows.Forms.DateTimePicker()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.VScrollBar1 = New System.Windows.Forms.VScrollBar()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
@@ -85,22 +85,6 @@ Partial Class teste
         Me.Button2.TabIndex = 0
         Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
-        '
-        'DateTimePicker2
-        '
-        Me.DateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker2.Location = New System.Drawing.Point(287, 157)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(200, 23)
-        Me.DateTimePicker2.TabIndex = 2
-        '
-        'DateTimePicker4
-        '
-        Me.DateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker4.Location = New System.Drawing.Point(287, 215)
-        Me.DateTimePicker4.Name = "DateTimePicker4"
-        Me.DateTimePicker4.Size = New System.Drawing.Size(200, 23)
-        Me.DateTimePicker4.TabIndex = 4
         '
         'Button1
         '
@@ -165,6 +149,23 @@ Partial Class teste
         Me.TextBox1.TabIndex = 10
         Me.TextBox1.Text = "asdadada"
         '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(288, 218)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.Size = New System.Drawing.Size(156, 64)
+        Me.RichTextBox1.TabIndex = 11
+        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(288, 119)
+        Me.TextBox2.Multiline = True
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(156, 78)
+        Me.TextBox2.TabIndex = 12
+        Me.TextBox2.Text = resources.GetString("TextBox2.Text")
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -172,14 +173,14 @@ Partial Class teste
         Me.AutoScroll = True
         Me.ClientSize = New System.Drawing.Size(541, 329)
         Me.ControlBox = False
+        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.VScrollBar1)
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.DateTimePicker4)
-        Me.Controls.Add(Me.DateTimePicker2)
         Me.Controls.Add(Me.SplitContainer1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "teste"
@@ -193,8 +194,6 @@ Partial Class teste
 
     End Sub
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents DateTimePicker2 As DateTimePicker
-    Friend WithEvents DateTimePicker4 As DateTimePicker
     Friend WithEvents Button1 As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Button4 As Button
@@ -204,4 +203,6 @@ Partial Class teste
     Friend WithEvents VScrollBar1 As VScrollBar
     Friend WithEvents Label2 As Label
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents TextBox2 As TextBox
 End Class

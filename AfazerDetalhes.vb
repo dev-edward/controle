@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Public Class DetalhesAfazer
+Public Class AfazerDetalhes
     'Create ADO.NET objects.
     Private conexao As SqlConnection
     Private consulta As SqlCommand
@@ -8,36 +8,56 @@ Public Class DetalhesAfazer
     Dim fk As Integer
     Dim pk As Integer
     Dim temprevisao As Integer
-    Dim panel As New Panel()
-    Dim lbl_id As New Label()
-    Dim lbl_fkitem As New Label()
-    Dim lbl_dataCadastro As New Label()
-    Dim lbl_dataCadastroValor As New Label()
-    Dim lbl_userCadastro As New Label()
-    Dim lbl_userCadastroValor As New Label()
-    Dim lbl_dataAlteracao As New Label()
-    Dim lbl_dataAlteracaoValor As New Label()
-    Dim lbl_useralteracao As New Label()
-    Dim lbl_useralteracaoValor As New Label()
-    Dim lbl_titulo As New Label()
-    Dim txt_titulo As New TextBox()
-    Dim lbl_detalhes As New Label()
-    Dim txt_detalhes As New TextBox()
-    Dim lbl_previsao As New Label()
-    Dim WithEvents cbx_previsao As New CheckBox()
-    Dim lbl_semprevisao As New Label()
-    Dim dtp_previsao As New DateTimePicker()
-    Dim lbl_estado As New Label()
-    Dim cbx_estado As New ComboBox()
-    Dim btn_addnotas As New Button()
-    Dim btn_cancelar As New Button()
-    Dim btn_modificar As New Button()
-    Dim btn_salvar As New Button()
+    Dim panel As New Panel
+    Dim lbl_id As New Label
+    Dim lbl_fkitem As New Label
+    Dim lbl_dataCadastro As New Label
+    Dim lbl_dataCadastroValor As New Label
+    Dim lbl_userCadastro As New Label
+    Dim lbl_userCadastroValor As New Label
+    Dim lbl_dataAlteracao As New Label
+    Dim lbl_dataAlteracaoValor As New Label
+    Dim lbl_useralteracao As New Label
+    Dim lbl_useralteracaoValor As New Label
+    Dim lbl_titulo As New Label
+    Dim txt_titulo As New TextBox
+    Dim lbl_detalhes As New Label
+    Dim txt_detalhes As New RichTextBox
+    Dim lbl_previsao As New Label
+    Dim WithEvents cbx_previsao As New CheckBox
+    Dim lbl_semprevisao As New Label
+    Dim dtp_previsao As New DateTimePicker
+    Dim lbl_estado As New Label
+    Dim cbx_estado As New ComboBox
+    Dim btn_addnotas As New Button
+    Dim btn_cancelar As New Button
+    Dim btn_modificar As New Button
+    Dim btn_salvar As New Button
+
+    Dim largura1 As Integer = 150
+    Dim largura2 As Integer = 260
+    Dim posicao As Integer = (largura1 * 2 - largura2) / 2
+    Dim altura1 As Integer = 30
+    Dim altura2 As Integer = 15
+    Dim altura3 As Integer = 40
 
     'fontes
     Dim fonte As New Font("Microsoft Sans Serif", 12)
     Dim fontemenor As New Font("Microsoft Sans Serif", 8)
 
+    Friend Sub New()
+
+        ' Esta chamada é requerida pelo designer.
+        InitializeComponent()
+
+        ' Adicione qualquer inicialização após a chamada InitializeComponent().
+        'lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
+        btn_salvar.Size = New Size(largura1, altura3)
+        btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
+        AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
+
+        configurarForm()
+    End Sub
     Friend Sub New(ByVal _id As Integer)
         pk = _id
         ' Esta chamada é requerida pelo designer.
@@ -71,30 +91,12 @@ Public Class DetalhesAfazer
         lbl_dataAlteracaoValor.Font = fontemenor
         lbl_useralteracao.Font = fontemenor
         lbl_useralteracaoValor.Font = fontemenor
-        lbl_titulo.Font = fonte
-        txt_titulo.Font = fonte
-        lbl_detalhes.Font = fonte
-        txt_detalhes.Font = fontemenor
-        lbl_previsao.Font = fonte
-        cbx_previsao.Font = fonte
-        lbl_semprevisao.Font = fonte
-        dtp_previsao.Font = fonte
-        lbl_estado.Font = fonte
-        cbx_estado.Font = fonte
         btn_addnotas.Font = fonte
         btn_cancelar.Font = fonte
         btn_modificar.Font = fonte
         btn_salvar.Font = fonte
 
         'tamanho dos controles
-        Dim largura1 As Integer = 150
-        Dim largura2 As Integer = 260
-        Dim posicao As Integer = (largura1 * 2 - largura2) / 2
-        Dim altura1 As Integer = 30
-        Dim altura2 As Integer = 15
-        Dim altura3 As Integer = 40
-
-        panel.Size = New Size(302, 400)
         lbl_id.Size = New Size(largura1, altura2)
         lbl_fkitem.Size = New Size(largura1, altura2)
         lbl_dataCadastro.Size = New Size(largura1, altura2)
@@ -105,23 +107,12 @@ Public Class DetalhesAfazer
         lbl_dataAlteracaoValor.Size = New Size(largura1, altura2)
         lbl_useralteracao.Size = New Size(largura1, altura2)
         lbl_useralteracaoValor.Size = New Size(largura1, altura2)
-        lbl_titulo.Size = New Size(largura2, altura1)
-        txt_titulo.Size = New Size(largura2, altura1)
-        lbl_detalhes.Size = New Size(largura2, altura1)
-        txt_detalhes.Size = New Size(largura2, 50)
-        lbl_previsao.Size = New Size(largura2 - 12, altura1)
-        cbx_previsao.Size = New Size(12, altura1)
-        lbl_semprevisao.Size = New Size(largura2, altura1)
-        dtp_previsao.Size = New Size(largura2, altura1)
-        lbl_estado.Size = New Size(largura2, altura1)
-        cbx_estado.Size = New Size(largura2, altura1)
         btn_addnotas.Size = New Size(largura1, altura3)
         btn_cancelar.Size = New Size(largura1, altura3)
         btn_modificar.Size = New Size(largura1, altura3)
         btn_salvar.Size = New Size(largura1, altura3)
 
         'posição dos controles
-        panel.Location = New Point(10, 10)
         lbl_id.Location = New Point(0, 0)
         lbl_fkitem.Location = New Point(largura1, 0)
         lbl_dataCadastro.Location = New Point(0, altura2)
@@ -132,23 +123,14 @@ Public Class DetalhesAfazer
         lbl_dataAlteracaoValor.Location = New Point(largura1, lbl_dataAlteracao.Location.Y + altura2)
         lbl_useralteracao.Location = New Point(largura1, lbl_dataAlteracaoValor.Location.Y + altura2)
         lbl_useralteracaoValor.Location = New Point(largura1, lbl_useralteracao.Location.Y + altura2)
-        lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
-        txt_titulo.Location = New Point(posicao, lbl_titulo.Location.Y + altura1)
-        lbl_detalhes.Location = New Point(posicao, txt_titulo.Location.Y + altura1)
-        txt_detalhes.Location = New Point(posicao, lbl_detalhes.Location.Y + altura1)
-        lbl_previsao.Location = New Point(posicao, txt_detalhes.Location.Y + 50)
-        cbx_previsao.Location = New Point(posicao + 248, txt_detalhes.Location.Y + 50)
-        dtp_previsao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
-        lbl_semprevisao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
-        lbl_estado.Location = New Point(posicao, dtp_previsao.Location.Y + altura1)
-        cbx_estado.Location = New Point(posicao, lbl_estado.Location.Y + altura1)
         btn_addnotas.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_cancelar.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_modificar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
         btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
 
-        'configurações especificas
-        'panel.BorderStyle = BorderStyle.FixedSingle
+        lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
+
+        'configurações específicas
         lbl_id.TextAlign = ContentAlignment.MiddleCenter
         lbl_fkitem.TextAlign = ContentAlignment.MiddleCenter
         lbl_dataCadastro.TextAlign = ContentAlignment.MiddleCenter
@@ -159,27 +141,14 @@ Public Class DetalhesAfazer
         lbl_useralteracao.TextAlign = ContentAlignment.MiddleCenter
         lbl_dataAlteracaoValor.TextAlign = ContentAlignment.MiddleCenter
         lbl_useralteracaoValor.TextAlign = ContentAlignment.MiddleCenter
-        lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
-        lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
-        cbx_previsao.CheckAlign = ContentAlignment.MiddleCenter
-        lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
-        lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
-        lbl_estado.TextAlign = ContentAlignment.MiddleCenter
-        cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento", "Descartado"})
-        dtp_previsao.Format = DateTimePickerFormat.Short
-        dtp_previsao.Visible = False
-        txt_detalhes.Multiline = True
+        btn_salvar.Visible = False
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
-        cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
-        btn_salvar.Visible = False
         btn_cancelar.Visible = False
-        cbx_previsao.FlatStyle = FlatStyle.Flat
 
-        'vinculando funções aos botões
         AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
         AddHandler btn_cancelar.Click, AddressOf btn_cancelar_Click
         AddHandler btn_modificar.Click, AddressOf btn_modificar_Click
@@ -196,6 +165,67 @@ Public Class DetalhesAfazer
         panel.Controls.Add(lbl_dataAlteracaoValor)
         panel.Controls.Add(lbl_useralteracao)
         panel.Controls.Add(lbl_useralteracaoValor)
+        panel.Controls.Add(btn_addnotas)
+        panel.Controls.Add(btn_cancelar)
+        panel.Controls.Add(btn_modificar)
+
+        configurarForm()
+        atualizarDados()
+    End Sub
+    Private Sub configurarForm()
+        'fonte dos controles
+        lbl_titulo.Font = fonte
+        txt_titulo.Font = fonte
+        lbl_detalhes.Font = fonte
+        txt_detalhes.Font = fontemenor
+        lbl_previsao.Font = fonte
+        cbx_previsao.Font = fonte
+        lbl_semprevisao.Font = fonte
+        dtp_previsao.Font = fonte
+        lbl_estado.Font = fonte
+        cbx_estado.Font = fonte
+
+        'tamanho dos controles
+        panel.Size = New Size(302, 400)
+        lbl_titulo.Size = New Size(largura2, altura1)
+        txt_titulo.Size = New Size(largura2, altura1)
+        lbl_detalhes.Size = New Size(largura2, altura1)
+        txt_detalhes.Size = New Size(largura2, 50)
+        lbl_previsao.Size = New Size(largura2 - 12, altura1)
+        cbx_previsao.Size = New Size(12, altura1)
+        lbl_semprevisao.Size = New Size(largura2, altura1)
+        dtp_previsao.Size = New Size(largura2, altura1)
+        lbl_estado.Size = New Size(largura2, altura1)
+        cbx_estado.Size = New Size(largura2, altura1)
+
+        'posição dos controles
+        panel.Location = New Point(10, 10)
+        txt_titulo.Location = New Point(posicao, lbl_titulo.Location.Y + altura1)
+        lbl_detalhes.Location = New Point(posicao, txt_titulo.Location.Y + altura1)
+        txt_detalhes.Location = New Point(posicao, lbl_detalhes.Location.Y + altura1)
+        lbl_previsao.Location = New Point(posicao, txt_detalhes.Location.Y + 50)
+        cbx_previsao.Location = New Point(posicao + 248, txt_detalhes.Location.Y + 50)
+        dtp_previsao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
+        lbl_semprevisao.Location = New Point(posicao, cbx_previsao.Location.Y + altura1)
+        lbl_estado.Location = New Point(posicao, dtp_previsao.Location.Y + altura1)
+        cbx_estado.Location = New Point(posicao, lbl_estado.Location.Y + altura1)
+
+        'configurações especificas
+        'panel.BorderStyle = BorderStyle.FixedSingle
+        lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
+        lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
+        cbx_previsao.CheckAlign = ContentAlignment.MiddleCenter
+        lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
+        lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
+        lbl_estado.TextAlign = ContentAlignment.MiddleCenter
+        cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento", "Descartado"})
+        dtp_previsao.Format = DateTimePickerFormat.Short
+        dtp_previsao.Visible = False
+        txt_detalhes.Multiline = True
+        cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
+        cbx_previsao.FlatStyle = FlatStyle.Flat
+
+        'adicionando controles ao panel
         panel.Controls.Add(lbl_titulo)
         panel.Controls.Add(txt_titulo)
         panel.Controls.Add(lbl_detalhes)
@@ -206,14 +236,9 @@ Public Class DetalhesAfazer
         panel.Controls.Add(dtp_previsao)
         panel.Controls.Add(lbl_estado)
         panel.Controls.Add(cbx_estado)
-        panel.Controls.Add(btn_addnotas)
-        panel.Controls.Add(btn_cancelar)
-        panel.Controls.Add(btn_modificar)
         panel.Controls.Add(btn_salvar)
 
         Me.Controls.Add(panel)
-        atualizarDados()
-
     End Sub
     Private Sub atualizarDados()
         'extração de conteúdo do BD

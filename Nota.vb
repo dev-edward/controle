@@ -6,7 +6,7 @@ Public Class Nota
     Dim parent
     Dim panel As New Panel
     Dim lbl_notaNum As New Label
-    Dim txt_nota As New TextBox
+    Dim txt_nota As New RichTextBox
     Dim btn_excluir As New Button
 
     Dim idNota As Integer
@@ -15,16 +15,16 @@ Public Class Nota
         idNota = _id
 
         'posição dos controles
-        panel.Location = New Point(12, _posicaoY)
+        panel.Location = New Point(10, _posicaoY)
         lbl_notaNum.Location = New Point(0, 5)
-        txt_nota.Location = New Point(35, 0)
-        btn_excluir.Location = New Point(225, 5)
+        txt_nota.Location = New Point(25, 0)
+        btn_excluir.Location = New Point(230, 0)
 
         'tamanho dos controles
-        panel.Size = New Size(275, 40)
-        lbl_notaNum.Size = New Size(30, 30)
-        txt_nota.Size = New Size(190, 40)
-        btn_excluir.Size = New Size(50, 30)
+        panel.Size = New Size(280, 40)
+        lbl_notaNum.Size = New Size(20, 30)
+        txt_nota.Size = New Size(200, 40)
+        btn_excluir.Size = New Size(50, 40)
 
         'especuficos
         lbl_notaNum.ForeColor = Color.FromArgb(255, 15, 15, 15)

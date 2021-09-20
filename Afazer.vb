@@ -83,10 +83,10 @@
         'Dim verDetalhes = New DetalhesAfazer(id)
         'verDetalhes.Show()
 
-        If Application.OpenForms.OfType(Of DetalhesAfazer).Any() Then
-            Application.OpenForms.OfType(Of DetalhesAfazer).First().Close()
+        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() Then
+            Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
         End If
-        Dim verDetalhes = New DetalhesAfazer(pk)
+        Dim verDetalhes = New AfazerDetalhes(pk)
         verDetalhes.ShowIcon = False
         verDetalhes.Show()
 

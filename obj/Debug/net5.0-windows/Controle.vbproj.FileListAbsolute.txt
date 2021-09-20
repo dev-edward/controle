@@ -27,7 +27,6 @@ C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.g
 C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.addNotas.resources
 C:\Users\edward.huayta\source\repos\Controle\obj\Debug\net5.0-windows\Controle.teste.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.Resources.resources
-C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.DetalhesAfazer.resources
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.vbprojAssemblyReference.cache
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.addNotas.resources
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.DetalhesAfazer.resources
@@ -64,3 +63,4 @@ C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.l
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerCadastro.resources
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerCadastro.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerEstado.resources
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerDetalhes.resources

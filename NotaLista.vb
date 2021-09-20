@@ -77,7 +77,7 @@ Public Class listarNotas
                 Dim label As New Label
                 label.Text = "Este item ainda não possui notas"
                 label.Location = New Point(0, 40)
-                label.Size = New Size(300, 40)
+                label.Size = New Size(280, 40)
                 label.TextAlign = ContentAlignment.MiddleCenter
                 conteiner.Controls.Add(label)
 
@@ -99,6 +99,7 @@ Public Class listarNotas
 
             conexao.Open()
             consulta.ExecuteNonQuery()
+            txt_novaNota.Text = ""
 
         Catch ex As Exception
             MessageBox.Show("Erro adicionar nova nota: " & ex.Message, "Insert Records")
@@ -107,5 +108,6 @@ Public Class listarNotas
         End Try
 
         atualizar()
+
     End Sub
 End Class
