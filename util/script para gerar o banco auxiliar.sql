@@ -63,7 +63,7 @@ CREATE TABLE tb_afazer
 	afazer_dtalteracao DATETIME,
 	afazer_useralteracao TINYINT,
 	afazer_titulo NVARCHAR(30),
-	afazer_detalhes NVARCHAR(90),
+	afazer_detalhes NVARCHAR(256),
 	afazer_temprevisao TINYINT,
 	afazer_previsao DATETIME,
 	afazer_status TINYINT

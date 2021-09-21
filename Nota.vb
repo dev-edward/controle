@@ -3,14 +3,14 @@ Public Class Nota
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-    Dim parent
+    Dim parent As listarNotas
     Dim panel As New Panel
     Dim lbl_notaNum As New Label
     Dim txt_nota As New RichTextBox
     Dim btn_excluir As New Button
 
     Dim idNota As Integer
-    Friend Sub New(ByVal _parent As listarNotas, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer)
+    Friend Sub New(ByRef _parent As listarNotas, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer)
 
         idNota = _id
 
@@ -64,7 +64,7 @@ Public Class Nota
             conexao.Close()
         End Try
 
-        parent.atualizar()
+        parent.atualizarLista()
 
     End Sub
 

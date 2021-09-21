@@ -80,20 +80,27 @@
 
     End Sub
     Private Sub btn_vermais_Click()
-        'Dim verDetalhes = New DetalhesAfazer(id)
-        'verDetalhes.Show()
 
-        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() Then
-            Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 2 Then
+            formsAbertos.atualdetalhes.atualizarDados(pk)
+            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+        Else
+            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 1 Then
+                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            End If
+            Dim verDetalhes = New AfazerDetalhes(pk, btn_notas)
+            verDetalhes.Show()
         End If
-        Dim verDetalhes = New AfazerDetalhes(pk)
-        verDetalhes.ShowIcon = False
-        verDetalhes.Show()
 
     End Sub
     Private Sub btn_notas_Click()
-        Dim notas = New listarNotas(fk)
-        notas.Show()
+        If Application.OpenForms.OfType(Of listarNotas).Any() Then
+            formsAbertos.atualnotas.atualizarNovaLista(fk, btn_notas)
+            Application.OpenForms.OfType(Of listarNotas).First().BringToFront()
+        Else
+            Dim notas = New listarNotas(fk, btn_notas)
+            notas.Show()
+        End If
     End Sub
     Private Sub btn_estado_Click()
         Dim status As New AfazerEstado(Me, pk, estado)
@@ -112,5 +119,14 @@
                 btn_estado.BackgroundImage = img.descartado
         End Select
         btn_estado.BackgroundImageLayout = ImageLayout.Zoom
+    End Sub
+    Friend Sub setDados(ByVal _estado As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime)
+        estado = _estado
+        setEstado(estado)
+        txt_titulo.Text = _titulo
+        lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
+    End Sub
+    Friend Sub setQtdNotas(ByVal _qtdNotas As Integer)
+        btn_notas.Text = _qtdNotas
     End Sub
 End Class

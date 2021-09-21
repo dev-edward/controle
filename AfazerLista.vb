@@ -6,8 +6,8 @@ Public Class AfazerLista
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
     Dim conteiner As New Panel
+    Dim controles As New Panel
     Dim spanel As Panel
-    Dim Vbarra
 
     Friend Sub New()
         spanel = Principal.splitconteiner.panel1
@@ -26,10 +26,23 @@ Public Class AfazerLista
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
 
+        controles.Location = New Point(0, 0)
+        controles.Size = New Size(290, 40)
+
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
-        conteiner.Location = New Point(0, 2)
+        conteiner.Location = New Point(0, 50)
         conteiner.AutoSize = True
 
+        btn_adicionar.BackgroundImage = img.mais
+        btn_adicionar.BackgroundImageLayout = ImageLayout.Zoom
+        btn_adicionar.Location = New Point(10, 10)
+        btn_adicionar.Size = New Size(26, 26)
+        btn_adicionar.FlatStyle = FlatStyle.Flat
+        AddHandler btn_adicionar.Click, AddressOf novo
+
+        controles.Controls.Add(btn_adicionar)
+
+        spanel.Controls.Add(controles)
         atualizarLista()
 
     End Sub
@@ -49,11 +62,10 @@ Public Class AfazerLista
         consulta = conexao.CreateCommand
         consulta.CommandText = sql
         conexao.Open()
-
         myReader = consulta.ExecuteReader()
 
         Dim panelY As Integer
-        panelY = 60
+        panelY = 0
 
         Do While myReader.Read()
             Dim id As Integer
@@ -81,6 +93,19 @@ Public Class AfazerLista
 
         myReader.Close()
         conexao.Close()
+    End Sub
+    Private Sub novo()
+        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 1 Then
+            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+
+        Else
+            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 2 Then
+                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            End If
+            Dim verDetalhes = New AfazerDetalhes()
+            verDetalhes.Show()
+        End If
+
     End Sub
 
 

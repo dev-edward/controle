@@ -7,6 +7,7 @@ Public Class AfazerDetalhes
 
     Dim fk As Integer
     Dim pk As Integer
+    Dim novoid As Integer
     Dim temprevisao As Integer
     Dim panel As New Panel
     Dim lbl_id As New Label
@@ -29,10 +30,12 @@ Public Class AfazerDetalhes
     Dim dtp_previsao As New DateTimePicker
     Dim lbl_estado As New Label
     Dim cbx_estado As New ComboBox
-    Dim btn_addnotas As New Button
+    Dim btn_notas As New Button
     Dim btn_cancelar As New Button
     Dim btn_modificar As New Button
     Dim btn_salvar As New Button
+
+    Dim btnnota As Button
 
     Dim largura1 As Integer = 150
     Dim largura2 As Integer = 260
@@ -46,19 +49,25 @@ Public Class AfazerDetalhes
     Dim fontemenor As New Font("Microsoft Sans Serif", 8)
 
     Friend Sub New()
-
+        formsAbertos.setAtualDetalhes(Me, 1)
+        Me.Text = "Cadastrar nova afazer"
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        'lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
-        btn_salvar.Size = New Size(largura1, altura3)
-        btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
+        lbl_titulo.Location = New Point(posicao, 0)
+        btn_salvar.Size = New Size(largura2, altura3)
         AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
 
         configurarForm()
+
+        btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
-    Friend Sub New(ByVal _id As Integer)
+    Friend Sub New(ByVal _id As Integer, ByRef _btnNota As Button)
+        formsAbertos.setAtualDetalhes(Me, 2)
+        Me.Text = "Detalhes do afazer"
+        btnnota = _btnNota
+
         pk = _id
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
@@ -70,15 +79,9 @@ Public Class AfazerDetalhes
         lbl_userCadastro.Text = "Usuário que cadastrou"
         lbl_dataAlteracao.Text = "Data da última alteração"
         lbl_useralteracao.Text = "Usuário que alterou"
-        lbl_titulo.Text = "Título"
-        lbl_previsao.Text = "Previsao"
-        lbl_semprevisao.Text = "Indeterminado"
-        lbl_estado.Text = "Estado"
-        lbl_detalhes.Text = "Detalhes"
-        btn_addnotas.Text = "add. notas"
+        btn_notas.Text = "Notas"
         btn_cancelar.Text = "Cancelar"
         btn_modificar.Text = "Editar"
-        btn_salvar.Text = "Salvar"
 
         'fonte dos controles
         lbl_id.Font = fontemenor
@@ -91,10 +94,10 @@ Public Class AfazerDetalhes
         lbl_dataAlteracaoValor.Font = fontemenor
         lbl_useralteracao.Font = fontemenor
         lbl_useralteracaoValor.Font = fontemenor
-        btn_addnotas.Font = fonte
+        btn_notas.Font = fonte
         btn_cancelar.Font = fonte
         btn_modificar.Font = fonte
-        btn_salvar.Font = fonte
+
 
         'tamanho dos controles
         lbl_id.Size = New Size(largura1, altura2)
@@ -107,7 +110,7 @@ Public Class AfazerDetalhes
         lbl_dataAlteracaoValor.Size = New Size(largura1, altura2)
         lbl_useralteracao.Size = New Size(largura1, altura2)
         lbl_useralteracaoValor.Size = New Size(largura1, altura2)
-        btn_addnotas.Size = New Size(largura1, altura3)
+        btn_notas.Size = New Size(largura1, altura3)
         btn_cancelar.Size = New Size(largura1, altura3)
         btn_modificar.Size = New Size(largura1, altura3)
         btn_salvar.Size = New Size(largura1, altura3)
@@ -123,12 +126,16 @@ Public Class AfazerDetalhes
         lbl_dataAlteracaoValor.Location = New Point(largura1, lbl_dataAlteracao.Location.Y + altura2)
         lbl_useralteracao.Location = New Point(largura1, lbl_dataAlteracaoValor.Location.Y + altura2)
         lbl_useralteracaoValor.Location = New Point(largura1, lbl_useralteracao.Location.Y + altura2)
-        btn_addnotas.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
+        lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
+
+        configurarForm()
+
+        btn_notas.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_cancelar.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_modificar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
         btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
 
-        lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
+
 
         'configurações específicas
         lbl_id.TextAlign = ContentAlignment.MiddleCenter
@@ -149,10 +156,10 @@ Public Class AfazerDetalhes
         cbx_estado.Enabled = False
         btn_cancelar.Visible = False
 
-        AddHandler btn_addnotas.Click, AddressOf btn_addnotas_Click
+        AddHandler btn_notas.Click, AddressOf btn_notas_Click
         AddHandler btn_cancelar.Click, AddressOf btn_cancelar_Click
         AddHandler btn_modificar.Click, AddressOf btn_modificar_Click
-        AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
+        AddHandler btn_salvar.Click, AddressOf btn_alterar_Click
 
         'adicionando controles ao panel
         panel.Controls.Add(lbl_id)
@@ -165,14 +172,23 @@ Public Class AfazerDetalhes
         panel.Controls.Add(lbl_dataAlteracaoValor)
         panel.Controls.Add(lbl_useralteracao)
         panel.Controls.Add(lbl_useralteracaoValor)
-        panel.Controls.Add(btn_addnotas)
+        panel.Controls.Add(btn_notas)
         panel.Controls.Add(btn_cancelar)
         panel.Controls.Add(btn_modificar)
 
-        configurarForm()
-        atualizarDados()
+        atualizarDados(pk)
     End Sub
     Private Sub configurarForm()
+        Me.ShowIcon = False
+
+        'texto dos controles
+        lbl_titulo.Text = "Título"
+        lbl_previsao.Text = "Previsao"
+        lbl_semprevisao.Text = "Indeterminado"
+        lbl_estado.Text = "Estado"
+        lbl_detalhes.Text = "Detalhes"
+        btn_salvar.Text = "Salvar"
+
         'fonte dos controles
         lbl_titulo.Font = fonte
         txt_titulo.Font = fonte
@@ -184,6 +200,7 @@ Public Class AfazerDetalhes
         dtp_previsao.Font = fonte
         lbl_estado.Font = fonte
         cbx_estado.Font = fonte
+        btn_salvar.Font = fonte
 
         'tamanho dos controles
         panel.Size = New Size(302, 400)
@@ -218,7 +235,7 @@ Public Class AfazerDetalhes
         lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
         lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
         lbl_estado.TextAlign = ContentAlignment.MiddleCenter
-        cbx_estado.Items.AddRange({"Não feito", "Feito", "Em andamento", "Descartado"})
+        cbx_estado.Items.AddRange({"Aguardando", "Em andamento", "Feito", "Descartado"})
         dtp_previsao.Format = DateTimePickerFormat.Short
         dtp_previsao.Visible = False
         txt_detalhes.Multiline = True
@@ -240,7 +257,7 @@ Public Class AfazerDetalhes
 
         Me.Controls.Add(panel)
     End Sub
-    Private Sub atualizarDados()
+    Friend Sub atualizarDados(ByVal _pk As Integer)
         'extração de conteúdo do BD
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
         consulta = conexao.CreateCommand
@@ -256,13 +273,14 @@ Public Class AfazerDetalhes
                                         afazer_temprevisao, 
                                         afazer_previsao, 
                                         afazer_status 
-                                from tb_afazer where afazer_id=" & pk
+                                from tb_afazer where afazer_id=" & _pk
         conexao.Open()
         myReader = consulta.ExecuteReader()
 
         myReader.Read()
 
         'conteudo dos controles extraido do BD
+        pk = myReader.GetValue(0)
         lbl_id.Text = "PK: " & pk
         fk = myReader.GetValue(1)
         lbl_fkitem.Text = "FK: " & fk
@@ -307,14 +325,17 @@ Public Class AfazerDetalhes
 
     End Sub
 
-    Private Sub btn_addnotas_Click()
-
-        Dim frm_addNotas As New addNotas(fk)
-        'addNotas.MdiParent =
-        frm_addNotas.ShowDialog()
+    Private Sub btn_notas_Click()
+        If Application.OpenForms.OfType(Of listarNotas).Any() Then
+            formsAbertos.atualnotas.atualizarNovaLista(fk, btnnota)
+            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+        Else
+            Dim notas = New listarNotas(fk, btnnota)
+            notas.Show()
+        End If
     End Sub
     Private Sub btn_modificar_Click()
-        btn_addnotas.Visible = False
+        btn_notas.Visible = False
         btn_modificar.Visible = False
         btn_cancelar.Visible = True
         btn_salvar.Visible = True
@@ -328,20 +349,20 @@ Public Class AfazerDetalhes
     Private Sub btn_cancelar_Click()
         btn_cancelar.Visible = False
         btn_salvar.Visible = False
-        btn_addnotas.Visible = True
+        btn_notas.Visible = True
         btn_modificar.Visible = True
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
-        atualizarDados()
+        atualizarDados(pk)
 
     End Sub
-    Private Sub btn_salvar_Click()
+    Private Sub btn_alterar_Click()
         btn_cancelar.Visible = False
         btn_salvar.Visible = False
-        btn_addnotas.Visible = True
+        btn_notas.Visible = True
         btn_modificar.Visible = True
 
         Try
@@ -352,18 +373,18 @@ Public Class AfazerDetalhes
                                 afazer_dtalteracao = GETDATE(),
                                 afazer_useralteracao = @useralteracao,
                                 afazer_titulo = @titulo,
+                                afazer_detalhes = @detalhes,
                                 afazer_temprevisao = @temprevisao,
                                 afazer_previsao = @previsao,
-                                afazer_status = @status,
-                                afazer_detalhes = @detalhes 
+                                afazer_status = @status
                                 WHERE afazer_id = @id"
 
             consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
             consulta.Parameters.AddWithValue("@titulo", txt_titulo.Text)
+            consulta.Parameters.AddWithValue("@detalhes", txt_detalhes.Text)
             consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
             consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
             consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
-            consulta.Parameters.AddWithValue("@detalhes", txt_detalhes.Text)
             consulta.Parameters.AddWithValue("@id", pk)
 
             conexao.Open()
@@ -382,7 +403,49 @@ Public Class AfazerDetalhes
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
-        atualizarDados()
+        atualizarDados(pk)
+    End Sub
+    Private Sub btn_salvar_Click()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+
+            consulta = conexao.CreateCommand
+
+            consulta.CommandText = "insert into tb_item(item_tipo) values(10) 
+                                    insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) 
+                                    VALUES(scope_identity(),
+                                    @usercadastro,
+                                    @titulo,
+                                    @detalhes,
+                                    @temprevisao,
+                                    @previsao,
+                                    @status)
+                                    select scope_identity()"
+
+            consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@titulo", txt_titulo.Text)
+            consulta.Parameters.AddWithValue("@detalhes", txt_detalhes.Text)
+            consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
+            consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
+
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+            novoid = myReader.GetValue(0)
+
+            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() Then
+                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            End If
+            Dim verDetalhes = New AfazerDetalhes(novoid, btnnota)
+            verDetalhes.Show()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao Cadastrar: " & ex.Message, "Insert Records")
+        Finally
+            conexao.Close()
+        End Try
     End Sub
 
 End Class
