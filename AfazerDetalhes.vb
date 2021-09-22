@@ -61,6 +61,8 @@ Public Class AfazerDetalhes
 
         configurarForm()
 
+        cbx_estado.SelectedIndex = 0
+
         btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
     Friend Sub New(ByVal _id As Integer, ByRef _btnNota As Button)
@@ -403,6 +405,7 @@ Public Class AfazerDetalhes
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
+
         atualizarDados(pk)
     End Sub
     Private Sub btn_salvar_Click()

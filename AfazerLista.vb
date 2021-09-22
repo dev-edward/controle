@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-
 Public Class AfazerLista
     'Create ADO.NET objects.
     Private conexao As SqlConnection
@@ -8,6 +7,16 @@ Public Class AfazerLista
     Dim conteiner As New Panel
     Dim controles As New Panel
     Dim spanel As Panel
+
+    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(nota_fkitem) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
+    Dim sql_parte2 As String = "group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
+
+    Dim filtro_items = ""
+    Dim sql_filtro As String = "where afazer_status in(" & filtro_items & ")"
+    Dim sql_previsao_crescente As String = "ORDER BY afazer_previsao asc"
+    Dim sql_previsao_decrescente As String = "ORDER BY afazer_previsao desc"
+    Dim sql_ordenar_crescente As String = "ORDER BY afazer_id asc"
+    Dim sql_ordenar_decrescente As String = "ORDER BY afazer_id desc"
 
     Friend Sub New()
         spanel = Principal.splitconteiner.panel1
@@ -21,13 +30,19 @@ Public Class AfazerLista
     End Sub
     Private Sub iniciar()
         Dim btn_adicionar As New Button
+        Dim btn_atualizar As New Button
+        Dim btn_ordenar As New Button
+        Dim btn_filtro As New Button
+
+
         Dim cbx_filtro As New ComboBox
+
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
 
         controles.Location = New Point(0, 0)
-        controles.Size = New Size(290, 40)
+        controles.Size = New Size(280, 40)
 
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
         conteiner.Location = New Point(0, 50)
@@ -40,7 +55,23 @@ Public Class AfazerLista
         btn_adicionar.FlatStyle = FlatStyle.Flat
         AddHandler btn_adicionar.Click, AddressOf novo
 
+        btn_atualizar.BackgroundImage = img.refresh
+        btn_atualizar.BackgroundImageLayout = ImageLayout.Zoom
+        btn_atualizar.Location = New Point(250, 10)
+        btn_atualizar.Size = New Size(26, 26)
+        btn_atualizar.FlatStyle = FlatStyle.Flat
+        AddHandler btn_atualizar.Click, AddressOf atualizarLista
+
+        btn_ordenar.BackgroundImage = img.sort
+        btn_ordenar.BackgroundImageLayout = ImageLayout.Zoom
+        btn_ordenar.Location = New Point(220, 10)
+        btn_ordenar.Size = New Size(26, 26)
+        btn_ordenar.FlatStyle = FlatStyle.Flat
+        AddHandler btn_ordenar.Click, AddressOf ordenar
+
+
         controles.Controls.Add(btn_adicionar)
+        controles.Controls.Add(btn_atualizar)
 
         spanel.Controls.Add(controles)
         atualizarLista()
@@ -53,6 +84,7 @@ Public Class AfazerLista
         Next
 
         Dim pagina = 0
+
         Dim sql = "select afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status from tb_afazer "
         Dim ordem_recentes = "ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
         Dim ordem_previsao = "ORDER BY afazer_previsao asc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
@@ -107,6 +139,8 @@ Public Class AfazerLista
         End If
 
     End Sub
+    Private Sub ordenar()
 
+    End Sub
 
 End Class

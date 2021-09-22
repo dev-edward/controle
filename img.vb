@@ -9,5 +9,10 @@
     Public Shared xis = Image.FromFile("..\..\..\img\64x64\xis.png")
     Public Shared certo = Image.FromFile("..\..\..\img\64x64\certo.png")
     Public Shared mais = Image.FromFile("..\..\..\img\64x64\mais.png")
+    Public Shared refresh = Image.FromFile("..\..\..\img\64x64\refresh.png")
+    Public Shared sort = Image.FromFile("..\..\..\img\64x64\sort.png")
+    Public Shared filtro = Image.FromFile("..\..\..\img\64x64\filtro.png")
+
+
 
 End Class
