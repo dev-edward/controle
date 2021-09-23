@@ -3,6 +3,7 @@
     Dim fk As Integer
     Dim panel As New Panel()
     Dim estado As Integer
+    Dim qtdNotas As Integer
     Dim txt_titulo As New TextBox()
     Dim lbl_previsao As New Label()
     Dim btn_vermais As New Button()
@@ -13,7 +14,7 @@
     Dim fonte As New Font("Microsoft Sans Serif", 12)
     Dim cor_botao = Color.FromArgb(255, 26, 147, 111)
 
-    Friend Sub New(ByRef _lista As AfazerLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _panelY As Integer)
+    Friend Sub New(ByRef _lista As AfazerLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
 
         'adicionando controles no panel
         panel.Controls.Add(txt_titulo)
@@ -29,6 +30,7 @@
         pk = _id
         fk = _fkitem
         estado = _estado
+        qtdNotas = _qtdNotas
         txt_titulo.Text = _titulo
         lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
 
@@ -55,7 +57,7 @@
         btn_vermais.BackColor = cor_botao
         btn_notas.BackColor = cor_botao
         btn_estado.BackColor = cor_botao
-        btn_notas.Text = pk
+        btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
         btn_notas.ForeColor = Color.FromArgb(255, 255, 255, 255)
         btn_notas.TextAlign = ContentAlignment.TopRight
         btn_notas.Font = New Font("Impact", 10)
@@ -127,6 +129,8 @@
         lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
     End Sub
     Friend Sub setQtdNotas(ByVal _qtdNotas As Integer)
-        btn_notas.Text = _qtdNotas
+        qtdNotas = _qtdNotas
+        btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
+
     End Sub
 End Class

@@ -1,13 +1,18 @@
 ﻿Imports System.Windows.Forms
 
 Public Class Principal
+    Dim topmost_esq As Boolean
+    Dim topmost_dir As Boolean
 
-    Dim atualWindowState As FormWindowState = FormWindowState.Maximized
+    Dim ms_tmEsq As New MenuStrip
+    Public WithEvents splitconteiner As New SplitContainer
+
     Dim LateralEsquerda As New Form With {
-            .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
+            .ControlBox = False,
             .StartPosition = FormStartPosition.Manual,
-            .AutoScroll = True
+            .AutoScroll = True,
+            .Text = " "
         }
     'Dim WithEvents FormCentral As New Form With {
     Dim FormCentral As New Form With {
@@ -23,11 +28,15 @@ Public Class Principal
             .AutoScroll = True
         }
     Dim redimensionando = New Panel
-    Public WithEvents splitconteiner As New SplitContainer
+
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-        LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
-        LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+        If Not topmost_esq Then
+            LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+        End If
+        If Not topmost_dir Then
+            LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+        End If
         FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
 
         'LateralEsquerda.Width = 200
@@ -127,6 +136,8 @@ Public Class Principal
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 
+
+
         LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
         LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
         FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
@@ -139,8 +150,8 @@ Public Class Principal
         FormCentral.Location = New Point(LateralEsquerda.Width, 0)
         LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
 
-        splitconteiner.panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
-        splitconteiner.panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        splitconteiner.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
+        splitconteiner.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
         FormCentral.BackColor = Color.FromArgb(255, 255, 255, 255)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
 
@@ -151,15 +162,22 @@ Public Class Principal
         FormCentral.Show()
         LateralDireita.Show()
 
-        splitconteiner.orientation = System.Windows.Forms.Orientation.Horizontal
-        Dim txt_teste As New TextBox()
-        splitconteiner.dock = DockStyle.Fill
+        splitconteiner.Orientation = System.Windows.Forms.Orientation.Horizontal
+        splitconteiner.Dock = DockStyle.Fill
+
+        Dim btn_topmostEsq As New Button
+        btn_topmostEsq.BackgroundImage = img.topmost
+        btn_topmostEsq.BackgroundImageLayout = ImageLayout.Zoom
+        btn_topmostEsq.Dock = DockStyle.Top
+        btn_topmostEsq.FlatStyle = FlatStyle.Flat
+        AddHandler btn_topmostEsq.Click, AddressOf topmost_esquerda
 
         'splitconteiner.panel2collapsed = True
 
-        splitconteiner.panel1.autoscroll = True
-        splitconteiner.panel2.autoscroll = True
+        splitconteiner.Panel1.AutoScroll = True
+        splitconteiner.Panel2.AutoScroll = True
 
+        LateralEsquerda.Controls.Add(btn_topmostEsq)
         LateralEsquerda.Controls.Add(splitconteiner)
         Dim listarAfazer = New AfazerLista(splitconteiner.Panel1)
 
@@ -240,6 +258,19 @@ Public Class Principal
     Private Sub mi_desconectar_Click()
         usuario.usuario_logado = False
         Application.Restart()
+    End Sub
+    Private Sub topmost_esquerda()
+        If topmost_esq Then
+            LateralEsquerda.TopMost = False
+            LateralEsquerda.FormBorderStyle = FormBorderStyle.None
+            LateralEsquerda.MdiParent = Me
+            LateralEsquerda.Location = New Point(0, 0)
+        Else
+            LateralEsquerda.FormBorderStyle = FormBorderStyle.FixedSingle
+            LateralEsquerda.MdiParent = Nothing
+            LateralEsquerda.TopMost = True
+        End If
+        topmost_esq = Not topmost_esq
     End Sub
 
 

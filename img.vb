@@ -10,8 +10,16 @@
     Public Shared certo = Image.FromFile("..\..\..\img\64x64\certo.png")
     Public Shared mais = Image.FromFile("..\..\..\img\64x64\mais.png")
     Public Shared refresh = Image.FromFile("..\..\..\img\64x64\refresh.png")
-    Public Shared sort = Image.FromFile("..\..\..\img\64x64\sort.png")
+    Public Shared sort1 = Image.FromFile("..\..\..\img\64x64\sort1.png")
+    Public Shared sort2 = Image.FromFile("..\..\..\img\64x64\sort2.png")
+    Public Shared previsao1 = Image.FromFile("..\..\..\img\64x64\previsao1.png")
+    Public Shared previsao2 = Image.FromFile("..\..\..\img\64x64\previsao2.png")
     Public Shared filtro = Image.FromFile("..\..\..\img\64x64\filtro.png")
+    Public Shared spliter1 = Image.FromFile("..\..\..\img\64x64\spliter1.png")
+    Public Shared spliter2 = Image.FromFile("..\..\..\img\64x64\spliter2.png")
+    Public Shared spliter3 = Image.FromFile("..\..\..\img\64x64\spliter3.png")
+    Public Shared topmost = Image.FromFile("..\..\..\img\64x64\topmost.png")
+
 
 
 

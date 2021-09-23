@@ -6,17 +6,25 @@ Public Class AfazerLista
     Private myReader As SqlDataReader
     Dim conteiner As New Panel
     Dim controles As New Panel
+    Dim btn_ordenar As New Button
+    Dim btn_previsao As New Button
     Dim spanel As Panel
 
-    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(nota_fkitem) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
-    Dim sql_parte2 As String = "group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
+    Dim s_filtro As Boolean
+    Dim s_previsao As Boolean
+    Dim s_ordem As Boolean
 
-    Dim filtro_items = ""
-    Dim sql_filtro As String = "where afazer_status in(" & filtro_items & ")"
-    Dim sql_previsao_crescente As String = "ORDER BY afazer_previsao asc"
-    Dim sql_previsao_decrescente As String = "ORDER BY afazer_previsao desc"
-    Dim sql_ordenar_crescente As String = "ORDER BY afazer_id asc"
-    Dim sql_ordenar_decrescente As String = "ORDER BY afazer_id desc"
+    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(nota_fkitem) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
+    Dim sql_parte2 As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
+    Dim filtro_itens = ""
+    Dim sql_filtro As String = " where afazer_status in(" & filtro_itens & ")"
+    Dim sql_retornos As String = " OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY"
+    Dim sql_previsao_crescente As String = " ORDER BY afazer_previsao asc" & sql_retornos
+    Dim sql_previsao_decrescente As String = " ORDER BY afazer_previsao desc" & sql_retornos
+    Dim sql_ordenar_crescente As String = " ORDER BY afazer_id asc" & sql_retornos
+    Dim sql_ordenar_decrescente As String = " ORDER BY afazer_id desc" & sql_retornos
+
+    Dim sql As String = slq_parte1 + sql_parte2 + sql_ordenar_decrescente
 
     Friend Sub New()
         spanel = Principal.splitconteiner.panel1
@@ -31,18 +39,18 @@ Public Class AfazerLista
     Private Sub iniciar()
         Dim btn_adicionar As New Button
         Dim btn_atualizar As New Button
-        Dim btn_ordenar As New Button
         Dim btn_filtro As New Button
-
+        Dim btn_estender As New Button
 
         Dim cbx_filtro As New ComboBox
+        Dim panel_filtro As New Panel
 
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
 
         controles.Location = New Point(0, 0)
-        controles.Size = New Size(280, 40)
+        controles.Size = New Size(280, 50)
 
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
         conteiner.Location = New Point(0, 50)
@@ -57,21 +65,45 @@ Public Class AfazerLista
 
         btn_atualizar.BackgroundImage = img.refresh
         btn_atualizar.BackgroundImageLayout = ImageLayout.Zoom
-        btn_atualizar.Location = New Point(250, 10)
+        btn_atualizar.Location = New Point(40, 10)
         btn_atualizar.Size = New Size(26, 26)
         btn_atualizar.FlatStyle = FlatStyle.Flat
         AddHandler btn_atualizar.Click, AddressOf atualizarLista
 
-        btn_ordenar.BackgroundImage = img.sort
+        btn_ordenar.BackgroundImage = img.sort1
         btn_ordenar.BackgroundImageLayout = ImageLayout.Zoom
-        btn_ordenar.Location = New Point(220, 10)
+        btn_ordenar.Location = New Point(70, 10)
         btn_ordenar.Size = New Size(26, 26)
         btn_ordenar.FlatStyle = FlatStyle.Flat
-        AddHandler btn_ordenar.Click, AddressOf ordenar
+        AddHandler btn_ordenar.Click, AddressOf porData
 
+        btn_previsao.BackgroundImage = img.previsao1
+        btn_previsao.BackgroundImageLayout = ImageLayout.Zoom
+        btn_previsao.Location = New Point(100, 10)
+        btn_previsao.Size = New Size(26, 26)
+        btn_previsao.FlatStyle = FlatStyle.Flat
+        AddHandler btn_previsao.Click, AddressOf porPrevisao
+
+        btn_filtro.BackgroundImage = img.filtro
+        btn_filtro.BackgroundImageLayout = ImageLayout.Zoom
+        btn_filtro.Location = New Point(130, 10)
+        btn_filtro.Size = New Size(26, 26)
+        btn_filtro.FlatStyle = FlatStyle.Flat
+        AddHandler btn_filtro.Click, AddressOf filtrar
+
+        btn_estender.BackgroundImage = img.spliter3
+        btn_estender.BackgroundImageLayout = ImageLayout.Zoom
+        btn_estender.Location = New Point(250, 10)
+        btn_estender.Size = New Size(26, 26)
+        btn_estender.FlatStyle = FlatStyle.Flat
+        AddHandler btn_estender.Click, AddressOf estender
 
         controles.Controls.Add(btn_adicionar)
         controles.Controls.Add(btn_atualizar)
+        controles.Controls.Add(btn_ordenar)
+        controles.Controls.Add(btn_filtro)
+        controles.Controls.Add(btn_previsao)
+        controles.Controls.Add(btn_estender)
 
         spanel.Controls.Add(controles)
         atualizarLista()
@@ -84,10 +116,6 @@ Public Class AfazerLista
         Next
 
         Dim pagina = 0
-
-        Dim sql = "select afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status from tb_afazer "
-        Dim ordem_recentes = "ORDER BY afazer_id desc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
-        Dim ordem_previsao = "ORDER BY afazer_previsao asc OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY"
 
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
@@ -106,6 +134,7 @@ Public Class AfazerLista
             Dim temprevisao As Integer
             Dim previsao As DateTime
             Dim estado As String
+            Dim qtdNotas As Integer
             Dim panel As New Panel()
 
             id = myReader.GetInt32(0)
@@ -114,8 +143,9 @@ Public Class AfazerLista
             temprevisao = If(myReader.IsDBNull(3), 0, myReader.GetValue(3))
             previsao = If(myReader.IsDBNull(4), 0, myReader.GetValue(4))
             estado = If(myReader.IsDBNull(5), 0, myReader.GetValue(5))
+            qtdNotas = If(myReader.IsDBNull(6), 0, myReader.GetInt32(6))
 
-            Dim afazeres As New Afazer(Me, conteiner, id, fkitem, titulo, temprevisao, previsao, estado, panelY)
+            Dim afazeres As New Afazer(Me, conteiner, id, fkitem, titulo, temprevisao, previsao, estado, qtdNotas, panelY)
             panelY += 56
 
         Loop
@@ -139,7 +169,32 @@ Public Class AfazerLista
         End If
 
     End Sub
-    Private Sub ordenar()
+    Private Sub porData()
+        If (s_ordem) Then
+            sql = slq_parte1 + sql_parte2 + sql_ordenar_decrescente
+            btn_ordenar.BackgroundImage = img.sort2
+        Else
+            sql = slq_parte1 + sql_parte2 + sql_ordenar_crescente
+            btn_ordenar.BackgroundImage = img.sort1
+        End If
+        s_ordem = Not s_ordem
+        atualizarLista()
+    End Sub
+    Private Sub porPrevisao()
+        If (s_previsao) Then
+            sql = slq_parte1 + sql_parte2 + sql_previsao_crescente
+            btn_previsao.BackgroundImage = img.previsao1
+        Else
+            sql = slq_parte1 + sql_parte2 + sql_previsao_decrescente
+            btn_previsao.BackgroundImage = img.previsao2
+        End If
+        s_previsao = Not s_previsao
+        atualizarLista()
+    End Sub
+    Private Sub filtrar()
+
+    End Sub
+    Private Sub estender()
 
     End Sub
 
