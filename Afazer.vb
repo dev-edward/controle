@@ -1,14 +1,48 @@
 ﻿Public Class Afazer
-    Dim pk As Integer
-    Dim fk As Integer
-    Dim panel As New Panel()
-    Dim estado As Integer
-    Dim qtdNotas As Integer
-    Dim txt_titulo As New TextBox()
-    Dim lbl_previsao As New Label()
-    Dim btn_vermais As New Button()
-    Dim btn_notas As New Button()
-    Dim btn_estado As New Button()
+    Friend pk As Integer
+    Friend fk As Integer
+    Friend estado As Integer
+    Friend qtdNotas As Integer
+    Dim panel As New Panel
+    Dim txt_titulo As New TextBox
+    Dim lbl_previsao As New Label
+    Dim btn_vermais As New Button
+    Dim btn_notas As New Button
+    Dim btn_estado As New Button
+
+    'Friend Property valor_pk() As Integer
+    '    Get
+    '        Return pk
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        pk = value
+    '    End Set
+    'End Property
+    'Friend Property valor_fk() As Integer
+    '    Get
+    '        Return fk
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        fk = value
+    '    End Set
+    'End Property
+    'Friend Property valor_estado() As Integer
+    '    Get
+    '        Return estado
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        estado = value
+    '    End Set
+    'End Property
+    'Friend Property valor_qtdNotas() As Integer
+    '    Get
+    '        Return qtdNotas
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        qtdNotas = value
+    '        btn_notas.Text = qtdNotas
+    '    End Set
+    'End Property
 
     'fonte padrão
     Dim fonte As New Font("Microsoft Sans Serif", 12)
@@ -90,24 +124,25 @@
             If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 1 Then
                 Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
             End If
-            Dim verDetalhes = New AfazerDetalhes(pk, btn_notas)
+            Dim verDetalhes = New AfazerDetalhes(Me)
             verDetalhes.Show()
         End If
 
     End Sub
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            formsAbertos.atualnotas.atualizarNovaLista(fk, btn_notas)
+            formsAbertos.atualnotas.atualizarNovaLista(Me)
             Application.OpenForms.OfType(Of listarNotas).First().BringToFront()
         Else
-            Dim notas = New listarNotas(fk, btn_notas)
+            Dim notas = New listarNotas(Me)
             notas.Show()
         End If
     End Sub
     Private Sub btn_estado_Click()
-        Dim status As New AfazerEstado(Me, pk, estado)
+        Dim status As New AfazerEstado(Me)
         status.ShowDialog()
     End Sub
+
     Friend Sub setEstado(ByVal _estado As Integer)
         estado = _estado
         Select Case estado
@@ -122,8 +157,7 @@
         End Select
         btn_estado.BackgroundImageLayout = ImageLayout.Zoom
     End Sub
-    Friend Sub setDados(ByVal _estado As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime)
-        estado = _estado
+    Friend Sub setDados(ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime)
         setEstado(estado)
         txt_titulo.Text = _titulo
         lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
@@ -131,6 +165,5 @@
     Friend Sub setQtdNotas(ByVal _qtdNotas As Integer)
         qtdNotas = _qtdNotas
         btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
-
     End Sub
 End Class

@@ -8,16 +8,15 @@ Public Class AfazerEstado
     Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
-    Dim lista As Afazer
+    Dim afazerAtual As Afazer
 
-    Friend Sub New(ByRef _lista As Afazer, ByVal _pk As Integer, ByRef _estado As Integer)
+    Friend Sub New(ByRef _afazerAtual As Afazer)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-
-        pk = _pk
-        estadoAtual = _estado
-        lista = _lista
+        afazerAtual = _afazerAtual
+        pk = afazerAtual.pk
+        estadoAtual = afazerAtual.estado
 
     End Sub
     Private Sub estadoAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -61,7 +60,7 @@ Public Class AfazerEstado
 
             consulta.ExecuteNonQuery()
 
-            lista.setEstado(estado)
+            afazerAtual.setEstado(estado)
 
             'AfazerLista.ajustarBarra()
 

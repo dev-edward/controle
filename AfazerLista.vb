@@ -14,7 +14,7 @@ Public Class AfazerLista
     Dim s_previsao As Boolean
     Dim s_ordem As Boolean
 
-    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(nota_fkitem) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
+    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(case when nota_excluido is null or nota_excluido = 0 then 1 else null end) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
     Dim sql_parte2 As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
     Dim filtro_itens = ""
     Dim sql_filtro As String = " where afazer_status in(" & filtro_itens & ")"
@@ -40,20 +40,22 @@ Public Class AfazerLista
         Dim btn_adicionar As New Button
         Dim btn_atualizar As New Button
         Dim btn_filtro As New Button
-        Dim btn_estender As New Button
 
-        Dim cbx_filtro As New ComboBox
         Dim panel_filtro As New Panel
+        Dim cbx_status1 As New CheckBox
+        Dim cbx_status2 As New CheckBox
+        Dim cbx_status3 As New CheckBox
+        Dim cbx_status4 As New CheckBox
 
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
 
         controles.Location = New Point(0, 0)
-        controles.Size = New Size(280, 50)
+        controles.Size = New Size(280, 60)
 
         'conteiner.Location = New Point((_form.Width - conteiner.Width) / 2, 0)
-        conteiner.Location = New Point(0, 50)
+        conteiner.Location = New Point(0, 60)
         conteiner.AutoSize = True
 
         btn_adicionar.BackgroundImage = img.mais
@@ -63,47 +65,68 @@ Public Class AfazerLista
         btn_adicionar.FlatStyle = FlatStyle.Flat
         AddHandler btn_adicionar.Click, AddressOf novo
 
-        btn_atualizar.BackgroundImage = img.refresh
-        btn_atualizar.BackgroundImageLayout = ImageLayout.Zoom
-        btn_atualizar.Location = New Point(40, 10)
-        btn_atualizar.Size = New Size(26, 26)
-        btn_atualizar.FlatStyle = FlatStyle.Flat
-        AddHandler btn_atualizar.Click, AddressOf atualizarLista
-
         btn_ordenar.BackgroundImage = img.sort1
         btn_ordenar.BackgroundImageLayout = ImageLayout.Zoom
-        btn_ordenar.Location = New Point(70, 10)
+        btn_ordenar.Location = New Point(40, 10)
         btn_ordenar.Size = New Size(26, 26)
         btn_ordenar.FlatStyle = FlatStyle.Flat
         AddHandler btn_ordenar.Click, AddressOf porData
 
         btn_previsao.BackgroundImage = img.previsao1
         btn_previsao.BackgroundImageLayout = ImageLayout.Zoom
-        btn_previsao.Location = New Point(100, 10)
+        btn_previsao.Location = New Point(70, 10)
         btn_previsao.Size = New Size(26, 26)
         btn_previsao.FlatStyle = FlatStyle.Flat
         AddHandler btn_previsao.Click, AddressOf porPrevisao
 
         btn_filtro.BackgroundImage = img.filtro
         btn_filtro.BackgroundImageLayout = ImageLayout.Zoom
-        btn_filtro.Location = New Point(130, 10)
+        btn_filtro.Location = New Point(100, 10)
         btn_filtro.Size = New Size(26, 26)
         btn_filtro.FlatStyle = FlatStyle.Flat
         AddHandler btn_filtro.Click, AddressOf filtrar
 
-        btn_estender.BackgroundImage = img.spliter3
-        btn_estender.BackgroundImageLayout = ImageLayout.Zoom
-        btn_estender.Location = New Point(250, 10)
-        btn_estender.Size = New Size(26, 26)
-        btn_estender.FlatStyle = FlatStyle.Flat
-        AddHandler btn_estender.Click, AddressOf estender
+        btn_atualizar.BackgroundImage = img.refresh
+        btn_atualizar.BackgroundImageLayout = ImageLayout.Zoom
+        btn_atualizar.Location = New Point(250, 10)
+        btn_atualizar.Size = New Size(26, 26)
+        btn_atualizar.FlatStyle = FlatStyle.Flat
+        AddHandler btn_atualizar.Click, AddressOf atualizarLista
+
+        panel_filtro.Location = New Point(10, 36)
+        panel_filtro.Size = New Size(260, 20)
+
+        cbx_status1.Text = "Aguardando"
+        cbx_status2.Text = "Em andamento"
+        cbx_status3.Text = "Feito"
+        cbx_status4.Text = "Descartado"
+
+        cbx_status1.Location = New Point(0, 0)
+        cbx_status2.Location = New Point(60, 0)
+        cbx_status3.Location = New Point(120, 0)
+        cbx_status4.Location = New Point(180, 0)
+
+        cbx_status1.Size = New Size(60, 20)
+        cbx_status2.Size = New Size(60, 20)
+        cbx_status3.Size = New Size(60, 20)
+        cbx_status4.Size = New Size(60, 20)
+
+        cbx_status1.backgroundImge
+        cbx_status2.backgroundImge
+        cbx_status3.backgroundImge
+        cbx_status4.backgroundImge
+
+        panel_filtro.Controls.Add(cbx_status1)
+        panel_filtro.Controls.Add(cbx_status2)
+        panel_filtro.Controls.Add(cbx_status3)
+        panel_filtro.Controls.Add(cbx_status4)
 
         controles.Controls.Add(btn_adicionar)
         controles.Controls.Add(btn_atualizar)
         controles.Controls.Add(btn_ordenar)
-        controles.Controls.Add(btn_filtro)
         controles.Controls.Add(btn_previsao)
-        controles.Controls.Add(btn_estender)
+        controles.Controls.Add(btn_filtro)
+        controles.Controls.Add(panel_filtro)
 
         spanel.Controls.Add(controles)
         atualizarLista()
@@ -172,10 +195,10 @@ Public Class AfazerLista
     Private Sub porData()
         If (s_ordem) Then
             sql = slq_parte1 + sql_parte2 + sql_ordenar_decrescente
-            btn_ordenar.BackgroundImage = img.sort2
+            btn_ordenar.BackgroundImage = img.sort1
         Else
             sql = slq_parte1 + sql_parte2 + sql_ordenar_crescente
-            btn_ordenar.BackgroundImage = img.sort1
+            btn_ordenar.BackgroundImage = img.sort2
         End If
         s_ordem = Not s_ordem
         atualizarLista()
@@ -183,19 +206,20 @@ Public Class AfazerLista
     Private Sub porPrevisao()
         If (s_previsao) Then
             sql = slq_parte1 + sql_parte2 + sql_previsao_crescente
-            btn_previsao.BackgroundImage = img.previsao1
+            btn_previsao.BackgroundImage = img.previsao2
         Else
             sql = slq_parte1 + sql_parte2 + sql_previsao_decrescente
-            btn_previsao.BackgroundImage = img.previsao2
+            btn_previsao.BackgroundImage = img.previsao1
         End If
         s_previsao = Not s_previsao
         atualizarLista()
     End Sub
     Private Sub filtrar()
+        If s_filtro Then
 
-    End Sub
-    Private Sub estender()
+        Else
 
+        End If
     End Sub
 
 End Class

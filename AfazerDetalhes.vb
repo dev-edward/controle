@@ -35,7 +35,7 @@ Public Class AfazerDetalhes
     Dim btn_modificar As New Button
     Dim btn_salvar As New Button
 
-    Dim btnnota As Button
+    Dim afazerAtual As Afazer
 
     Dim largura1 As Integer = 150
     Dim largura2 As Integer = 260
@@ -65,12 +65,12 @@ Public Class AfazerDetalhes
 
         btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
-    Friend Sub New(ByVal _id As Integer, ByRef _btnNota As Button)
+    Friend Sub New(ByRef _afazerAtual As Afazer)
         formsAbertos.setAtualDetalhes(Me, 2)
         Me.Text = "Detalhes do afazer"
-        btnnota = _btnNota
+        afazerAtual = _afazerAtual
+        pk = afazerAtual.pk
 
-        pk = _id
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
@@ -136,8 +136,6 @@ Public Class AfazerDetalhes
         btn_cancelar.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
         btn_modificar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
         btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
-
-
 
         'configurações específicas
         lbl_id.TextAlign = ContentAlignment.MiddleCenter
@@ -293,12 +291,6 @@ Public Class AfazerDetalhes
         txt_titulo.Text = If(myReader.IsDBNull(6), "", myReader.GetString(6))
         txt_detalhes.Text = If(myReader.IsDBNull(7), "", myReader.GetString(7))
         temprevisao = If(myReader.IsDBNull(8), 0, myReader.GetValue(8))
-        dtp_previsao.Value = If(myReader.IsDBNull(9), "", myReader.GetDateTime(9))
-        cbx_estado.SelectedIndex = If(myReader.IsDBNull(10), 0, myReader.GetValue(10) - 1)
-
-        myReader.Close()
-        conexao.Close()
-
         If temprevisao > 0 Then
             lbl_semprevisao.Visible = False
             dtp_previsao.Visible = True
@@ -308,6 +300,12 @@ Public Class AfazerDetalhes
             dtp_previsao.Visible = False
             cbx_previsao.Checked = False
         End If
+        dtp_previsao.Value = If(myReader.IsDBNull(9), "", myReader.GetDateTime(9))
+        cbx_estado.SelectedIndex = If(myReader.IsDBNull(10), 0, myReader.GetValue(10) - 1)
+
+        myReader.Close()
+        conexao.Close()
+
 
     End Sub
     Private Sub DetalhesAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -320,19 +318,21 @@ Public Class AfazerDetalhes
         If cbx_previsao.Checked Then
             lbl_semprevisao.Visible = False
             dtp_previsao.Visible = True
+            dtp_previsao.Value = DateTime.Now
         ElseIf cbx_previsao.Checked = False Then
-            lbl_semprevisao.Visible = True
-            dtp_previsao.Visible = False
+            'lbl_semprevisao.Visible = True
+            'dtp_previsao.Visible = False
+            dtp_previsao.Value = DateTime.Now.AddDays(30)
         End If
 
     End Sub
 
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            formsAbertos.atualnotas.atualizarNovaLista(fk, btnnota)
+            formsAbertos.atualnotas.atualizarNovaLista(afazerAtual)
             Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
         Else
-            Dim notas = New listarNotas(fk, btnnota)
+            Dim notas = New listarNotas(afazerAtual)
             notas.Show()
         End If
     End Sub
@@ -393,7 +393,8 @@ Public Class AfazerDetalhes
 
             consulta.ExecuteNonQuery()
 
-
+            afazerAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
+            afazerAtual.setEstado(cbx_estado.SelectedIndex + 1)
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
         Finally
@@ -441,7 +442,7 @@ Public Class AfazerDetalhes
             If Application.OpenForms.OfType(Of AfazerDetalhes).Any() Then
                 Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
             End If
-            Dim verDetalhes = New AfazerDetalhes(novoid, btnnota)
+            Dim verDetalhes = New AfazerDetalhes(afazerAtual)
             verDetalhes.Show()
 
         Catch ex As Exception

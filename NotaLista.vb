@@ -9,16 +9,16 @@ Public Class listarNotas
     Dim conteiner As New Panel
     Dim txt_novaNota As New TextBox
     Dim btn_addNota As New Button
-    Dim btnNota As Button
+    Dim afazerAtual As Afazer
 
-    Friend Sub New(ByVal _fk As Integer, ByRef _btnNota As Button)
+    Friend Sub New(ByRef _afazerAtual As Afazer)
         formsAbertos.setAtualNotas(Me)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        fk = _fk
-        btnNota = _btnNota
+        afazerAtual = _afazerAtual
+        fk = afazerAtual.fk
     End Sub
 
     Private Sub listarNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -52,9 +52,9 @@ Public Class listarNotas
         atualizarLista()
 
     End Sub
-    Friend Sub atualizarNovaLista(ByVal _fk As Integer, ByRef _btnNota As Button)
-        fk = _fk
-        btnNota = _btnNota
+    Friend Sub atualizarNovaLista(ByRef _afazerAtual As Afazer)
+        afazerAtual = _afazerAtual
+        fk = afazerAtual.fk
         atualizarLista()
     End Sub
     Friend Sub atualizarLista()
@@ -79,8 +79,8 @@ Public Class listarNotas
                     Dim notas As New Nota(Me, conteiner, id, textoNota, posicaoY, num)
                     posicaoY += 44
                 Loop
-                If btnNota IsNot Nothing Then
-                    btnNota.Text = num
+                If afazerAtual IsNot Nothing Then
+                    afazerAtual.setQtdNotas(num)
                 End If
             Else
                 Dim label As New Label

@@ -24,21 +24,21 @@ Partial Class Principal
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.MenuStrip = New System.Windows.Forms.MenuStrip()
+        Me.MenuStripPrincipal = New System.Windows.Forms.MenuStrip()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
         Me.lbl_usuarioLogado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
-        'MenuStrip
+        'MenuStripPrincipal
         '
-        Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip.Name = "MenuStrip"
-        Me.MenuStrip.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
-        Me.MenuStrip.Size = New System.Drawing.Size(784, 24)
-        Me.MenuStrip.TabIndex = 5
-        Me.MenuStrip.Text = "MenuStrip"
+        Me.MenuStripPrincipal.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStripPrincipal.Name = "MenuStripPrincipal"
+        Me.MenuStripPrincipal.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
+        Me.MenuStripPrincipal.Size = New System.Drawing.Size(784, 24)
+        Me.MenuStripPrincipal.TabIndex = 5
+        Me.MenuStripPrincipal.Text = "MenuStrip"
         '
         'StatusStrip
         '
@@ -62,10 +62,10 @@ Partial Class Principal
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(784, 451)
         Me.Controls.Add(Me.StatusStrip)
-        Me.Controls.Add(Me.MenuStrip)
+        Me.Controls.Add(Me.MenuStripPrincipal)
         Me.DoubleBuffered = True
         Me.IsMdiContainer = True
-        Me.MainMenuStrip = Me.MenuStrip
+        Me.MainMenuStrip = Me.MenuStripPrincipal
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MinimumSize = New System.Drawing.Size(800, 320)
         Me.Name = "Principal"
@@ -78,7 +78,7 @@ Partial Class Principal
 
     End Sub
     Friend WithEvents ToolTip As System.Windows.Forms.ToolTip
-    Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip
+    Friend WithEvents MenuStripPrincipal As System.Windows.Forms.MenuStrip
     Friend WithEvents StatusStrip As StatusStrip
     Friend WithEvents lbl_usuarioLogado As ToolStripStatusLabel
 End Class

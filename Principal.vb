@@ -4,7 +4,10 @@ Public Class Principal
     Dim topmost_esq As Boolean
     Dim topmost_dir As Boolean
 
-    Dim ms_tmEsq As New MenuStrip
+    Dim mi_tmEsq As New ToolStripButton("", img.topmost)
+    Dim spliterModo As Integer
+    Dim mi_spliter As New ToolStripButton("", img.spliter3)
+
     Public WithEvents splitconteiner As New SplitContainer
 
     Dim LateralEsquerda As New Form With {
@@ -32,12 +35,12 @@ Public Class Principal
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If Not topmost_esq Then
-            LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+            LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
         End If
         If Not topmost_dir Then
-            LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+            LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
         End If
-        FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+        FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
 
         'LateralEsquerda.Width = 200
         'LateralDireita.Width = 200
@@ -72,11 +75,11 @@ Public Class Principal
 
         Dim mi_afazer As New ToolStripMenuItem("Afazer")
         AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
-        Me.MenuStrip.Items.Add(mi_afazer)
+        Me.MenuStripPrincipal.Items.Add(mi_afazer)
 
         Dim mi_eventos As New ToolStripMenuItem("Eventos")
         AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
-        Me.MenuStrip.Items.Add(mi_eventos)
+        Me.MenuStripPrincipal.Items.Add(mi_eventos)
 
         Dim mi_dispositivos As New ToolStripMenuItem("Dispositivos")
         Dim si_computador As New ToolStripMenuItem("Computador")
@@ -94,20 +97,20 @@ Public Class Principal
         Dim si_celular As New ToolStripMenuItem("Celular")
         mi_dispositivos.DropDownItems.Add(si_celular)
         AddHandler si_celular.Click, AddressOf si_celular_Click
-        Me.MenuStrip.Items.Add(mi_dispositivos)
+        Me.MenuStripPrincipal.Items.Add(mi_dispositivos)
 
         Dim mi_impressora As New ToolStripMenuItem("Impressora")
         AddHandler mi_impressora.Click, AddressOf mi_impressora_Click
-        Me.MenuStrip.Items.Add(mi_impressora)
+        Me.MenuStripPrincipal.Items.Add(mi_impressora)
         Dim mi_nobreak As New ToolStripMenuItem("Nobreak")
         AddHandler mi_nobreak.Click, AddressOf mi_nobreak_Click
-        Me.MenuStrip.Items.Add(mi_nobreak)
+        Me.MenuStripPrincipal.Items.Add(mi_nobreak)
         Dim mi_projetor As New ToolStripMenuItem("Projetor")
         AddHandler mi_projetor.Click, AddressOf mi_projetor_Click
-        Me.MenuStrip.Items.Add(mi_projetor)
+        Me.MenuStripPrincipal.Items.Add(mi_projetor)
         Dim mi_camera As New ToolStripMenuItem("Camera")
         AddHandler mi_camera.Click, AddressOf mi_camera_Click
-        Me.MenuStrip.Items.Add(mi_camera)
+        Me.MenuStripPrincipal.Items.Add(mi_camera)
 
         Dim mi_contas As New ToolStripMenuItem("Contas")
         Dim si_email As New ToolStripMenuItem("E-mail")
@@ -116,31 +119,29 @@ Public Class Principal
         Dim si_skype As New ToolStripMenuItem("Skype")
         mi_contas.DropDownItems.Add(si_skype)
         AddHandler si_skype.Click, AddressOf si_skype_Click
-        Me.MenuStrip.Items.Add(mi_contas)
+        Me.MenuStripPrincipal.Items.Add(mi_contas)
 
         Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
         AddHandler mi_pessoas.Click, AddressOf mi_pessoas_Click
-        Me.MenuStrip.Items.Add(mi_pessoas)
+        Me.MenuStripPrincipal.Items.Add(mi_pessoas)
         Dim mi_estoque As New ToolStripMenuItem("Estoque")
         AddHandler mi_estoque.Click, AddressOf mi_estoque_Click
-        Me.MenuStrip.Items.Add(mi_estoque)
+        Me.MenuStripPrincipal.Items.Add(mi_estoque)
         Dim mi_software As New ToolStripMenuItem("Sofware")
         AddHandler mi_software.Click, AddressOf mi_software_Click
-        Me.MenuStrip.Items.Add(mi_software)
+        Me.MenuStripPrincipal.Items.Add(mi_software)
 
         Dim mi_desconectar As New ToolStripMenuItem("Desconectar")
         AddHandler mi_desconectar.Click, AddressOf mi_desconectar_Click
-        Me.MenuStrip.Items.Add(mi_desconectar)
+        Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
         redimensionando.BackgroundImage = Image.FromFile("..\..\..\util\rezise-icon2.png")
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 
-
-
-        LateralEsquerda.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
-        LateralDireita.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
-        FormCentral.Height = Me.ClientSize.Height - (MenuStrip.Height + StatusStrip.Height) - 4
+        LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
 
         LateralEsquerda.Width = 300
         LateralDireita.Width = 300
@@ -165,21 +166,29 @@ Public Class Principal
         splitconteiner.Orientation = System.Windows.Forms.Orientation.Horizontal
         splitconteiner.Dock = DockStyle.Fill
 
-        Dim btn_topmostEsq As New Button
-        btn_topmostEsq.BackgroundImage = img.topmost
-        btn_topmostEsq.BackgroundImageLayout = ImageLayout.Zoom
-        btn_topmostEsq.Dock = DockStyle.Top
-        btn_topmostEsq.FlatStyle = FlatStyle.Flat
-        AddHandler btn_topmostEsq.Click, AddressOf topmost_esquerda
+        Dim ms_tmEsq As New ToolStrip
+        ms_tmEsq.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow
+        ms_tmEsq.GripStyle = ToolStripGripStyle.Hidden
+        ms_tmEsq.Padding = New Padding(30, ms_tmEsq.Padding.Top, 30, ms_tmEsq.Padding.Bottom)
 
-        'splitconteiner.panel2collapsed = True
+
+        AddHandler mi_tmEsq.Click, AddressOf topmost_esquerda
+        ms_tmEsq.Items.Add(mi_tmEsq)
+
+
+        mi_spliter.Alignment = ToolStripItemAlignment.Right
+        AddHandler mi_spliter.Click, AddressOf estenderSP
+        ms_tmEsq.Items.Add(mi_spliter)
+
+        'mi_tmEsq.ImageScaling = ToolStripItemImageScaling.SizeToFit
 
         splitconteiner.Panel1.AutoScroll = True
         splitconteiner.Panel2.AutoScroll = True
 
-        LateralEsquerda.Controls.Add(btn_topmostEsq)
         LateralEsquerda.Controls.Add(splitconteiner)
+        LateralEsquerda.Controls.Add(ms_tmEsq)
         Dim listarAfazer = New AfazerLista(splitconteiner.Panel1)
+        ms_tmEsq.Dock = DockStyle.Top
 
     End Sub
 
@@ -266,12 +275,30 @@ Public Class Principal
             LateralEsquerda.MdiParent = Me
             LateralEsquerda.Location = New Point(0, 0)
         Else
-            LateralEsquerda.FormBorderStyle = FormBorderStyle.FixedSingle
             LateralEsquerda.MdiParent = Nothing
+            LateralEsquerda.FormBorderStyle = FormBorderStyle.FixedSingle
             LateralEsquerda.TopMost = True
         End If
         topmost_esq = Not topmost_esq
     End Sub
+    Private Sub estenderSP()
+        spliterModo += 1
+        Select Case spliterModo
+            Case 1
+                splitconteiner.Panel2Collapsed = True
+                mi_spliter.Image = img.spliter2
+            Case 2
+                splitconteiner.Panel2Collapsed = False
+                mi_spliter.Image = img.spliter1
+            Case 3
+                splitconteiner.Panel1Collapsed = True
+                mi_spliter.Image = img.spliter2
+            Case 4
+                splitconteiner.Panel1Collapsed = False
+                mi_spliter.Image = img.spliter3
+                spliterModo = 0
+        End Select
 
+    End Sub
 
 End Class
