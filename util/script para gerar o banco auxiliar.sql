@@ -171,11 +171,18 @@ CREATE TABLE tb_software
 	software_ultatualizacao DATETIME
 )
 CREATE TABLE tb_notaitem
-(
+(/*informações da tabela inseridas*/
 	nota_id INT PRIMARY KEY IDENTITY,
 	nota_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	nota_nota NVARCHAR(256),
 	nota_excluido TINYINT
+)
+CREATE table tb_notapessoal
+(/*informações da tabela inseridas*/
+	nt_id INT PRIMARY KEY IDENTITY,
+	nt_fkuser INT FOREIGN KEY REFERENCES tb_usuario(usuario_id) NOT NULL,
+	nt_nota NVARCHAR(256),
+	nt_excluido TINYINT
 )
 CREATE TABLE tb_pessoaitem
 (
@@ -273,6 +280,13 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_fkitem','Chave extrangeira correspondente ao item que a nota pertenca','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_nota','A anotação','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
+
+/** Tabela de notas pessoais **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_id','Chave primaria da tabela ','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_fkuser','Chave extrangeira correspondente ao usuário que a nota pertence','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_nota','A anotação','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
 /** Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)

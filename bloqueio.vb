@@ -1,5 +1,5 @@
 ﻿Public Class bloqueio
-    Dim skValor As Microsoft.Win32.RegistryKey
+    Dim skValor As String
     Dim skParent As Microsoft.Win32.RegistryKey
     Dim fontBT = New Font("Arial", 72, FontStyle.Bold)
     Dim recadoBT As String
@@ -30,19 +30,19 @@
         skValor = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", Nothing)
 
         If (skValor IsNot Nothing) Then
+            skParent = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\", True)
+            skParent.CreateSubKey("PersonalizationCSP", True)
+            My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", "\backgroundBT\newImg.jpg")
+            skValor = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", Nothing)
             MsgBox(skValor)
+
         Else
             Try
-                skParent = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\", True)
-                skParent.CreateSubKey("PersonalizationCSP", True)
-                'My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", "\backgroundBT\newImg.jpg")
             Catch ex As Exception
                 MsgBox(ex)
             End Try
 
         End If
-
-
 
     End Sub
 

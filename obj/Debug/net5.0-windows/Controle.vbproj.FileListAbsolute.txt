@@ -63,3 +63,4 @@ C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.A
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerDetalhes.resources
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.AfazerEstado.resources
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.bloqueio.resources
+C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.bloqueio.resources

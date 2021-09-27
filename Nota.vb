@@ -2,15 +2,14 @@
 Public Class Nota
     Private conexao As SqlConnection
     Private consulta As SqlCommand
-    Private myReader As SqlDataReader
-    Dim parent As listarNotas
     Dim panel As New Panel
     Dim lbl_notaNum As New Label
     Dim txt_nota As New RichTextBox
     Dim btn_excluir As New Button
 
     Dim idNota As Integer
-    Friend Sub New(ByRef _parent As listarNotas, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer)
+
+    Friend Sub New(ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer, Optional ByVal _notapessoal As Boolean = False)
 
         idNota = _id
 
@@ -18,13 +17,13 @@ Public Class Nota
         panel.Location = New Point(10, _posicaoY)
         lbl_notaNum.Location = New Point(0, 5)
         txt_nota.Location = New Point(25, 0)
-        btn_excluir.Location = New Point(230, 0)
+        btn_excluir.Location = New Point(230, 12)
 
         'tamanho dos controles
         panel.Size = New Size(280, 40)
         lbl_notaNum.Size = New Size(20, 30)
         txt_nota.Size = New Size(200, 40)
-        btn_excluir.Size = New Size(50, 40)
+        btn_excluir.Size = New Size(26, 26)
 
         'especuficos
         lbl_notaNum.ForeColor = Color.FromArgb(255, 15, 15, 15)
@@ -39,14 +38,19 @@ Public Class Nota
         btn_excluir.FlatStyle = FlatStyle.Popup
         txt_nota.BackColor = Color.FromArgb(255, 230, 230, 240)
 
-        AddHandler btn_excluir.Click, AddressOf excluir
+        If _notapessoal Then
+            AddHandler btn_excluir.Click, AddressOf excluirPessoal
+        Else
+            AddHandler btn_excluir.Click, AddressOf excluir
+        End If
+
 
         panel.Controls.Add(lbl_notaNum)
         panel.Controls.Add(txt_nota)
         panel.Controls.Add(btn_excluir)
         _conteiner.Controls.Add(panel)
 
-        parent = _parent
+        'parent = _parent
 
     End Sub
 
@@ -64,7 +68,24 @@ Public Class Nota
             conexao.Close()
         End Try
 
-        parent.atualizarLista()
+        classesAbertas.atualnotas.atualizarLista()
+
+    End Sub
+    Friend Sub excluirPessoal()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "update tb_notapessoal set nt_excluido = 1 where nt_id = " & idNota
+            conexao.Open()
+            consulta.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao excluir nota: " & ex.Message, "Insert Records")
+        Finally
+            conexao.Close()
+        End Try
+
+        classesAbertas.atualntpessoal.atualizarLista()
 
     End Sub
 

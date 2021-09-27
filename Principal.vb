@@ -196,7 +196,8 @@ Public Class Principal
 
         LateralEsquerda.Controls.Add(splitconteiner)
         LateralEsquerda.Controls.Add(ms_tmEsq)
-        Dim listarAfazer = New AfazerLista(splitconteiner.Panel1)
+        Dim listarAfazer = New AfazerLista()
+        Dim listarNotasPessoais = New NotaPessoal()
         ms_tmEsq.Dock = DockStyle.Top
 
     End Sub

@@ -188,11 +188,11 @@ Public Class AfazerLista
         conexao.Close()
     End Sub
     Private Sub novo()
-        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 1 Then
+        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 1 Then
             Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
 
         Else
-            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 2 Then
+            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 2 Then
                 Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
             End If
             Dim verDetalhes = New AfazerDetalhes()

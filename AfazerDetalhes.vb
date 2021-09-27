@@ -49,7 +49,7 @@ Public Class AfazerDetalhes
     Dim fontemenor As New Font("Microsoft Sans Serif", 8)
 
     Friend Sub New()
-        formsAbertos.setAtualDetalhes(Me, 1)
+        classesAbertas.setAtualDetalhes(Me, 1)
         Me.Text = "Cadastrar nova afazer"
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
@@ -66,7 +66,7 @@ Public Class AfazerDetalhes
         btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
     Friend Sub New(ByRef _afazerAtual As Afazer)
-        formsAbertos.setAtualDetalhes(Me, 2)
+        classesAbertas.setAtualDetalhes(Me, 2)
         Me.Text = "Detalhes do afazer"
         afazerAtual = _afazerAtual
         pk = afazerAtual.pk
@@ -329,7 +329,7 @@ Public Class AfazerDetalhes
 
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            formsAbertos.atualnotas.atualizarNovaLista(afazerAtual)
+            classesAbertas.atualnotas.atualizarNovaLista(afazerAtual)
             Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
         Else
             Dim notas = New listarNotas(afazerAtual)

@@ -117,11 +117,11 @@
     End Sub
     Private Sub btn_vermais_Click()
 
-        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 2 Then
-            formsAbertos.atualdetalhes.atualizarDados(pk)
+        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 2 Then
+            classesAbertas.atualdetalhes.atualizarDados(pk)
             Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
         Else
-            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And formsAbertos.cadastroOUdetalhes = 1 Then
+            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 1 Then
                 Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
             End If
             Dim verDetalhes = New AfazerDetalhes(Me)
@@ -131,7 +131,7 @@
     End Sub
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            formsAbertos.atualnotas.atualizarNovaLista(Me)
+            classesAbertas.atualnotas.atualizarNovaLista(Me)
             Application.OpenForms.OfType(Of listarNotas).First().BringToFront()
         Else
             Dim notas = New listarNotas(Me)
