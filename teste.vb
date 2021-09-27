@@ -1,4 +1,13 @@
 ﻿Public Class teste
+    Dim fontBT = New Font("Arial", 72, FontStyle.Bold)
+    Dim recadoBT As String
+    Dim brushBT As New SolidBrush(Color.FromArgb(140, 200, 200, 255))
+
+
+    Dim Format As New StringFormat With {
+        .LineAlignment = StringAlignment.Center,
+        .Alignment = StringAlignment.Center
+    }
     Private Sub Button1_Click(sender As Object, e As EventArgs)
 
     End Sub
@@ -8,22 +17,20 @@
     End Sub
 
     Private Sub teste_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim bmpBG = Bitmap.FromFile("..\..\..\img\background\orig.jpg")
+        Dim newImage = New Bitmap(bmpBG.Width, bmpBG.Height)
+        Dim gr = Graphics.FromImage(newImage)
+        Dim rectBT1 As New RectangleF(0, 200, bmpBG.Width, 200)
+        Dim rectBT2 As New RectangleF(200, 600, bmpBG.Width - 400, 900)
+        recadoBT = ""
+        'txt_mensagem.Text
 
-        'Dim bmp = Bitmap.FromFile("orig.jpg")
-        'Dim newImage = New Bitmap(bmp.Width, bmp.Height)
-        'Dim font = New Font("Arial", 64, FontStyle.Bold)
-        'Dim gr = Graphics.FromImage(newImage)
+        gr.DrawImageUnscaled(bmpBG, 0, 0)
+        gr.DrawString("Aviso", fontBT, brushBT, rectBT1, Format)
 
-        'Dim Format = New StringFormat()
-        'Format.LineAlignment = StringAlignment.Center
-        'Format.Alignment = StringAlignment.Center
+        gr.DrawString(recadoBT, fontBT, brushBT, rectBT2, Format)
 
-        'gr.DrawImageUnscaled(bmp, 0, 0)
-        'gr.DrawString("this is the added text", font, Brushes.Aquamarine,
-        'New RectangleF(0, 100, 500, 100), Format)
-
-
-        'newImage.Save("newImg.jpg")
+        newImage.Save("..\..\..\img\background\newImg.jpg")
     End Sub
 
 End Class

@@ -1,4 +1,5 @@
 ﻿Public Class img
+    Public Shared bg = Image.FromFile("..\..\..\img\background\orig.jpg")
 
     Public Shared vermais = Image.FromFile("..\..\..\img\64x64\zoom-with-plus-sign.png")
     Public Shared notas = Image.FromFile("..\..\..\img\64x64\notas.png")

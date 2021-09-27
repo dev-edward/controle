@@ -4,7 +4,15 @@ Public Class Principal
     Dim topmost_esq As Boolean
     Dim topmost_dir As Boolean
 
+    Dim ms_tmEsq As New ToolStrip With {
+        .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
+        .GripStyle = ToolStripGripStyle.Hidden,
+        .Padding = New Padding(30, 0, 30, 0),
+        .BackColor = Color.FromArgb(255, 50, 108, 122)
+    }
+
     Dim mi_tmEsq As New ToolStripButton("", img.topmost)
+
     Dim spliterModo As Integer
     Dim mi_spliter As New ToolStripButton("", img.spliter3)
 
@@ -31,6 +39,35 @@ Public Class Principal
             .AutoScroll = True
         }
     Dim redimensionando = New Panel
+
+    Dim mi_afazer As New ToolStripMenuItem("Afazer")
+
+    Dim mi_eventos As New ToolStripMenuItem("Eventos")
+
+    Dim mi_dispositivos As New ToolStripMenuItem("Dispositivos")
+    Dim si_computador As New ToolStripMenuItem("Computador")
+    Dim si_notebook As New ToolStripMenuItem("Notebook")
+    Dim si_chromebook As New ToolStripMenuItem("Chromebook")
+    Dim si_tablet As New ToolStripMenuItem("Tablet")
+    Dim si_celular As New ToolStripMenuItem("Celular")
+
+    Dim mi_impressora As New ToolStripMenuItem("Impressora")
+    Dim mi_nobreak As New ToolStripMenuItem("Nobreak")
+    Dim mi_projetor As New ToolStripMenuItem("Projetor")
+    Dim mi_camera As New ToolStripMenuItem("Camera")
+
+    Dim mi_contas As New ToolStripMenuItem("Contas")
+    Dim si_email As New ToolStripMenuItem("E-mail")
+    Dim si_skype As New ToolStripMenuItem("Skype")
+
+    Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
+    Dim mi_estoque As New ToolStripMenuItem("Estoque")
+    Dim mi_software As New ToolStripMenuItem("Sofware")
+    Dim mi_bloquear As New ToolStripMenuItem("Bloquear")
+
+    Dim mi_desconectar As New ToolStripMenuItem("Desconectar")
+
+
 
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -65,79 +102,42 @@ Public Class Principal
     End Sub
 
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'itens do menustrip 
+        mi_dispositivos.DropDownItems.Add(si_computador)
+        mi_dispositivos.DropDownItems.Add(si_notebook)
+        mi_dispositivos.DropDownItems.Add(si_chromebook)
+        mi_dispositivos.DropDownItems.Add(si_tablet)
+        mi_dispositivos.DropDownItems.Add(si_celular)
+        mi_contas.DropDownItems.Add(si_email)
+        mi_contas.DropDownItems.Add(si_skype)
+        AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
+        AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
+        AddHandler si_computador.Click, AddressOf si_computador_Click
+        AddHandler si_notebook.Click, AddressOf si_notebook_Click
+        AddHandler si_chromebook.Click, AddressOf si_chromebook_Click
+        AddHandler si_tablet.Click, AddressOf si_tablet_Click
+        AddHandler si_celular.Click, AddressOf si_celular_Click
+        AddHandler mi_impressora.Click, AddressOf mi_impressora_Click
+        AddHandler mi_nobreak.Click, AddressOf mi_nobreak_Click
+        AddHandler mi_projetor.Click, AddressOf mi_projetor_Click
+        AddHandler mi_camera.Click, AddressOf mi_camera_Click
+        AddHandler si_email.Click, AddressOf si_email_Click
+        AddHandler si_skype.Click, AddressOf si_skype_Click
+        AddHandler mi_pessoas.Click, AddressOf mi_pessoas_Click
+        AddHandler mi_estoque.Click, AddressOf mi_estoque_Click
+        AddHandler mi_software.Click, AddressOf mi_software_Click
+        AddHandler mi_bloquear.Click, AddressOf mi_bloquear_Click
+        AddHandler mi_desconectar.Click, AddressOf mi_desconectar_Click
+
+        redimensionando.BackgroundImage = Image.FromFile("..\..\..\util\rezise-icon2.png")
+        redimensionando.BackgroundImageLayout = ImageLayout.Center
+        redimensionando.Dock = DockStyle.Fill
+
         If usuario.usuario_logado = False Then
             Dim Login = New Login
             Login.ShowDialog()
             'teste.ShowDialog()
         End If
-
-        lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
-
-        Dim mi_afazer As New ToolStripMenuItem("Afazer")
-        AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
-        Me.MenuStripPrincipal.Items.Add(mi_afazer)
-
-        Dim mi_eventos As New ToolStripMenuItem("Eventos")
-        AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
-        Me.MenuStripPrincipal.Items.Add(mi_eventos)
-
-        Dim mi_dispositivos As New ToolStripMenuItem("Dispositivos")
-        Dim si_computador As New ToolStripMenuItem("Computador")
-        mi_dispositivos.DropDownItems.Add(si_computador)
-        AddHandler si_computador.Click, AddressOf si_computador_Click
-        Dim si_notebook As New ToolStripMenuItem("Notebook")
-        mi_dispositivos.DropDownItems.Add(si_notebook)
-        AddHandler si_notebook.Click, AddressOf si_notebook_Click
-        Dim si_chromebook As New ToolStripMenuItem("Chromebook")
-        mi_dispositivos.DropDownItems.Add(si_chromebook)
-        AddHandler si_chromebook.Click, AddressOf si_chromebook_Click
-        Dim si_tablet As New ToolStripMenuItem("Tablet")
-        mi_dispositivos.DropDownItems.Add(si_tablet)
-        AddHandler si_tablet.Click, AddressOf si_tablet_Click
-        Dim si_celular As New ToolStripMenuItem("Celular")
-        mi_dispositivos.DropDownItems.Add(si_celular)
-        AddHandler si_celular.Click, AddressOf si_celular_Click
-        Me.MenuStripPrincipal.Items.Add(mi_dispositivos)
-
-        Dim mi_impressora As New ToolStripMenuItem("Impressora")
-        AddHandler mi_impressora.Click, AddressOf mi_impressora_Click
-        Me.MenuStripPrincipal.Items.Add(mi_impressora)
-        Dim mi_nobreak As New ToolStripMenuItem("Nobreak")
-        AddHandler mi_nobreak.Click, AddressOf mi_nobreak_Click
-        Me.MenuStripPrincipal.Items.Add(mi_nobreak)
-        Dim mi_projetor As New ToolStripMenuItem("Projetor")
-        AddHandler mi_projetor.Click, AddressOf mi_projetor_Click
-        Me.MenuStripPrincipal.Items.Add(mi_projetor)
-        Dim mi_camera As New ToolStripMenuItem("Camera")
-        AddHandler mi_camera.Click, AddressOf mi_camera_Click
-        Me.MenuStripPrincipal.Items.Add(mi_camera)
-
-        Dim mi_contas As New ToolStripMenuItem("Contas")
-        Dim si_email As New ToolStripMenuItem("E-mail")
-        mi_contas.DropDownItems.Add(si_email)
-        AddHandler si_email.Click, AddressOf si_email_Click
-        Dim si_skype As New ToolStripMenuItem("Skype")
-        mi_contas.DropDownItems.Add(si_skype)
-        AddHandler si_skype.Click, AddressOf si_skype_Click
-        Me.MenuStripPrincipal.Items.Add(mi_contas)
-
-        Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
-        AddHandler mi_pessoas.Click, AddressOf mi_pessoas_Click
-        Me.MenuStripPrincipal.Items.Add(mi_pessoas)
-        Dim mi_estoque As New ToolStripMenuItem("Estoque")
-        AddHandler mi_estoque.Click, AddressOf mi_estoque_Click
-        Me.MenuStripPrincipal.Items.Add(mi_estoque)
-        Dim mi_software As New ToolStripMenuItem("Sofware")
-        AddHandler mi_software.Click, AddressOf mi_software_Click
-        Me.MenuStripPrincipal.Items.Add(mi_software)
-
-        Dim mi_desconectar As New ToolStripMenuItem("Desconectar")
-        AddHandler mi_desconectar.Click, AddressOf mi_desconectar_Click
-        Me.MenuStripPrincipal.Items.Add(mi_desconectar)
-
-        redimensionando.BackgroundImage = Image.FromFile("..\..\..\util\rezise-icon2.png")
-        redimensionando.BackgroundImageLayout = ImageLayout.Center
-        redimensionando.Dock = DockStyle.Fill
 
         LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
         LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
@@ -166,15 +166,24 @@ Public Class Principal
         splitconteiner.Orientation = System.Windows.Forms.Orientation.Horizontal
         splitconteiner.Dock = DockStyle.Fill
 
-        Dim ms_tmEsq As New ToolStrip
-        ms_tmEsq.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow
-        ms_tmEsq.GripStyle = ToolStripGripStyle.Hidden
-        ms_tmEsq.Padding = New Padding(30, ms_tmEsq.Padding.Top, 30, ms_tmEsq.Padding.Bottom)
+        lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
+        Me.MenuStripPrincipal.Items.Add(mi_afazer)
+        Me.MenuStripPrincipal.Items.Add(mi_eventos)
+        Me.MenuStripPrincipal.Items.Add(mi_dispositivos)
+        Me.MenuStripPrincipal.Items.Add(mi_impressora)
+        Me.MenuStripPrincipal.Items.Add(mi_nobreak)
+        Me.MenuStripPrincipal.Items.Add(mi_projetor)
+        Me.MenuStripPrincipal.Items.Add(mi_camera)
+        Me.MenuStripPrincipal.Items.Add(mi_contas)
+        Me.MenuStripPrincipal.Items.Add(mi_pessoas)
+        Me.MenuStripPrincipal.Items.Add(mi_estoque)
+        Me.MenuStripPrincipal.Items.Add(mi_software)
+        Me.MenuStripPrincipal.Items.Add(mi_bloquear)
+        Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
         AddHandler mi_tmEsq.Click, AddressOf topmost_esquerda
         ms_tmEsq.Items.Add(mi_tmEsq)
-
 
         mi_spliter.Alignment = ToolStripItemAlignment.Right
         AddHandler mi_spliter.Click, AddressOf estenderSP
@@ -263,6 +272,10 @@ Public Class Principal
     End Sub
     Private Sub mi_software_Click()
         MsgBox("mi_software")
+    End Sub
+    Private Sub mi_bloquear_Click()
+        Dim bloqueio = New bloqueio
+        bloqueio.ShowDialog()
     End Sub
     Private Sub mi_desconectar_Click()
         usuario.usuario_logado = False

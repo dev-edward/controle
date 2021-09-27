@@ -27,7 +27,9 @@ Partial Class teste
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -39,6 +41,10 @@ Partial Class teste
         Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.CheckBox1)
         Me.SplitContainer1.Size = New System.Drawing.Size(541, 329)
         Me.SplitContainer1.SplitterDistance = 132
         Me.SplitContainer1.TabIndex = 1
@@ -72,6 +78,17 @@ Partial Class teste
         Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
         Me.ToolStripButton2.Text = "ToolStripButton2"
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.CheckBox1.BackgroundImage = CType(resources.GetObject("CheckBox1.BackgroundImage"), System.Drawing.Image)
+        Me.CheckBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.CheckBox1.Location = New System.Drawing.Point(362, 68)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(50, 20)
+        Me.CheckBox1.TabIndex = 0
+        Me.CheckBox1.UseVisualStyleBackColor = False
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -86,6 +103,7 @@ Partial Class teste
         Me.Name = "teste"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = " "
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
@@ -98,4 +116,5 @@ Partial Class teste
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

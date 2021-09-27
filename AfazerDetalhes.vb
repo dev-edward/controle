@@ -320,8 +320,8 @@ Public Class AfazerDetalhes
             dtp_previsao.Visible = True
             dtp_previsao.Value = DateTime.Now
         ElseIf cbx_previsao.Checked = False Then
-            'lbl_semprevisao.Visible = True
-            'dtp_previsao.Visible = False
+            lbl_semprevisao.Visible = True
+            dtp_previsao.Visible = False
             dtp_previsao.Value = DateTime.Now.AddDays(30)
         End If
 

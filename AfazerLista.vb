@@ -14,9 +14,17 @@ Public Class AfazerLista
     Dim s_previsao As Boolean
     Dim s_ordem As Boolean
 
-    Dim slq_parte1 As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,COUNT(case when nota_excluido is null or nota_excluido = 0 then 1 else null end) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
-    Dim sql_parte2 As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
-    Dim filtro_itens = ""
+    Dim panel_filtro As New Panel
+    Dim cbx_status1 As New CheckBox
+    Dim cbx_status2 As New CheckBox
+    Dim cbx_status3 As New CheckBox
+    Dim cbx_status4 As New CheckBox
+
+    Dim slq_select As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,sum(case when nota_fkitem is not null and nota_excluido is null then 1 else 0 end) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
+    Dim sql_groupby As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
+    Dim sql_ordem As String
+
+    Dim filtro_itens = "0,1,2,3,4"
     Dim sql_filtro As String = " where afazer_status in(" & filtro_itens & ")"
     Dim sql_retornos As String = " OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY"
     Dim sql_previsao_crescente As String = " ORDER BY afazer_previsao asc" & sql_retornos
@@ -24,7 +32,7 @@ Public Class AfazerLista
     Dim sql_ordenar_crescente As String = " ORDER BY afazer_id asc" & sql_retornos
     Dim sql_ordenar_decrescente As String = " ORDER BY afazer_id desc" & sql_retornos
 
-    Dim sql As String = slq_parte1 + sql_parte2 + sql_ordenar_decrescente
+    Dim sql As String
 
     Friend Sub New()
         spanel = Principal.splitconteiner.panel1
@@ -40,12 +48,6 @@ Public Class AfazerLista
         Dim btn_adicionar As New Button
         Dim btn_atualizar As New Button
         Dim btn_filtro As New Button
-
-        Dim panel_filtro As New Panel
-        Dim cbx_status1 As New CheckBox
-        Dim cbx_status2 As New CheckBox
-        Dim cbx_status3 As New CheckBox
-        Dim cbx_status4 As New CheckBox
 
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
@@ -93,28 +95,33 @@ Public Class AfazerLista
         btn_atualizar.FlatStyle = FlatStyle.Flat
         AddHandler btn_atualizar.Click, AddressOf atualizarLista
 
-        panel_filtro.Location = New Point(10, 36)
-        panel_filtro.Size = New Size(260, 20)
-
-        cbx_status1.Text = "Aguardando"
-        cbx_status2.Text = "Em andamento"
-        cbx_status3.Text = "Feito"
-        cbx_status4.Text = "Descartado"
+        panel_filtro.Location = New Point(40, 34)
+        panel_filtro.Size = New Size(200, 20)
+        panel_filtro.Visible = False
 
         cbx_status1.Location = New Point(0, 0)
-        cbx_status2.Location = New Point(60, 0)
-        cbx_status3.Location = New Point(120, 0)
-        cbx_status4.Location = New Point(180, 0)
+        cbx_status2.Location = New Point(50, 0)
+        cbx_status3.Location = New Point(100, 0)
+        cbx_status4.Location = New Point(150, 0)
 
-        cbx_status1.Size = New Size(60, 20)
-        cbx_status2.Size = New Size(60, 20)
-        cbx_status3.Size = New Size(60, 20)
-        cbx_status4.Size = New Size(60, 20)
+        cbx_status1.Size = New Size(50, 20)
+        cbx_status2.Size = New Size(50, 20)
+        cbx_status3.Size = New Size(50, 20)
+        cbx_status4.Size = New Size(50, 20)
 
-        cbx_status1.backgroundImge
-        cbx_status2.backgroundImge
-        cbx_status3.backgroundImge
-        cbx_status4.backgroundImge
+        cbx_status1.Checked = True
+        cbx_status2.Checked = True
+        cbx_status3.Checked = True
+        cbx_status4.Checked = True
+
+        cbx_status1.BackgroundImage = img.aguardando
+        cbx_status2.BackgroundImage = img.andamento
+        cbx_status3.BackgroundImage = img.feito
+        cbx_status4.BackgroundImage = img.descartado
+        cbx_status1.BackgroundImageLayout = ImageLayout.Zoom
+        cbx_status2.BackgroundImageLayout = ImageLayout.Zoom
+        cbx_status3.BackgroundImageLayout = ImageLayout.Zoom
+        cbx_status4.BackgroundImageLayout = ImageLayout.Zoom
 
         panel_filtro.Controls.Add(cbx_status1)
         panel_filtro.Controls.Add(cbx_status2)
@@ -133,6 +140,7 @@ Public Class AfazerLista
 
     End Sub
     Friend Sub atualizarLista()
+        sql = slq_select + sql_filtro + sql_groupby + sql_ordem
         conteiner.Controls.Clear()
         For Each ctrl As Control In conteiner.Controls
             ctrl.Dispose()
@@ -194,10 +202,10 @@ Public Class AfazerLista
     End Sub
     Private Sub porData()
         If (s_ordem) Then
-            sql = slq_parte1 + sql_parte2 + sql_ordenar_decrescente
+            sql_ordem = sql_ordenar_decrescente
             btn_ordenar.BackgroundImage = img.sort1
         Else
-            sql = slq_parte1 + sql_parte2 + sql_ordenar_crescente
+            sql_ordem = sql_ordenar_crescente
             btn_ordenar.BackgroundImage = img.sort2
         End If
         s_ordem = Not s_ordem
@@ -205,10 +213,10 @@ Public Class AfazerLista
     End Sub
     Private Sub porPrevisao()
         If (s_previsao) Then
-            sql = slq_parte1 + sql_parte2 + sql_previsao_crescente
+            sql_ordem = sql_previsao_crescente
             btn_previsao.BackgroundImage = img.previsao2
         Else
-            sql = slq_parte1 + sql_parte2 + sql_previsao_decrescente
+            sql_ordem = sql_previsao_decrescente
             btn_previsao.BackgroundImage = img.previsao1
         End If
         s_previsao = Not s_previsao
@@ -216,10 +224,23 @@ Public Class AfazerLista
     End Sub
     Private Sub filtrar()
         If s_filtro Then
+            filtro_itens = "0"
+            filtro_itens = If(cbx_status1.Checked, filtro_itens + ",1", filtro_itens)
+            filtro_itens = If(cbx_status2.Checked, filtro_itens + ",2", filtro_itens)
+            filtro_itens = If(cbx_status3.Checked, filtro_itens + ",3", filtro_itens)
+            filtro_itens = If(cbx_status4.Checked, filtro_itens + ",4", filtro_itens)
+            'If cbx_status1.Checked Or cbx_status2.Checked Or cbx_status3.Checked Or cbx_status4.Checked Then
 
+            'End If
+            sql_filtro = " where afazer_status in(" & filtro_itens & ")"
+            panel_filtro.Visible = False
+
+            atualizarLista()
         Else
-
+                panel_filtro.Visible = True
         End If
+        s_filtro = Not s_filtro
+
     End Sub
 
 End Class
