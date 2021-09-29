@@ -23,11 +23,12 @@ Partial Class bloqueio
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.txt_mensagem = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btn_bloquear = New System.Windows.Forms.Button()
         Me.rbt_outro = New System.Windows.Forms.RadioButton()
         Me.rbt_almoco = New System.Windows.Forms.RadioButton()
         Me.rbt_banheiro = New System.Windows.Forms.RadioButton()
         Me.rbt_setor = New System.Windows.Forms.RadioButton()
+        Me.btn_voltei = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'txt_mensagem
@@ -38,14 +39,18 @@ Partial Class bloqueio
         Me.txt_mensagem.Size = New System.Drawing.Size(380, 90)
         Me.txt_mensagem.TabIndex = 0
         '
-        'Button1
+        'btn_bloquear
         '
-        Me.Button1.Location = New System.Drawing.Point(150, 150)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(100, 30)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Bloquear tela"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_bloquear.BackColor = System.Drawing.Color.Tomato
+        Me.btn_bloquear.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btn_bloquear.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.btn_bloquear.ForeColor = System.Drawing.SystemColors.ButtonFace
+        Me.btn_bloquear.Location = New System.Drawing.Point(150, 150)
+        Me.btn_bloquear.Name = "btn_bloquear"
+        Me.btn_bloquear.Size = New System.Drawing.Size(100, 30)
+        Me.btn_bloquear.TabIndex = 1
+        Me.btn_bloquear.Text = "Bloquear"
+        Me.btn_bloquear.UseVisualStyleBackColor = False
         '
         'rbt_outro
         '
@@ -91,20 +96,35 @@ Partial Class bloqueio
         Me.rbt_setor.Text = "Setor"
         Me.rbt_setor.UseVisualStyleBackColor = True
         '
+        'btn_voltei
+        '
+        Me.btn_voltei.BackColor = System.Drawing.Color.SteelBlue
+        Me.btn_voltei.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btn_voltei.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.btn_voltei.ForeColor = System.Drawing.SystemColors.ButtonFace
+        Me.btn_voltei.Location = New System.Drawing.Point(256, 150)
+        Me.btn_voltei.Name = "btn_voltei"
+        Me.btn_voltei.Size = New System.Drawing.Size(100, 30)
+        Me.btn_voltei.TabIndex = 6
+        Me.btn_voltei.Text = "Voltei"
+        Me.btn_voltei.UseVisualStyleBackColor = False
+        '
         'bloqueio
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(404, 191)
+        Me.Controls.Add(Me.btn_voltei)
         Me.Controls.Add(Me.rbt_setor)
         Me.Controls.Add(Me.rbt_banheiro)
         Me.Controls.Add(Me.rbt_almoco)
         Me.Controls.Add(Me.rbt_outro)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_bloquear)
         Me.Controls.Add(Me.txt_mensagem)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "bloqueio"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Bloqueio de tela"
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -112,9 +132,10 @@ Partial Class bloqueio
     End Sub
 
     Friend WithEvents txt_mensagem As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btn_bloquear As Button
     Friend WithEvents rbt_outro As RadioButton
     Friend WithEvents rbt_almoco As RadioButton
     Friend WithEvents rbt_banheiro As RadioButton
     Friend WithEvents rbt_setor As RadioButton
+    Friend WithEvents btn_voltei As Button
 End Class

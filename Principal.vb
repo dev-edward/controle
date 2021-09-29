@@ -4,11 +4,17 @@ Public Class Principal
     Dim topmost_esq As Boolean
     Dim topmost_dir As Boolean
 
-    Dim ms_tmEsq As New ToolStrip With {
+    Dim ts_Esq As New ToolStrip With {
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
         .GripStyle = ToolStripGripStyle.Hidden,
         .Padding = New Padding(30, 0, 30, 0),
-        .BackColor = Color.FromArgb(255, 50, 108, 122)
+        .BackColor = Color.FromArgb(255, 250, 209, 183)
+    }
+    Dim ts_Dir As New ToolStrip With {
+        .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
+        .GripStyle = ToolStripGripStyle.Hidden,
+        .Padding = New Padding(30, 0, 30, 0),
+        .BackColor = Color.FromArgb(255, 250, 209, 183)
     }
 
     Dim mi_tmEsq As New ToolStripButton("", img.topmost)
@@ -183,11 +189,11 @@ Public Class Principal
         Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
         AddHandler mi_tmEsq.Click, AddressOf topmost_esquerda
-        ms_tmEsq.Items.Add(mi_tmEsq)
+        ts_Esq.Items.Add(mi_tmEsq)
 
         mi_spliter.Alignment = ToolStripItemAlignment.Right
         AddHandler mi_spliter.Click, AddressOf estenderSP
-        ms_tmEsq.Items.Add(mi_spliter)
+        ts_Esq.Items.Add(mi_spliter)
 
         'mi_tmEsq.ImageScaling = ToolStripItemImageScaling.SizeToFit
 
@@ -195,10 +201,10 @@ Public Class Principal
         splitconteiner.Panel2.AutoScroll = True
 
         LateralEsquerda.Controls.Add(splitconteiner)
-        LateralEsquerda.Controls.Add(ms_tmEsq)
+        LateralEsquerda.Controls.Add(ts_Esq)
         Dim listarAfazer = New AfazerLista()
         Dim listarNotasPessoais = New NotaPessoal()
-        ms_tmEsq.Dock = DockStyle.Top
+        ts_Esq.Dock = DockStyle.Top
 
     End Sub
 

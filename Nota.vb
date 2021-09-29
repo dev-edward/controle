@@ -17,10 +17,10 @@ Public Class Nota
         panel.Location = New Point(10, _posicaoY)
         lbl_notaNum.Location = New Point(0, 5)
         txt_nota.Location = New Point(25, 0)
-        btn_excluir.Location = New Point(230, 12)
+        btn_excluir.Location = New Point(230, 7)
 
         'tamanho dos controles
-        panel.Size = New Size(280, 40)
+        panel.Size = New Size(260, 40)
         lbl_notaNum.Size = New Size(20, 30)
         txt_nota.Size = New Size(200, 40)
         btn_excluir.Size = New Size(26, 26)

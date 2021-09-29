@@ -22,7 +22,6 @@ Public Class AfazerLista
 
     Dim slq_select As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,sum(case when nota_fkitem is not null and nota_excluido is null then 1 else 0 end) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
     Dim sql_groupby As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
-    Dim sql_ordem As String
 
     Dim filtro_itens = "0,1,2,3,4"
     Dim sql_filtro As String = " where afazer_status in(" & filtro_itens & ")"
@@ -32,6 +31,8 @@ Public Class AfazerLista
     Dim sql_ordenar_crescente As String = " ORDER BY afazer_id asc" & sql_retornos
     Dim sql_ordenar_decrescente As String = " ORDER BY afazer_id desc" & sql_retornos
 
+
+    Dim sql_ordem As String = sql_ordenar_decrescente
     Dim sql As String
 
     Friend Sub New()

@@ -5,9 +5,11 @@ Public Class listarNotas
     Private myReader As SqlDataReader
     Dim fk As Integer
     Dim num As Integer
+    Dim idnota As Integer
+    Dim textoNota As String
     Dim posicaoY As Integer
     Dim conteiner As New Panel
-    Dim txt_novaNota As New TextBox
+    Dim txt_novaNota As New RichTextBox
     Dim btn_addNota As New Button
     Dim afazerAtual As Afazer
 
@@ -28,12 +30,12 @@ Public Class listarNotas
 
         'posição dos controles
         conteiner.Location = New Point(10, 10)
-        txt_novaNota.Location = New Point(10, 380)
-        btn_addNota.Location = New Point(260, 380)
+        txt_novaNota.Location = New Point(10, 370)
+        btn_addNota.Location = New Point(260, 375)
 
         'tamanho dos controles
-        conteiner.Size = New Point(300, 360)
-        txt_novaNota.Size = New Size(240, 30)
+        conteiner.Size = New Size(300, 350)
+        txt_novaNota.Size = New Size(240, 40)
         btn_addNota.Size = New Size(50, 30)
 
         'específicos
@@ -74,9 +76,9 @@ Public Class listarNotas
             If myReader.HasRows Then
                 Do While myReader.Read()
                     num += 1
-                    Dim id As Integer = myReader.GetInt32("nota_id")
-                    Dim textoNota As String = myReader.GetString("nota_nota")
-                    Dim notas As New Nota(conteiner, id, textoNota, posicaoY, num)
+                    idnota = myReader.GetInt32("nota_id")
+                    textoNota = myReader.GetString("nota_nota")
+                    Dim notas As New Nota(conteiner, idnota, textoNota, posicaoY, num)
                     posicaoY += 44
                 Loop
                 If afazerAtual IsNot Nothing Then

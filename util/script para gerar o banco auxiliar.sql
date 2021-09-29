@@ -75,7 +75,13 @@ CREATE TABLE tb_evento
 	evento_data DATETIME,
 	evento_descricao NVARCHAR(256)
 )
-
+CREATE TABLE tb_ramal
+(/*informações da tabela inseridas*/
+	ramal_id INT PRIMARY KEY IDENTITY,
+	ramal_numero INT,
+	ramal_pessoa NVARCHAR(30),
+	ramal_departamento NVARCHAR(30)
+)
 CREATE TABLE tb_estoque
 (
 	estoque_id INT PRIMARY KEY IDENTITY,
@@ -287,6 +293,13 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_fkuser','Chave extrangeira correspondente ao usuário que a nota pertence','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_nota','A anotação','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
+
+/** Tabela de ramais **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','#','Armazena os ramais de usuarios/departamentos','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_pessoa','Pessoas que atendem este ramal','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_departamento','O departamento ao qual o ramal pertence','1')
+
 
 /** Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)
