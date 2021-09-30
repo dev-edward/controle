@@ -342,6 +342,44 @@ insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,af
 --select * from tb_afazer
 --select * from tb_item
 
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('200','Bruna/Marcela','Telefonia Recepção')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('201','Ir. Fátima','Diretora ADM e Financeira')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('205','Lilian','Financeiro')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('206','Leandro','Secretaria')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('207','Galiani','Direção')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('208','Eloisa','Gerência Geral')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('209','Amanda','Orienação Educacional')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('210','Karina','Secretaria')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('212','Régis','Portaria A')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('215','Andre/Paulo/Edward','Serviço de TI')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('216','Portaria F','Portaria F')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('217','Leoveral','Serviço Social')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('218','Lena','Biblioteca')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('222','Angela','Cozinha')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('224','Anderson','Reprografia')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('225','Bete/Vanessa','Cozinha')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('227','Debora','Dpto. de Pessoal')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('232','Sala de Reunião CA','Centro Administrativo')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('233','Bruna','Aux Coordenação')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('234','Yuri','Lab. Ciências')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('235/234','Thais Yumi','Lab. Informática')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('236','Ana Maria','Enfermaria')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('238','Andrea','Compras')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('240','Glaucia','Financeiro')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('241','Andre Condes','Coordenação')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('243','Fernanda','Financeiro')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('244','Guilherme','MArketing')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('246','Suzanete','Coordenação')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('248','Elisangela','Serviço de RH')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('251','José Ricardo','Pastoral')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('252','Danilo/Graciele','Pastoral')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('253','Monica','Contas a Receber')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('254','Giovanna','Marketing')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('258','Sala dos Professores','Sala dos Professores')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('249/250','Integral','Integral + Coordenação')
+
+
+
 insert into tb_notaitem(nota_fkitem,nota_nota) values(1,'teste nota')
 select * from tb_notaitem
 

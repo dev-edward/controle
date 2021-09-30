@@ -36,7 +36,7 @@ Public Class AfazerLista
     Dim sql As String
 
     Friend Sub New()
-        spanel = Principal.splitconteiner.panel1
+        spanel = Principal.splitconteiner_Esq.Panel1
         iniciar()
 
     End Sub

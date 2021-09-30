@@ -102,12 +102,13 @@ Partial Class bloqueio
         Me.btn_voltei.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btn_voltei.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
         Me.btn_voltei.ForeColor = System.Drawing.SystemColors.ButtonFace
-        Me.btn_voltei.Location = New System.Drawing.Point(256, 150)
+        Me.btn_voltei.Location = New System.Drawing.Point(150, 150)
         Me.btn_voltei.Name = "btn_voltei"
         Me.btn_voltei.Size = New System.Drawing.Size(100, 30)
         Me.btn_voltei.TabIndex = 6
         Me.btn_voltei.Text = "Voltei"
         Me.btn_voltei.UseVisualStyleBackColor = False
+        Me.btn_voltei.Visible = False
         '
         'bloqueio
         '

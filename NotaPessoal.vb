@@ -13,10 +13,9 @@ Public Class NotaPessoal
     Dim btn_addNota As New Button
     Dim conteiner As New Panel
 
-
     Friend Sub New()
         classesAbertas.setAtualNtPessoal(Me)
-        spanel = Principal.splitconteiner.Panel2
+        spanel = Principal.splitconteiner_Esq.Panel2
         iniciar()
 
     End Sub

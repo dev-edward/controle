@@ -22,7 +22,15 @@ Public Class Principal
     Dim spliterModo As Integer
     Dim mi_spliter As New ToolStripButton("", img.spliter3)
 
-    Public WithEvents splitconteiner As New SplitContainer
+    'Public WithEvents splitconteiner_Esq As New SplitContainer
+    Public splitconteiner_Esq As New SplitContainer With {
+            .Orientation = System.Windows.Forms.Orientation.Horizontal,
+            .Dock = DockStyle.Fill
+        }
+    Public splitconteiner_Dir As New SplitContainer With {
+            .Orientation = System.Windows.Forms.Orientation.Horizontal,
+            .Dock = DockStyle.Fill
+        }
 
     Dim LateralEsquerda As New Form With {
             .FormBorderStyle = FormBorderStyle.None,
@@ -69,12 +77,9 @@ Public Class Principal
     Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
     Dim mi_estoque As New ToolStripMenuItem("Estoque")
     Dim mi_software As New ToolStripMenuItem("Sofware")
-    Dim mi_bloquear As New ToolStripMenuItem("Bloquear")
+    Dim mi_bloquear As New ToolStripMenuItem("", img.cadeado)
 
     Dim mi_desconectar As New ToolStripMenuItem("Desconectar")
-
-
-
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         If Not topmost_esq Then
@@ -139,6 +144,16 @@ Public Class Principal
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 
+        splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
+        splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        splitconteiner_Esq.Panel1.AutoScroll = True
+        splitconteiner_Esq.Panel2.AutoScroll = True
+
+        splitconteiner_Dir.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
+        splitconteiner_Dir.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        splitconteiner_Dir.Panel1.AutoScroll = True
+        splitconteiner_Dir.Panel2.AutoScroll = True
+
         If usuario.usuario_logado = False Then
             Dim Login = New Login
             Login.ShowDialog()
@@ -157,8 +172,6 @@ Public Class Principal
         FormCentral.Location = New Point(LateralEsquerda.Width, 0)
         LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
 
-        splitconteiner.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
-        splitconteiner.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
         FormCentral.BackColor = Color.FromArgb(255, 255, 255, 255)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
 
@@ -168,9 +181,6 @@ Public Class Principal
         LateralEsquerda.Show()
         FormCentral.Show()
         LateralDireita.Show()
-
-        splitconteiner.Orientation = System.Windows.Forms.Orientation.Horizontal
-        splitconteiner.Dock = DockStyle.Fill
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
@@ -188,23 +198,27 @@ Public Class Principal
         Me.MenuStripPrincipal.Items.Add(mi_bloquear)
         Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
-        AddHandler mi_tmEsq.Click, AddressOf topmost_esquerda
-        ts_Esq.Items.Add(mi_tmEsq)
-
+        AddHandler mi_tmEsq.Click, AddressOf separar_Esq
         mi_spliter.Alignment = ToolStripItemAlignment.Right
-        AddHandler mi_spliter.Click, AddressOf estenderSP
+        AddHandler mi_spliter.Click, AddressOf estenderSP_Esq
+
+        ts_Esq.Dock = DockStyle.Top
+        ts_Esq.Items.Add(mi_tmEsq)
         ts_Esq.Items.Add(mi_spliter)
+
+        ts_Dir.Dock = DockStyle.Top
+        ts_Dir.Items.Add(mi_tmEsq)
+        ts_Dir.Items.Add(mi_spliter)
 
         'mi_tmEsq.ImageScaling = ToolStripItemImageScaling.SizeToFit
 
-        splitconteiner.Panel1.AutoScroll = True
-        splitconteiner.Panel2.AutoScroll = True
 
-        LateralEsquerda.Controls.Add(splitconteiner)
+        LateralEsquerda.Controls.Add(splitconteiner_Esq)
         LateralEsquerda.Controls.Add(ts_Esq)
+        LateralDireita.Controls.Add(splitconteiner_Dir)
+        LateralDireita.Controls.Add(ts_Dir)
         Dim listarAfazer = New AfazerLista()
         Dim listarNotasPessoais = New NotaPessoal()
-        ts_Esq.Dock = DockStyle.Top
 
     End Sub
 
@@ -288,7 +302,7 @@ Public Class Principal
         usuario.usuario_logado = False
         Application.Restart()
     End Sub
-    Private Sub topmost_esquerda()
+    Private Sub separar_Esq()
         If topmost_esq Then
             LateralEsquerda.TopMost = False
             LateralEsquerda.FormBorderStyle = FormBorderStyle.None
@@ -301,20 +315,20 @@ Public Class Principal
         End If
         topmost_esq = Not topmost_esq
     End Sub
-    Private Sub estenderSP()
+    Private Sub estenderSP_Esq()
         spliterModo += 1
         Select Case spliterModo
             Case 1
-                splitconteiner.Panel2Collapsed = True
+                splitconteiner_Esq.Panel2Collapsed = True
                 mi_spliter.Image = img.spliter2
             Case 2
-                splitconteiner.Panel2Collapsed = False
+                splitconteiner_Esq.Panel2Collapsed = False
                 mi_spliter.Image = img.spliter1
             Case 3
-                splitconteiner.Panel1Collapsed = True
+                splitconteiner_Esq.Panel1Collapsed = True
                 mi_spliter.Image = img.spliter2
             Case 4
-                splitconteiner.Panel1Collapsed = False
+                splitconteiner_Esq.Panel1Collapsed = False
                 mi_spliter.Image = img.spliter3
                 spliterModo = 0
         End Select
