@@ -72,7 +72,7 @@ Public Class bloqueio
     End Sub
 
     Private Sub rbt_almoco_CheckedChanged(sender As Object, e As EventArgs) Handles rbt_almoco.CheckedChanged
-        txt_mensagem.Text = "Estou no horário de almoço, previsão de volta: " & TimeOfDay.AddMinutes(62)
+        txt_mensagem.Text = "Estou no horário de almoço" & vbCrLf & "previsão de volta: " & TimeOfDay.AddMinutes(60)
 
     End Sub
 

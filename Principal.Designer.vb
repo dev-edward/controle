@@ -36,16 +36,16 @@ Partial Class Principal
         Me.MenuStripPrincipal.Location = New System.Drawing.Point(0, 0)
         Me.MenuStripPrincipal.Name = "MenuStripPrincipal"
         Me.MenuStripPrincipal.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
-        Me.MenuStripPrincipal.Size = New System.Drawing.Size(784, 24)
+        Me.MenuStripPrincipal.Size = New System.Drawing.Size(884, 24)
         Me.MenuStripPrincipal.TabIndex = 5
         Me.MenuStripPrincipal.Text = "MenuStrip"
         '
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lbl_usuarioLogado})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 429)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 419)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(784, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(884, 22)
         Me.StatusStrip.TabIndex = 9
         Me.StatusStrip.Text = "StatusStrip1"
         '
@@ -60,15 +60,16 @@ Partial Class Principal
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(784, 451)
+        Me.ClientSize = New System.Drawing.Size(884, 441)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.MenuStripPrincipal)
         Me.DoubleBuffered = True
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStripPrincipal
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.MinimumSize = New System.Drawing.Size(800, 320)
+        Me.MinimumSize = New System.Drawing.Size(480, 320)
         Me.Name = "Principal"
+        Me.Opacity = 0.5R
         Me.Text = "Controle"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.StatusStrip.ResumeLayout(False)

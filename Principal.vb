@@ -1,8 +1,17 @@
 ﻿Imports System.Windows.Forms
 
 Public Class Principal
-    Dim topmost_esq As Boolean
-    Dim topmost_dir As Boolean
+    Dim separa_esq As Boolean
+    Dim separa_dir As Boolean
+    Dim istopmost_esq As Boolean
+    Dim istopmost_dir As Boolean
+    Dim minsizedentro = New Size(300, 100)
+    Dim minsizefora = New Size(320, 300)
+    Dim maxsize = New Size(320, 1080)
+    'Teste
+    Dim labelteste As New TextBox()
+    Dim larguraEsq As Integer = 300
+    Dim larguraDir As Integer = 300
 
     Dim ts_Esq As New ToolStrip With {
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
@@ -17,10 +26,16 @@ Public Class Principal
         .BackColor = Color.FromArgb(255, 250, 209, 183)
     }
 
-    Dim mi_tmEsq As New ToolStripButton("", img.topmost)
+    Dim mi_topmostEsq As New ToolStripButton("", img.topmost)
+    Dim mi_topmostDir As New ToolStripButton("", img.topmost)
 
-    Dim spliterModo As Integer
-    Dim mi_spliter As New ToolStripButton("", img.spliter3)
+    Dim mi_separaEsq As New ToolStripButton("", img.separar)
+    Dim mi_separaDir As New ToolStripButton("", img.separar)
+
+    Dim spliterModoEsq As Integer
+    Dim spliterModoDir As Integer
+    Dim mi_splitEsq As New ToolStripButton("", img.spliter3)
+    Dim mi_splitDir As New ToolStripButton("", img.spliter3)
 
     'Public WithEvents splitconteiner_Esq As New SplitContainer
     Public splitconteiner_Esq As New SplitContainer With {
@@ -37,6 +52,8 @@ Public Class Principal
             .ControlBox = False,
             .StartPosition = FormStartPosition.Manual,
             .AutoScroll = True,
+            .Width = 300,
+            .MaximumSize = maxsize,
             .Text = " "
         }
     'Dim WithEvents FormCentral As New Form With {
@@ -50,7 +67,10 @@ Public Class Principal
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
             .StartPosition = FormStartPosition.Manual,
-            .AutoScroll = True
+            .AutoScroll = True,
+            .Width = 300,
+            .MaximumSize = maxsize,
+            .Text = " "
         }
     Dim redimensionando = New Panel
 
@@ -79,24 +99,10 @@ Public Class Principal
     Dim mi_software As New ToolStripMenuItem("Sofware")
     Dim mi_bloquear As New ToolStripMenuItem("", img.cadeado)
 
-    Dim mi_desconectar As New ToolStripMenuItem("Desconectar")
+    Dim mi_desconectar As New ToolStripMenuItem("", img.sair)
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
-        If Not topmost_esq Then
-            LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
-        End If
-        If Not topmost_dir Then
-            LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
-        End If
-        FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
-
-        'LateralEsquerda.Width = 200
-        'LateralDireita.Width = 200
-        FormCentral.Width = Me.ClientSize.Width - (LateralDireita.Width + LateralEsquerda.Width) - 4
-
-        LateralEsquerda.Location = New Point(0, 0)
-        FormCentral.Location = New Point(LateralEsquerda.Width, 0)
-        LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
+        alinharForms()
     End Sub
     Private Sub Principal_ResizeBegin(sender As Object, e As EventArgs) Handles MyBase.ResizeBegin
         LateralEsquerda.Hide()
@@ -111,7 +117,25 @@ Public Class Principal
         LateralDireita.Show()
         Me.Controls.Remove(redimensionando)
     End Sub
+    Private Sub alinharForms()
+        'If Not separa_esq Then
+        '    LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        '    LateralEsquerda.Location = New Point(0, 0)
+        'End If
+        'FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        'FormCentral.Width = Me.ClientSize.Width - (LateralDireita.Width + LateralEsquerda.Width) - 4
+        'If Not separa_dir Then
+        '    LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        '    LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
+        'End If
+        'FormCentral.Location = New Point(LateralEsquerda.ClientSize.Width, 0)
 
+        FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        FormCentral.Width = Me.ClientSize.Width - (larguraDir + larguraEsq) - 4
+        FormCentral.Location = New Point(larguraEsq, 0)
+
+
+    End Sub
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'itens do menustrip 
         mi_dispositivos.DropDownItems.Add(si_computador)
@@ -154,25 +178,16 @@ Public Class Principal
         splitconteiner_Dir.Panel1.AutoScroll = True
         splitconteiner_Dir.Panel2.AutoScroll = True
 
-        If usuario.usuario_logado = False Then
-            Dim Login = New Login
-            Login.ShowDialog()
-            'teste.ShowDialog()
-        End If
+        'If usuario.usuario_logado = False Then
+        '    Dim Login = New Login
+        '    Login.ShowDialog()
+        '    'teste.ShowDialog()
+        'End If
 
-        LateralEsquerda.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
-        LateralDireita.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
-        FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
+        teste.Show()
 
-        LateralEsquerda.Width = 300
-        LateralDireita.Width = 300
-        FormCentral.Width = Me.ClientSize.Width - (LateralDireita.Width + LateralEsquerda.Width) - 4
 
-        LateralEsquerda.Location = New Point(0, 0)
-        FormCentral.Location = New Point(LateralEsquerda.Width, 0)
-        LateralDireita.Location = New Point(LateralEsquerda.Width + FormCentral.Width, 0)
-
-        FormCentral.BackColor = Color.FromArgb(255, 255, 255, 255)
+        FormCentral.BackColor = Color.FromArgb(255, 50, 50, 50)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
 
         LateralEsquerda.MdiParent = Me
@@ -181,6 +196,10 @@ Public Class Principal
         LateralEsquerda.Show()
         FormCentral.Show()
         LateralDireita.Show()
+
+        LateralEsquerda.Dock = DockStyle.Left
+        LateralDireita.Dock = DockStyle.Right
+        alinharForms()
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
@@ -198,20 +217,30 @@ Public Class Principal
         Me.MenuStripPrincipal.Items.Add(mi_bloquear)
         Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
-        AddHandler mi_tmEsq.Click, AddressOf separar_Esq
-        mi_spliter.Alignment = ToolStripItemAlignment.Right
-        AddHandler mi_spliter.Click, AddressOf estenderSP_Esq
+        AddHandler mi_separaEsq.Click, AddressOf separar_Esq
+        AddHandler mi_topmostEsq.Click, AddressOf topmost_Esq
+        mi_topmostEsq.Enabled = False
+        AddHandler mi_splitEsq.Click, AddressOf estenderSP_Esq
+        mi_splitEsq.Alignment = ToolStripItemAlignment.Right
+
+
+        AddHandler mi_separaDir.Click, AddressOf separar_Dir
+        AddHandler mi_topmostDir.Click, AddressOf topmost_Dir
+        mi_topmostDir.Enabled = False
+        AddHandler mi_splitDir.Click, AddressOf estenderSP_Dir
+        mi_splitDir.Alignment = ToolStripItemAlignment.Right
 
         ts_Esq.Dock = DockStyle.Top
-        ts_Esq.Items.Add(mi_tmEsq)
-        ts_Esq.Items.Add(mi_spliter)
+        ts_Esq.Items.Add(mi_separaEsq)
+        ts_Esq.Items.Add(mi_topmostEsq)
+        ts_Esq.Items.Add(mi_splitEsq)
 
         ts_Dir.Dock = DockStyle.Top
-        ts_Dir.Items.Add(mi_tmEsq)
-        ts_Dir.Items.Add(mi_spliter)
+        ts_Dir.Items.Add(mi_separaDir)
+        ts_Dir.Items.Add(mi_topmostDir)
+        ts_Dir.Items.Add(mi_splitDir)
 
         'mi_tmEsq.ImageScaling = ToolStripItemImageScaling.SizeToFit
-
 
         LateralEsquerda.Controls.Add(splitconteiner_Esq)
         LateralEsquerda.Controls.Add(ts_Esq)
@@ -219,6 +248,13 @@ Public Class Principal
         LateralDireita.Controls.Add(ts_Dir)
         Dim listarAfazer = New AfazerLista()
         Dim listarNotasPessoais = New NotaPessoal()
+
+        labelteste.Text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has"
+        labelteste.Location = New Point(10, 100)
+        labelteste.Size = New Size(800, 300)
+        labelteste.Multiline = True
+        FormCentral.AutoScroll = True
+        FormCentral.Controls.Add(labelteste)
 
     End Sub
 
@@ -303,34 +339,101 @@ Public Class Principal
         Application.Restart()
     End Sub
     Private Sub separar_Esq()
-        If topmost_esq Then
-            LateralEsquerda.TopMost = False
+        separa_esq = Not separa_esq
+        If Not separa_esq Then
             LateralEsquerda.FormBorderStyle = FormBorderStyle.None
             LateralEsquerda.MdiParent = Me
-            LateralEsquerda.Location = New Point(0, 0)
+            LateralEsquerda.Dock = DockStyle.Left
+            mi_topmostEsq.Enabled = False
+            LateralEsquerda.TopMost = False
+            istopmost_esq = False
+            LateralEsquerda.MinimumSize = minsizedentro
+            LateralEsquerda.Width = 300
+            larguraEsq = LateralDireita.ClientSize.Width
+            alinharForms()
         Else
             LateralEsquerda.MdiParent = Nothing
-            LateralEsquerda.FormBorderStyle = FormBorderStyle.FixedSingle
+            LateralEsquerda.FormBorderStyle = FormBorderStyle.Sizable
+            LateralEsquerda.MinimumSize = minsizefora
+            mi_topmostEsq.Enabled = True
+            larguraEsq = 0
+            alinharForms()
+        End If
+    End Sub
+    Private Sub separar_Dir()
+        separa_dir = Not separa_dir
+        If Not separa_dir Then
+            LateralDireita.FormBorderStyle = FormBorderStyle.None
+            LateralDireita.MdiParent = Me
+            LateralDireita.Dock = DockStyle.Right
+            mi_topmostDir.Enabled = False
+            LateralDireita.TopMost = False
+            istopmost_dir = False
+            LateralDireita.MinimumSize = minsizedentro
+            LateralDireita.Width = 300
+            larguraDir = LateralDireita.ClientSize.Width
+            alinharForms()
+        Else
+            LateralDireita.MdiParent = Nothing
+            LateralDireita.FormBorderStyle = FormBorderStyle.Sizable
+            'LateralDireita.MaximumSize = New Size(300, 768)
+            mi_topmostDir.Enabled = True
+            LateralDireita.MinimumSize = minsizefora
+            larguraDir = 0
+            alinharForms()
+        End If
+    End Sub
+    Private Sub topmost_Esq()
+        If istopmost_esq Then
+            LateralEsquerda.TopMost = False
+        Else
             LateralEsquerda.TopMost = True
         End If
-        topmost_esq = Not topmost_esq
+        istopmost_esq = Not istopmost_esq
+    End Sub
+    Private Sub topmost_Dir()
+        If istopmost_dir Then
+            LateralDireita.TopMost = False
+        Else
+            LateralDireita.TopMost = True
+        End If
+        istopmost_dir = Not istopmost_dir
     End Sub
     Private Sub estenderSP_Esq()
-        spliterModo += 1
-        Select Case spliterModo
+        spliterModoEsq += 1
+        Select Case spliterModoEsq
             Case 1
                 splitconteiner_Esq.Panel2Collapsed = True
-                mi_spliter.Image = img.spliter2
+                mi_splitEsq.Image = img.spliter2
             Case 2
                 splitconteiner_Esq.Panel2Collapsed = False
-                mi_spliter.Image = img.spliter1
+                mi_splitEsq.Image = img.spliter1
             Case 3
                 splitconteiner_Esq.Panel1Collapsed = True
-                mi_spliter.Image = img.spliter2
+                mi_splitEsq.Image = img.spliter2
             Case 4
                 splitconteiner_Esq.Panel1Collapsed = False
-                mi_spliter.Image = img.spliter3
-                spliterModo = 0
+                mi_splitEsq.Image = img.spliter3
+                spliterModoEsq = 0
+        End Select
+
+    End Sub
+    Private Sub estenderSP_Dir()
+        spliterModoDir += 1
+        Select Case spliterModoDir
+            Case 1
+                splitconteiner_Dir.Panel2Collapsed = True
+                mi_splitDir.Image = img.spliter2
+            Case 2
+                splitconteiner_Dir.Panel2Collapsed = False
+                mi_splitDir.Image = img.spliter1
+            Case 3
+                splitconteiner_Dir.Panel1Collapsed = True
+                mi_splitDir.Image = img.spliter2
+            Case 4
+                splitconteiner_Dir.Panel1Collapsed = False
+                mi_splitDir.Image = img.spliter3
+                spliterModoDir = 0
         End Select
 
     End Sub

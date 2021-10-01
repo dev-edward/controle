@@ -75,12 +75,12 @@ CREATE TABLE tb_evento
 	evento_data DATETIME,
 	evento_descricao NVARCHAR(256)
 )
-CREATE TABLE tb_ramal
+CREATE TABLE tb_telefone
 (/*informações da tabela inseridas*/
-	ramal_id INT PRIMARY KEY IDENTITY,
-	ramal_numero INT,
-	ramal_pessoa NVARCHAR(30),
-	ramal_departamento NVARCHAR(30)
+	telefone_id INT PRIMARY KEY IDENTITY,
+	telefone_numero NVARCHAR(16),
+	telefone_pessoa NVARCHAR(30),
+	telefone_departamento NVARCHAR(30)
 )
 CREATE TABLE tb_estoque
 (
@@ -294,11 +294,11 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_nota','A anotação','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
-/** Tabela de ramais **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','#','Armazena os ramais de usuarios/departamentos','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_pessoa','Pessoas que atendem este ramal','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_ramal','ramal_departamento','O departamento ao qual o ramal pertence','1')
+/** Tabela de tb_telefone **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','#','Armazena os ramais/telefone de usuarios/departamentos internos e externos','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_pessoa','Pessoas que atendem este ramal/telefone','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_departamento','O departamento ao qual o ramal/telefone pertence','1')
 
 
 /** Tabelas e seus números **/
@@ -359,6 +359,7 @@ insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('222',
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('224','Anderson','Reprografia')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('225','Bete/Vanessa','Cozinha')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('227','Debora','Dpto. de Pessoal')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('231','Carla','Contas a Receber')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('232','Sala de Reunião CA','Centro Administrativo')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('233','Bruna','Aux Coordenação')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('234','Yuri','Lab. Ciências')
@@ -370,13 +371,14 @@ insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('241',
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('243','Fernanda','Financeiro')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('244','Guilherme','MArketing')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('246','Suzanete','Coordenação')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('247','Integral Refeitório','Refeitório')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('248','Elisangela','Serviço de RH')
+insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('249/250','Integral','Integral + Coordenação')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('251','José Ricardo','Pastoral')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('252','Danilo/Graciele','Pastoral')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('253','Monica','Contas a Receber')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('254','Giovanna','Marketing')
 insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('258','Sala dos Professores','Sala dos Professores')
-insert into tb_ramal(ramal_numero,ramal_pessoa,ramal_departamento) values('249/250','Integral','Integral + Coordenação')
 
 
 

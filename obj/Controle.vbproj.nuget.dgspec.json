@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\edward.huayta\\source\\repos\\controle\\Controle.vbproj": {}
+    "C:\\Users\\edward.huayta\\source\\repos\\Controle\\Controle.vbproj": {}
   },
   "projects": {
-    "C:\\Users\\edward.huayta\\source\\repos\\controle\\Controle.vbproj": {
+    "C:\\Users\\edward.huayta\\source\\repos\\Controle\\Controle.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\edward.huayta\\source\\repos\\controle\\Controle.vbproj",
+        "projectUniqueName": "C:\\Users\\edward.huayta\\source\\repos\\Controle\\Controle.vbproj",
         "projectName": "Controle",
-        "projectPath": "C:\\Users\\edward.huayta\\source\\repos\\controle\\Controle.vbproj",
+        "projectPath": "C:\\Users\\edward.huayta\\source\\repos\\Controle\\Controle.vbproj",
         "packagesPath": "C:\\Users\\edward.huayta\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\edward.huayta\\source\\repos\\controle\\obj\\",
+        "outputPath": "C:\\Users\\edward.huayta\\source\\repos\\Controle\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

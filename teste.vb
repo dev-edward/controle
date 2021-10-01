@@ -33,4 +33,7 @@
         newImage.Save("..\..\..\img\background\newImg.jpg")
     End Sub
 
+    Private Sub BindingSource1_CurrentChanged(sender As Object, e As EventArgs) Handles BindingSource1.CurrentChanged
+
+    End Sub
 End Class
