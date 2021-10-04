@@ -1,39 +1,85 @@
-﻿Public Class teste
-    Dim fontBT = New Font("Arial", 72, FontStyle.Bold)
-    Dim recadoBT As String
-    Dim brushBT As New SolidBrush(Color.FromArgb(140, 200, 200, 255))
+﻿Imports System.Data.SqlClient
+Public Class teste
+    'Create ADO.NET objects.
+    Private conexao As SqlConnection
+    Private consulta As SqlCommand
+    Private myReader As SqlDataReader
 
+    Dim cs As New System.Windows.Forms.DataGridViewCellStyle
 
-    Dim Format As New StringFormat With {
-        .LineAlignment = StringAlignment.Center,
-        .Alignment = StringAlignment.Center
-    }
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Dim dt = New DataTable()
 
-    End Sub
-
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
-
-    End Sub
+    Dim id As Integer
 
     Private Sub teste_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim bmpBG = Bitmap.FromFile("..\..\..\img\background\orig.jpg")
-        Dim newImage = New Bitmap(bmpBG.Width, bmpBG.Height)
-        Dim gr = Graphics.FromImage(newImage)
-        Dim rectBT1 As New RectangleF(0, 200, bmpBG.Width, 200)
-        Dim rectBT2 As New RectangleF(200, 600, bmpBG.Width - 400, 900)
-        recadoBT = ""
+        'Dim bmpBG = Bitmap.FromFile("..\..\..\img\background\orig.jpg")
+        'Dim newImage = New Bitmap(bmpBG.Width, bmpBG.Height)
+        'Dim gr = Graphics.FromImage(newImage)
+        'Dim rectBT1 As New RectangleF(0, 200, bmpBG.Width, 200)
+        'Dim rectBT2 As New RectangleF(200, 600, bmpBG.Width - 400, 900)
+        'recadoBT = ""
         'txt_mensagem.Text
 
-        gr.DrawImageUnscaled(bmpBG, 0, 0)
-        gr.DrawString("Aviso", fontBT, brushBT, rectBT1, Format)
+        'gr.DrawImageUnscaled(bmpBG, 0, 0)
+        'gr.DrawString("Aviso", fontBT, brushBT, rectBT1, Format)
 
-        gr.DrawString(recadoBT, fontBT, brushBT, rectBT2, Format)
+        'gr.DrawString(recadoBT, fontBT, brushBT, rectBT2, Format)
 
-        newImage.Save("..\..\..\img\background\newImg.jpg")
+        'newImage.Save("..\..\..\img\background\newImg.jpg")
+
+        cs.BackColor = Color.Azure
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "select * from tb_afazer"
+
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+
+            If myReader.HasRows Then
+                'myReader.Read()
+                dt.Load(myReader)
+
+            Else
+                'nenhum registro encontrado
+            End If
+            myReader.Close()
+        Catch ex As Exception
+            MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
+        Finally
+            conexao.Close()
+        End Try
+
+
+
+        DataGridView1.AutoGenerateColumns = True
+        DataGridView1.DataSource = dt
+        DataGridView1.Refresh()
+
+        For Each dc As DataGridViewColumn In DataGridView1.Columns
+            If dc.Index > 0 Then
+                dc.ReadOnly = True
+            End If
+        Next
+
+        DataGridView1.RowHeadersVisible = False
+        DataGridView1.AllowUserToAddRows = False
+        'DataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically
+        DataGridView1.AllowUserToDeleteRows = False
+        DataGridView1.AllowUserToOrderColumns = True
+        DataGridView1.AllowUserToResizeRows = False
+        DataGridView1.AlternatingRowsDefaultCellStyle = cs
+        DataGridView1.Columns(0).ReadOnly = False
+        'DataGridView1.Columns(1).ReadOnly = True
+
     End Sub
 
-    Private Sub BindingSource1_CurrentChanged(sender As Object, e As EventArgs) Handles BindingSource1.CurrentChanged
-
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+        If e.RowIndex >= 0 Then
+            id = DataGridView1(1, e.RowIndex).Value
+        End If
+        'MsgBox(id)
     End Sub
 End Class

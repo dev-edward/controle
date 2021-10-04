@@ -178,11 +178,11 @@ Public Class Principal
         splitconteiner_Dir.Panel1.AutoScroll = True
         splitconteiner_Dir.Panel2.AutoScroll = True
 
-        'If usuario.usuario_logado = False Then
-        '    Dim Login = New Login
-        '    Login.ShowDialog()
-        '    'teste.ShowDialog()
-        'End If
+        If usuario.usuario_logado = False Then
+            Dim Login = New Login
+            Login.ShowDialog()
+            'teste.ShowDialog()
+        End If
 
         teste.Show()
 
