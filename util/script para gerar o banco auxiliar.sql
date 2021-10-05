@@ -52,7 +52,7 @@ CREATE TABLE tb_usuario
 CREATE TABLE tb_item
 (/*informações da tabela inseridas*/
 	item_id INT PRIMARY KEY IDENTITY,
-	item_tipo INT
+	item_tabela NVARCHAR(20)
 )
 CREATE TABLE tb_afazer
 (/*informações da tabela inseridas*/
@@ -83,11 +83,14 @@ CREATE TABLE tb_telefone
 	telefone_local NVARCHAR(30)
 )
 CREATE TABLE tb_estoque
-(
+(/*informações da tabela inseridas*/
 	estoque_id INT PRIMARY KEY IDENTITY,
 	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	estoque_nome NVARCHAR(18),
+	estoque_descricao NVARCHAR(60),
+	estoque_tag NVARCHAR(12),
 	estoque_quantidade INT,
-	estoque_localizacao NVARCHAR(30)
+	estoque_localizacao NVARCHAR(40)
 )
 
 CREATE TABLE tb_sala
@@ -136,10 +139,13 @@ CREATE TABLE tb_impressora
 	impressora_useralteracao TINYINT,
 	impressora_marcamodelo NVARCHAR(20),
 	impressora_nserie NVARCHAR(12),
-	impressora_ip NVARCHAR(15),
-	impressora_suprimento TINYINT,
+	impressora_nnota NVARCHAR(16),
+	impressora_nproduto NVARCHAR(16),
+	impressora_suprimento INT FOREIGN KEY REFERENCES tb_estoque(estoque_id),
 	impressora_corimpressão TINYINT,
+	impressora_local NVARCHAR(20),
 	impressora_estado TINYINT,
+	impressora_ip NVARCHAR(15),
 	impressora_dtentrada DATETIME,
 	impressora_dtsaida DATETIME
 )
@@ -212,8 +218,6 @@ CREATE TABLE tb_historico
 	historico_descricao NVARCHAR(256)
 )
 
-
-
 /******************************************/
 /* inclusões para a tabela de dicionario */
 /****************************************/
@@ -238,9 +242,9 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','tabela_numero','Número atribuído à tabela','1')
 
 /** Tabela item **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','#','Esta tabela serve para catrastrar todos os itens, para que possam se relacionar com outras tabelas, ex:tb_notas','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_id','Chave primaria da tabela, que será usada como FK em outras tabelas','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_item','item_tipo','FK do tipo do item ou seja em que tabela está cadastrada','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','#','Esta tabela serve para catrastrar todos os itens, para que possam se relacionar com outras tabelas, ex:tb_notas','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','item_id','Chave primaria da tabela, que será usada como FK em outras tabelas','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','item_tabela','Tabela em que está cadastrada, onde se encontram informações específicas do item','1')
 
 /** Tabela usuario **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','#','Armazena dados dos usuarios que usam o software','1')
@@ -273,12 +277,25 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_useralteracao','FK do usuario que alterou por ultimo','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_marcamodelo','Marca e modelo da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nserie','Número de serie da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nnota','Número da nota da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nproduto','Número de produto da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco ou colorido','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco(1) ou colorido(2)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','O local que a impressora está sendo usada','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
+
+/** Tabela do estoque **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','#','Armazena informações dos itens em estoque','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_id','Chave primária da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_nome','Nome do recurso/peça/material','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_descricao','Breve informação da sua utilidade','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_tag','Usada para agrupar por tipos ou utilidade','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_quantidade','Quantidade em estoque','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_localizacao','O local onde o item está guardado','1')
 
 /** Tabela de notas **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','#','Armazena as notas de itens(anotações relevantes, especifica do item)','1')
@@ -313,32 +330,34 @@ insert into meta_tabela(tabela_nome,tabela_numero) values('tb_salaitem',8)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_historico',9)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
 
+insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',11)
+
 
 /**************************************/
 /* inclusões para proposito de teste */
 /************************************/
 
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 10','detalhes 10',1,'25/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 11','detalhes 11',1,'26/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 12','detalhes 12',1,'27/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 13','detalhes 13',1,'28/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 14','detalhes 14',1,'29/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 15','detalhes 15',1,'30/04/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 16','detalhes 16',1,'01/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 17','detalhes 17',1,'02/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 18','detalhes 18',1,'03/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 19','detalhes 19',1,'04/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 20','detalhes 20',1,'05/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 21','detalhes 21',1,'06/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 22','detalhes 22',1,'07/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 23','detalhes 23',1,'08/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 24','detalhes 24',1,'09/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 25','detalhes 25',1,'10/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 26','detalhes 26',1,'11/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 27','detalhes 27',1,'12/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 28','detalhes 28',1,'13/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 29','detalhes 29',1,'14/09/2021',1)
-insert into tb_item(item_tipo) values(10) insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 30','detalhes 30',1,'15/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 10','detalhes 10',1,'25/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 11','detalhes 11',1,'26/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 12','detalhes 12',1,'27/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 13','detalhes 13',1,'28/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 14','detalhes 14',1,'29/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 15','detalhes 15',1,'30/04/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 16','detalhes 16',1,'01/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 17','detalhes 17',1,'02/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 18','detalhes 18',1,'03/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 19','detalhes 19',1,'04/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 20','detalhes 20',1,'05/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 21','detalhes 21',1,'06/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 22','detalhes 22',1,'07/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 23','detalhes 23',1,'08/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 24','detalhes 24',1,'09/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 25','detalhes 25',1,'10/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 26','detalhes 26',1,'11/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 27','detalhes 27',1,'12/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 28','detalhes 28',1,'13/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 29','detalhes 29',1,'14/09/2021',1)
+insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 30','detalhes 30',1,'15/09/2021',1)
 --select * from tb_afazer
 --select * from tb_item
 

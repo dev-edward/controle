@@ -52,8 +52,6 @@ Public Class teste
             conexao.Close()
         End Try
 
-
-
         DataGridView1.AutoGenerateColumns = True
         DataGridView1.DataSource = dt
         DataGridView1.Refresh()
@@ -77,9 +75,9 @@ Public Class teste
     End Sub
 
     Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-        If e.RowIndex >= 0 Then
+        If e.RowIndex >= 0 And e.ColumnIndex > 0 Then
             id = DataGridView1(1, e.RowIndex).Value
+            MsgBox(id)
         End If
-        'MsgBox(id)
     End Sub
 End Class

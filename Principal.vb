@@ -1,6 +1,11 @@
 ﻿Imports System.Windows.Forms
-
+Imports System.Data.SqlClient
 Public Class Principal
+    'Create ADO.NET objects.
+    Private conexao As SqlConnection
+    Private consulta As SqlCommand
+    Private myReader As SqlDataReader
+
     Dim separa_esq As Boolean
     Dim separa_dir As Boolean
     Dim istopmost_esq As Boolean
@@ -38,14 +43,16 @@ Public Class Principal
     Dim mi_splitDir As New ToolStripButton("", img.spliter3)
 
     'Public WithEvents splitconteiner_Esq As New SplitContainer
-    Public splitconteiner_Esq As New SplitContainer With {
+    Dim splitconteiner_Esq As New SplitContainer With {
             .Orientation = System.Windows.Forms.Orientation.Horizontal,
             .Dock = DockStyle.Fill
         }
-    Public splitconteiner_Dir As New SplitContainer With {
+    Dim splitconteiner_Dir As New SplitContainer With {
             .Orientation = System.Windows.Forms.Orientation.Horizontal,
             .Dock = DockStyle.Fill
         }
+
+    Dim tabCentro As New TabControl
 
     Dim LateralEsquerda As New Form With {
             .FormBorderStyle = FormBorderStyle.None,
@@ -101,6 +108,9 @@ Public Class Principal
 
     Dim mi_desconectar As New ToolStripMenuItem("", img.sair)
 
+    Dim cs As New System.Windows.Forms.DataGridViewCellStyle
+    Dim dt = New DataTable()
+
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         alinharForms()
     End Sub
@@ -133,7 +143,6 @@ Public Class Principal
         FormCentral.Height = Me.ClientSize.Height - (MenuStripPrincipal.Height + StatusStrip.Height) - 4
         FormCentral.Width = Me.ClientSize.Width - (larguraDir + larguraEsq) - 4
         FormCentral.Location = New Point(larguraEsq, 0)
-
 
     End Sub
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -185,7 +194,6 @@ Public Class Principal
         End If
 
         teste.Show()
-
 
         FormCentral.BackColor = Color.FromArgb(255, 50, 50, 50)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
@@ -295,16 +303,50 @@ Public Class Principal
         MsgBox("si_celular")
     End Sub
     Private Sub mi_impressora_Click()
-        'If (Application.OpenForms.OfType(Of ListarImpressora).Any()) Then
-        '    Application.OpenForms.OfType(Of ListarImpressora).First().BringToFront()
-        'Else
-        '    'Dim listarImpressora = New ListarImpressora
-        '    ListarImpressora.MdiParent = Me
-        '    ListarImpressora.Dock = DockStyle.Fill
-        '    ListarImpressora.ShowIcon = False
-        '    ListarImpressora.MaximizeBox = False
-        '    ListarImpressora.Show()
-        'End If
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "select * from tb_impressora"
+
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+
+            If myReader.HasRows Then
+                'myReader.Read()
+                dt.Load(myReader)
+
+            Else
+                'nenhum registro encontrado
+            End If
+            myReader.Close()
+        Catch ex As Exception
+            MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
+        Finally
+            conexao.Close()
+        End Try
+
+        DataGridView1.AutoGenerateColumns = True
+        DataGridView1.DataSource = dt
+        DataGridView1.Refresh()
+
+        For Each dc As DataGridViewColumn In DataGridView1.Columns
+            If dc.Index > 0 Then
+                dc.ReadOnly = True
+            End If
+        Next
+
+        DataGridView1.RowHeadersVisible = False
+        DataGridView1.AllowUserToAddRows = False
+        'DataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically
+        DataGridView1.AllowUserToDeleteRows = False
+        DataGridView1.AllowUserToOrderColumns = True
+        DataGridView1.AllowUserToResizeRows = False
+        DataGridView1.AlternatingRowsDefaultCellStyle = cs
+        DataGridView1.Columns(0).ReadOnly = False
+        'DataGridView1.Columns(1).ReadOnly = True
+
     End Sub
     Private Sub mi_nobreak_Click()
         MsgBox("mi_nobreak")
