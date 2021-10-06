@@ -47,7 +47,7 @@ Public Class Principal
             .Dock = DockStyle.Fill
         }
 
-    Friend tabCentro As New TabControl With {
+    Friend WithEvents tabCentro As New TabControl With {
         .Dock = DockStyle.Fill,
         .Margin = New Padding(0, 0, 0, 0),
         .HotTrack = True,
@@ -255,14 +255,16 @@ Public Class Principal
         Dim listarAfazer = New AfazerLista()
         Dim listarNotasPessoais = New NotaPessoal()
 
-
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)
 
     End Sub
 
     Private Sub mi_afazer_Click()
-        Dim tab_afazer As New tabpages("tb_notaitem", "Afazeres")
+        If tabCentro.TabPages("tb_afazer") Is Nothing Then
+            Dim tab_afazer As New tabpages("tb_afazer", "Afazeres")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_afazer")
         'Dim verAfazer = New DetalhesAfazer(1011)
         'verAfazer.Show()
 
@@ -280,7 +282,10 @@ Public Class Principal
         'End If
     End Sub
     Private Sub mi_eventos_Click()
-        MsgBox("mi_eventos")
+        If tabCentro.TabPages("tb_evento") Is Nothing Then
+            Dim tab_evento As New tabpages("tb_evento", "Eventos")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_evento")
     End Sub
     Private Sub si_computador_Click()
         MsgBox("si_computador")
@@ -298,72 +303,28 @@ Public Class Principal
         MsgBox("si_celular")
     End Sub
     Private Sub mi_impressora_Click()
-        Dim tab_impressora As New tabpages("tb_impressora", "Impressoras")
-        'Dim dgv_impressora As New DataGridView
-
-        'Try
-        '    conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
-
-        '    consulta = conexao.CreateCommand
-        '    consulta.CommandText = "select * from tb_impressora"
-
-        '    conexao.Open()
-
-        '    myReader = consulta.ExecuteReader()
-
-        '    If myReader.HasRows Then
-        '        'myReader.Read()
-        '        dt.Load(myReader)
-
-        '    Else
-        '        'nenhum registro encontrado
-        '    End If
-        '    myReader.Close()
-        'Catch ex As Exception
-        '    MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
-        'Finally
-        '    conexao.Close()
-        'End Try
-
-        'Dim tabpg As New TabPage With {
-        '.Name = "impressoras",
-        '.Text = "Impressoras",
-        '.BorderStyle = BorderStyle.Fixed3D,
-
-        '}
-        'tabCentro.TabPages.Add("impressoras", "Impressoras")
-        'tabCentro.TabPages("impressoras").BorderStyle = BorderStyle.Fixed3D
-        'tabCentro.TabPages("impressoras").Controls.Add(tabpg)
-
-        'dgv_impressora.AutoGenerateColumns = True
-        'dgv_impressora.DataSource = dt
-        'dgv_impressora.Refresh()
-
-        'For Each dc As DataGridViewColumn In dgv_impressora.Columns
-        '    If dc.Index > 0 Then
-        '        dc.ReadOnly = True
-        '    End If
-        'Next
-
-        'dgv_impressora.RowHeadersVisible = False
-        'dgv_impressora.AllowUserToAddRows = False
-        ''dgv_impressora.EditMode = DataGridViewEditMode.EditProgrammatically
-        'dgv_impressora.AllowUserToDeleteRows = False
-        'dgv_impressora.AllowUserToOrderColumns = True
-        'dgv_impressora.AllowUserToResizeRows = False
-        'dgv_impressora.AlternatingRowsDefaultCellStyle = cs
-        ''dgv_impressora.Columns(0).ReadOnly = False
-        ''dgv_impressora.Columns(1).ReadOnly = True
-
+        If tabCentro.TabPages("tb_impressora") Is Nothing Then
+            Dim tab_impressora As New tabpages("tb_impressora", "Impressoras")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_impressora")
     End Sub
     Private Sub mi_nobreak_Click()
-        MsgBox("mi_nobreak")
+        If tabCentro.TabPages("tb_nobreak") Is Nothing Then
+            Dim tab_nobreak As New tabpages("tb_nobreak", "Nobreak")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_nobreak")
     End Sub
     Private Sub mi_projetor_Click()
-        MsgBox("mi_projetor")
+        If tabCentro.TabPages("tb_projetor") Is Nothing Then
+            Dim tab_projetor As New tabpages("tb_projetor", "Projetores")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_projetor")
     End Sub
     Private Sub mi_camera_Click()
-        MsgBox("mi_camera")
+        If tabCentro.TabPages("tb_camera") Is Nothing Then
+            Dim tab_projetor As New tabpages("tb_camera", "Câmeras")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_camera")
     End Sub
     Private Sub si_email_Click()
         MsgBox("mi_email")
@@ -372,13 +333,22 @@ Public Class Principal
         MsgBox("mi_skype")
     End Sub
     Private Sub mi_pessoas_Click()
-        MsgBox("mi_pessoas")
+        If tabCentro.TabPages("tb_pessoas") Is Nothing Then
+            Dim tab_pessoas As New tabpages("tb_pessoas", "Pessoas")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_pessoas")
     End Sub
     Private Sub mi_estoque_Click()
-        MsgBox("mi_estoque")
+        If tabCentro.TabPages("tb_estoque") Is Nothing Then
+            Dim tab_estoque As New tabpages("tb_estoque", "Estoque")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_estoque")
     End Sub
     Private Sub mi_software_Click()
-        MsgBox("mi_software")
+        If tabCentro.TabPages("tb_software") Is Nothing Then
+            Dim tab_software As New tabpages("tb_software", "Software")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("tb_software")
     End Sub
     Private Sub mi_bloquear_Click()
         Dim bloqueio = New bloqueio

@@ -54,6 +54,16 @@ CREATE TABLE tb_item
 	item_id INT PRIMARY KEY IDENTITY,
 	item_tabela NVARCHAR(20)
 )
+CREATE TABLE tb_estoque
+(/*informações da tabela inseridas*/
+	estoque_id INT PRIMARY KEY IDENTITY,
+	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	estoque_nome NVARCHAR(20),
+	estoque_descricao NVARCHAR(60),
+	estoque_tag NVARCHAR(20),
+	estoque_quantidade INT,
+	estoque_localizacao NVARCHAR(40)
+)
 CREATE TABLE tb_afazer
 (/*informações da tabela inseridas*/
 	afazer_id INT PRIMARY KEY IDENTITY,
@@ -82,17 +92,14 @@ CREATE TABLE tb_telefone
 	telefone_pessoa NVARCHAR(30),
 	telefone_local NVARCHAR(30)
 )
-CREATE TABLE tb_estoque
-(/*informações da tabela inseridas*/
-	estoque_id INT PRIMARY KEY IDENTITY,
-	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	estoque_nome NVARCHAR(20),
-	estoque_descricao NVARCHAR(60),
-	estoque_tag NVARCHAR(20),
-	estoque_quantidade INT,
-	estoque_localizacao NVARCHAR(40)
+CREATE TABLE tb_email
+(
+	
 )
+CREATE TABLE tb_skype
+(
 
+)
 CREATE TABLE tb_sala
 (
 	sala_id INT PRIMARY KEY IDENTITY,
@@ -115,6 +122,10 @@ CREATE TABLE tb_dispositivo
 	--dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
 	--dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
 	dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
+	dispositivo_usercadastro TINYINT,
+	dispositivo_dtalteracao DATETIME,
+	dispositivo_useralteracao TINYINT,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
 	dispositivo_marcamodelo NVARCHAR(30),
@@ -267,25 +278,6 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_previsao','Data em que precisa ser concluída a tarefa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_status','FK do estado que se encontra a tarefa','1')
 
-/** Tabela impressora **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','#','Guarda informações das impressoras','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_fkitem','Chave estrangeira da tabela item','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtcadastro','Data em que a impressora foi cadastrada pela primeira vez','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_usercadastro','FK do usuario que cadastrou a impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtalteracao','Data da ultima alteração das informações','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_useralteracao','FK do usuario que alterou por ultimo','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_marcamodelo','Marca e modelo da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nserie','Número de serie da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nnota','Número da nota da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nproduto','Número de produto da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco(1) ou colorido(2)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','O local que a impressora está sendo usada','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
 
 /** Tabela do estoque **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','#','Armazena informações dos itens em estoque','1')
@@ -318,7 +310,51 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_pessoa','Pessoas que atendem este ramal/telefone','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_local','O departamento ao qual o ramal/telefone pertence','1')
 
-/** Tabelas e seus números **/
+/** Tabela Dispositivo **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','#','Guarda informações de Computador/Notebook/Chromebook/Tablet/Celular','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_id','Chave primária da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_dtcadastro','Data em que o dispositivo foi cadastrado','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_usercadastro','FK do usuario que cadastrou o dispositivo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_dtalteracao','Data da ultima alteração das informações','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_useralteracao','FK do usuario que alterou por ultimo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_tipo','FK do tipo de dispositivo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_posto','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_marcamodelo','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_nome','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_ip','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_macadress','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_os','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_qtdmemoriaram','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_processador','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_armazenamento','','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_bateria','','1')
+
+
+/** Tabela impressora **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','#','Guarda informações das impressoras','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtcadastro','Data em que a impressora foi cadastrada pela primeira vez','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_usercadastro','FK do usuario que cadastrou a impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtalteracao','Data da ultima alteração das informações','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_useralteracao','FK do usuario que alterou por ultimo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_marcamodelo','Marca e modelo da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nserie','Número de serie da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nnota','Número da nota da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nproduto','Número de produto da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco(1) ou colorido(2)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','O local que a impressora está sendo usada','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
+
+
+
+
+/** (desnecessário)Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_valor',2)
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_tabela',3)

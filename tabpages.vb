@@ -27,12 +27,18 @@ Public Class tabpages
         .AllowUserToResizeRows = False,
         .AlternatingRowsDefaultCellStyle = cs
     }
+    Dim ts_tab As New ToolStrip With {
+        .Dock = DockStyle.Top,
+        .GripStyle = ToolStripGripStyle.Hidden
+    }
+    Dim mi_botao As New ToolStripButton("", img.xis)
     'dgv_tabpg.EditMode = DataGridViewEditMode.EditProgrammatically
     'dgv_tabpg.Columns(0).ReadOnly = False
     'dgv_tabpg.Columns(1).ReadOnly = True
 
 
     Sub New(ByVal _tabela As String, ByVal _titulo As String)
+        tabpg.Name = _tabela
         tabpg.Text = _titulo
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
@@ -62,17 +68,29 @@ Public Class tabpages
                 tabpg.Controls.Add(label)
             End If
             myReader.Close()
+            ts_tab.Items.Add(mi_botao)
+            tabpg.Controls.Add(ts_tab)
+            Principal.tabCentro.TabPages.Add(tabpg)
+            AddHandler mi_botao.Click, AddressOf fechar
         Catch ex As Exception
             MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
         Finally
             conexao.Close()
         End Try
-
-        Principal.tabCentro.TabPages.Add(tabpg)
-
     End Sub
     Private Sub tabpg_alteralargura(sender As Object, e As EventArgs) Handles tabpg.SizeChanged
         label.Width = tabpg.Width
     End Sub
-
+    Private Sub tabpg_keydown(ByVal eventSender As System.Object, ByVal eventArgs As System.Windows.Forms.KeyEventArgs) Handles tabpg.KeyDown
+        'Dim KeyCode As Short = eventArgs.KeyCode
+        'If KeyCode = System.Windows.Forms.Keys.Escape Then
+        '    Principal.tabCentro.TabPages.Remove(tabpg)
+        'End If
+    End Sub
+    Private Sub fechar()
+        Principal.tabCentro.TabPages.Remove(tabpg)
+        'tabpg.Dispose()
+        'dgv_tabpg.Dispose()
+        'dt.Dispose()
+    End Sub
 End Class
