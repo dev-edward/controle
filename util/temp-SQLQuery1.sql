@@ -20,12 +20,18 @@ scope_identity(),
 '000021624',
 '3630C003AA',
 1,
-'',
+1,
+'SECRETARIA',
+1,
+'192.0.1.184',
+'20/01/2021',
+''
 )
 
-insert into tb_item(item_tabela) values('tb_estoque') go
-insert into tb_estoque(estoque_fkitem,estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao)
-values(scope_identity(),'Toner T06','Toner usado em impressoras da canon','SuprimentoImpressora',12,'Sala em frente à secretaria')
+insert into tb_item(item_tabela) values('tb_estoque') insert into tb_estoque(estoque_fkitem,estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao)
+values(scope_identity(),'Toner T06','Toner usado em impressoras da canon','SuprimentoImpressorahhh',12,'Sala em frente à secretaria')
+
 select * from tb_estoque
+select * from tb_impressora
 
 alter table tb_estoque alter column estoque_tag NVARCHAR(20)

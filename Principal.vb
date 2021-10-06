@@ -1,10 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Data.SqlClient
 Public Class Principal
-    'Create ADO.NET objects.
-    Private conexao As SqlConnection
-    Private consulta As SqlCommand
-    Private myReader As SqlDataReader
+
 
     Dim separa_esq As Boolean
     Dim separa_dir As Boolean
@@ -13,8 +10,6 @@ Public Class Principal
     Dim minsizedentro = New Size(300, 100)
     Dim minsizefora = New Size(320, 300)
     Dim maxsize = New Size(320, 1080)
-    'Teste
-    Dim labelteste As New TextBox()
     Dim larguraEsq As Integer = 300
     Dim larguraDir As Integer = 300
 
@@ -43,16 +38,22 @@ Public Class Principal
     Dim mi_splitDir As New ToolStripButton("", img.spliter3)
 
     'Public WithEvents splitconteiner_Esq As New SplitContainer
-    Dim splitconteiner_Esq As New SplitContainer With {
+    Friend splitconteiner_Esq As New SplitContainer With {
             .Orientation = System.Windows.Forms.Orientation.Horizontal,
             .Dock = DockStyle.Fill
         }
-    Dim splitconteiner_Dir As New SplitContainer With {
+    Friend splitconteiner_Dir As New SplitContainer With {
             .Orientation = System.Windows.Forms.Orientation.Horizontal,
             .Dock = DockStyle.Fill
         }
 
-    Dim tabCentro As New TabControl
+    Friend tabCentro As New TabControl With {
+        .Dock = DockStyle.Fill,
+        .Margin = New Padding(0, 0, 0, 0),
+        .HotTrack = True,
+        .Padding = New Point(50, 6)
+    }
+
 
     Dim LateralEsquerda As New Form With {
             .FormBorderStyle = FormBorderStyle.None,
@@ -107,9 +108,6 @@ Public Class Principal
     Dim mi_bloquear As New ToolStripMenuItem("", img.cadeado)
 
     Dim mi_desconectar As New ToolStripMenuItem("", img.sair)
-
-    Dim cs As New System.Windows.Forms.DataGridViewCellStyle
-    Dim dt = New DataTable()
 
     Private Sub Principal_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         alinharForms()
@@ -257,17 +255,14 @@ Public Class Principal
         Dim listarAfazer = New AfazerLista()
         Dim listarNotasPessoais = New NotaPessoal()
 
-        labelteste.Text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has"
-        labelteste.Location = New Point(10, 100)
-        labelteste.Size = New Size(800, 300)
-        labelteste.Multiline = True
+
         FormCentral.AutoScroll = True
-        FormCentral.Controls.Add(labelteste)
+        FormCentral.Controls.Add(tabCentro)
 
     End Sub
 
     Private Sub mi_afazer_Click()
-
+        Dim tab_afazer As New tabpages("tb_notaitem", "Afazeres")
         'Dim verAfazer = New DetalhesAfazer(1011)
         'verAfazer.Show()
 
@@ -303,49 +298,62 @@ Public Class Principal
         MsgBox("si_celular")
     End Sub
     Private Sub mi_impressora_Click()
-        Try
-            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+        Dim tab_impressora As New tabpages("tb_impressora", "Impressoras")
+        'Dim dgv_impressora As New DataGridView
 
-            consulta = conexao.CreateCommand
-            consulta.CommandText = "select * from tb_impressora"
+        'Try
+        '    conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-            conexao.Open()
+        '    consulta = conexao.CreateCommand
+        '    consulta.CommandText = "select * from tb_impressora"
 
-            myReader = consulta.ExecuteReader()
+        '    conexao.Open()
 
-            If myReader.HasRows Then
-                'myReader.Read()
-                dt.Load(myReader)
+        '    myReader = consulta.ExecuteReader()
 
-            Else
-                'nenhum registro encontrado
-            End If
-            myReader.Close()
-        Catch ex As Exception
-            MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
-        Finally
-            conexao.Close()
-        End Try
+        '    If myReader.HasRows Then
+        '        'myReader.Read()
+        '        dt.Load(myReader)
 
-        DataGridView1.AutoGenerateColumns = True
-        DataGridView1.DataSource = dt
-        DataGridView1.Refresh()
+        '    Else
+        '        'nenhum registro encontrado
+        '    End If
+        '    myReader.Close()
+        'Catch ex As Exception
+        '    MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
+        'Finally
+        '    conexao.Close()
+        'End Try
 
-        For Each dc As DataGridViewColumn In DataGridView1.Columns
-            If dc.Index > 0 Then
-                dc.ReadOnly = True
-            End If
-        Next
+        'Dim tabpg As New TabPage With {
+        '.Name = "impressoras",
+        '.Text = "Impressoras",
+        '.BorderStyle = BorderStyle.Fixed3D,
 
-        DataGridView1.RowHeadersVisible = False
-        DataGridView1.AllowUserToAddRows = False
-        'DataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically
-        DataGridView1.AllowUserToDeleteRows = False
-        DataGridView1.AllowUserToOrderColumns = True
-        DataGridView1.AllowUserToResizeRows = False
-        DataGridView1.AlternatingRowsDefaultCellStyle = cs
-        DataGridView1.Columns(0).ReadOnly = False
-        'DataGridView1.Columns(1).ReadOnly = True
+        '}
+        'tabCentro.TabPages.Add("impressoras", "Impressoras")
+        'tabCentro.TabPages("impressoras").BorderStyle = BorderStyle.Fixed3D
+        'tabCentro.TabPages("impressoras").Controls.Add(tabpg)
+
+        'dgv_impressora.AutoGenerateColumns = True
+        'dgv_impressora.DataSource = dt
+        'dgv_impressora.Refresh()
+
+        'For Each dc As DataGridViewColumn In dgv_impressora.Columns
+        '    If dc.Index > 0 Then
+        '        dc.ReadOnly = True
+        '    End If
+        'Next
+
+        'dgv_impressora.RowHeadersVisible = False
+        'dgv_impressora.AllowUserToAddRows = False
+        ''dgv_impressora.EditMode = DataGridViewEditMode.EditProgrammatically
+        'dgv_impressora.AllowUserToDeleteRows = False
+        'dgv_impressora.AllowUserToOrderColumns = True
+        'dgv_impressora.AllowUserToResizeRows = False
+        'dgv_impressora.AlternatingRowsDefaultCellStyle = cs
+        ''dgv_impressora.Columns(0).ReadOnly = False
+        ''dgv_impressora.Columns(1).ReadOnly = True
 
     End Sub
     Private Sub mi_nobreak_Click()

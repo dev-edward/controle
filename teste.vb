@@ -10,6 +10,7 @@ Public Class teste
     Dim dt = New DataTable()
 
     Dim id As Integer
+    Dim x As Integer
 
     Private Sub teste_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'Dim bmpBG = Bitmap.FromFile("..\..\..\img\background\orig.jpg")
@@ -27,57 +28,81 @@ Public Class teste
 
         'newImage.Save("..\..\..\img\background\newImg.jpg")
 
-        cs.BackColor = Color.Azure
-        Try
-            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-            consulta = conexao.CreateCommand
-            consulta.CommandText = "select * from tb_afazer"
 
-            conexao.Open()
 
-            myReader = consulta.ExecuteReader()
+        'cs.BackColor = Color.Azure
+        'Try
+        '    conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-            If myReader.HasRows Then
-                'myReader.Read()
-                dt.Load(myReader)
+        '    consulta = conexao.CreateCommand
+        '    consulta.CommandText = "select * from tb_afazer"
 
-            Else
-                'nenhum registro encontrado
-            End If
-            myReader.Close()
-        Catch ex As Exception
-            MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
-        Finally
-            conexao.Close()
-        End Try
+        '    conexao.Open()
 
-        DataGridView1.AutoGenerateColumns = True
-        DataGridView1.DataSource = dt
-        DataGridView1.Refresh()
+        '    myReader = consulta.ExecuteReader()
 
-        For Each dc As DataGridViewColumn In DataGridView1.Columns
-            If dc.Index > 0 Then
-                dc.ReadOnly = True
-            End If
-        Next
+        '    If myReader.HasRows Then
+        '        'myReader.Read()
+        '        dt.Load(myReader)
 
-        DataGridView1.RowHeadersVisible = False
-        DataGridView1.AllowUserToAddRows = False
-        'DataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically
-        DataGridView1.AllowUserToDeleteRows = False
-        DataGridView1.AllowUserToOrderColumns = True
-        DataGridView1.AllowUserToResizeRows = False
-        DataGridView1.AlternatingRowsDefaultCellStyle = cs
-        DataGridView1.Columns(0).ReadOnly = False
-        'DataGridView1.Columns(1).ReadOnly = True
+        '    Else
+        '        'nenhum registro encontrado
+        '    End If
+        '    myReader.Close()
+        'Catch ex As Exception
+        '    MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
+        'Finally
+        '    conexao.Close()
+        'End Try
+
+        'DataGridView1.AutoGenerateColumns = True
+        'DataGridView1.DataSource = dt
+        'DataGridView1.Refresh()
+
+        'For Each dc As DataGridViewColumn In DataGridView1.Columns
+        '    If dc.Index > 0 Then
+        '        dc.ReadOnly = True
+        '    End If
+        'Next
+
+        'DataGridView1.RowHeadersVisible = False
+        'DataGridView1.AllowUserToAddRows = False
+        ''DataGridView1.EditMode = DataGridViewEditMode.EditProgrammatically
+        'DataGridView1.AllowUserToDeleteRows = False
+        'DataGridView1.AllowUserToOrderColumns = True
+        'DataGridView1.AllowUserToResizeRows = False
+        'DataGridView1.AlternatingRowsDefaultCellStyle = cs
+        'DataGridView1.Columns(0).ReadOnly = False
+        ''DataGridView1.Columns(1).ReadOnly = True
+
+        '        e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 4);
+        'e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
+        'e.DrawFocusRectangle();
+
+        '        e.gra
 
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
-        If e.RowIndex >= 0 And e.ColumnIndex > 0 Then
-            id = DataGridView1(1, e.RowIndex).Value
-            MsgBox(id)
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        x += 1
+        If x = 1 Then
+            TabControl1.TabPages(0).BorderStyle = BorderStyle.FixedSingle
+        ElseIf x = 2 Then
+            TabControl1.TabPages(0).BorderStyle = BorderStyle.Fixed3D
+        ElseIf x = 3 Then
+            TabControl1.TabPages(0).BorderStyle = BorderStyle.None
+            x = 0
         End If
     End Sub
+
+
+
+
+    'Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
+    '    If e.RowIndex >= 0 And e.ColumnIndex > 0 Then
+    '        id = DataGridView1(1, e.RowIndex).Value
+    '        MsgBox(id)
+    '    End If
+    'End Sub
 End Class

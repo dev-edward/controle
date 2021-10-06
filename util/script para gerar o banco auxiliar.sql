@@ -86,9 +86,9 @@ CREATE TABLE tb_estoque
 (/*informações da tabela inseridas*/
 	estoque_id INT PRIMARY KEY IDENTITY,
 	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	estoque_nome NVARCHAR(18),
+	estoque_nome NVARCHAR(20),
 	estoque_descricao NVARCHAR(60),
-	estoque_tag NVARCHAR(12),
+	estoque_tag NVARCHAR(20),
 	estoque_quantidade INT,
 	estoque_localizacao NVARCHAR(40)
 )
@@ -403,7 +403,6 @@ insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('
 insert into tb_notaitem(nota_fkitem,nota_nota) values(1,'teste nota')
 select * from tb_notaitem
 
-insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_fkitem) values('canon teste','dfsas',11)
 
 insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
 
