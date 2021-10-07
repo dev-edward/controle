@@ -37,7 +37,7 @@ Public Class TelefoneLista
                     pessoa = myReader.GetString("telefone_pessoa")
                     local = myReader.GetString("telefone_local")
 
-                    posicaoY += 30
+                    posicaoY += 38
 
                     Dim telefone As New Telefone(spanel, id, numero, pessoa, local, posicaoY)
 

@@ -379,7 +379,7 @@ Public Class DemandaDetalhes
                                 demanda_temprevisao = @temprevisao,
                                 demanda_previsao = @previsao,
                                 demanda_status = @status
-                                WHERE afazer_id = @id"
+                                WHERE demanda_id = @id"
 
             consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
             consulta.Parameters.AddWithValue("@titulo", txt_titulo.Text)
@@ -415,15 +415,16 @@ Public Class DemandaDetalhes
 
             consulta = conexao.CreateCommand
 
-            consulta.CommandText = "insert into tb_item(item_tipo) values(10) 
-                                    insert into tb_afazer(afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) 
-                                    VALUES(scope_identity(),
-                                    @usercadastro,
-                                    @titulo,
-                                    @detalhes,
-                                    @temprevisao,
-                                    @previsao,
-                                    @status)
+            consulta.CommandText = "insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) 
+                                    VALUES(
+                                        @usercadastro,
+                                        @titulo,
+                                        @detalhes,
+                                        @temprevisao,
+                                        @previsao,
+                                        @status,
+                                        @encarregado,
+                                        @prioridade)
                                     select scope_identity()"
 
             consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
@@ -432,6 +433,8 @@ Public Class DemandaDetalhes
             consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
             consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
             consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@encarregado", cbx_encarregado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@prioridade", cbx_prioridade.SelectedIndex + 1)
 
             conexao.Open()
 

@@ -1,5 +1,5 @@
 --use master
---rop database teste
+--rop database controle
 
 CREATE DATABASE controle
 GO
@@ -437,10 +437,10 @@ insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward',
 
 -- Estoque
 insert into tb_estoque(estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao) values('Toner T06','Toner usado em impressoras da canon','SuprimentoImpressora',12,'Sala em frente à secretaria')
-select * from tb_impressora
+select * from tb_estoque
 
 -- Impressoras
-insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',2,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
+insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
 
 -- Anotacões
 insert into tb_notaitem(nota_fkitem,nota_nota) values(@fk,@nota)

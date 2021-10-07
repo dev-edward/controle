@@ -191,7 +191,7 @@ Public Class Principal
             'teste.ShowDialog()
         End If
 
-        teste.Show()
+        'teste.Show()
 
         FormCentral.BackColor = Color.FromArgb(255, 50, 50, 50)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)

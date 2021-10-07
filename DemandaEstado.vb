@@ -8,15 +8,15 @@ Public Class DemandaEstado
     Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
-    Dim afazerAtual As Demanda
+    Dim demandaAtual As Demanda
 
-    Friend Sub New(ByRef _afazerAtual As Demanda)
+    Friend Sub New(ByRef _demandaAtual As Demanda)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        afazerAtual = _afazerAtual
-        pk = afazerAtual.pk
-        estadoAtual = afazerAtual.estado
+        demandaAtual = _demandaAtual
+        pk = demandaAtual.pk
+        estadoAtual = demandaAtual.estado
 
     End Sub
     Private Sub estadoAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -46,11 +46,11 @@ Public Class DemandaEstado
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "UPDATE tb_afazer SET 
-                                afazer_dtalteracao = GETDATE(),
-                                afazer_useralteracao = @useralteracao,
-                                afazer_status = @status
-                                WHERE afazer_id = @id"
+            consulta.CommandText = "UPDATE tb_demanda SET 
+                                demanda_dtalteracao = GETDATE(),
+                                demanda_useralteracao = @useralteracao,
+                                demanda_status = @status
+                                WHERE demanda_id = @id"
 
             consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
             consulta.Parameters.AddWithValue("@status", estado)
@@ -60,7 +60,7 @@ Public Class DemandaEstado
 
             consulta.ExecuteNonQuery()
 
-            afazerAtual.setEstado(estado)
+            demandaAtual.setEstado(estado)
 
             'AfazerLista.ajustarBarra()
 

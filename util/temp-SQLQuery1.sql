@@ -11,3 +11,7 @@ sum(case when nota_pkitem = demanda_id and nota_tabela = 'demanda' and nota_excl
 FROM tb_demanda LEFT JOIN tb_anotacao ON  demanda_id = nota_pkitem and  nota_tabela = 'demanda'
 where demanda_status in(0,1) -- and demanda_usercadastro = 1 and demanda_encarregado = 1
 group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status
+
+select * from tb_impressora
+
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('(11)937520377','Teste Edward','Celular e Whatsapp')
