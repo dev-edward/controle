@@ -1,5 +1,5 @@
 --use master
---rop database controle
+--rop database teste
 
 CREATE DATABASE controle
 GO
@@ -42,43 +42,53 @@ CREATE TABLE meta_sistema
 	sistema_menunome varchar(15),
 	sistema_submenunome varchar(15)
 )
+--CREATE TABLE tb_item
+--(/*informações da tabela inseridas*/
+--	item_id INT PRIMARY KEY IDENTITY,
+--	item_tabela NVARCHAR(20)
+--)
 CREATE TABLE tb_usuario
 (/*informações da tabela inseridas*/
 	usuario_id INT PRIMARY KEY IDENTITY,
+	--usuario_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	usuario_user VARCHAR(15),
 	usuario_nome VARCHAR(30),
 	usuario_senha VARCHAR(35)
 )
-CREATE TABLE tb_item
+CREATE TABLE tb_anotacao
 (/*informações da tabela inseridas*/
-	item_id INT PRIMARY KEY IDENTITY,
-	item_tabela NVARCHAR(20)
+	nota_id INT PRIMARY KEY IDENTITY,
+	nota_pkitem INT NOT NULL,
+	nota_tabela NVARCHAR(30) NOT NULL,
+	nota_nota NVARCHAR(256),
+	nota_excluido TINYINT
 )
 CREATE TABLE tb_estoque
 (/*informações da tabela inseridas*/
 	estoque_id INT PRIMARY KEY IDENTITY,
-	estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	estoque_nome NVARCHAR(20),
 	estoque_descricao NVARCHAR(60),
 	estoque_tag NVARCHAR(20),
 	estoque_quantidade INT,
 	estoque_localizacao NVARCHAR(40)
 )
-CREATE TABLE tb_afazer
+CREATE TABLE tb_demanda
 (/*informações da tabela inseridas*/
-	afazer_id INT PRIMARY KEY IDENTITY,
-	afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	afazer_dtcadastro DATETIME DEFAULT GETDATE(),
-	afazer_usercadastro TINYINT,
-	afazer_dtalteracao DATETIME,
-	afazer_useralteracao TINYINT,
-	afazer_titulo NVARCHAR(30),
-	afazer_detalhes NVARCHAR(256),
-	afazer_temprevisao TINYINT,
-	afazer_previsao DATETIME,
-	afazer_status TINYINT
+	demanda_id INT PRIMARY KEY IDENTITY,
+	--afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	demanda_dtcadastro DATETIME DEFAULT GETDATE(),
+	demanda_usercadastro TINYINT,
+	demanda_dtalteracao DATETIME,
+	demanda_useralteracao TINYINT,
+	demanda_titulo NVARCHAR(30),
+	demanda_detalhes NVARCHAR(256),
+	demanda_temprevisao TINYINT,
+	demanda_previsao DATETIME,
+	demanda_status TINYINT,
+	demanda_encarregado TINYINT,
+	demanda_prioridade TINYINT
 )
-
 CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
@@ -103,12 +113,11 @@ CREATE TABLE tb_skype
 CREATE TABLE tb_sala
 (
 	sala_id INT PRIMARY KEY IDENTITY,
-	sala_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--sala_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	sala_nome NVARCHAR(20),
 	sala_bloco NVARCHAR(20),
 	sala_descricao NVARCHAR(30)
 )
-
 CREATE TABLE tb_pessoa
 (
 	pessoa_id INT PRIMARY KEY IDENTITY,
@@ -117,11 +126,11 @@ CREATE TABLE tb_pessoa
 )
 
 CREATE TABLE tb_dispositivo
-(
+(/*informações da tabela inseridas*/
 	dispositivo_id INT PRIMARY KEY IDENTITY,
 	--dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
 	--dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
-	dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
 	dispositivo_usercadastro TINYINT,
 	dispositivo_dtalteracao DATETIME,
@@ -137,13 +146,12 @@ CREATE TABLE tb_dispositivo
 	dispositivo_processador NVARCHAR(20),
 	dispositivo_armazenamento NVARCHAR(30),
 	dispositivo_bateria NVARCHAR(30)
-	
 )
 
 CREATE TABLE tb_impressora
 (/*informações da tabela inseridas*/
 	impressora_id INT PRIMARY KEY IDENTITY,
-	impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
 	impressora_usercadastro TINYINT,
 	impressora_dtalteracao DATETIME,
@@ -163,7 +171,7 @@ CREATE TABLE tb_impressora
 CREATE TABLE tb_nobreak
 (
 	nobreak_id INT PRIMARY KEY IDENTITY,
-	nobreak_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--nobreak_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	nobreak_marca NVARCHAR(20),
 	nobreak_modelo NVARCHAR(20),
 	nobreak_bateria NVARCHAR(20)
@@ -171,7 +179,7 @@ CREATE TABLE tb_nobreak
 CREATE TABLE tb_projetor
 (
 	projetor_id INT PRIMARY KEY IDENTITY,
-	projetor_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--projetor_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	projetor_modelo NVARCHAR(20),
 	projetor_conexao TINYINT,
 	projetor_limpeza DATE, 
@@ -180,7 +188,7 @@ CREATE TABLE tb_projetor
 CREATE TABLE tb_camera
 (
 	camera_id INT PRIMARY KEY IDENTITY,
-	camera_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
+	--camera_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	camera_marcamodelo NVARCHAR(30),
 	camera_resolucao NVARCHAR(16),
 	camera_local NVARCHAR(20)
@@ -192,13 +200,6 @@ CREATE TABLE tb_software
 	software_descricao NVARCHAR(120),
 	software_dtinstalacao DATETIME,
 	software_ultatualizacao DATETIME
-)
-CREATE TABLE tb_notaitem
-(/*informações da tabela inseridas*/
-	nota_id INT PRIMARY KEY IDENTITY,
-	nota_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	nota_nota NVARCHAR(256),
-	nota_excluido TINYINT
 )
 CREATE table tb_notapessoal
 (/*informações da tabela inseridas*/
@@ -260,29 +261,31 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 /** Tabela usuario **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','#','Armazena dados dos usuarios que usam o software','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_id','Chave primaria da tabela, usada como FK em outras tabelas','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_fkitem','Chave estrangeira da tabela items','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_user','Nome de usuario da pessoa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_nome','Nome real da pessoa','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_usuario','usuario_senha','Senha que foi definida','1')
 
-/** Tabela afazer **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','#','Armazena afazeres, tarefas, atividades, para lembrar e consultar','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_fkitem','Chave estrangeira da tabela item','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_dtcadastro','Data em que a tarefa foi cadastrada pela primeira vez','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_usercadastro','FK do usuario que cadastrou a tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_dtalteracao','Data da ultima alteração das informações','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_useralteracao','FK do usuario que alterou por ultimo','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_titulo','O titulo que se deu para a tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_detalhes','A descrição e os detalhes da tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_temprevisao','Indica se tem prazo ou uma previsão para a realização da tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_previsao','Data em que precisa ser concluída a tarefa','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_afazer','afazer_status','FK do estado que se encontra a tarefa','1')
-
+/** Tabela demanda **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','#','Armazena demandas, tarefas, atividades, para lembrar e consultar','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_id','Chave primaria da tabela','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_fkitem','Chave estrangeira da tabela item','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_dtcadastro','Data em que a demanda foi cadastrada','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_usercadastro','FK do usuario que cadastrou a demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_dtalteracao','Data da ultima alteração das informações','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_useralteracao','FK do usuario que alterou por ultimo','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_titulo','O titulo que se deu para a demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_detalhes','A descrição e os detalhes da demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_temprevisao','Indica se tem prazo ou uma previsão para a realização da demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_previsao','Data em que precisa ser concluída a demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_status','FK do estado que se encontra a demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_encarregado','FK do usuario que ficou encarregado/responsável/à frente da demanda','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_demanda','demanda_prioridade','Quanto maior o numero maior a prioridade da demanda,','1')
 
 /** Tabela do estoque **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','#','Armazena informações dos itens em estoque','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_id','Chave primária da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_fkitem','Chave estrangeira da tabela item','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_fkitem','Chave estrangeira da tabela item','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_nome','Nome do recurso/peça/material','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_descricao','Breve informação da sua utilidade','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_tag','Usada para agrupar por tipos ou utilidade','1')
@@ -292,16 +295,17 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 /** Tabela de notas **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','#','Armazena as notas de itens(anotações relevantes, especifica do item)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_fkitem','Chave extrangeira correspondente ao item que a nota pertenca','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_pkitem','Chave primaria da tabela do item da nota','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_tabela','Tabela ao qual o item dono da nota pertence','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_nota','A anotação','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
 /** Tabela de notas pessoais **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_id','Chave primaria da tabela ','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_fkuser','Chave extrangeira correspondente ao usuário que a nota pertence','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_nota','A anotação','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_id','Chave primaria da tabela ','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_fkuser','Chave extrangeira correspondente ao usuário que a nota pertence','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_nota','A anotação','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
 /** Tabela de tb_telefone **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','#','Armazena os ramais/telefone de usuarios/departamentos internos e externos','1')
@@ -313,7 +317,7 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 /** Tabela Dispositivo **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','#','Guarda informações de Computador/Notebook/Chromebook/Tablet/Celular','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_id','Chave primária da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_fkitem','Chave estrangeira da tabela item','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_fkitem','Chave estrangeira da tabela item','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_dtcadastro','Data em que o dispositivo foi cadastrado','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_usercadastro','FK do usuario que cadastrou o dispositivo','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_dtalteracao','Data da ultima alteração das informações','1')
@@ -330,11 +334,10 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_armazenamento','','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_bateria','','1')
 
-
 /** Tabela impressora **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','#','Guarda informações das impressoras','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_fkitem','Chave estrangeira da tabela item','1')
+--insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_fkitem','Chave estrangeira da tabela item','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtcadastro','Data em que a impressora foi cadastrada pela primeira vez','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_usercadastro','FK do usuario que cadastrou a impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtalteracao','Data da ultima alteração das informações','1')
@@ -351,14 +354,11 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtsaida','Data em que a impressora saiu','1')
 
-
-
-
 /** (desnecessário)Tabelas e seus números **/
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_dicionario',1)
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_valor',2)
 insert into meta_tabela(tabela_nome,tabela_numero) values('meta_tabela',3)
-insert into meta_tabela(tabela_nome,tabela_numero) values('tb_item',4)
+--insert into meta_tabela(tabela_nome,tabela_numero) values('tb_item',4)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_notaitem',5)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_item',6)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_pessoaitem',7)
@@ -366,37 +366,34 @@ insert into meta_tabela(tabela_nome,tabela_numero) values('tb_salaitem',8)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_historico',9)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
 
-insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',11)
-
 
 /**************************************/
 /* inclusões para proposito de teste */
 /************************************/
+-- Afazeres
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 10','detalhes 10',1,'25/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 11','detalhes 11',1,'26/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 12','detalhes 12',1,'27/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 13','detalhes 13',1,'28/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 14','detalhes 14',1,'29/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 15','detalhes 15',1,'30/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 16','detalhes 16',1,'01/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 17','detalhes 17',1,'02/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 18','detalhes 18',1,'03/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 19','detalhes 19',1,'04/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 20','detalhes 20',1,'05/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 21','detalhes 21',1,'06/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 22','detalhes 22',1,'07/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 23','detalhes 23',1,'08/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 24','detalhes 24',1,'09/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 25','detalhes 25',1,'10/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 26','detalhes 26',1,'11/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 27','detalhes 27',1,'12/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 28','detalhes 28',1,'13/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 29','detalhes 29',1,'14/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 30','detalhes 30',1,'15/09/2021',1,1,5)
 
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 10','detalhes 10',1,'25/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 11','detalhes 11',1,'26/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 12','detalhes 12',1,'27/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 13','detalhes 13',1,'28/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 14','detalhes 14',1,'29/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 15','detalhes 15',1,'30/04/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 16','detalhes 16',1,'01/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 17','detalhes 17',1,'02/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 18','detalhes 18',1,'03/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 19','detalhes 19',1,'04/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 20','detalhes 20',1,'05/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 21','detalhes 21',1,'06/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 22','detalhes 22',1,'07/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 23','detalhes 23',1,'08/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 24','detalhes 24',1,'09/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 25','detalhes 25',1,'10/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 26','detalhes 26',1,'11/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 27','detalhes 27',1,'12/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 28','detalhes 28',1,'13/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 29','detalhes 29',1,'14/09/2021',1)
-insert into tb_item(item_tabela) values('tb_afazer') insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) VALUES(scope_identity(),1,'titulo 30','detalhes 30',1,'15/09/2021',1)
---select * from tb_afazer
---select * from tb_item
-
+-- Telefones/Ramais
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('200','Bruna/Marcela','Telefonia Recepção')
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('201','Ir. Fátima','Diretora ADM e Financeira')
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('205','Lilian','Financeiro')
@@ -435,10 +432,15 @@ insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('254','Giovanna','Marketing')
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('258','Sala dos Professores','Sala dos Professores')
 
-
-insert into tb_notaitem(nota_fkitem,nota_nota) values(1,'teste nota')
-select * from tb_notaitem
-
-
+-- Usuários
 insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
 
+-- Estoque
+insert into tb_estoque(estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao) values('Toner T06','Toner usado em impressoras da canon','SuprimentoImpressora',12,'Sala em frente à secretaria')
+select * from tb_impressora
+
+-- Impressoras
+insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',2,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
+
+-- Anotacões
+insert into tb_notaitem(nota_fkitem,nota_nota) values(@fk,@nota)

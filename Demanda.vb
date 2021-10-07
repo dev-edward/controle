@@ -1,6 +1,5 @@
-﻿Public Class Afazer
+﻿Public Class Demanda
     Friend pk As Integer
-    Friend fk As Integer
     Friend estado As Integer
     Friend qtdNotas As Integer
     Dim panel As New Panel
@@ -48,7 +47,7 @@
     Dim fonte As New Font("Microsoft Sans Serif", 12)
     Dim cor_botao = Color.FromArgb(255, 26, 147, 111)
 
-    Friend Sub New(ByRef _lista As AfazerLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _fkitem As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
+    Friend Sub New(ByRef _lista As DemandaLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
 
         'adicionando controles no panel
         panel.Controls.Add(txt_titulo)
@@ -62,7 +61,6 @@
 
         'conteudo dos controles extraido do BD
         pk = _id
-        fk = _fkitem
         estado = _estado
         qtdNotas = _qtdNotas
         txt_titulo.Text = _titulo
@@ -117,14 +115,14 @@
     End Sub
     Private Sub btn_vermais_Click()
 
-        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 2 Then
+        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And Not classesAbertas.cadastrodemanda Then
             classesAbertas.atualdetalhes.atualizarDados(pk)
-            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
         Else
-            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 1 Then
-                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And classesAbertas.cadastrodemanda Then
+                Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
             End If
-            Dim verDetalhes = New AfazerDetalhes(Me)
+            Dim verDetalhes = New DemandaDetalhes(Me)
             verDetalhes.Show()
         End If
 
@@ -139,7 +137,7 @@
         End If
     End Sub
     Private Sub btn_estado_Click()
-        Dim status As New AfazerEstado(Me)
+        Dim status As New DemandaEstado(Me)
         status.ShowDialog()
     End Sub
 

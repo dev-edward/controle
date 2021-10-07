@@ -1,12 +1,12 @@
 ﻿Public Class classesAbertas
-    Public Shared atualdetalhes As AfazerDetalhes
+    Public Shared atualdetalhes As DemandaDetalhes
     Public Shared atualnotas As listarNotas
     Public Shared atualntpessoal As NotaPessoal
-    Public Shared cadastroOUdetalhes As Integer
+    Public Shared cadastrodemanda As Boolean
 
-    Shared Sub setAtualDetalhes(ByRef _atualdetalhes As AfazerDetalhes, ByVal _cadastroOUdetalhes As Integer)
+    Shared Sub setAtualDetalhes(ByRef _atualdetalhes As DemandaDetalhes, ByVal _cadastrodemanda As Boolean)
         atualdetalhes = _atualdetalhes
-        cadastroOUdetalhes = _cadastroOUdetalhes
+        cadastrodemanda = _cadastrodemanda
     End Sub
     Shared Sub setAtualNotas(ByRef _atualnotas As listarNotas)
         atualnotas = _atualnotas

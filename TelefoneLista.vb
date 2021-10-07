@@ -33,9 +33,9 @@ Public Class TelefoneLista
             If myReader.HasRows Then
                 Do While myReader.Read()
                     id = myReader.GetInt32("telefone_id")
-                    numero = myReader.GetInt32("telefone_numero")
-                    pessoa = myReader.GetInt32("telefone_pessoa")
-                    local = myReader.GetInt32("telefone_local")
+                    numero = myReader.GetString("telefone_numero")
+                    pessoa = myReader.GetString("telefone_pessoa")
+                    local = myReader.GetString("telefone_local")
 
                     posicaoY += 30
 
@@ -52,7 +52,7 @@ Public Class TelefoneLista
 
             End If
         Catch ex As Exception
-            MessageBox.Show("Erro ao obter notas: " & ex.Message, "Insert Records")
+            MessageBox.Show("Erro ao obter telefones: " & ex.Message, "Insert Records")
         Finally
             conexao.Close()
         End Try

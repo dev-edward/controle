@@ -3,7 +3,7 @@ Public Class NotaPessoal
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-    Dim fk As Integer
+    Dim pkitem As Integer
     Dim id As Integer
     Dim textoNota As String
     Dim num As Integer
@@ -27,7 +27,7 @@ Public Class NotaPessoal
     End Sub
 
     Private Sub iniciar()
-        fk = usuario.usuario_id
+        pkitem = usuario.usuario_id
 
         'posição dos controles
         conteiner.Location = New Point(0, 60)
@@ -62,7 +62,8 @@ Public Class NotaPessoal
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select ROW_NUMBER() OVER(ORDER BY nt_id  asc) AS indice, nt_id, nt_nota from tb_notapessoal where nt_fkuser = " & fk & " and (nt_excluido = 0 or nt_excluido is null) order by nt_id  desc"
+            'consulta.CommandText = "select ROW_NUMBER() OVER(ORDER BY nt_id  asc) AS indice, nt_id, nt_nota from tb_notapessoal where nt_fkuser = " & fk & " and (nt_excluido = 0 or nt_excluido is null) order by nt_id  desc"
+            consulta.CommandText = "select ROW_NUMBER() OVER(ORDER BY nota_id  asc) AS indice, nota_id, nota_nota from tb_anotacao where nota_pkitem = " & pkitem & " and nota_tabela = 'usuario' and nota_excluido is null  order by nota_id desc"
             conexao.Open()
 
             myReader = consulta.ExecuteReader()
@@ -71,8 +72,8 @@ Public Class NotaPessoal
             posicaoY = 0
             If myReader.HasRows Then
                 Do While myReader.Read()
-                    id = myReader.GetInt32("nt_id")
-                    textoNota = myReader.GetString("nt_nota")
+                    id = myReader.GetInt32("nota_id")
+                    textoNota = myReader.GetString("nota_nota")
                     num = myReader.GetValue("indice")
                     Dim notas As New Nota(conteiner, id, textoNota, posicaoY, num, True)
                     posicaoY += 44
@@ -97,8 +98,9 @@ Public Class NotaPessoal
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "insert into tb_notapessoal(nt_fkuser,nt_nota) values(@fk,@nota)"
-            consulta.Parameters.AddWithValue("@fk", fk)
+            consulta.CommandText = "insert into tb_anotacao(nota_pkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
+            consulta.Parameters.AddWithValue("@fk", pkitem)
+            consulta.Parameters.AddWithValue("@tabela", "usuario")
             consulta.Parameters.AddWithValue("@nota", txt_novaNota.Text)
 
             conexao.Open()
@@ -106,7 +108,7 @@ Public Class NotaPessoal
             txt_novaNota.Text = ""
 
         Catch ex As Exception
-            MessageBox.Show("Erro adicionar nova nota: " & ex.Message, "Insert Records")
+            MessageBox.Show("Erro adicionar nova anotação: " & ex.Message, "Insert Records")
         Finally
             conexao.Close()
         End Try

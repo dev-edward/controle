@@ -22,7 +22,7 @@
         .Location = New Point(190, 0)
     }
     Friend Sub New(ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _numero As String, ByVal _pessoa As String, ByVal _local As String, ByVal _posicaoY As Integer)
-        id = _numero
+        id = _id
         lbl_numero.Text = _numero
         lbl_pessoa.Text = _local
         lbl_local.Text = _local

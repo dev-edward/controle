@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Public Class AfazerEstado
+Public Class DemandaEstado
     Private conexao As SqlConnection
     Private consulta As SqlCommand
 
@@ -8,9 +8,9 @@ Public Class AfazerEstado
     Dim estadoAtual As Integer
     Dim selecionado = Color.FromArgb(255, 134, 185, 233)
     Dim deselecionado = SystemColors.Control
-    Dim afazerAtual As Afazer
+    Dim afazerAtual As Demanda
 
-    Friend Sub New(ByRef _afazerAtual As Afazer)
+    Friend Sub New(ByRef _afazerAtual As Demanda)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().

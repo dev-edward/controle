@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Public Class AfazerDetalhes
+Public Class DemandaDetalhes
     'Create ADO.NET objects.
     Private conexao As SqlConnection
     Private consulta As SqlCommand
@@ -35,7 +35,7 @@ Public Class AfazerDetalhes
     Dim btn_modificar As New Button
     Dim btn_salvar As New Button
 
-    Dim afazerAtual As Afazer
+    Dim demandaAtual As Demanda
 
     Dim largura1 As Integer = 150
     Dim largura2 As Integer = 260
@@ -50,7 +50,7 @@ Public Class AfazerDetalhes
 
     Friend Sub New()
         classesAbertas.setAtualDetalhes(Me, 1)
-        Me.Text = "Cadastrar nova afazer"
+        Me.Text = "Cadastrar nova demanda"
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
@@ -65,11 +65,11 @@ Public Class AfazerDetalhes
 
         btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
-    Friend Sub New(ByRef _afazerAtual As Afazer)
+    Friend Sub New(ByRef _demandaAtual As Demanda)
         classesAbertas.setAtualDetalhes(Me, 2)
         Me.Text = "Detalhes do afazer"
-        afazerAtual = _afazerAtual
-        pk = afazerAtual.pk
+        demandaAtual = _demandaAtual
+        pk = demandaAtual.pk
 
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
@@ -262,18 +262,18 @@ Public Class AfazerDetalhes
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
         consulta = conexao.CreateCommand
         consulta.CommandText = "select 
-                                        afazer_id,
-                                        afazer_fkitem, 
-                                        afazer_dtcadastro, 
-                                        afazer_usercadastro, 
-                                        afazer_dtalteracao, 
-                                        afazer_useralteracao, 
-                                        afazer_titulo, 
-                                        afazer_detalhes, 
-                                        afazer_temprevisao, 
-                                        afazer_previsao, 
-                                        afazer_status 
-                                from tb_afazer where afazer_id=" & _pk
+                                        demanda_id,
+                                        demanda_fkitem, 
+                                        demanda_dtcadastro, 
+                                        demanda_usercadastro, 
+                                        demanda_dtalteracao, 
+                                        demanda_useralteracao, 
+                                        demanda_titulo, 
+                                        demanda_detalhes, 
+                                        demanda_temprevisao, 
+                                        demanda_previsao, 
+                                        demanda_status 
+                                from tb_demanda where demanda_id=" & _pk
         conexao.Open()
         myReader = consulta.ExecuteReader()
 
@@ -308,7 +308,7 @@ Public Class AfazerDetalhes
 
 
     End Sub
-    Private Sub DetalhesAfazer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub DetalhesDemanda_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.ClientSize = New Size(320, 420)
@@ -329,10 +329,10 @@ Public Class AfazerDetalhes
 
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            classesAbertas.atualnotas.atualizarNovaLista(afazerAtual)
-            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+            classesAbertas.atualnotas.atualizarNovaLista(demandaAtual)
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
         Else
-            Dim notas = New listarNotas(afazerAtual)
+            Dim notas = New listarNotas(demandaAtual)
             notas.Show()
         End If
     End Sub
@@ -371,14 +371,14 @@ Public Class AfazerDetalhes
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "UPDATE tb_afazer SET 
-                                afazer_dtalteracao = GETDATE(),
-                                afazer_useralteracao = @useralteracao,
-                                afazer_titulo = @titulo,
-                                afazer_detalhes = @detalhes,
-                                afazer_temprevisao = @temprevisao,
-                                afazer_previsao = @previsao,
-                                afazer_status = @status
+            consulta.CommandText = "UPDATE tb_demanda SET 
+                                demanda_dtalteracao = GETDATE(),
+                                demanda_useralteracao = @useralteracao,
+                                demanda_titulo = @titulo,
+                                demanda_detalhes = @detalhes,
+                                demanda_temprevisao = @temprevisao,
+                                demanda_previsao = @previsao,
+                                demanda_status = @status
                                 WHERE afazer_id = @id"
 
             consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
@@ -393,8 +393,8 @@ Public Class AfazerDetalhes
 
             consulta.ExecuteNonQuery()
 
-            afazerAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
-            afazerAtual.setEstado(cbx_estado.SelectedIndex + 1)
+            demandaAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
+            demandaAtual.setEstado(cbx_estado.SelectedIndex + 1)
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
         Finally
@@ -416,7 +416,7 @@ Public Class AfazerDetalhes
             consulta = conexao.CreateCommand
 
             consulta.CommandText = "insert into tb_item(item_tipo) values(10) 
-                                    insert into tb_afazer(afazer_fkitem,afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) 
+                                    insert into tb_afazer(afazer_usercadastro,afazer_titulo,afazer_detalhes,afazer_temprevisao,afazer_previsao,afazer_status) 
                                     VALUES(scope_identity(),
                                     @usercadastro,
                                     @titulo,
@@ -439,10 +439,10 @@ Public Class AfazerDetalhes
             myReader.Read()
             novoid = myReader.GetValue(0)
 
-            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() Then
-                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+                Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
             End If
-            Dim verDetalhes = New AfazerDetalhes(afazerAtual)
+            Dim verDetalhes = New DemandaDetalhes(demandaAtual)
             verDetalhes.Show()
 
         Catch ex As Exception

@@ -6,10 +6,11 @@ Public Class Nota
     Dim lbl_notaNum As New Label
     Dim txt_nota As New RichTextBox
     Dim btn_excluir As New Button
+    Dim anotacao As New Boolean
 
     Dim idNota As Integer
 
-    Friend Sub New(ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer, Optional ByVal _notapessoal As Boolean = False)
+    Friend Sub New(ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _textoNota As String, ByVal _posicaoY As Integer, ByVal _num As Integer, Optional ByVal _anotacao As Boolean = False)
 
         idNota = _id
 
@@ -38,12 +39,13 @@ Public Class Nota
         btn_excluir.FlatStyle = FlatStyle.Popup
         txt_nota.BackColor = Color.FromArgb(255, 230, 230, 240)
 
-        If _notapessoal Then
-            AddHandler btn_excluir.Click, AddressOf excluirPessoal
-        Else
-            AddHandler btn_excluir.Click, AddressOf excluir
-        End If
+        'If _notapessoal Then
+        '    AddHandler btn_excluir.Click, AddressOf excluirPessoal
+        'Else
+        '    AddHandler btn_excluir.Click, AddressOf excluir
+        'End If
 
+        anotacao = _anotacao
 
         panel.Controls.Add(lbl_notaNum)
         panel.Controls.Add(txt_nota)
@@ -58,35 +60,37 @@ Public Class Nota
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "update tb_notaitem set nota_excluido = 1 where nota_id = " & idNota
+            consulta.CommandText = "update tb_anotacao set nota_excluido = 1 where nota_id = " & idNota
             conexao.Open()
             consulta.ExecuteNonQuery()
 
+            If anotacao Then
+                classesAbertas.atualntpessoal.atualizarLista()
+            Else
+                classesAbertas.atualnotas.atualizarLista()
+            End If
         Catch ex As Exception
             MessageBox.Show("Erro ao excluir nota: " & ex.Message, "Insert Records")
         Finally
             conexao.Close()
         End Try
-
-        classesAbertas.atualnotas.atualizarLista()
-
     End Sub
-    Friend Sub excluirPessoal()
-        Try
-            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
-            consulta = conexao.CreateCommand
-            consulta.CommandText = "update tb_notapessoal set nt_excluido = 1 where nt_id = " & idNota
-            conexao.Open()
-            consulta.ExecuteNonQuery()
+    'Friend Sub excluirPessoal()
+    '    Try
+    '        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+    '        consulta = conexao.CreateCommand
+    '        consulta.CommandText = "update tb_notapessoal set nt_excluido = 1 where nt_id = " & idNota
+    '        conexao.Open()
+    '        consulta.ExecuteNonQuery()
 
-        Catch ex As Exception
-            MessageBox.Show("Erro ao excluir nota: " & ex.Message, "Insert Records")
-        Finally
-            conexao.Close()
-        End Try
+    '    Catch ex As Exception
+    '        MessageBox.Show("Erro ao excluir nota: " & ex.Message, "Insert Records")
+    '    Finally
+    '        conexao.Close()
+    '    End Try
 
-        classesAbertas.atualntpessoal.atualizarLista()
+    '    classesAbertas.atualntpessoal.atualizarLista()
 
-    End Sub
+    'End Sub
 
 End Class

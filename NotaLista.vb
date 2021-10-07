@@ -3,7 +3,8 @@ Public Class listarNotas
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-    Dim fk As Integer
+    Dim pkitem As Integer
+    Dim tabela As String
     Dim num As Integer
     Dim idnota As Integer
     Dim textoNota As String
@@ -11,16 +12,17 @@ Public Class listarNotas
     Dim conteiner As New Panel
     Dim txt_novaNota As New RichTextBox
     Dim btn_addNota As New Button
-    Dim afazerAtual As Afazer
+    Dim demandaAtual As Demanda
 
-    Friend Sub New(ByRef _afazerAtual As Afazer)
+    Friend Sub New(ByRef _demandaAtual As Demanda)
         classesAbertas.setAtualNotas(Me)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        afazerAtual = _afazerAtual
-        fk = afazerAtual.fk
+        demandaAtual = _demandaAtual
+        pkitem = demandaAtual.pk
+        tabela = "demanda"
     End Sub
 
     Private Sub listarNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -54,9 +56,9 @@ Public Class listarNotas
         atualizarLista()
 
     End Sub
-    Friend Sub atualizarNovaLista(ByRef _afazerAtual As Afazer)
-        afazerAtual = _afazerAtual
-        fk = afazerAtual.fk
+    Friend Sub atualizarNovaLista(ByRef _demandaAtual As Demanda)
+        demandaAtual = _demandaAtual
+        pkitem = demandaAtual.pk
         atualizarLista()
     End Sub
     Friend Sub atualizarLista()
@@ -66,7 +68,7 @@ Public Class listarNotas
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select nota_id, nota_nota from tb_notaitem where nota_fkitem = " & fk & " and (nota_excluido = 0 or nota_excluido is null)"
+            consulta.CommandText = "select nota_id, nota_nota from tb_anotacao where nota_pkitem = " & pkitem & " and nota_tabela = " & tabela & " and nota_excluido is null"
             conexao.Open()
 
             myReader = consulta.ExecuteReader()
@@ -81,8 +83,8 @@ Public Class listarNotas
                     Dim notas As New Nota(conteiner, idnota, textoNota, posicaoY, num)
                     posicaoY += 44
                 Loop
-                If afazerAtual IsNot Nothing Then
-                    afazerAtual.setQtdNotas(num)
+                If demandaAtual IsNot Nothing Then
+                    demandaAtual.setQtdNotas(num)
                 End If
             Else
                 Dim label As New Label
@@ -104,8 +106,9 @@ Public Class listarNotas
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "insert into tb_notaitem(nota_fkitem,nota_nota) values(@fk,@nota)"
-            consulta.Parameters.AddWithValue("@fk", fk)
+            consulta.CommandText = "insert into tb_anotacao(nota_fkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
+            consulta.Parameters.AddWithValue("@fk", pkitem)
+            consulta.Parameters.AddWithValue("@tabela", tabela)
             consulta.Parameters.AddWithValue("@nota", txt_novaNota.Text)
 
             conexao.Open()

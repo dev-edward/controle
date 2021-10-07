@@ -252,8 +252,9 @@ Public Class Principal
         LateralEsquerda.Controls.Add(ts_Esq)
         LateralDireita.Controls.Add(splitconteiner_Dir)
         LateralDireita.Controls.Add(ts_Dir)
-        Dim listarAfazer = New AfazerLista()
+        Dim listarAfazer = New DemandaLista()
         Dim listarNotasPessoais = New NotaPessoal()
+        Dim listartelefones = New TelefoneLista()
 
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)

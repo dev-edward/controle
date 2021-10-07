@@ -1,5 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Public Class AfazerLista
+Public Class DemandaLista
     'Create ADO.NET objects.
     Private conexao As SqlConnection
     Private consulta As SqlCommand
@@ -20,16 +20,16 @@ Public Class AfazerLista
     Dim cbx_status3 As New CheckBox
     Dim cbx_status4 As New CheckBox
 
-    Dim slq_select As String = "SELECT afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status,sum(case when nota_fkitem is not null and nota_excluido is null then 1 else 0 end) as 'qtd_notas' FROM tb_afazer LEFT JOIN tb_notaitem ON  afazer_fkitem = nota_fkitem"
-    Dim sql_groupby As String = " group by  afazer_id, afazer_fkitem, afazer_titulo, afazer_temprevisao, afazer_previsao, afazer_status"
+    Dim slq_select As String = "SELECT demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status,demanda_encarregado,demanda_prioridade,sum(case when nota_pkitem = demanda_id and nota_tabela = 'demanda' and nota_excluido is null then 1 else 0 end) as 'qtd_notas' FROM tb_demanda LEFT JOIN tb_anotacao ON  demanda_id = nota_pkitem and nota_tabela = 'demanda'"
+    Dim sql_groupby As String = " group by  demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status,demanda_encarregado,demanda_prioridade"
 
     Dim filtro_itens = "0,1,2,3,4"
-    Dim sql_filtro As String = " where afazer_status in(" & filtro_itens & ")"
+    Dim sql_filtro As String = " where demanda_status in(" & filtro_itens & ")"
     Dim sql_retornos As String = " OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY"
-    Dim sql_previsao_crescente As String = " ORDER BY afazer_previsao asc" & sql_retornos
-    Dim sql_previsao_decrescente As String = " ORDER BY afazer_previsao desc" & sql_retornos
-    Dim sql_ordenar_crescente As String = " ORDER BY afazer_id asc" & sql_retornos
-    Dim sql_ordenar_decrescente As String = " ORDER BY afazer_id desc" & sql_retornos
+    Dim sql_previsao_crescente As String = " ORDER BY demanda_previsao asc" & sql_retornos
+    Dim sql_previsao_decrescente As String = " ORDER BY demanda_previsao desc" & sql_retornos
+    Dim sql_ordenar_crescente As String = " ORDER BY demanda_id asc" & sql_retornos
+    Dim sql_ordenar_decrescente As String = " ORDER BY demanda_id desc" & sql_retornos
 
 
     Dim sql_ordem As String = sql_ordenar_decrescente
@@ -161,23 +161,32 @@ Public Class AfazerLista
 
         Do While myReader.Read()
             Dim id As Integer
-            Dim fkitem As Integer
             Dim titulo As String
             Dim temprevisao As Integer
             Dim previsao As DateTime
             Dim estado As String
             Dim qtdNotas As Integer
-            Dim panel As New Panel()
+            Dim encarregado As Integer
+            Dim prioridade As Integer
+            Dim panel As New Panel
 
-            id = myReader.GetInt32(0)
-            fkitem = myReader.GetInt32(1)
-            titulo = If(myReader.IsDBNull(2), "", myReader.GetString(2))
-            temprevisao = If(myReader.IsDBNull(3), 0, myReader.GetValue(3))
-            previsao = If(myReader.IsDBNull(4), 0, myReader.GetValue(4))
-            estado = If(myReader.IsDBNull(5), 0, myReader.GetValue(5))
-            qtdNotas = If(myReader.IsDBNull(6), 0, myReader.GetInt32(6))
+            'id = myReader.GetInt32(0)
+            'titulo = If(myReader.IsDBNull(1), "", myReader.GetString(1))
+            'temprevisao = If(myReader.IsDBNull(2), 0, myReader.GetValue(2))
+            'previsao = If(myReader.IsDBNull(3), 0, myReader.GetValue(3))
+            'estado = If(myReader.IsDBNull(4), 0, myReader.GetValue(4))
+            'qtdNotas = If(myReader.IsDBNull(5), 0, myReader.GetInt32(5))
 
-            Dim afazeres As New Afazer(Me, conteiner, id, fkitem, titulo, temprevisao, previsao, estado, qtdNotas, panelY)
+            id = myReader.GetInt32("demanda_id")
+            titulo = If(myReader.IsDBNull("demanda_titulo"), "", myReader.GetString("demanda_titulo"))
+            temprevisao = If(myReader.IsDBNull("demanda_temprevisao"), 0, myReader.GetValue("demanda_temprevisao"))
+            previsao = If(myReader.IsDBNull("demanda_previsao"), 0, myReader.GetValue("demanda_previsao"))
+            estado = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status"))
+            qtdNotas = If(myReader.IsDBNull("qtd_notas"), 0, myReader.GetInt32("qtd_notas"))
+            encarregado = If(myReader.IsDBNull("demanda_encarregado"), 0, myReader.GetValue("demanda_encarregado"))
+            prioridade = If(myReader.IsDBNull("demanda_prioridade"), 0, myReader.GetValue("demanda_prioridade"))
+
+            Dim demandas As New Demanda(Me, conteiner, id, titulo, temprevisao, previsao, estado, qtdNotas, panelY)
             panelY += 56
 
         Loop
@@ -189,14 +198,14 @@ Public Class AfazerLista
         conexao.Close()
     End Sub
     Private Sub novo()
-        If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 1 Then
-            Application.OpenForms.OfType(Of AfazerDetalhes).First().BringToFront()
+        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And classesAbertas.cadastrodemanda Then
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
 
         Else
-            If Application.OpenForms.OfType(Of AfazerDetalhes).Any() And classesAbertas.cadastroOUdetalhes = 2 Then
-                Application.OpenForms.OfType(Of AfazerDetalhes).First().Close()
+            If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And Not classesAbertas.cadastrodemanda Then
+                Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
             End If
-            Dim verDetalhes = New AfazerDetalhes()
+            Dim verDetalhes = New DemandaDetalhes()
             verDetalhes.Show()
         End If
 
@@ -233,12 +242,12 @@ Public Class AfazerLista
             'If cbx_status1.Checked Or cbx_status2.Checked Or cbx_status3.Checked Or cbx_status4.Checked Then
 
             'End If
-            sql_filtro = " where afazer_status in(" & filtro_itens & ")"
+            sql_filtro = " where demanda_status in(" & filtro_itens & ")"
             panel_filtro.Visible = False
 
             atualizarLista()
         Else
-                panel_filtro.Visible = True
+            panel_filtro.Visible = True
         End If
         s_filtro = Not s_filtro
 

@@ -1,39 +1,13 @@
-select * from tb_impressora
-insert into tb_item(item_tabela) values('tb_impressora')
-insert into tb_impressora(
-impressora_fkitem,
-impressora_marcamodelo,
-impressora_nserie,
-impressora_nnota,
-impressora_nproduto,
-impressora_suprimento,
-impressora_corimpressão,
-impressora_local,
-impressora_estado,
-impressora_ip,
-impressora_dtentrada,
-impressora_dtsaida)
-values(
-scope_identity(),
-'Canon IR1643IF',
-'2TQ05853',
-'000021624',
-'3630C003AA',
-1,
-1,
-'SECRETARIA',
-1,
-'192.0.1.184',
-'20/01/2021',
-null
-)
+select * from tb_anotacao
+select * from tb_afazer
+insert into tb_anotacao(nota_pkitem,nota_tabela,nota_nota) values(7,'afazer','Anotação 5 | afazer 7')
+select * from tb_anotacao
 
-insert into tb_item(item_tabela) values('tb_estoque') insert into tb_estoque(estoque_fkitem,estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao)
-values(scope_identity(),'Toner T06','Toner usado em impressoras da canon','SuprimentoImpressorahhh',12,'Sala em frente à secretaria')
+update tb_anotacao set nota_excluido = null where nota_id = 6
+select * from tb_anotacao
 
-select * from tb_estoque
-select * from tb_impressora
-
-alter table tb_estoque alter column estoque_tag NVARCHAR(20)
-
-select * from tb_telefone
+SELECT demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status,
+sum(case when nota_pkitem = demanda_id and nota_tabela = 'demanda' and nota_excluido is null then 1 else 0 end) as 'qtd_notas' 
+FROM tb_demanda LEFT JOIN tb_anotacao ON  demanda_id = nota_pkitem and  nota_tabela = 'demanda'
+where demanda_status in(0,1) -- and demanda_usercadastro = 1 and demanda_encarregado = 1
+group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status

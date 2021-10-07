@@ -4,13 +4,10 @@
     <_LastSelectedProfileId>C:\Users\edward.huayta\source\repos\controle\My Project\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="addNotas.vb">
+    <Compile Update="DemandaDetalhes.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="AfazerDetalhes.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AfazerEstado.vb">
+    <Compile Update="DemandaEstado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="bloqueio.vb">
