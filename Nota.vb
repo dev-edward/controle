@@ -45,6 +45,8 @@ Public Class Nota
         '    AddHandler btn_excluir.Click, AddressOf excluir
         'End If
 
+        AddHandler btn_excluir.Click, AddressOf excluir
+
         anotacao = _anotacao
 
         panel.Controls.Add(lbl_notaNum)
@@ -58,7 +60,7 @@ Public Class Nota
 
     Friend Sub excluir()
         Try
-            nao conseui excluir
+            'nao conseui excluir
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
             consulta.CommandText = "update tb_anotacao set nota_excluido = 1 where nota_id = " & idNota

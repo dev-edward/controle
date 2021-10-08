@@ -20,7 +20,8 @@
     Public Shared spliter2 = Image.FromFile("..\..\..\img\64x64\spliter2.png")
     Public Shared spliter3 = Image.FromFile("..\..\..\img\64x64\spliter3.png")
     Public Shared separar = Image.FromFile("..\..\..\img\64x64\separar.png")
-    Public Shared topmost = Image.FromFile("..\..\..\img\64x64\topmost.png")
+    Public Shared topmostoff = Image.FromFile("..\..\..\img\64x64\topmostoff.png")
+    Public Shared topmoston = Image.FromFile("..\..\..\img\64x64\topmoston.png")
     Public Shared cadeado = Image.FromFile("..\..\..\img\64x64\cadeado.png")
     Public Shared sair = Image.FromFile("..\..\..\img\64x64\exit.png")
 

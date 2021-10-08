@@ -2,7 +2,6 @@
 Imports System.Data.SqlClient
 Public Class Principal
 
-
     Dim separa_esq As Boolean
     Dim separa_dir As Boolean
     Dim istopmost_esq As Boolean
@@ -26,8 +25,8 @@ Public Class Principal
         .BackColor = Color.FromArgb(255, 250, 209, 183)
     }
 
-    Dim mi_topmostEsq As New ToolStripButton("", img.topmost)
-    Dim mi_topmostDir As New ToolStripButton("", img.topmost)
+    Dim mi_topmostEsq As New ToolStripButton("", img.topmostoff)
+    Dim mi_topmostDir As New ToolStripButton("", img.topmostoff)
 
     Dim mi_separaEsq As New ToolStripButton("", img.separar)
     Dim mi_separaDir As New ToolStripButton("", img.separar)
@@ -99,8 +98,10 @@ Public Class Principal
     Dim mi_camera As New ToolStripMenuItem("Camera")
 
     Dim mi_contas As New ToolStripMenuItem("Contas")
+    Dim si_telefone As New ToolStripMenuItem("Telefone")
     Dim si_email As New ToolStripMenuItem("E-mail")
     Dim si_skype As New ToolStripMenuItem("Skype")
+    Dim si_totvsrm As New ToolStripMenuItem("Totvs RM")
 
     Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
     Dim mi_estoque As New ToolStripMenuItem("Estoque")
@@ -150,8 +151,10 @@ Public Class Principal
         mi_dispositivos.DropDownItems.Add(si_chromebook)
         mi_dispositivos.DropDownItems.Add(si_tablet)
         mi_dispositivos.DropDownItems.Add(si_celular)
+        mi_contas.DropDownItems.Add(si_telefone)
         mi_contas.DropDownItems.Add(si_email)
         mi_contas.DropDownItems.Add(si_skype)
+        mi_contas.DropDownItems.Add(si_totvsrm)
         AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
         AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
         AddHandler si_computador.Click, AddressOf si_computador_Click
@@ -164,7 +167,9 @@ Public Class Principal
         AddHandler mi_projetor.Click, AddressOf mi_projetor_Click
         AddHandler mi_camera.Click, AddressOf mi_camera_Click
         AddHandler si_email.Click, AddressOf si_email_Click
+        AddHandler si_telefone.Click, AddressOf si_telefone_Click
         AddHandler si_skype.Click, AddressOf si_skype_Click
+        AddHandler si_totvsrm.Click, AddressOf si_totvsrm_Click
         AddHandler mi_pessoas.Click, AddressOf mi_pessoas_Click
         AddHandler mi_estoque.Click, AddressOf mi_estoque_Click
         AddHandler mi_software.Click, AddressOf mi_software_Click
@@ -262,95 +267,112 @@ Public Class Principal
     End Sub
 
     Private Sub mi_afazer_Click()
-        If tabCentro.TabPages("tb_afazer") Is Nothing Then
-            Dim tab_afazer As New tabpages("tb_afazer", "Afazeres")
+        If tabCentro.TabPages("Demandas") Is Nothing Then
+            Dim tab_afazer As New tabpages("Demandas")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_afazer")
-        'Dim verAfazer = New DetalhesAfazer(1011)
-        'verAfazer.Show()
-
-        'If (Application.OpenForms.OfType(Of listarAfazer).Any()) Then
-        '    Application.OpenForms.OfType(Of listarAfazer).First().BringToFront()
-        'Else
-        '    'Dim verAfazer = New listarAfazer
-        '    listarAfazer.MdiParent = Me
-        '    'listarAfazer.Dock = DockStyle.Fill
-        '    listarAfazer.ShowIcon = False
-        '    'listarAfazer.MaximizeBox = False
-
-        '    listarAfazer.Show()
-        '    'listarAfazer.WindowState = FormWindowState.Maximized
-        'End If
-        teste.Show()
+        tabCentro.SelectedTab = tabCentro.TabPages("Demandass")
     End Sub
     Private Sub mi_eventos_Click()
-        If tabCentro.TabPages("tb_evento") Is Nothing Then
-            Dim tab_evento As New tabpages("tb_evento", "Eventos")
+        If tabCentro.TabPages("Eventos") Is Nothing Then
+            Dim tab_evento As New tabpages("Eventos")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_evento")
+        tabCentro.SelectedTab = tabCentro.TabPages("Eventos")
     End Sub
     Private Sub si_computador_Click()
-        MsgBox("si_computador")
+        If tabCentro.TabPages("Dispositivos") Is Nothing Then
+            Dim tab_computador As New tabpages("Dispositivos")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Dispositivos")
     End Sub
     Private Sub si_notebook_Click()
-        MsgBox("si_notebook")
+        If tabCentro.TabPages("Notebooks") Is Nothing Then
+            Dim tab_notebook As New tabpages("Notebooks")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Notebooks")
     End Sub
     Private Sub si_chromebook_Click()
-        MsgBox("si_chromebook")
+        If tabCentro.TabPages("Chromebooks") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Chromebooks")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Chromebooks")
     End Sub
     Private Sub si_tablet_Click()
-        MsgBox("si_tablet")
+        If tabCentro.TabPages("Tablets") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Tablets")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Tablets")
     End Sub
     Private Sub si_celular_Click()
-        MsgBox("si_celular")
+        If tabCentro.TabPages("Celulares") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Celulares")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Celulares")
     End Sub
     Private Sub mi_impressora_Click()
-        If tabCentro.TabPages("tb_impressora") Is Nothing Then
-            Dim tab_impressora As New tabpages("tb_impressora", "Impressoras")
+        If tabCentro.TabPages("Impressoras") Is Nothing Then
+            Dim tab_impressora As New tabpages("Impressoras")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_impressora")
+        tabCentro.SelectedTab = tabCentro.TabPages("Impressoras")
     End Sub
     Private Sub mi_nobreak_Click()
-        If tabCentro.TabPages("tb_nobreak") Is Nothing Then
-            Dim tab_nobreak As New tabpages("tb_nobreak", "Nobreak")
+        If tabCentro.TabPages("Nobreaks") Is Nothing Then
+            Dim tab_nobreak As New tabpages("Nobreaks")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_nobreak")
+        tabCentro.SelectedTab = tabCentro.TabPages("Nobreaks")
     End Sub
     Private Sub mi_projetor_Click()
-        If tabCentro.TabPages("tb_projetor") Is Nothing Then
-            Dim tab_projetor As New tabpages("tb_projetor", "Projetores")
+        If tabCentro.TabPages("Projetores") Is Nothing Then
+            Dim tab_projetor As New tabpages("Projetores")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_projetor")
+        tabCentro.SelectedTab = tabCentro.TabPages("Projetores")
     End Sub
     Private Sub mi_camera_Click()
-        If tabCentro.TabPages("tb_camera") Is Nothing Then
-            Dim tab_projetor As New tabpages("tb_camera", "Câmeras")
+        If tabCentro.TabPages("Cameras") Is Nothing Then
+            Dim tab_projetor As New tabpages("Cameras")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_camera")
+        tabCentro.SelectedTab = tabCentro.TabPages("Cameras")
+    End Sub
+    Private Sub si_telefone_Click()
+        If tabCentro.TabPages("Telefones") Is Nothing Then
+            Dim tab_projetor As New tabpages("Telefones")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Telefones")
     End Sub
     Private Sub si_email_Click()
-        MsgBox("mi_email")
+        If tabCentro.TabPages("Emails") Is Nothing Then
+            Dim tab_projetor As New tabpages("Emails")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Emails")
     End Sub
     Private Sub si_skype_Click()
-        MsgBox("mi_skype")
+        If tabCentro.TabPages("Skypes") Is Nothing Then
+            Dim tab_projetor As New tabpages("Skypes")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Skypes")
+    End Sub
+    Private Sub si_totvsrm_Click()
+        If tabCentro.TabPages("TotvsRM") Is Nothing Then
+            Dim tab_projetor As New tabpages("TotvsRM")
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("TotvsRM")
     End Sub
     Private Sub mi_pessoas_Click()
-        If tabCentro.TabPages("tb_pessoas") Is Nothing Then
-            Dim tab_pessoas As New tabpages("tb_pessoas", "Pessoas")
+        If tabCentro.TabPages("Pessoas") Is Nothing Then
+            Dim tab_pessoas As New tabpages("Pessoas")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_pessoas")
+        tabCentro.SelectedTab = tabCentro.TabPages("Pessoas")
     End Sub
     Private Sub mi_estoque_Click()
-        If tabCentro.TabPages("tb_estoque") Is Nothing Then
-            Dim tab_estoque As New tabpages("tb_estoque", "Estoque")
+        If tabCentro.TabPages("Estoque") Is Nothing Then
+            Dim tab_estoque As New tabpages("Estoque")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_estoque")
+        tabCentro.SelectedTab = tabCentro.TabPages("Estoque")
     End Sub
     Private Sub mi_software_Click()
-        If tabCentro.TabPages("tb_software") Is Nothing Then
-            Dim tab_software As New tabpages("tb_software", "Software")
+        If tabCentro.TabPages("Software") Is Nothing Then
+            Dim tab_software As New tabpages("Software")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("tb_software")
+        tabCentro.SelectedTab = tabCentro.TabPages("Software")
     End Sub
     Private Sub mi_bloquear_Click()
         Dim bloqueio = New bloqueio
@@ -368,6 +390,7 @@ Public Class Principal
             LateralEsquerda.Dock = DockStyle.Left
             mi_topmostEsq.Enabled = False
             LateralEsquerda.TopMost = False
+            mi_topmostEsq.Image = img.topmostoff
             istopmost_esq = False
             LateralEsquerda.MinimumSize = minsizedentro
             LateralEsquerda.Width = 300
@@ -390,6 +413,7 @@ Public Class Principal
             LateralDireita.Dock = DockStyle.Right
             mi_topmostDir.Enabled = False
             LateralDireita.TopMost = False
+            mi_topmostDir.Image = img.topmostoff
             istopmost_dir = False
             LateralDireita.MinimumSize = minsizedentro
             LateralDireita.Width = 300
@@ -408,16 +432,20 @@ Public Class Principal
     Private Sub topmost_Esq()
         If istopmost_esq Then
             LateralEsquerda.TopMost = False
+            mi_topmostEsq.Image = img.topmostoff
         Else
             LateralEsquerda.TopMost = True
+            mi_topmostEsq.Image = img.topmoston
         End If
         istopmost_esq = Not istopmost_esq
     End Sub
     Private Sub topmost_Dir()
         If istopmost_dir Then
             LateralDireita.TopMost = False
+            mi_topmostDir.Image = img.topmostoff
         Else
             LateralDireita.TopMost = True
+            mi_topmostDir.Image = img.topmoston
         End If
         istopmost_dir = Not istopmost_dir
     End Sub

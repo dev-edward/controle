@@ -4,7 +4,8 @@ Public Class tabpages
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-
+    Dim tabela As String
+    Dim sql As String
     Dim label As New Label With {
         .Text = "Nenhum registro foi encontrado ",
         .Location = New Point(0, 60),
@@ -37,14 +38,60 @@ Public Class tabpages
     'dgv_tabpg.Columns(1).ReadOnly = True
 
 
-    Sub New(ByVal _tabela As String, ByVal _titulo As String)
-        tabpg.Name = _tabela
-        tabpg.Text = _titulo
+    Sub New(ByVal _tabela As String, Optional ByVal _opcao As Integer = 0)
+        tabela = _tabela
+        tabpg.Name = tabela
+
+        Select Case tabela
+            Case "Demandas"
+                sql = "select demanda_id as 'ID',demanda_dtcadastro from tb_demanda"
+            Case "Eventos"
+
+            Case "Dispositivos"
+
+            Case "Notebooks"
+
+            Case "Chromebooks"
+
+            Case "Tablets"
+
+            Case "Celulares"
+
+            Case "Impressoras"
+
+            Case "Nobreaks"
+
+            Case "Projetores"
+
+            Case "Cameras"
+
+            Case "Telefones"
+
+            Case "Emails"
+
+            Case "Skype"
+
+            Case "TotvsRM"
+
+            Case "Pessoas"
+
+            Case "Estoque"
+
+            Case "Software"
+
+            Case Else
+                MessageBox.Show("Tabela: " & tabela&" não encontrada")
+        End Select
+
+
+        iniciar()
+    End Sub
+    Private Sub iniciar()
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select * from " & _tabela
+            consulta.CommandText = sql
 
             conexao.Open()
 

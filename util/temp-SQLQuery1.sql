@@ -15,3 +15,18 @@ group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, dema
 select * from tb_impressora
 
 insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('(11)937520377','Teste Edward','Celular e Whatsapp')
+
+
+select * from tb_demanda
+
+SELECT *
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = N'tb_demanda'
+
+select demanda_id as 'ID',Convert(varchar(16),demanda_dtcadastro, 120) as 'Cadastro', demanda_usercadastro as 'Cadastrado por',
+Convert(varchar(16),demanda_dtalteracao, 120) as 'Alteração',demanda_useralteracao as 'Alterado por', demanda_titulo as 'Título',
+demanda_detalhes as 'Detalhes', case when demanda_temprevisao > 0 then Convert(varchar(16),demanda_previsao, 120) else 'Sem Previsão' END as 'Previsão',
+demanda_status as 'Status'
+from tb_demanda 
+
+update tb_demanda set demanda_temprevisao = 0 where demanda_id =2
