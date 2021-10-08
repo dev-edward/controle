@@ -5,13 +5,11 @@ Public Class DemandaDetalhes
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
 
-    Dim fk As Integer
     Dim pk As Integer
     Dim novoid As Integer
     Dim temprevisao As Integer
     Dim panel As New Panel
     Dim lbl_id As New Label
-    Dim lbl_fkitem As New Label
     Dim lbl_dataCadastro As New Label
     Dim lbl_dataCadastroValor As New Label
     Dim lbl_userCadastro As New Label
@@ -49,7 +47,7 @@ Public Class DemandaDetalhes
     Dim fontemenor As New Font("Microsoft Sans Serif", 8)
 
     Friend Sub New()
-        classesAbertas.setAtualDetalhes(Me, 1)
+        classesAbertas.setAtualDetalhes(Me, True)
         Me.Text = "Cadastrar nova demanda"
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
@@ -66,7 +64,7 @@ Public Class DemandaDetalhes
         btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
     End Sub
     Friend Sub New(ByRef _demandaAtual As Demanda)
-        classesAbertas.setAtualDetalhes(Me, 2)
+        classesAbertas.setAtualDetalhes(Me, False)
         Me.Text = "Detalhes do afazer"
         demandaAtual = _demandaAtual
         pk = demandaAtual.pk
@@ -87,7 +85,6 @@ Public Class DemandaDetalhes
 
         'fonte dos controles
         lbl_id.Font = fontemenor
-        lbl_fkitem.Font = fontemenor
         lbl_dataCadastro.Font = fontemenor
         lbl_dataCadastroValor.Font = fontemenor
         lbl_userCadastro.Font = fontemenor
@@ -100,10 +97,8 @@ Public Class DemandaDetalhes
         btn_cancelar.Font = fonte
         btn_modificar.Font = fonte
 
-
         'tamanho dos controles
         lbl_id.Size = New Size(largura1, altura2)
-        lbl_fkitem.Size = New Size(largura1, altura2)
         lbl_dataCadastro.Size = New Size(largura1, altura2)
         lbl_dataCadastroValor.Size = New Size(largura1, altura2)
         lbl_userCadastro.Size = New Size(largura1, altura2)
@@ -119,7 +114,6 @@ Public Class DemandaDetalhes
 
         'posição dos controles
         lbl_id.Location = New Point(0, 0)
-        lbl_fkitem.Location = New Point(largura1, 0)
         lbl_dataCadastro.Location = New Point(0, altura2)
         lbl_dataCadastroValor.Location = New Point(0, lbl_dataCadastro.Location.Y + altura2)
         lbl_userCadastro.Location = New Point(0, lbl_dataCadastroValor.Location.Y + altura2)
@@ -139,7 +133,6 @@ Public Class DemandaDetalhes
 
         'configurações específicas
         lbl_id.TextAlign = ContentAlignment.MiddleCenter
-        lbl_fkitem.TextAlign = ContentAlignment.MiddleCenter
         lbl_dataCadastro.TextAlign = ContentAlignment.MiddleCenter
         lbl_userCadastro.TextAlign = ContentAlignment.MiddleCenter
         lbl_dataCadastroValor.TextAlign = ContentAlignment.MiddleCenter
@@ -163,7 +156,6 @@ Public Class DemandaDetalhes
 
         'adicionando controles ao panel
         panel.Controls.Add(lbl_id)
-        panel.Controls.Add(lbl_fkitem)
         panel.Controls.Add(lbl_dataCadastro)
         panel.Controls.Add(lbl_dataCadastroValor)
         panel.Controls.Add(lbl_userCadastro)
@@ -263,7 +255,6 @@ Public Class DemandaDetalhes
         consulta = conexao.CreateCommand
         consulta.CommandText = "select 
                                         demanda_id,
-                                        demanda_fkitem, 
                                         demanda_dtcadastro, 
                                         demanda_usercadastro, 
                                         demanda_dtalteracao, 
@@ -280,17 +271,15 @@ Public Class DemandaDetalhes
         myReader.Read()
 
         'conteudo dos controles extraido do BD
-        pk = myReader.GetValue(0)
+        pk = myReader.GetValue("demanda_id")
         lbl_id.Text = "PK: " & pk
-        fk = myReader.GetValue(1)
-        lbl_fkitem.Text = "FK: " & fk
-        lbl_dataCadastroValor.Text = If(myReader.IsDBNull(2), "", myReader.GetDateTime(2))
-        lbl_userCadastroValor.Text = If(myReader.IsDBNull(3), "", myReader.GetValue(3))
-        lbl_dataAlteracaoValor.Text = If(myReader.IsDBNull(4), "", myReader.GetDateTime(4))
-        lbl_useralteracaoValor.Text = If(myReader.IsDBNull(5), "", myReader.GetValue(5))
-        txt_titulo.Text = If(myReader.IsDBNull(6), "", myReader.GetString(6))
-        txt_detalhes.Text = If(myReader.IsDBNull(7), "", myReader.GetString(7))
-        temprevisao = If(myReader.IsDBNull(8), 0, myReader.GetValue(8))
+        lbl_dataCadastroValor.Text = If(myReader.IsDBNull("demanda_dtcadastro"), "", myReader.GetDateTime("demanda_dtcadastro"))
+        lbl_userCadastroValor.Text = If(myReader.IsDBNull("demanda_usercadastro"), "", myReader.GetValue("demanda_usercadastro"))
+        lbl_dataAlteracaoValor.Text = If(myReader.IsDBNull("demanda_dtalteracao"), "", myReader.GetDateTime("demanda_dtalteracao"))
+        lbl_useralteracaoValor.Text = If(myReader.IsDBNull("demanda_useralteracao"), "", myReader.GetValue("demanda_useralteracao"))
+        txt_titulo.Text = If(myReader.IsDBNull("demanda_titulo"), "", myReader.GetString("demanda_titulo"))
+        txt_detalhes.Text = If(myReader.IsDBNull("demanda_detalhes"), "", myReader.GetString("demanda_detalhes"))
+        temprevisao = If(myReader.IsDBNull("demanda_temprevisao"), 0, myReader.GetValue("demanda_temprevisao"))
         If temprevisao > 0 Then
             lbl_semprevisao.Visible = False
             dtp_previsao.Visible = True
@@ -300,12 +289,11 @@ Public Class DemandaDetalhes
             dtp_previsao.Visible = False
             cbx_previsao.Checked = False
         End If
-        dtp_previsao.Value = If(myReader.IsDBNull(9), "", myReader.GetDateTime(9))
-        cbx_estado.SelectedIndex = If(myReader.IsDBNull(10), 0, myReader.GetValue(10) - 1)
+        dtp_previsao.Value = If(myReader.IsDBNull("demanda_previsao"), "", myReader.GetDateTime("demanda_previsao"))
+        cbx_estado.SelectedIndex = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status") - 1)
 
         myReader.Close()
         conexao.Close()
-
 
     End Sub
     Private Sub DetalhesDemanda_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -433,8 +421,8 @@ Public Class DemandaDetalhes
             consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
             consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
             consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
-            consulta.Parameters.AddWithValue("@encarregado", cbx_encarregado.SelectedIndex + 1)
-            consulta.Parameters.AddWithValue("@prioridade", cbx_prioridade.SelectedIndex + 1)
+            'consulta.Parameters.AddWithValue("@encarregado", cbx_encarregado.SelectedIndex + 1)
+            'consulta.Parameters.AddWithValue("@prioridade", cbx_prioridade.SelectedIndex + 1)
 
             conexao.Open()
 

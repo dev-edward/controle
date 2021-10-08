@@ -68,7 +68,7 @@ Public Class listarNotas
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select nota_id, nota_nota from tb_anotacao where nota_pkitem = " & pkitem & " and nota_tabela = " & tabela & " and nota_excluido is null"
+            consulta.CommandText = "select nota_id, nota_nota from tb_anotacao where nota_pkitem = " & pkitem & " and nota_tabela = '" & tabela & "' and nota_excluido is null"
             conexao.Open()
 
             myReader = consulta.ExecuteReader()
@@ -96,7 +96,7 @@ Public Class listarNotas
 
             End If
         Catch ex As Exception
-            MessageBox.Show("Erro ao obter notas: " & ex.Message, "Insert Records")
+            MessageBox.Show("Erro ao obter notas 01: " & ex.Message, "Insert Records")
         Finally
             conexao.Close()
         End Try
@@ -106,7 +106,7 @@ Public Class listarNotas
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "insert into tb_anotacao(nota_fkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
+            consulta.CommandText = "insert into tb_anotacao(nota_pkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
             consulta.Parameters.AddWithValue("@fk", pkitem)
             consulta.Parameters.AddWithValue("@tabela", tabela)
             consulta.Parameters.AddWithValue("@nota", txt_novaNota.Text)

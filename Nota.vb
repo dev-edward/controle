@@ -58,6 +58,7 @@ Public Class Nota
 
     Friend Sub excluir()
         Try
+            nao conseui excluir
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
             consulta.CommandText = "update tb_anotacao set nota_excluido = 1 where nota_id = " & idNota

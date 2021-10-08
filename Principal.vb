@@ -191,7 +191,7 @@ Public Class Principal
             'teste.ShowDialog()
         End If
 
-        'teste.Show()
+
 
         FormCentral.BackColor = Color.FromArgb(255, 50, 50, 50)
         LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
@@ -258,7 +258,7 @@ Public Class Principal
 
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)
-
+        teste.Show()
     End Sub
 
     Private Sub mi_afazer_Click()
@@ -281,6 +281,7 @@ Public Class Principal
         '    listarAfazer.Show()
         '    'listarAfazer.WindowState = FormWindowState.Maximized
         'End If
+        teste.Show()
     End Sub
     Private Sub mi_eventos_Click()
         If tabCentro.TabPages("tb_evento") Is Nothing Then

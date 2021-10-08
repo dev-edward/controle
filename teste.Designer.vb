@@ -24,12 +24,15 @@ Partial Class teste
     Private Sub InitializeComponent()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.HScrollBar1 = New System.Windows.Forms.HScrollBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.TabPage1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabPage2
@@ -45,6 +48,8 @@ Partial Class teste
         'TabPage1
         '
         Me.TabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.TabPage1.Controls.Add(Me.NumericUpDown1)
+        Me.TabPage1.Controls.Add(Me.HScrollBar1)
         Me.TabPage1.Controls.Add(Me.Label1)
         Me.TabPage1.Controls.Add(Me.DataGridView1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 30)
@@ -55,6 +60,15 @@ Partial Class teste
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'HScrollBar1
+        '
+        Me.HScrollBar1.LargeChange = 30
+        Me.HScrollBar1.Location = New System.Drawing.Point(223, 194)
+        Me.HScrollBar1.Name = "HScrollBar1"
+        Me.HScrollBar1.Size = New System.Drawing.Size(250, 17)
+        Me.HScrollBar1.SmallChange = 10
+        Me.HScrollBar1.TabIndex = 2
         '
         'Label1
         '
@@ -89,6 +103,13 @@ Partial Class teste
         Me.TabControl1.Size = New System.Drawing.Size(690, 329)
         Me.TabControl1.TabIndex = 0
         '
+        'NumericUpDown1
+        '
+        Me.NumericUpDown1.Location = New System.Drawing.Point(414, 113)
+        Me.NumericUpDown1.Name = "NumericUpDown1"
+        Me.NumericUpDown1.Size = New System.Drawing.Size(120, 23)
+        Me.NumericUpDown1.TabIndex = 3
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -104,6 +125,7 @@ Partial Class teste
         Me.TabPage1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
+        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -117,4 +139,6 @@ Partial Class teste
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Label1 As Label
+    Friend WithEvents HScrollBar1 As HScrollBar
+    Friend WithEvents NumericUpDown1 As NumericUpDown
 End Class
