@@ -81,11 +81,12 @@ Public Class Principal
         }
     Dim redimensionando = New Panel
 
-    Dim mi_afazer As New ToolStripMenuItem("Afazer")
+    Dim mi_afazer As New ToolStripMenuItem("Demandas")
 
     Dim mi_eventos As New ToolStripMenuItem("Eventos")
 
     Dim mi_dispositivos As New ToolStripMenuItem("Dispositivos")
+    Dim si_todos As New ToolStripMenuItem("Todos")
     Dim si_computador As New ToolStripMenuItem("Computador")
     Dim si_notebook As New ToolStripMenuItem("Notebook")
     Dim si_chromebook As New ToolStripMenuItem("Chromebook")
@@ -146,6 +147,7 @@ Public Class Principal
     End Sub
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'itens do menustrip 
+        mi_dispositivos.DropDownItems.Add(si_todos)
         mi_dispositivos.DropDownItems.Add(si_computador)
         mi_dispositivos.DropDownItems.Add(si_notebook)
         mi_dispositivos.DropDownItems.Add(si_chromebook)
@@ -157,6 +159,7 @@ Public Class Principal
         mi_contas.DropDownItems.Add(si_totvsrm)
         AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
         AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
+        AddHandler si_todos.Click, AddressOf si_dispositivos_Click
         AddHandler si_computador.Click, AddressOf si_computador_Click
         AddHandler si_notebook.Click, AddressOf si_notebook_Click
         AddHandler si_chromebook.Click, AddressOf si_chromebook_Click
@@ -270,7 +273,7 @@ Public Class Principal
         If tabCentro.TabPages("Demandas") Is Nothing Then
             Dim tab_afazer As New tabpages("Demandas")
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Demandass")
+        tabCentro.SelectedTab = tabCentro.TabPages("Demandas")
     End Sub
     Private Sub mi_eventos_Click()
         If tabCentro.TabPages("Eventos") Is Nothing Then
@@ -278,35 +281,41 @@ Public Class Principal
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Eventos")
     End Sub
-    Private Sub si_computador_Click()
+    Private Sub si_dispositivos_Click()
         If tabCentro.TabPages("Dispositivos") Is Nothing Then
-            Dim tab_computador As New tabpages("Dispositivos")
+            Dim tab_evento As New tabpages("Dispositivos")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Dispositivos")
     End Sub
-    Private Sub si_notebook_Click()
-        If tabCentro.TabPages("Notebooks") Is Nothing Then
-            Dim tab_notebook As New tabpages("Notebooks")
+    Private Sub si_computador_Click()
+        If tabCentro.TabPages("Computador") Is Nothing Then
+            Dim tab_computador As New tabpages("Computador", 1)
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Notebooks")
+        tabCentro.SelectedTab = tabCentro.TabPages("Computador")
+    End Sub
+    Private Sub si_notebook_Click()
+        If tabCentro.TabPages("Notebook") Is Nothing Then
+            Dim tab_notebook As New tabpages("Notebook", 2)
+        End If
+        tabCentro.SelectedTab = tabCentro.TabPages("Notebook")
     End Sub
     Private Sub si_chromebook_Click()
-        If tabCentro.TabPages("Chromebooks") Is Nothing Then
-            Dim tab_chromebook As New tabpages("Chromebooks")
+        If tabCentro.TabPages("Chromebook") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Chromebook", 3)
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Chromebooks")
+        tabCentro.SelectedTab = tabCentro.TabPages("Chromebook")
     End Sub
     Private Sub si_tablet_Click()
-        If tabCentro.TabPages("Tablets") Is Nothing Then
-            Dim tab_chromebook As New tabpages("Tablets")
+        If tabCentro.TabPages("Tablet") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Tablet", 4)
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Tablets")
+        tabCentro.SelectedTab = tabCentro.TabPages("Tablet")
     End Sub
     Private Sub si_celular_Click()
-        If tabCentro.TabPages("Celulares") Is Nothing Then
-            Dim tab_chromebook As New tabpages("Celulares")
+        If tabCentro.TabPages("Celular") Is Nothing Then
+            Dim tab_chromebook As New tabpages("Celular", 5)
         End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Celulares")
+        tabCentro.SelectedTab = tabCentro.TabPages("Celular")
     End Sub
     Private Sub mi_impressora_Click()
         If tabCentro.TabPages("Impressoras") Is Nothing Then

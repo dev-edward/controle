@@ -100,15 +100,31 @@ CREATE TABLE tb_telefone
 	telefone_id INT PRIMARY KEY IDENTITY,
 	telefone_numero NVARCHAR(16),
 	telefone_pessoa NVARCHAR(30),
-	telefone_local NVARCHAR(30)
+	telefone_local NVARCHAR(30),
 )
 CREATE TABLE tb_email
 (
-	
+	email_id INT PRIMARY KEY IDENTITY,
+	email_nome NVARCHAR(40),
+	email_setor NVARCHAR(30),
+	email_email NVARCHAR(40),
+	email_senha NVARCHAR(16),
+	email_dominio NVARCHAR(20),
+	email_estado TINYINT,
+	email_grupo TINYINT,
+	email_outlook_nome NVARCHAR(40),
+	email_outlook_ass_nome NVARCHAR(40),
+	email_outlook_ass_servico NVARCHAR(40)
 )
 CREATE TABLE tb_skype
 (
-
+	skype_id INT PRIMARY KEY IDENTITY,
+	skype_nome NVARCHAR(40),
+	skype_unidade NVARCHAR(30),
+	skype_departamento NVARCHAR(30),
+	skype_skype NVARCHAR(30),
+	skype_email NVARCHAR(40),
+	skype_senha NVARCHAR(12)
 )
 CREATE TABLE tb_sala
 (
@@ -161,7 +177,7 @@ CREATE TABLE tb_impressora
 	impressora_nnota NVARCHAR(16),
 	impressora_nproduto NVARCHAR(16),
 	impressora_suprimento INT FOREIGN KEY REFERENCES tb_estoque(estoque_id),
-	impressora_corimpressão TINYINT,
+	impressora_corimpressao TINYINT,
 	impressora_local NVARCHAR(20),
 	impressora_estado TINYINT,
 	impressora_ip NVARCHAR(15),
@@ -201,13 +217,13 @@ CREATE TABLE tb_software
 	software_dtinstalacao DATETIME,
 	software_ultatualizacao DATETIME
 )
-CREATE table tb_notapessoal
-(/*informações da tabela inseridas*/
-	nt_id INT PRIMARY KEY IDENTITY,
-	nt_fkuser INT FOREIGN KEY REFERENCES tb_usuario(usuario_id) NOT NULL,
-	nt_nota NVARCHAR(256),
-	nt_excluido TINYINT
-)
+--CREATE table tb_notapessoal
+--(/*informações da tabela inseridas*/
+--	nt_id INT PRIMARY KEY IDENTITY,
+--	nt_fkuser INT FOREIGN KEY REFERENCES tb_usuario(usuario_id) NOT NULL,
+--	nt_nota NVARCHAR(256),
+--	nt_excluido TINYINT
+--)
 CREATE TABLE tb_pessoaitem
 (
 	pessoaitem_id INT PRIMARY KEY IDENTITY,
@@ -226,7 +242,6 @@ CREATE TABLE tb_salaitem
 CREATE TABLE tb_historico
 (
 	historico_id INT PRIMARY KEY IDENTITY,
-	historico_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	historico_descricao NVARCHAR(256)
 )
 
@@ -314,6 +329,29 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_pessoa','Pessoas que atendem este ramal/telefone','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_local','O departamento ao qual o ramal/telefone pertence','1')
 
+/** Tabela de tb_email **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','#','Armazena os emails internos e externos','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_nome','Nome da pessoa que usa este e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_setor','Setor em que se encontra a pessoa que usa este e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_email','Endereço de e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_senha','Senha do e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_dominio','Dominio do e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_estado','Estado do email','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_grupo','Grupo a que pertence o dono do e-mail','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_nome','O nome colocado na configuração do Outlook','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_ass_nome','O nome que aparece na assinatura do Outlook','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_ass_servico','Departamento/Serviço que aparece na assinatura do Outlook','1')
+
+/** Tabela de tb_skype **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','#','Armazena as contas de skype de funcionários e outros','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_nome','O nome que aparece na conta do skype','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_unidade','A unidade do funcionário que usa o skype','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_departamento','O departamento que o funcionário pertence','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_skype','ID da conta de skype','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_email','E-mail que está cadastrado neste skype','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','skype_senha','Senha do skype','1')
+
 /** Tabela Dispositivo **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','#','Guarda informações de Computador/Notebook/Chromebook/Tablet/Celular','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_dispositivo','dispositivo_id','Chave primária da tabela','1')
@@ -366,6 +404,47 @@ insert into meta_tabela(tabela_nome,tabela_numero) values('tb_salaitem',8)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_historico',9)
 insert into meta_tabela(tabela_nome,tabela_numero) values('tb_afazer',10)
 
+/***********************************/
+/* inclusões na tabela meta_valor */
+/*********************************/
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_anotacao','nota_excluido',0,'não excluído')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_anotacao','nota_excluido',1,'ecluído')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_temprevisao',0,'não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_temprevisao',1,'sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',1,'Aguardando')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',2,'Em andamento')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',3,'Feito')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',4,'Descartado')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',1,'Computador')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',2,'Notebook')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',3,'Chromebook')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',4,'Tablet')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',5,'Celular')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_posto',0,'não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_posto',1,'sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',0,'Preto & Branco')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',1,'Colorido')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_estado',1,'Ativo')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_estado',2,'Inativo')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_estado',3,'Devolvido')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_projetor','projetor_conexao',1,'VGA')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_projetor','projetor_conexao',2,'HDMI')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_estado',0,'Inativo')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_estado',1,'Ativo')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',1,'Funcionário')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',2,'Irmãs')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',3,'Externo')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',4,'Inativo')
 
 /**************************************/
 /* inclusões para proposito de teste */
@@ -442,5 +521,52 @@ select * from tb_estoque
 -- Impressoras
 insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
 
--- Anotacões
-insert into tb_notaitem(nota_fkitem,nota_nota) values(@fk,@nota)
+-- E-mails
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ELOISA HELENA DE REZENDE','Gerente Geral','admin@ifsj.org.br','#A70B50c30@','ifsj.org.br',1,1,'Administrador - IFSJ',null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('LENA CLAUDIA DIAS BATISTA','Biblioteca','biblioteca@ifsj.org.br','Y67$y56.KLb%','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('GLAUCIA ANGELINA PERIN DE LIMA','Financeiro','financ.inst@ifs.org.br','F1N4NC3Ir0#','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('LILIAN TOREZAN PIMENTA DE SOUSA','Financeiro','financeiro@ifsj.org.br','I02F04S06J08*z','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ELOISA HELENA DE REZENDE','Gerência Geral','gerencia@ifsj.org.br','8@}KOMf2','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('GUILHERME BRIQUES JACYNTO','Comunicação e Marketing','marketing@ifsj.org.br','A10b20c40*','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('Nota Fiscal Eletrônica',null,'nfe@ifsj.org.br','N0T4F15C4L#$','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('JOSÉ RICARDO BAPTISTA','Pastoral','pastoral@ifsj.org.br','&Ze5F07S07J15','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ANDREA TAMASSAKI ARAUJO DA SILVA','Recursos Humanos','rh1@ifsj.org.br','&L6B!53r7T9','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ELISANGELA AMARO FEITOSA DE ANDRADE','Recursos Humanos','rh2@ifsj.org.br','A10B20C30d40E50#','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('LEOVERAL GOLZER SOARES','Serviço Social','serv.social@ifsj.org.br','%Z3[1Lrr','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ANDRE LUIZ RUFFO VERONEZE','TECNOLOGIA DA INFORMAÇÃO','ti1@ifsj.org.br','I05F09S08J08@a','ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('PAULO HENRIQUE GONCALVES DOS SANTOS','TECNOLOGIA DA INFORMAÇÃO','ti2@ifsj.org.br',null,'ifsj.org.br',1,1,null,null,null)
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('EDWARD CAHUA HUAYTA','TECNOLOGIA DA INFORMAÇÃO','ti3@ifsj.org.br',null,'ifsj.org.br',1,1,null,null,null)
+
+
+
+
+insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
+values('ANDREA TAMASSAKI ARAUJO DA SILVA','Compras','compras@saojosevm.org.br','&L6B!53r7T9','saoojosevm.org.br',1,1,null,null,null)
+--
