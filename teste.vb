@@ -80,7 +80,6 @@ Public Class teste
         'e.Graphics.DrawString(this.tabControl1.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 4);
         'e.DrawFocusRectangle();
 
-        '        e.gra
 
     End Sub
 
@@ -95,11 +94,6 @@ Public Class teste
             x = 0
         End If
     End Sub
-
-
-
-
-
 
     'Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
     '    If e.RowIndex >= 0 And e.ColumnIndex > 0 Then

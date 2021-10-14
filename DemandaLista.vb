@@ -137,6 +137,7 @@ Public Class DemandaLista
         controles.Controls.Add(panel_filtro)
 
         spanel.Controls.Add(controles)
+        spanel.Controls.Add(conteiner)
         atualizarLista()
 
     End Sub
@@ -192,10 +193,11 @@ Public Class DemandaLista
         Loop
 
         'conteiner.BackColor = New Color().FromArgb(255, 0, 0, 150)
-        spanel.Controls.Add(conteiner)
+
 
         myReader.Close()
         conexao.Close()
+        conteiner.Width = 260
     End Sub
     Private Sub novo()
         If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And classesAbertas.cadastrodemanda Then

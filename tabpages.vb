@@ -21,22 +21,27 @@ Public Class tabpages
         }
     Dim dgv_tabpg As New DataGridView With {
         .Dock = DockStyle.Fill,
-        .RowHeadersVisible = False,
         .AllowUserToAddRows = False,
         .AllowUserToDeleteRows = False,
         .AllowUserToOrderColumns = True,
         .AllowUserToResizeRows = False,
-        .AlternatingRowsDefaultCellStyle = cs
+        .AlternatingRowsDefaultCellStyle = cs,
+        .ReadOnly = True,
+        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
+        .AllowUserToResizeColumns = True,
+        .RowHeadersWidth = 10
     }
     Dim ts_tab As New ToolStrip With {
         .Dock = DockStyle.Top,
         .GripStyle = ToolStripGripStyle.Hidden
     }
-    Dim mi_botao As New ToolStripButton("", img.xis)
+    Dim mi_fechar As New ToolStripButton("", img.xis) With {
+        .Alignment = ToolStripItemAlignment.Right
+    }
     'dgv_tabpg.EditMode = DataGridViewEditMode.EditProgrammatically
     'dgv_tabpg.Columns(0).ReadOnly = False
     'dgv_tabpg.Columns(1).ReadOnly = True
-    Dim valores As Dictionary(Of Integer, String)
+    Dim larguraColunas As New Dictionary(Of Integer, DataGridViewAutoSizeColumnsMode)
 
     Sub New(ByVal _tabela As String, Optional ByVal _opcao As Integer = 0)
         tabela = _tabela
@@ -66,7 +71,7 @@ Public Class tabpages
                     left join tb_usuario u1 on demanda_usercadastro = u1.usuario_id
                     left join tb_usuario u2 on demanda_useralteracao = u2.usuario_id
                     left join tb_usuario u3 on demanda_encarregado = u3.usuario_id"
-
+                larguraColunas.Add(1, DataGridViewAutoSizeColumnsMode.ColumnHeader)
             Case "Eventos"
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
@@ -191,9 +196,9 @@ Public Class tabpages
             Case Else
                 MessageBox.Show("Tabela: " & tabela & " não encontrada")
         End Select
-
-
-        iniciar()
+        If sql <> "" Then
+            iniciar()
+        End If
     End Sub
     Private Sub iniciar()
         Try
@@ -214,22 +219,16 @@ Public Class tabpages
                 dgv_tabpg.AutoGenerateColumns = True
                 dgv_tabpg.DataSource = dt
                 dgv_tabpg.Refresh()
-                dgv_tabpg.ReadOnly = True
 
-                'For Each dc As DataGridViewColumn In dgv_tabpg.Columns
-                '    If dc.Index > 0 Then
-                '        dc.ReadOnly = True
-                '    End If
-                'Next
             Else
                 tabpg.Controls.Add(label)
             End If
             myReader.Close()
             tabpg.Text = tabela
-            ts_tab.Items.Add(mi_botao)
+            ts_tab.Items.Add(mi_fechar)
             tabpg.Controls.Add(ts_tab)
             Principal.tabCentro.TabPages.Add(tabpg)
-            AddHandler mi_botao.Click, AddressOf fechar
+            AddHandler mi_fechar.Click, AddressOf fechar
         Catch ex As Exception
             MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
         Finally

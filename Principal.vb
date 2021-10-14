@@ -196,7 +196,6 @@ Public Class Principal
         If usuario.usuario_logado = False Then
             Dim Login = New Login
             Login.ShowDialog()
-            'teste.ShowDialog()
         End If
 
 
@@ -266,7 +265,6 @@ Public Class Principal
 
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)
-        teste.Show()
     End Sub
 
     Private Sub mi_afazer_Click()

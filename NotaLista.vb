@@ -13,6 +13,13 @@ Public Class listarNotas
     Dim txt_novaNota As New RichTextBox
     Dim btn_addNota As New Button
     Dim demandaAtual As Demanda
+    Dim label As New Label With {
+        .Text = "Este item ainda não possui notas",
+        .Location = New Point(0, 40),
+        .Size = New Size(280, 40),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+
 
     Friend Sub New(ByRef _demandaAtual As Demanda)
         classesAbertas.setAtualNotas(Me)
@@ -83,17 +90,14 @@ Public Class listarNotas
                     Dim notas As New Nota(conteiner, idnota, textoNota, posicaoY, num)
                     posicaoY += 44
                 Loop
-                If demandaAtual IsNot Nothing Then
-                    demandaAtual.setQtdNotas(num)
-                End If
+
             Else
-                Dim label As New Label
-                label.Text = "Este item ainda não possui notas"
-                label.Location = New Point(0, 40)
-                label.Size = New Size(280, 40)
-                label.TextAlign = ContentAlignment.MiddleCenter
+
                 conteiner.Controls.Add(label)
 
+            End If
+            If demandaAtual IsNot Nothing Then
+                demandaAtual.setQtdNotas(num)
             End If
         Catch ex As Exception
             MessageBox.Show("Erro ao obter notas 01: " & ex.Message, "Insert Records")
@@ -103,25 +107,26 @@ Public Class listarNotas
 
     End Sub
     Private Sub addNota()
-        Try
-            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
-            consulta = conexao.CreateCommand
-            consulta.CommandText = "insert into tb_anotacao(nota_pkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
-            consulta.Parameters.AddWithValue("@fk", pkitem)
-            consulta.Parameters.AddWithValue("@tabela", tabela)
-            consulta.Parameters.AddWithValue("@nota", txt_novaNota.Text)
+        If txt_novaNota.Text <> "" Then
+            Try
+                conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+                consulta = conexao.CreateCommand
+                consulta.CommandText = "insert into tb_anotacao(nota_pkitem,nota_tabela,nota_nota) values(@fk,@tabela,@nota)"
+                consulta.Parameters.AddWithValue("@fk", pkitem)
+                consulta.Parameters.AddWithValue("@tabela", tabela)
+                consulta.Parameters.AddWithValue("@nota", txt_novaNota.Text)
 
-            conexao.Open()
-            consulta.ExecuteNonQuery()
-            txt_novaNota.Text = ""
+                conexao.Open()
+                consulta.ExecuteNonQuery()
+                txt_novaNota.Text = ""
 
-        Catch ex As Exception
-            MessageBox.Show("Erro adicionar nova nota: " & ex.Message, "Insert Records")
-        Finally
-            conexao.Close()
-        End Try
+            Catch ex As Exception
+                MessageBox.Show("Erro adicionar nova nota: " & ex.Message, "Insert Records")
+            Finally
+                conexao.Close()
+            End Try
 
-        atualizarLista()
-
+            atualizarLista()
+        End If
     End Sub
 End Class
