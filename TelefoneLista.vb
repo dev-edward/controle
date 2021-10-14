@@ -80,7 +80,7 @@ Public Class TelefoneLista
         conteiner.Width = 260
     End Sub
     Private Sub txt_filtro_TextChanged(sender As Object, e As EventArgs) Handles txt_filtro.TextChanged
-        sql = "select * from tb_telefone where telefone_numero like '" & txt_filtro.Text & "%' or telefone_pessoa like '%" & txt_filtro.Text & "%' or telefone_local like '%" & txt_filtro.Text & "%'"
+        sql = "select * from tb_telefone where telefone_numero like '%" & txt_filtro.Text & "%' or telefone_pessoa like '%" & txt_filtro.Text & "%' or telefone_local like '%" & txt_filtro.Text & "%'"
         atualizar()
     End Sub
 

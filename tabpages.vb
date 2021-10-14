@@ -29,7 +29,7 @@ Public Class tabpages
         .ReadOnly = True,
         .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
         .AllowUserToResizeColumns = True,
-        .RowHeadersWidth = 10
+        .RowHeadersWidth = 20
     }
     Dim ts_tab As New ToolStrip With {
         .Dock = DockStyle.Top,
@@ -71,7 +71,9 @@ Public Class tabpages
                     left join tb_usuario u1 on demanda_usercadastro = u1.usuario_id
                     left join tb_usuario u2 on demanda_useralteracao = u2.usuario_id
                     left join tb_usuario u3 on demanda_encarregado = u3.usuario_id"
-                larguraColunas.Add(1, DataGridViewAutoSizeColumnsMode.ColumnHeader)
+
+                larguraColunas.Add(6, DataGridViewAutoSizeColumnsMode.ColumnHeader)
+
             Case "Eventos"
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
@@ -219,6 +221,15 @@ Public Class tabpages
                 dgv_tabpg.AutoGenerateColumns = True
                 dgv_tabpg.DataSource = dt
                 dgv_tabpg.Refresh()
+
+                'For Each kvp As KeyValuePair(Of Integer, DataGridViewAutoSizeColumnsMode) In larguraColunas
+                '    'dgv_tabpg.Columns(6).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+                '    'MessageBox.Show(kvp.Key & " - " & kvp.Value)
+                'Next
+                'dgv_tabpg.Columns(6).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
+
+                'dgv_tabpg.
+                dgv_tabpg.Columns(0).HeaderText = "teste"
 
             Else
                 tabpg.Controls.Add(label)
