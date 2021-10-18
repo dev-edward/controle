@@ -81,7 +81,7 @@ Public Class Principal
         }
     Dim redimensionando = New Panel
 
-    Dim mi_afazer As New ToolStripMenuItem("Demandas")
+    Dim mi_demanda As New ToolStripMenuItem("Demandas")
 
     Dim mi_eventos As New ToolStripMenuItem("Eventos")
 
@@ -156,8 +156,8 @@ Public Class Principal
         mi_contas.DropDownItems.Add(si_telefone)
         mi_contas.DropDownItems.Add(si_email)
         mi_contas.DropDownItems.Add(si_skype)
-        mi_contas.DropDownItems.Add(si_totvsrm)
-        AddHandler mi_afazer.Click, AddressOf mi_afazer_Click
+        'mi_contas.DropDownItems.Add(si_totvsrm)
+        AddHandler mi_demanda.Click, AddressOf mi_demanda_Click
         AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
         AddHandler si_todos.Click, AddressOf si_dispositivos_Click
         AddHandler si_computador.Click, AddressOf si_computador_Click
@@ -216,17 +216,17 @@ Public Class Principal
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
-        Me.MenuStripPrincipal.Items.Add(mi_afazer)
+        Me.MenuStripPrincipal.Items.Add(mi_demanda)
         Me.MenuStripPrincipal.Items.Add(mi_eventos)
         Me.MenuStripPrincipal.Items.Add(mi_dispositivos)
         Me.MenuStripPrincipal.Items.Add(mi_impressora)
-        Me.MenuStripPrincipal.Items.Add(mi_nobreak)
+        'Me.MenuStripPrincipal.Items.Add(mi_nobreak)
         Me.MenuStripPrincipal.Items.Add(mi_projetor)
-        Me.MenuStripPrincipal.Items.Add(mi_camera)
+        'Me.MenuStripPrincipal.Items.Add(mi_camera)
         Me.MenuStripPrincipal.Items.Add(mi_contas)
         Me.MenuStripPrincipal.Items.Add(mi_pessoas)
         Me.MenuStripPrincipal.Items.Add(mi_estoque)
-        Me.MenuStripPrincipal.Items.Add(mi_software)
+        'Me.MenuStripPrincipal.Items.Add(mi_software)
         Me.MenuStripPrincipal.Items.Add(mi_bloquear)
         Me.MenuStripPrincipal.Items.Add(mi_desconectar)
 
@@ -261,13 +261,14 @@ Public Class Principal
         LateralDireita.Controls.Add(ts_Dir)
         Dim listarAfazer = New DemandaLista()
         Dim listarNotasPessoais = New NotaPessoal()
-        Dim listartelefones = New TelefoneLista()
+        Dim listarTelefones = New TelefoneLista()
+        Dim listarEventos = New EventoLista()
 
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)
     End Sub
 
-    Private Sub mi_afazer_Click()
+    Private Sub mi_demanda_Click()
         If tabCentro.TabPages("Demandas") Is Nothing Then
             Dim tab_afazer As New tabpages("Demandas")
         End If

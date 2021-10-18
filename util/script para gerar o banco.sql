@@ -93,17 +93,7 @@ CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
 	evento_data DATETIME,
-	evento_descricao NVARCHAR(256),
-	evento_frequencia TINYINT,
-	evento_dtinicio DATETIME,
-	evento_ativo TINYINT
-	Frequencia:
-Diário
-Semanal
-Mensal
-
-
-
+	evento_descricao NVARCHAR(256)
 )
 CREATE TABLE tb_telefone
 (/*informações da tabela inseridas*/
@@ -111,7 +101,6 @@ CREATE TABLE tb_telefone
 	telefone_numero NVARCHAR(16),
 	telefone_pessoa NVARCHAR(30),
 	telefone_local NVARCHAR(30),
-	telefone_tipo TINYINT
 )
 CREATE TABLE tb_email
 (
@@ -136,13 +125,6 @@ CREATE TABLE tb_skype
 	skype_skype NVARCHAR(30),
 	skype_email NVARCHAR(40),
 	skype_senha NVARCHAR(12)
-)
-CREATE TABLE tb_totvsrm
-(
-	rm_id INT PRIMARY KEY IDENTITY,
-	rm_usuario NVARCHAR(30),
-	rm_objetivo NVARCHAR(30),
-	rm_ativo TINYINT
 )
 CREATE TABLE tb_sala
 (
@@ -346,7 +328,6 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_numero','Número de ramal/telefone','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_pessoa','Pessoas que atendem este ramal/telefone','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_local','O departamento ao qual o ramal/telefone pertence','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_telefone','telefone_tipo','O tipo do número, se é ramal/telefone/celular','1')
 
 /** Tabela de tb_email **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','#','Armazena os emails internos e externos','1')
@@ -438,12 +419,6 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',3,'Feito')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',4,'Descartado')
 --
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',1,'Descartável')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',2,'Baixa')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',3,'Normal')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',4,'Alta')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',5,'Urgente')
---
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',1,'Computador')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',2,'Notebook')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',3,'Chromebook')
@@ -469,76 +444,72 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',1,'Funcionário')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',2,'Irmãs')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',3,'Externo')
---
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',1,'Ramal')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',2,'Telefone')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',3,'Celular')
---
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',4,'Inativo')
 
 /**************************************/
 /* inclusões para proposito de teste */
 /************************************/
--- Demandas
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 10','detalhes 10',1,'25/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 11','detalhes 11',1,'26/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 12','detalhes 12',1,'27/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 13','detalhes 13',1,'28/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 14','detalhes 14',1,'29/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 15','detalhes 15',1,'30/04/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 16','detalhes 16',1,'01/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 17','detalhes 17',1,'02/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 18','detalhes 18',1,'03/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 19','detalhes 19',1,'04/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 20','detalhes 20',1,'05/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 21','detalhes 21',1,'06/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 22','detalhes 22',1,'07/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 23','detalhes 23',1,'08/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 24','detalhes 24',1,'09/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 25','detalhes 25',1,'10/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 26','detalhes 26',1,'11/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 27','detalhes 27',1,'12/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 28','detalhes 28',1,'13/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 29','detalhes 29',1,'14/09/2021',1,1,3)
-insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 30','detalhes 30',1,'15/09/2021',1,1,3)
+-- Afazeres
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 10','detalhes 10',1,'25/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 11','detalhes 11',1,'26/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 12','detalhes 12',1,'27/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 13','detalhes 13',1,'28/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 14','detalhes 14',1,'29/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 15','detalhes 15',1,'30/04/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 16','detalhes 16',1,'01/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 17','detalhes 17',1,'02/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 18','detalhes 18',1,'03/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 19','detalhes 19',1,'04/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 20','detalhes 20',1,'05/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 21','detalhes 21',1,'06/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 22','detalhes 22',1,'07/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 23','detalhes 23',1,'08/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 24','detalhes 24',1,'09/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 25','detalhes 25',1,'10/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 26','detalhes 26',1,'11/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 27','detalhes 27',1,'12/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 28','detalhes 28',1,'13/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 29','detalhes 29',1,'14/09/2021',1,1,5)
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) VALUES(1,'titulo 30','detalhes 30',1,'15/09/2021',1,1,5)
 
 -- Telefones/Ramais
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('200','Bruna/Marcela','Telefonia Recepção',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('201','Ir. Fátima','Diretora ADM e Financeira',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('205','Lilian','Financeiro',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('206','Leandro','Secretaria',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('207','Galiani','Direção',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('208','Eloisa','Gerência Geral',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('209','Amanda','Orienação Educacional',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('210','Karina','Secretaria',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('212','Régis','Portaria A',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('215','Andre/Paulo/Edward','Serviço de TI',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('216','Portaria F','Portaria F',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('217','Leoveral','Serviço Social',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('218','Lena','Biblioteca',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('222','Angela','Cozinha',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('224','Anderson','Reprografia',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('225','Bete/Vanessa','Cozinha',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('227','Debora','Dpto. de Pessoal',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('231','Carla','Contas a Receber',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('232','Sala de Reunião CA','Centro Administrativo',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('233','Bruna','Aux Coordenação',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('234','Yuri','Lab. Ciências',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('235/234','Thais Yumi','Lab. Informática',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('236','Ana Maria','Enfermaria',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('238','Andrea','Compras',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('240','Glaucia','Financeiro',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('241','Andre Condes','Coordenação',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('243','Fernanda','Financeiro',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('244','Guilherme','MArketing',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('246','Suzanete','Coordenação',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('247','Integral Refeitório','Refeitório',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('248','Elisangela','Serviço de RH',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('249/250','Integral','Integral + Coordenação',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('251','José Ricardo','Pastoral',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('252','Danilo/Graciele','Pastoral',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('253','Monica','Contas a Receber',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('254','Giovanna','Marketing',1)
-insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local,telefone_tipo) values('258','Sala dos Professores','Sala dos Professores',1)
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('200','Bruna/Marcela','Telefonia Recepção')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('201','Ir. Fátima','Diretora ADM e Financeira')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('205','Lilian','Financeiro')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('206','Leandro','Secretaria')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('207','Galiani','Direção')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('208','Eloisa','Gerência Geral')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('209','Amanda','Orienação Educacional')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('210','Karina','Secretaria')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('212','Régis','Portaria A')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('215','Andre/Paulo/Edward','Serviço de TI')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('216','Portaria F','Portaria F')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('217','Leoveral','Serviço Social')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('218','Lena','Biblioteca')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('222','Angela','Cozinha')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('224','Anderson','Reprografia')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('225','Bete/Vanessa','Cozinha')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('227','Debora','Dpto. de Pessoal')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('231','Carla','Contas a Receber')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('232','Sala de Reunião CA','Centro Administrativo')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('233','Bruna','Aux Coordenação')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('234','Yuri','Lab. Ciências')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('235/234','Thais Yumi','Lab. Informática')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('236','Ana Maria','Enfermaria')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('238','Andrea','Compras')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('240','Glaucia','Financeiro')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('241','Andre Condes','Coordenação')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('243','Fernanda','Financeiro')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('244','Guilherme','MArketing')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('246','Suzanete','Coordenação')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('247','Integral Refeitório','Refeitório')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('248','Elisangela','Serviço de RH')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('249/250','Integral','Integral + Coordenação')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('251','José Ricardo','Pastoral')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('252','Danilo/Graciele','Pastoral')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('253','Monica','Contas a Receber')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('254','Giovanna','Marketing')
+insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('258','Sala dos Professores','Sala dos Professores')
 
 -- Usuários
 insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
@@ -548,7 +519,7 @@ insert into tb_estoque(estoque_nome,estoque_descricao,estoque_tag,estoque_quanti
 select * from tb_estoque
 
 -- Impressoras
-insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressao,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
+insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
 
 -- E-mails
 insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)

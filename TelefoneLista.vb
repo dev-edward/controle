@@ -27,7 +27,6 @@ Public Class TelefoneLista
         .TextAlign = ContentAlignment.MiddleCenter
     }
 
-
     Dim sql As String = "select * from tb_telefone"
 
     Friend Sub New()

@@ -27,7 +27,6 @@ Public Class tabpages
         .AllowUserToResizeRows = False,
         .AlternatingRowsDefaultCellStyle = cs,
         .ReadOnly = True,
-        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
         .AllowUserToResizeColumns = True,
         .RowHeadersWidth = 20
     }
@@ -35,9 +34,11 @@ Public Class tabpages
         .Dock = DockStyle.Top,
         .GripStyle = ToolStripGripStyle.Hidden
     }
-    Dim mi_fechar As New ToolStripButton("", img.xis) With {
+    Dim mi_fechar As New ToolStripButton("", img.xis, AddressOf fechar) With {
         .Alignment = ToolStripItemAlignment.Right
     }
+    Dim mi_novo As New ToolStripButton("", img.mais, AddressOf novo)
+    Dim mi_atualizar As New ToolStripButton("", img.refresh, AddressOf novo)
     'dgv_tabpg.EditMode = DataGridViewEditMode.EditProgrammatically
     'dgv_tabpg.Columns(0).ReadOnly = False
     'dgv_tabpg.Columns(1).ReadOnly = True
@@ -46,15 +47,15 @@ Public Class tabpages
     Sub New(ByVal _tabela As String, Optional ByVal _opcao As Integer = 0)
         tabela = _tabela
         tabpg.Name = tabela
+        tabpg.Text = tabela
+        ts_tab.Items.Add(mi_fechar)
+        ts_tab.Items.Add(mi_novo)
+        ts_tab.Items.Add(mi_atualizar)
 
         Select Case tabela
             Case "Demandas"
                 sql = "select 
                     demanda_id as 'ID',
-                    Convert(varchar(16),demanda_dtcadastro, 120) as 'Cadastro',
-                    u1.usuario_user as 'Cadastrado por',
-                    Convert(varchar(16),demanda_dtalteracao, 120) as 'Alteração',
-                    u2.usuario_user as 'Alterado por',
                     demanda_titulo as 'Título',
                     demanda_detalhes as 'Detalhes',
                     case when demanda_temprevisao > 0 then Convert(varchar(16),
@@ -66,47 +67,51 @@ Public Class tabpages
 	                    when demanda_status = 4 then 'Descartado' 
 	                    end as 'Status',
                     u3.usuario_user as 'Encarregado',
-                    demanda_prioridade as 'Prioridade'
+                    demanda_prioridade as 'Prioridade',
+                    Convert(varchar(16),demanda_dtcadastro, 120) as 'Cadastro',
+                    u1.usuario_user as 'Cadastrado por',
+                    Convert(varchar(16),demanda_dtalteracao, 120) as 'Alteração',
+                    u2.usuario_user as 'Alterado por'
                     from tb_demanda 
                     left join tb_usuario u1 on demanda_usercadastro = u1.usuario_id
                     left join tb_usuario u2 on demanda_useralteracao = u2.usuario_id
                     left join tb_usuario u3 on demanda_encarregado = u3.usuario_id"
-
-                larguraColunas.Add(6, DataGridViewAutoSizeColumnsMode.ColumnHeader)
+                larguraColunas.Add(0, 40)
+                larguraColunas.Add(2, 120)
+                larguraColunas.Add(6, 70)
 
             Case "Eventos"
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
                 sql = "select 
-                        dispositivo_id as 'ID',
-                        Convert(varchar(16),dispositivo_dtcadastro, 120) as 'Cadastro',
-                        ucadastro.usuario_user as 'Cadastrado por',
-                        Convert(varchar(16),dispositivo_dtalteracao, 120) as 'Alteração',
-                        ualteracao.usuario_user as 'Alterado por',
-                        case 
-	                        when dispositivo_tipo = 1 then 'Computador' 
-	                        when dispositivo_tipo = 2 then 'Notebook' 
-	                        when dispositivo_tipo = 3 then 'Chromebook' 
-	                        when dispositivo_tipo = 4 then 'Tablet' 
-	                        when dispositivo_tipo = 5 then 'Celular' 
-                        end as 'Tipo',
-                        case 
-	                        when dispositivo_posto = 0 then 'Não' 
-	                        else 'Sim' 
-                        end as 'É posto informático',
-                        dispositivo_marcamodelo as 'Marca e Modelo',
-                        dispositivo_nome as 'Nome/hostname',
-                        dispositivo_ip as 'IP',
-                        dispositivo_macadress as 'Endereço MAC',
-                        dispositivo_os as 'Sistema Operacional',
-                        dispositivo_qtdmemoriaram as 'Memória RAM',
-                        dispositivo_processador as 'Processador',
-                        dispositivo_armazenamento as  'Armazenamento',
-                        dispositivo_bateria as 'Bateria'
-                        from tb_dispositivo
-                        left join tb_usuario ucadastro on dispositivo_usercadastro = ucadastro.usuario_id
-                        left join tb_usuario ualteracao on dispositivo_usercadastro = ualteracao.usuario_id
-                        left join tb_usuario u1 on dispositivo_usercadastro = u1.usuario_id"
+                    dispositivo_id as 'ID',
+                    case 
+	                    when dispositivo_tipo = 1 then 'Computador' 
+	                    when dispositivo_tipo = 2 then 'Notebook' 
+	                    when dispositivo_tipo = 3 then 'Chromebook' 
+	                    when dispositivo_tipo = 4 then 'Tablet' 
+	                    when dispositivo_tipo = 5 then 'Celular' 
+                    end as 'Tipo',
+                    case 
+	                    when dispositivo_posto = 0 or dispositivo_posto is null then 'Não' 
+	                    else 'Sim' 
+                    end as 'É posto informático',
+                    dispositivo_marcamodelo as 'Marca e Modelo',
+                    dispositivo_nome as 'Nome/hostname',
+                    dispositivo_ip as 'IP',
+                    dispositivo_macadress as 'Endereço MAC',
+                    dispositivo_os as 'Sistema Operacional',
+                    dispositivo_qtdmemoriaram as 'Memória RAM',
+                    dispositivo_processador as 'Processador',
+                    dispositivo_armazenamento as  'Armazenamento',
+                    dispositivo_bateria as 'Bateria',
+                    Convert(varchar(16),dispositivo_dtcadastro, 120) as 'Cadastro',
+                    ucadastro.usuario_user as 'Cadastrado por',
+                    Convert(varchar(16),dispositivo_dtalteracao, 120) as 'Alteração',
+                    ualteracao.usuario_user as 'Alterado por'
+                    from tb_dispositivo
+                    left join tb_usuario ucadastro on dispositivo_usercadastro = ucadastro.usuario_id
+                    left join tb_usuario ualteracao on dispositivo_usercadastro = ualteracao.usuario_id"
 
                 If _opcao > 0 Then
                     sql += " where dispositivo_tipo = " & _opcao
@@ -115,17 +120,13 @@ Public Class tabpages
             Case "Impressoras"
                 sql = "select 
                     impressora_id as 'ID',
-                    Convert(varchar(16),impressora_dtcadastro, 120) as 'Cadastro',
-                    ucadastro.usuario_user as 'Cadastrado por',
-                    Convert(varchar(16),impressora_dtalteracao, 120) as 'Alteração',
-                    ualteracao.usuario_user as 'Alterado por',
                     impressora_marcamodelo as 'Marca & Modelo',
                     impressora_nserie as 'Nº Serie',
                     impressora_nnota as 'Nº Nota',
                     impressora_nproduto as 'Nº Produto',
                     suprimento.estoque_nome as 'Suprimento',
                     case 
-	                    when impressora_corimpressão = 0 or impressora_corimpressão is null then 'Preto & Branco' 
+	                    when impressora_corimpressao = 0 or impressora_corimpressao is null then 'Preto & Branco' 
 	                    else 'Colorido' 
                     end as 'P/B ou Colorido',
                     impressora_local as 'Local da impressora',
@@ -136,7 +137,11 @@ Public Class tabpages
                     end as 'Status',
                     impressora_ip as 'IP da impressora',
                     Convert(varchar(16),impressora_dtentrada, 103) as 'Data de entrada',
-                    Convert(varchar(16),impressora_dtsaida, 103) as 'Data de saida'
+                    Convert(varchar(16),impressora_dtsaida, 103) as 'Data de saida',
+                    Convert(varchar(16),impressora_dtcadastro, 120) as 'Cadastro',
+                    ucadastro.usuario_user as 'Cadastrado por',
+                    Convert(varchar(16),impressora_dtalteracao, 120) as 'Alteração',
+                    ualteracao.usuario_user as 'Alterado por'
                     from tb_impressora
                     left join tb_usuario ucadastro on impressora_usercadastro = ucadastro.usuario_id
                     left join tb_usuario ualteracao on impressora_usercadastro = ualteracao.usuario_id
@@ -153,8 +158,10 @@ Public Class tabpages
                     telefone_id as 'ID',
                     telefone_numero as 'Número',
                     telefone_pessoa as 'Pessoa',
-                    telefone_local as 'Local'
-                    from tb_telefone"
+                    telefone_local as 'Local',
+                    tipo.valor_valor as 'Tipo'
+                    from tb_telefone
+                    inner join meta_valor tipo on valor_tabela = 'tb_telefone' and valor_coluna = 'telefone_tipo' and telefone_tipo = tipo.valor_numero"
             Case "Emails"
                 sql = "select
                     email_id as 'ID',
@@ -173,7 +180,7 @@ Public Class tabpages
                     email_outlook_ass_nome as 'Nome na Assinatura Outlook',
                     email_outlook_ass_servico as 'Serviço na Assinatura Outlook'
                     from tb_email
-                    inner join meta_valor on valor_tabela = 'tb_email' and valor_coluna = 'email_grupo' and email_grupo = meta_valor.valor_numero "
+                    inner join meta_valor on valor_tabela = 'tb_email' and valor_coluna = 'email_grupo' and email_grupo = meta_valor.valor_numero"
 
             Case "Skypes"
                 sql = "select
@@ -192,11 +199,19 @@ Public Class tabpages
             Case "Pessoas"
 
             Case "Estoque"
+                sql = "Select 
+                    estoque_id as 'ID',
+                    estoque_nome as 'Nome',
+                    estoque_descricao as 'Descrição',
+                    estoque_tag as 'Tag',
+                    estoque_quantidade as 'Quantidade',
+                    estoque_localizacao as 'Local armazenado'
+                    from tb_estoque"
 
             Case "Software"
 
             Case Else
-                MessageBox.Show("Tabela: " & tabela & " não encontrada")
+                MessageBox.Show("Tabela: " & tabela & " não encontrada, por favor comunique este erro")
         End Select
         If sql <> "" Then
             iniciar()
@@ -212,7 +227,7 @@ Public Class tabpages
             conexao.Open()
 
             myReader = consulta.ExecuteReader()
-
+            Principal.tabCentro.TabPages.Add(tabpg)
             If myReader.HasRows Then
                 dt.Load(myReader)
 
@@ -222,24 +237,17 @@ Public Class tabpages
                 dgv_tabpg.DataSource = dt
                 dgv_tabpg.Refresh()
 
-                'For Each kvp As KeyValuePair(Of Integer, DataGridViewAutoSizeColumnsMode) In larguraColunas
-                '    'dgv_tabpg.Columns(6).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
-                '    'MessageBox.Show(kvp.Key & " - " & kvp.Value)
-                'Next
-                'dgv_tabpg.Columns(6).AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader
-
-                'dgv_tabpg.
-                dgv_tabpg.Columns(0).HeaderText = "teste"
+                For Each kvp As KeyValuePair(Of Integer, DataGridViewAutoSizeColumnsMode) In larguraColunas
+                    dgv_tabpg.Columns(kvp.Key).Width = kvp.Value
+                Next
 
             Else
                 tabpg.Controls.Add(label)
             End If
-            myReader.Close()
-            tabpg.Text = tabela
-            ts_tab.Items.Add(mi_fechar)
             tabpg.Controls.Add(ts_tab)
-            Principal.tabCentro.TabPages.Add(tabpg)
-            AddHandler mi_fechar.Click, AddressOf fechar
+            myReader.Close()
+
+
         Catch ex As Exception
             MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
         Finally
@@ -260,5 +268,8 @@ Public Class tabpages
         'tabpg.Dispose()
         'dgv_tabpg.Dispose()
         'dt.Dispose()
+    End Sub
+    Private Sub novo()
+        MessageBox.Show("Teste")
     End Sub
 End Class
