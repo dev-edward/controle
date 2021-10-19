@@ -5,6 +5,14 @@ Public Class EventoLista
     Private myReader As SqlDataReader
     Dim spanel As Panel
     Dim dtatual As DateTime
+    Dim posicaoY As Integer
+    Dim id As Integer
+    Dim lbl_label As New Label With {
+        .Text = "Telefones não encontrados",
+        .Location = New Point(0, 40),
+        .Size = New Size(280, 40),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
     Friend Sub New()
         spanel = Principal.splitconteiner_Dir.Panel1
         iniciar()
@@ -23,15 +31,23 @@ Public Class EventoLista
             consulta = conexao.CreateCommand
             consulta.CommandText = "select getdate()"
             conexao.Open()
-
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+            dtatual = myReader.GetDateTime(0)
+            myReader.Close()
+            consulta.CommandText = "select getdate()"
             myReader = consulta.ExecuteReader()
 
-            myReader.Read()
+            If myReader.HasRows Then
+                Do While myReader.Read()
+                    id = 1
 
-            dtatual = myReader.GetDateTime("")
+                    'Dim evento As New Evento()
 
-
-
+                Loop
+            Else
+                spanel.Controls.Add(lbl_label)
+            End If
 
         Catch ex As Exception
             MessageBox.Show("Erro ao obter telefones: " & ex.Message, "Insert Records")

@@ -92,18 +92,12 @@ CREATE TABLE tb_demanda
 CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
-	evento_data DATETIME,
 	evento_descricao NVARCHAR(256),
+	evento_datahora DATETIME,
+	evento_vistoultimo DATETIME,
 	evento_frequencia TINYINT,
-	evento_dtinicio DATETIME,
+	evento_allday TINYINT,
 	evento_ativo TINYINT
-	Frequencia:
-Diário
-Semanal
-Mensal
-
-
-
 )
 CREATE TABLE tb_telefone
 (/*informações da tabela inseridas*/
@@ -286,7 +280,7 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','tabela_nome','Nome da tabela','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('meta_tabela','tabela_numero','Número atribuído à tabela','1')
 
-/** Tabela item **/
+/** (descontinuado) Tabela item **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','#','Esta tabela serve para catrastrar todos os itens, para que possam se relacionar com outras tabelas, ex:tb_notas','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','item_id','Chave primaria da tabela, que será usada como FK em outras tabelas','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_item','item_tabela','Tabela em que está cadastrada, onde se encontram informações específicas do item','1')
@@ -326,12 +320,34 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_estoque','estoque_localizacao','O local onde o item está guardado','1')
 
 /** Tabela de notas **/
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','#','Armazena as notas de itens(anotações relevantes, especifica do item)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_id','Chave primaria da tabela','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_pkitem','Chave primaria da tabela do item da nota','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_tabela','Tabela ao qual o item dono da nota pertence','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_nota','A anotação','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','#','Armazena as notas de itens(anotações relevantes, especifica do item)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','nota_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','nota_pkitem','Chave primaria da tabela do item da nota','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','nota_tabela','Tabela ao qual o item dono da nota pertence','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','nota_nota','A anotação','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_anotacao','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
+
+/** Tabela de eventos **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','#','Armazena eventos, para ajudar lembrar eventos no dia','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_descricao','Descrição do evento','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_datahora','A data e a hora que o evento irá começar a acontecer','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_vistoultimo','Ultimo dia que foi visualisado/confirmado que já terminou o evento ','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_frequencia','O periodo de lembretes, se é uma vez, diário, semanal, etc...','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_allday','O evento pode acontecer a qualquer momento do dia','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_ativo','Se o evento está ativo, ainda mostra lembretes','1')
+
+
+CREATE TABLE tb_evento
+(
+	evento_id INT PRIMARY KEY IDENTITY,
+	evento_descricao NVARCHAR(256),
+	evento_datahora DATETIME,
+	evento_vistoultimo
+	evento_frequencia TINYINT,
+	evento_allday TINYINT,
+	evento_ativo TINYINT
+)
 
 /** Tabela de notas pessoais **/
 --insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')

@@ -14,9 +14,9 @@ WHERE TABLE_NAME = N'tb_evento'
 
 --> alter table <--
 alter table tb_evento add evento_frequencia TINYINT
-alter table tb_evento add evento_dtinicio DATETIME
-alter table tb_evento add evento_ativo TINYINT
-
+alter table tb_evento drop column evento_dtinicio 
+alter table tb_evento add evento_ativo TINYINT 
+alter table tb_evento alter column evento_data tinyint
 --> alter table <--
 
 --> Demandas <--
@@ -46,6 +46,15 @@ left join meta_valor prioridade on valor_tabela = 'tb_demanda' and valor_coluna 
 --> Demandas <--
 
 --> Evento <--
+select
+evento_id as 'ID',
+evento_data as 'Data do evento',
+evento_descricao as 'Descrição',
+evento_frequencia as 'Frequência',
+evento_dtinicio as 'Data de inicio',
+evento_allday as 'O dia inteiro',
+evento_ativo as 'Ativo'
+from tb_evento
 
 --> Evento <--
 

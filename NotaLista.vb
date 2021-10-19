@@ -92,13 +92,12 @@ Public Class listarNotas
                 Loop
 
             Else
-
                 conteiner.Controls.Add(label)
-
             End If
             If demandaAtual IsNot Nothing Then
                 demandaAtual.setQtdNotas(num)
             End If
+            myReader.Close()
         Catch ex As Exception
             MessageBox.Show("Erro ao obter notas 01: " & ex.Message, "Insert Records")
         Finally

@@ -37,7 +37,8 @@ Public Class Nota
         btn_excluir.BackgroundImage = img.xis
         btn_excluir.BackgroundImageLayout = ImageLayout.Zoom
         btn_excluir.FlatStyle = FlatStyle.Popup
-        txt_nota.BackColor = Color.FromArgb(255, 230, 230, 240)
+        txt_nota.Enabled = False
+        txt_nota.BackColor = Color.FromArgb(255, 240, 240, 250)
 
         'If _notapessoal Then
         '    AddHandler btn_excluir.Click, AddressOf excluirPessoal

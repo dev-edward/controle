@@ -20,7 +20,7 @@ Public Class TelefoneLista
     Dim numero As String
     Dim pessoa As String
     Dim local As String
-    Dim label As New Label With {
+    Dim lbl_label As New Label With {
         .Text = "Telefones não encontrados",
         .Location = New Point(0, 40),
         .Size = New Size(280, 40),
@@ -69,8 +69,9 @@ Public Class TelefoneLista
                     posicaoY += 38
                 Loop
             Else
-                conteiner.Controls.Add(label)
+                conteiner.Controls.Add(lbl_label)
             End If
+            myReader.Close()
         Catch ex As Exception
             MessageBox.Show("Erro ao obter telefones: " & ex.Message, "Insert Records")
         Finally
