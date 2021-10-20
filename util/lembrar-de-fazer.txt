@@ -1,1 +1,2 @@
-- converter id do usuario na tela detalhes afazer
+- remover informações adicionais no form detalhes da demanda
+- 

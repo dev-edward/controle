@@ -19,7 +19,7 @@
         .Size = New Size(270, 16),
         .Location = New Point(0, 16)
     }
-    Friend Sub New(ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _numero As String, ByVal _pessoa As String, ByVal _local As String, ByVal _posicaoY As Integer)
+    Friend Sub New(ByRef _conteiner As Panel, ByVal _numero As String, ByVal _pessoa As String, ByVal _local As String, ByVal _posicaoY As Integer)
         lbl_numero.Text = _numero
         lbl_pessoa.Text = " | " & _pessoa
         lbl_local.Text = _local

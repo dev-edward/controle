@@ -7,6 +7,9 @@ Public Class EventoLista
     Dim dtatual As DateTime
     Dim posicaoY As Integer
     Dim id As Integer
+    Dim hora As DateTime
+    Dim descricao As String
+    Dim checado As Boolean
     Dim lbl_label As New Label With {
         .Text = "Telefones não encontrados",
         .Location = New Point(0, 40),
@@ -40,10 +43,11 @@ Public Class EventoLista
 
             If myReader.HasRows Then
                 Do While myReader.Read()
-                    id = 1
-
-                    'Dim evento As New Evento()
-
+                    id = myReader.GetInt32("evento_id")
+                    hora = myReader.GetDateTime("evento_datahora")
+                    descricao = myReader.GetString("evento_descricao")
+                    'checado = myReader.GetString("evento_vistoultimo")
+                    Dim evento As New Evento(spanel, id, hora, descricao, True)
                 Loop
             Else
                 spanel.Controls.Add(lbl_label)

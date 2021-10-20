@@ -1,3 +1,16 @@
+--> informações de tabelas <--
+SELECT *
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = N'tb_evento'
+--> informações de tabelas <--
+
+--> alter table <--
+alter table tb_evento add evento_ultimocheck DATETIME
+alter table tb_evento drop column evento_dtinicio 
+alter table tb_evento add evento_ativo TINYINT 
+alter table tb_evento alter column evento_data tinyint
+--> alter table <--
+
 --> lista de demandas <--
 SELECT demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status,
 sum(case when nota_pkitem = demanda_id and nota_tabela = 'demanda' and nota_excluido is null then 1 else 0 end) as 'qtd_notas' 
@@ -6,18 +19,33 @@ where demanda_status in(0,1) -- and demanda_usercadastro = 1 and demanda_encarre
 group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, demanda_status
 --> lista de demandas <--
 
---> informações de tabelas <--
-SELECT *
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = N'tb_evento'
---> informações de tabelas <--
+--> lista de eventos <--
+select
+evento_id as 'ID',
+evento_descricao as 'Descrição',
+evento_datahora as 'Data do evento',
+evento_ultimocheck as 'Último Checado',
+evento_frequencia as 'Frequência',
+evento_allday as 'O dia inteiro',
+evento_ativo as 'Ativo',
+case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'Checado'
+from tb_evento
+where evento_ativo = 1 and evento_datahora > CONVERT(date, GETDATE()) and evento_datahora < (DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE())))
+order by 'Checado'
 
---> alter table <--
-alter table tb_evento add evento_frequencia TINYINT
-alter table tb_evento drop column evento_dtinicio 
-alter table tb_evento add evento_ativo TINYINT 
-alter table tb_evento alter column evento_data tinyint
---> alter table <--
+--SELECT CONVERT(date, GETDATE())
+
+update tb_evento set evento_datahora = '18/10/2021 09:00', evento_ultimocheck = '18/10/2021 22:00' where evento_id = 1
+update tb_evento set evento_datahora = '20/10/2021 14:15', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 2
+update tb_evento set evento_datahora = '20/10/2021 17:00', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 3
+update tb_evento set evento_datahora = '21/10/2021 09:00', evento_ultimocheck = null where evento_id = 4
+update tb_evento set evento_datahora = '22/10/2021 15:00', evento_ultimocheck = null where evento_id = 5
+
+
+insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','24/04/2021 12:00','Teste de Evento',1,0,1)
+insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','25/04/2021 13:00','Teste de Evento',1,0,1)
+
+--> lista de eventos <--
 
 --> Demandas <--
 select 
@@ -48,14 +76,13 @@ left join meta_valor prioridade on valor_tabela = 'tb_demanda' and valor_coluna 
 --> Evento <--
 select
 evento_id as 'ID',
-evento_data as 'Data do evento',
 evento_descricao as 'Descrição',
+evento_datahora as 'Data do evento',
+evento_ultimocheck as 'Último Checado',
 evento_frequencia as 'Frequência',
-evento_dtinicio as 'Data de inicio',
 evento_allday as 'O dia inteiro',
 evento_ativo as 'Ativo'
 from tb_evento
-
 --> Evento <--
 
 --> Dispositivos <--

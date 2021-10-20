@@ -16,7 +16,6 @@ Public Class TelefoneLista
     }
     Dim posicaoY As Integer
 
-    Dim id As Integer
     Dim numero As String
     Dim pessoa As String
     Dim local As String
@@ -59,12 +58,11 @@ Public Class TelefoneLista
 
             If myReader.HasRows Then
                 Do While myReader.Read()
-                    id = myReader.GetInt32("telefone_id")
                     numero = myReader.GetString("telefone_numero")
                     pessoa = myReader.GetString("telefone_pessoa")
                     local = myReader.GetString("telefone_local")
 
-                    Dim telefone As New Telefone(conteiner, id, numero, pessoa, local, posicaoY)
+                    Dim telefone As New Telefone(conteiner, numero, pessoa, local, posicaoY)
 
                     posicaoY += 38
                 Loop

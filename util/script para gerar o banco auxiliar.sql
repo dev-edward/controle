@@ -75,26 +75,25 @@ CREATE TABLE tb_estoque
 )
 CREATE TABLE tb_demanda
 (/*informações da tabela inseridas*/
-	demanda_id INT PRIMARY KEY IDENTITY,
-	--afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	demanda_dtcadastro DATETIME DEFAULT GETDATE(),
-	demanda_usercadastro TINYINT,
-	demanda_dtalteracao DATETIME,
-	demanda_useralteracao TINYINT,
+	demanda_id INT PRIMARY KEY IDENTITY
 	demanda_titulo NVARCHAR(30),
 	demanda_detalhes NVARCHAR(256),
 	demanda_temprevisao TINYINT,
 	demanda_previsao DATETIME,
 	demanda_status TINYINT,
 	demanda_encarregado TINYINT,
-	demanda_prioridade TINYINT
+	demanda_prioridade TINYINT,
+	demanda_dtcadastro DATETIME DEFAULT GETDATE(),
+	demanda_usercadastro TINYINT,
+	demanda_dtalteracao DATETIME,
+	demanda_useralteracao TINYINT,
 )
 CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
 	evento_descricao NVARCHAR(256),
 	evento_datahora DATETIME,
-	evento_vistoultimo DATETIME,
+	evento_ultimocheck DATETIME,
 	evento_frequencia TINYINT,
 	evento_allday TINYINT,
 	evento_ativo TINYINT
@@ -141,7 +140,6 @@ CREATE TABLE tb_totvsrm
 CREATE TABLE tb_sala
 (
 	sala_id INT PRIMARY KEY IDENTITY,
-	--sala_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	sala_nome NVARCHAR(20),
 	sala_bloco NVARCHAR(20),
 	sala_descricao NVARCHAR(30)
@@ -156,13 +154,6 @@ CREATE TABLE tb_pessoa
 CREATE TABLE tb_dispositivo
 (/*informações da tabela inseridas*/
 	dispositivo_id INT PRIMARY KEY IDENTITY,
-	--dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
-	--dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
-	--dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
-	dispositivo_usercadastro TINYINT,
-	dispositivo_dtalteracao DATETIME,
-	dispositivo_useralteracao TINYINT,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
 	dispositivo_marcamodelo NVARCHAR(30),
@@ -173,17 +164,16 @@ CREATE TABLE tb_dispositivo
 	dispositivo_qtdmemoriaram TINYINT,
 	dispositivo_processador NVARCHAR(20),
 	dispositivo_armazenamento NVARCHAR(30),
-	dispositivo_bateria NVARCHAR(30)
+	dispositivo_bateria NVARCHAR(30),
+	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
+	dispositivo_usercadastro TINYINT,
+	dispositivo_dtalteracao DATETIME,
+	dispositivo_useralteracao TINYINT
 )
 
 CREATE TABLE tb_impressora
 (/*informações da tabela inseridas*/
 	impressora_id INT PRIMARY KEY IDENTITY,
-	--impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
-	impressora_usercadastro TINYINT,
-	impressora_dtalteracao DATETIME,
-	impressora_useralteracao TINYINT,
 	impressora_marcamodelo NVARCHAR(20),
 	impressora_nserie NVARCHAR(12),
 	impressora_nnota NVARCHAR(16),
@@ -194,12 +184,15 @@ CREATE TABLE tb_impressora
 	impressora_estado TINYINT,
 	impressora_ip NVARCHAR(15),
 	impressora_dtentrada DATETIME,
-	impressora_dtsaida DATETIME
+	impressora_dtsaida DATETIME,
+	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
+	impressora_usercadastro TINYINT,
+	impressora_dtalteracao DATETIME,
+	impressora_useralteracao TINYINT
 )
 CREATE TABLE tb_nobreak
 (
 	nobreak_id INT PRIMARY KEY IDENTITY,
-	--nobreak_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	nobreak_marca NVARCHAR(20),
 	nobreak_modelo NVARCHAR(20),
 	nobreak_bateria NVARCHAR(20)
@@ -207,7 +200,6 @@ CREATE TABLE tb_nobreak
 CREATE TABLE tb_projetor
 (
 	projetor_id INT PRIMARY KEY IDENTITY,
-	--projetor_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	projetor_modelo NVARCHAR(20),
 	projetor_conexao TINYINT,
 	projetor_limpeza DATE, 
@@ -216,7 +208,6 @@ CREATE TABLE tb_projetor
 CREATE TABLE tb_camera
 (
 	camera_id INT PRIMARY KEY IDENTITY,
-	--camera_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	camera_marcamodelo NVARCHAR(30),
 	camera_resolucao NVARCHAR(16),
 	camera_local NVARCHAR(20)
@@ -229,25 +220,16 @@ CREATE TABLE tb_software
 	software_dtinstalacao DATETIME,
 	software_ultatualizacao DATETIME
 )
---CREATE table tb_notapessoal
---(/*informações da tabela inseridas*/
---	nt_id INT PRIMARY KEY IDENTITY,
---	nt_fkuser INT FOREIGN KEY REFERENCES tb_usuario(usuario_id) NOT NULL,
---	nt_nota NVARCHAR(256),
---	nt_excluido TINYINT
---)
 CREATE TABLE tb_pessoaitem
 (
 	pessoaitem_id INT PRIMARY KEY IDENTITY,
 	fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id) NOT NULL,
-	fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	data_atribuicao DATETIME
 )
 CREATE TABLE tb_salaitem
 (
 	salaitem_id INT PRIMARY KEY IDENTITY,
 	fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id) NOT NULL,
-	fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	data_atribuicao DATETIME
 )
 
@@ -332,22 +314,10 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_id','Chave primaria da tabela','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_descricao','Descrição do evento','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_datahora','A data e a hora que o evento irá começar a acontecer','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_vistoultimo','Ultimo dia que foi visualisado/confirmado que já terminou o evento ','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_ultimocheck','Ultimo dia que foi visualisado/confirmado que já terminou o evento ','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_frequencia','O periodo de lembretes, se é uma vez, diário, semanal, etc...','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_allday','O evento pode acontecer a qualquer momento do dia','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_ativo','Se o evento está ativo, ainda mostra lembretes','1')
-
-
-CREATE TABLE tb_evento
-(
-	evento_id INT PRIMARY KEY IDENTITY,
-	evento_descricao NVARCHAR(256),
-	evento_datahora DATETIME,
-	evento_vistoultimo
-	evento_frequencia TINYINT,
-	evento_allday TINYINT,
-	evento_ativo TINYINT
-)
 
 /** Tabela de notas pessoais **/
 --insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')
@@ -490,6 +460,16 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',2,'Telefone')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',3,'Celular')
 --
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',1,'Diário')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',2,'Semanal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',3,'Mensal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',4,'Anual')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_allday',0,'Não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_allday',1,'Sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',0,'Não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',1,'Sim')
 
 /**************************************/
 /* inclusões para proposito de teste */

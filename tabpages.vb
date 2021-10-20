@@ -81,6 +81,15 @@ Public Class tabpages
                 larguraColunas.Add(6, 70)
 
             Case "Eventos"
+                sql = "select
+                    evento_id as 'ID',
+                    evento_descricao as 'Descrição',
+                    evento_datahora as 'Data do evento',
+                    evento_ultimocheck as 'Último Checado',
+                    evento_frequencia as 'Frequência',
+                    evento_allday as 'O dia inteiro',
+                    evento_ativo as 'Ativo'
+                    from tb_evento"
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
                 sql = "select 

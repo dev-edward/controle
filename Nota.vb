@@ -37,14 +37,7 @@ Public Class Nota
         btn_excluir.BackgroundImage = img.xis
         btn_excluir.BackgroundImageLayout = ImageLayout.Zoom
         btn_excluir.FlatStyle = FlatStyle.Popup
-        txt_nota.Enabled = False
         txt_nota.BackColor = Color.FromArgb(255, 240, 240, 250)
-
-        'If _notapessoal Then
-        '    AddHandler btn_excluir.Click, AddressOf excluirPessoal
-        'Else
-        '    AddHandler btn_excluir.Click, AddressOf excluir
-        'End If
 
         AddHandler btn_excluir.Click, AddressOf excluir
 
@@ -55,13 +48,10 @@ Public Class Nota
         panel.Controls.Add(btn_excluir)
         _conteiner.Controls.Add(panel)
 
-        'parent = _parent
-
     End Sub
 
     Friend Sub excluir()
         Try
-            'nao conseui excluir
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
             consulta.CommandText = "update tb_anotacao set nota_excluido = 1 where nota_id = " & idNota
@@ -79,22 +69,5 @@ Public Class Nota
             conexao.Close()
         End Try
     End Sub
-    'Friend Sub excluirPessoal()
-    '    Try
-    '        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
-    '        consulta = conexao.CreateCommand
-    '        consulta.CommandText = "update tb_notapessoal set nt_excluido = 1 where nt_id = " & idNota
-    '        conexao.Open()
-    '        consulta.ExecuteNonQuery()
-
-    '    Catch ex As Exception
-    '        MessageBox.Show("Erro ao excluir nota: " & ex.Message, "Insert Records")
-    '    Finally
-    '        conexao.Close()
-    '    End Try
-
-    '    classesAbertas.atualntpessoal.atualizarLista()
-
-    'End Sub
 
 End Class
