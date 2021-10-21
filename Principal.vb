@@ -262,7 +262,8 @@ Public Class Principal
         Dim listarAfazer = New DemandaLista()
         Dim listarNotasPessoais = New NotaPessoal()
         Dim listarTelefones = New TelefoneLista()
-        'Dim listarEventos = New EventoLista()
+        Dim listarEventos = New EventoLista()
+
         teste.Show()
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)

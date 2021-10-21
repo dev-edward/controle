@@ -21,19 +21,19 @@ group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, dema
 
 --> lista de eventos <--
 select
-evento_id as 'ID',
-evento_descricao as 'Descrição',
-evento_datahora as 'Data do evento',
-evento_ultimocheck as 'Último Checado',
-evento_frequencia as 'Frequência',
-evento_allday as 'O dia inteiro',
-evento_ativo as 'Ativo',
-case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'Checado'
+evento_id,
+evento_descricao,
+evento_datahora,
+evento_frequencia,
+evento_allday,
+case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'checado'
 from tb_evento
-where evento_ativo = 1 and evento_datahora > CONVERT(date, GETDATE()) and evento_datahora < (DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE())))
-order by 'Checado'
+where evento_ativo = 1 and evento_datahora > DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and evento_datahora < DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
+order by 'checado'
 
---SELECT CONVERT(date, GETDATE())
+select * from tb_evento
+select dateadd(month,2,'31/10/2021 00:00')
+update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE())) where evento_id = 4
 
 update tb_evento set evento_datahora = '18/10/2021 09:00', evento_ultimocheck = '18/10/2021 22:00' where evento_id = 1
 update tb_evento set evento_datahora = '20/10/2021 14:15', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 2

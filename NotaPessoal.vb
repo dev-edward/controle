@@ -19,7 +19,6 @@ Public Class NotaPessoal
         .TextAlign = ContentAlignment.MiddleCenter
     }
 
-
     Friend Sub New()
         classesAbertas.setAtualNtPessoal(Me)
         spanel = Principal.splitconteiner_Esq.Panel2
