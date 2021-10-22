@@ -24,23 +24,37 @@ select
 evento_id,
 evento_descricao,
 evento_datahora,
+evento_ultimocheck,
 evento_frequencia,
 evento_allday,
 case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'checado'
 from tb_evento
-where evento_ativo = 1 and evento_datahora > DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) and evento_datahora < DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
+where evento_ativo = 1 
+and case 
+	when evento_frequencia = 3 then
+	DATEADD(w, 1,evento_datahora )
+	when evento_frequencia = 4 then
+	DATEADD(m, 1,evento_datahora )
+	when evento_frequencia = 5 then
+	DATEADD(y, 1,evento_datahora )
+	else
+	evento_datahora 
+	end < DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
 order by 'checado'
 
 select * from tb_evento
-select dateadd(month,2,'31/10/2021 00:00')
-update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE())) where evento_id = 4
+select dateadd(d,1,'31/10/2021 00:00')
+select dateadd(w,1,'31/10/2021 00:00')
+select dateadd(m,1,'31/10/2021 00:00')
+select dateadd(y,1,'31/10/2021 00:00')
+
+update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE())), evento_datahora =  DATEADD(dd,1,evento_datahora) where evento_id = 4
 
 update tb_evento set evento_datahora = '18/10/2021 09:00', evento_ultimocheck = '18/10/2021 22:00' where evento_id = 1
 update tb_evento set evento_datahora = '20/10/2021 14:15', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 2
 update tb_evento set evento_datahora = '20/10/2021 17:00', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 3
 update tb_evento set evento_datahora = '21/10/2021 09:00', evento_ultimocheck = null where evento_id = 4
 update tb_evento set evento_datahora = '22/10/2021 15:00', evento_ultimocheck = null where evento_id = 5
-
 
 insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','24/04/2021 12:00','Teste de Evento',1,0,1)
 insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','25/04/2021 13:00','Teste de Evento',1,0,1)

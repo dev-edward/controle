@@ -92,8 +92,13 @@ CREATE TABLE tb_demanda
 CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
-	evento_data DATETIME,
-	evento_descricao NVARCHAR(256)
+	evento_descricao NVARCHAR(256),
+	evento_datahora DATETIME,
+	evento_ultimocheck DATETIME,
+	evento_frequencia TINYINT,
+	evento_allday TINYINT,
+	evento_ativo TINYINT,
+	evento_notificadohj tinyint
 )
 CREATE TABLE tb_telefone
 (/*informações da tabela inseridas*/
@@ -315,6 +320,17 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_nota','A anotação','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notaitem','nota_excluido','Valor maior ou igual a 1 indica se foi excluido, nesse caso não irá aparecer na lista de notas do item.','1')
 
+/** Tabela de eventos **/
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','#','Armazena eventos, para ajudar lembrar eventos no dia','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_id','Chave primaria da tabela','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_descricao','Descrição do evento','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_datahora','A data e a hora que o evento irá começar a acontecer','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_ultimocheck','Ultimo dia que foi visualisado/confirmado que já terminou o evento ','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_frequencia','O periodo de lembretes, se é uma vez, diário, semanal, etc...','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_allday','O evento pode acontecer a qualquer momento do dia','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_ativo','Se o evento está ativo, ainda mostra lembretes','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_evento','evento_notificadohj','Se já apareceu uma notificação do evento no dia','1')
+
 /** Tabela de notas pessoais **/
 --insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','#','Armazena as anotações de cada usuário','1')
 --insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_notapessoal','nt_id','Chave primaria da tabela ','1')
@@ -444,7 +460,26 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',1,'Funcionário')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',2,'Irmãs')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',3,'Externo')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_email','email_grupo',4,'Inativo')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',1,'Ramal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',2,'Telefone')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',3,'Celular')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',1,'Uma vez')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',2,'Diário')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',3,'Semanal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',4,'Mensal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',5,'Anual')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_allday',0,'Não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_allday',1,'Sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',0,'Não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',1,'Sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_notificadohj',0,'Não')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_notificadohj',1,'Sim')
+
 
 /**************************************/
 /* inclusões para proposito de teste */

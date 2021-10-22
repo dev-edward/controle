@@ -11,6 +11,7 @@ Public Class EventoLista
     Dim descricao As String
     Dim checado As Boolean
     Dim allday As Boolean
+    Dim frequencia As Integer
     Dim lbl_label As New Label With {
         .Text = "Telefones não encontrados",
         .Location = New Point(0, 40),
@@ -56,7 +57,8 @@ Public Class EventoLista
                     descricao = If(myReader.IsDBNull("evento_descricao"), "", myReader.GetString("evento_descricao"))
                     checado = If(myReader.GetValue("checado") = 0, False, True)
                     allday = If(myReader.GetValue("evento_allday") = 0, False, True)
-                    Dim evento As New Evento(spanel, id, hora, descricao, checado, allday, posicaoY)
+                    frequencia = If(myReader.GetValue("evento_frequencia") = 2, False, True)
+                    Dim evento As New Evento(spanel, id, hora, descricao, checado, frequencia, allday, posicaoY)
                     posicaoY += 44
                 Loop
 

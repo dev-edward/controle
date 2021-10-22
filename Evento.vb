@@ -3,7 +3,8 @@ Public Class Evento
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Dim id As Integer
-    Dim 
+    Dim frequencia As Integer
+    Dim sql As String
     Dim panel As New Panel With {
         .Size = New Size(270, 60),
         .BorderStyle = BorderStyle.FixedSingle
@@ -27,8 +28,9 @@ Public Class Evento
         .Multiline = True,
         .ReadOnly = True
     }
-    Friend Sub New(ByRef _spanel As Panel, ByVal _id As Integer, ByVal _hora As DateTime, ByVal _descricao As String, ByVal _checado As Boolean, ByVal _allday As Boolean, ByVal _posicaoY As Integer)
+    Friend Sub New(ByRef _spanel As Panel, ByVal _id As Integer, ByVal _hora As DateTime, ByVal _descricao As String, ByVal _checado As Boolean, ByVal _frequencia As Integer, ByVal _allday As Boolean, ByVal _posicaoY As Integer)
         id = _id
+        frequencia = _frequencia
         lbl_hora.Text = If(_allday, "Qualquer hora", _hora.ToString("hh:mm"))
         txt_descricao.Text = _descricao
         AddHandler btn_checar.Click, AddressOf checkar
@@ -44,11 +46,24 @@ Public Class Evento
         _spanel.Controls.Add(panel)
     End Sub
     Private Sub checkar()
+        Select Case frequencia
+            Case 1
+                sql = "evento_ativo = 0"
+            Case 2
+                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+            Case 3
+                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+            Case 4
+                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+            Case 5
+                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+        End Select
+
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
-            consulta.CommandText = "update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE())) where evento_id = " & id
+            consulta.CommandText = "update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE()))," & sql & " where evento_id = " & id
             conexao.Open()
             consulta.ExecuteNonQuery()
 
