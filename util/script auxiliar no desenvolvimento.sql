@@ -20,6 +20,8 @@ group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, dema
 --> lista de demandas <--
 
 --> lista de eventos <--
+update tb_evento set evento_ultimocheck = getdate(), evento_datahora = DATEADD(w,1,evento_datahora) where evento_id = 3
+
 select
 evento_id,
 evento_descricao,
@@ -27,34 +29,64 @@ evento_datahora,
 evento_ultimocheck,
 evento_frequencia,
 evento_allday,
-case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'checado'
+case when evento_ultimocheck > evento_datahora and DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,getdate())) then 1 else 0 end as 'checado'
 from tb_evento
-where evento_ativo = 1 
-and case 
+where
+evento_ativo = 1
+and 
+(
+DATEADD(dd, 0, DATEDIFF(dd, 0, evento_datahora)) <=select DATEADD(dd, 0, DATEDIFF(dd, 0, getdate()))
+or
+case
+	when evento_frequencia = 2 then
+		DATEADD(d, 1,getdate()) 
 	when evento_frequencia = 3 then
-	DATEADD(w, 1,evento_datahora )
+		DATEADD(w, 1,getdate())
 	when evento_frequencia = 4 then
-	DATEADD(m, 1,evento_datahora )
+		DATEADD(m, 1,getdate())
 	when evento_frequencia = 5 then
-	DATEADD(y, 1,evento_datahora )
-	else
-	evento_datahora 
-	end < DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
+		DATEADD(y, 1,getdate())
+	else 
+		getdate()
+end = DATEADD(dd, 0, DATEDIFF(dd, 0, evento_datahora))
+)
+
 order by 'checado'
 
+
+update tb_evento set evento_ultimocheck  = GETDATE() where evento_id = 5
 select * from tb_evento
+
+select DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE())),* from tb_evento
+
+select DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
+
 select dateadd(d,1,'31/10/2021 00:00')
 select dateadd(w,1,'31/10/2021 00:00')
 select dateadd(m,1,'31/10/2021 00:00')
 select dateadd(y,1,'31/10/2021 00:00')
 
-update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, GETDATE())), evento_datahora =  DATEADD(dd,1,evento_datahora) where evento_id = 4
+select DATEADD(hh, 0, DATEDIFF(dd, 0, getdate()))
+select DATEADD(hh, 0, DATEDIFF(dd, 0, evento_datahora)) from tb_evento where evento_id = 3
 
-update tb_evento set evento_datahora = '18/10/2021 09:00', evento_ultimocheck = '18/10/2021 22:00' where evento_id = 1
-update tb_evento set evento_datahora = '20/10/2021 14:15', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 2
-update tb_evento set evento_datahora = '20/10/2021 17:00', evento_ultimocheck = '19/10/2021 22:00' where evento_id = 3
-update tb_evento set evento_datahora = '21/10/2021 09:00', evento_ultimocheck = null where evento_id = 4
-update tb_evento set evento_datahora = '22/10/2021 15:00', evento_ultimocheck = null where evento_id = 5
+update tb_evento set evento_ultimocheck = DATEADD(hh, 22, DATEDIFF(dd, 0, evento_datahora)), evento_datahora = DATEADD(dd,1,evento_datahora) where evento_id = 1
+
+update tb_evento set evento_datahora = '23/10/2021 09:00', evento_ultimocheck = null where evento_id = 1
+update tb_evento set evento_datahora = '23/10/2021 14:15', evento_ultimocheck = null where evento_id = 2
+update tb_evento set evento_datahora = '24/10/2021 17:00', evento_ultimocheck = null where evento_id = 3
+update tb_evento set evento_datahora = '24/10/2021 09:00', evento_ultimocheck = null where evento_id = 4
+update tb_evento set evento_datahora = '25/10/2021 15:00', evento_ultimocheck = null where evento_id = 5
+update tb_evento set evento_datahora = '25/10/2021 09:00', evento_ultimocheck = null where evento_id = 6
+update tb_evento set evento_datahora = '26/10/2021 14:15', evento_ultimocheck = null where evento_id = 7
+update tb_evento set evento_datahora = '26/10/2021 17:00', evento_ultimocheck = null where evento_id = 8
+update tb_evento set evento_datahora = '27/10/2021 09:00', evento_ultimocheck = null where evento_id = 9
+update tb_evento set evento_datahora = '27/10/2021 15:00', evento_ultimocheck = null where evento_id = 10
+
+update tb_evento set evento_frequencia = 1 where evento_id = 1
+update tb_evento set evento_frequencia = 2 where evento_id = 3
+update tb_evento set evento_frequencia = 3 where evento_id = 5
+update tb_evento set evento_frequencia = 4 where evento_id = 7
+update tb_evento set evento_frequencia = 5 where evento_id = 9
 
 insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','24/04/2021 12:00','Teste de Evento',1,0,1)
 insert into tb_evento(evento_datahora,evento_ultimocheck,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','25/04/2021 13:00','Teste de Evento',1,0,1)

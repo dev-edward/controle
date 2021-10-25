@@ -50,13 +50,13 @@ Public Class Evento
             Case 1
                 sql = "evento_ativo = 0"
             Case 2
-                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+                sql = "evento_datahora = DATEADD(d,1,evento_datahora)"
             Case 3
-                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+                sql = "evento_datahora = DATEADD(w,1,evento_datahora)"
             Case 4
-                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+                sql = "evento_datahora = DATEADD(m,1,evento_datahora)"
             Case 5
-                sql = "evento_datahora = DATEADD(dd,1,evento_datahora)"
+                sql = "evento_datahora = DATEADD(y,1,evento_datahora)"
         End Select
 
         Try
