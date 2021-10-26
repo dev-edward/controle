@@ -31,6 +31,7 @@ Partial Class teste
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -83,6 +84,7 @@ Partial Class teste
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Panel1)
         Me.TabPage1.Controls.Add(Me.TrackBar1)
         Me.TabPage1.Controls.Add(Me.DataGridView1)
         Me.TabPage1.Location = New System.Drawing.Point(4, 24)
@@ -96,7 +98,7 @@ Partial Class teste
         'TrackBar1
         '
         Me.TrackBar1.LargeChange = 2
-        Me.TrackBar1.Location = New System.Drawing.Point(206, 94)
+        Me.TrackBar1.Location = New System.Drawing.Point(428, 6)
         Me.TrackBar1.Maximum = 4
         Me.TrackBar1.Name = "TrackBar1"
         Me.TrackBar1.Size = New System.Drawing.Size(104, 45)
@@ -112,6 +114,14 @@ Partial Class teste
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.AntiqueWhite
+        Me.Panel1.Location = New System.Drawing.Point(135, 203)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(200, 100)
+        Me.Panel1.TabIndex = 5
         '
         'teste
         '
@@ -139,4 +149,5 @@ Partial Class teste
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TrackBar1 As TrackBar
+    Friend WithEvents Panel1 As Panel
 End Class

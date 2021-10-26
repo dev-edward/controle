@@ -16,13 +16,13 @@ Public Class Principal
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
         .GripStyle = ToolStripGripStyle.Hidden,
         .Padding = New Padding(30, 0, 30, 0),
-        .BackColor = Color.FromArgb(255, 250, 209, 183)
+        .BackColor = Color.FromArgb(255, 190, 186, 180)
     }
     Dim ts_Dir As New ToolStrip With {
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
         .GripStyle = ToolStripGripStyle.Hidden,
         .Padding = New Padding(30, 0, 30, 0),
-        .BackColor = Color.FromArgb(255, 250, 209, 183)
+        .BackColor = Color.FromArgb(255, 190, 186, 180)
     }
 
     Dim mi_topmostEsq As New ToolStripButton("", img.topmostoff)
@@ -50,7 +50,8 @@ Public Class Principal
         .Dock = DockStyle.Fill,
         .Margin = New Padding(0, 0, 0, 0),
         .HotTrack = True,
-        .Padding = New Point(50, 6)
+        .Padding = New Point(50, 6),
+        .BackColor = Color.White
     }
 
 
@@ -61,7 +62,8 @@ Public Class Principal
             .AutoScroll = True,
             .Width = 300,
             .MaximumSize = maxsize,
-            .Text = " "
+            .Text = " ",
+            .BackColor = Color.FromArgb(255, 50, 50, 50)
         }
     'Dim WithEvents FormCentral As New Form With {
     Dim FormCentral As New Form With {
@@ -77,7 +79,8 @@ Public Class Principal
             .AutoScroll = True,
             .Width = 300,
             .MaximumSize = maxsize,
-            .Text = " "
+            .Text = " ",
+            .BackColor = Color.FromArgb(255, 50, 50, 50)
         }
     Dim redimensionando = New Panel
 
@@ -183,13 +186,15 @@ Public Class Principal
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 
-        splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
-        splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        'splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
+        'splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 243, 243, 243)
+        splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 215, 216, 218)
         splitconteiner_Esq.Panel1.AutoScroll = True
         splitconteiner_Esq.Panel2.AutoScroll = True
 
-        splitconteiner_Dir.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
-        splitconteiner_Dir.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
+        splitconteiner_Dir.Panel1.BackColor = Color.FromArgb(255, 247, 247, 246)
+        splitconteiner_Dir.Panel2.BackColor = Color.FromArgb(255, 215, 216, 218)
         splitconteiner_Dir.Panel1.AutoScroll = True
         splitconteiner_Dir.Panel2.AutoScroll = True
 
@@ -197,11 +202,6 @@ Public Class Principal
             Dim Login = New Login
             Login.ShowDialog()
         End If
-
-
-
-        FormCentral.BackColor = Color.FromArgb(255, 50, 50, 50)
-        LateralDireita.BackColor = Color.FromArgb(255, 255, 133, 82)
 
         LateralEsquerda.MdiParent = Me
         FormCentral.MdiParent = Me
@@ -216,6 +216,8 @@ Public Class Principal
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
+        Me.StatusStrip.BackColor = Color.FromArgb(255, 210, 218, 231)
+        Me.MenuStripPrincipal.BackColor = Color.FromArgb(255, 215, 216, 218)
         Me.MenuStripPrincipal.Items.Add(mi_demanda)
         Me.MenuStripPrincipal.Items.Add(mi_eventos)
         Me.MenuStripPrincipal.Items.Add(mi_dispositivos)
@@ -264,11 +266,10 @@ Public Class Principal
         Dim listarTelefones = New TelefoneLista()
         Dim listarEventos = New EventoLista()
 
-        teste.Show()
+        'teste.Show()
         FormCentral.AutoScroll = True
         FormCentral.Controls.Add(tabCentro)
     End Sub
-
     Private Sub mi_demanda_Click()
         If tabCentro.TabPages("Demandas") Is Nothing Then
             Dim tab_afazer As New tabpages("Demandas")

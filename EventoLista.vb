@@ -4,14 +4,14 @@ Public Class EventoLista
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
     Dim spanel As Panel
-    Dim dtatual As DateTime
     Dim posicaoY As Integer
     Dim id As Integer
-    Dim hora As DateTime
+    Dim datahora As String
     Dim descricao As String
-    Dim checado As Boolean
-    Dim allday As Boolean
     Dim frequencia As Integer
+    Dim allday As Boolean
+    Dim checado As Boolean
+    Dim proximo As Boolean
     Dim lbl_label As New Label With {
         .Text = "Telefones não encontrados",
         .Location = New Point(0, 40),
@@ -31,21 +31,32 @@ Public Class EventoLista
     Private Sub iniciar()
         atualizar()
     End Sub
-    Private Sub atualizar()
+    Friend Sub atualizar()
+        spanel.Controls.Clear()
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
             consulta.CommandText = "select
-                                evento_id,
-                                evento_descricao,
-                                evento_datahora,
-                                evento_frequencia,
-                                evento_allday,
-                                case when evento_ultimocheck > evento_datahora then 1 else 0 end as 'checado'
+                                evento_id
+                                ,evento_descricao
+                                ,SUBSTRING(DATENAME(dw, evento_datahora), 0,4) + ', ' + format(evento_datahora,'dd/MM/yyyy HH:mm','pt-br') as 'evento_datahora'
+                                ,evento_ultimocheck
+                                ,evento_frequencia
+                                ,evento_allday
+                                ,case when evento_datahora >= getdate() then 1 else 0 end as 'proximo'
+                                ,case when DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE())) then 1 else 0 end as 'checado'
                                 from tb_evento
-                                where evento_ativo = 1 and evento_datahora > CONVERT(date, GETDATE()) and evento_datahora < DATEADD(dd, 1, DATEDIFF(dd, 0, GETDATE()))
+                                where
+                                evento_ativo = 1
+                                and 
+                                (
+                                DATEADD(dd, 0, DATEDIFF(dd,0,evento_datahora)) <= DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE()))
+                                or
+                                DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE()))
+                                )
                                 order by 'checado'"
+
             conexao.Open()
             myReader = consulta.ExecuteReader()
 
@@ -53,13 +64,14 @@ Public Class EventoLista
             If myReader.HasRows Then
                 Do While myReader.Read()
                     id = myReader.GetInt32("evento_id")
-                    hora = If(myReader.IsDBNull("evento_datahora"), "", myReader.GetDateTime("evento_datahora"))
+                    datahora = If(myReader.IsDBNull("evento_datahora"), "", myReader.GetString("evento_datahora"))
                     descricao = If(myReader.IsDBNull("evento_descricao"), "", myReader.GetString("evento_descricao"))
-                    checado = If(myReader.GetValue("checado") = 0, False, True)
+                    frequencia = If(myReader.IsDBNull("evento_frequencia"), 2, myReader.GetValue("evento_frequencia"))
                     allday = If(myReader.GetValue("evento_allday") = 0, False, True)
-                    frequencia = If(myReader.GetValue("evento_frequencia") = 2, False, True)
-                    Dim evento As New Evento(spanel, id, hora, descricao, checado, frequencia, allday, posicaoY)
-                    posicaoY += 44
+                    proximo = If(myReader.GetValue("proximo") = 0, False, True)
+                    checado = If(myReader.GetValue("checado") = 0, False, True)
+                    Dim evento As New Evento(spanel, id, datahora, descricao, frequencia, allday, proximo, checado, posicaoY)
+                    posicaoY += 64
                 Loop
 
             Else
