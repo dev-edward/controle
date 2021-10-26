@@ -20,37 +20,40 @@ group by demanda_id, demanda_titulo, demanda_temprevisao, demanda_previsao, dema
 --> lista de demandas <--
 
 --> lista de eventos <--
-update tb_evento set evento_ultimocheck = getdate(), evento_datahora = DATEADD(w,1,evento_datahora) where evento_id = 3
+update tb_evento set evento_ultimocheck = evento_datahora, evento_datahora = DATEADD(d,1,evento_datahora) where evento_id = 10
+update tb_evento set evento_ultimocheck = evento_datahora, evento_datahora = DATEADD(d,1,evento_datahora)
+
+UPDATE tb_evento
+SET evento_ultimocheck= CASE
+   WHEN DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) <> DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE())) 
+   THEN evento_datahora
+   ELSE evento_ultimocheck
+END
+,evento_datahora=case 
+	when DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) <> DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE())) 
+	then DATEADD(d,1,evento_datahora)
+	else evento_datahora
+end
+
 
 select
-evento_id,
-evento_descricao,
-evento_datahora,
-evento_ultimocheck,
-evento_frequencia,
-evento_allday,
-case when evento_ultimocheck > evento_datahora and DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,getdate())) then 1 else 0 end as 'checado'
+evento_id
+,evento_descricao
+,evento_datahora
+,evento_ultimocheck
+,evento_frequencia
+,evento_allday
+,case when evento_datahora >= getdate() then 1 else 0 end as 'proximos'
+,case when DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE())) then 1 else 0 end as 'checado'
 from tb_evento
 where
 evento_ativo = 1
 and 
 (
-DATEADD(dd, 0, DATEDIFF(dd, 0, evento_datahora)) <=select DATEADD(dd, 0, DATEDIFF(dd, 0, getdate()))
+DATEADD(dd, 0, DATEDIFF(dd,0,evento_datahora)) <= DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE()))
 or
-case
-	when evento_frequencia = 2 then
-		DATEADD(d, 1,getdate()) 
-	when evento_frequencia = 3 then
-		DATEADD(w, 1,getdate())
-	when evento_frequencia = 4 then
-		DATEADD(m, 1,getdate())
-	when evento_frequencia = 5 then
-		DATEADD(y, 1,getdate())
-	else 
-		getdate()
-end = DATEADD(dd, 0, DATEDIFF(dd, 0, evento_datahora))
+DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE()))
 )
-
 order by 'checado'
 
 
