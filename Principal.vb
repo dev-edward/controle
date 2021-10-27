@@ -16,13 +16,13 @@ Public Class Principal
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
         .GripStyle = ToolStripGripStyle.Hidden,
         .Padding = New Padding(30, 0, 30, 0),
-        .BackColor = Color.FromArgb(255, 190, 186, 180)
+        .BackColor = Color.FromArgb(255, 170, 175, 190)
     }
     Dim ts_Dir As New ToolStrip With {
         .LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow,
         .GripStyle = ToolStripGripStyle.Hidden,
         .Padding = New Padding(30, 0, 30, 0),
-        .BackColor = Color.FromArgb(255, 190, 186, 180)
+        .BackColor = Color.FromArgb(255, 170, 175, 190)
     }
 
     Dim mi_topmostEsq As New ToolStripButton("", img.topmostoff)
@@ -63,7 +63,7 @@ Public Class Principal
             .Width = 300,
             .MaximumSize = maxsize,
             .Text = " ",
-            .BackColor = Color.FromArgb(255, 50, 50, 50)
+            .BackColor = Color.FromArgb(255, 40, 85, 110)
         }
     'Dim WithEvents FormCentral As New Form With {
     Dim FormCentral As New Form With {
@@ -80,7 +80,7 @@ Public Class Principal
             .Width = 300,
             .MaximumSize = maxsize,
             .Text = " ",
-            .BackColor = Color.FromArgb(255, 50, 50, 50)
+            .BackColor = Color.FromArgb(255, 40, 85, 110)
         }
     Dim redimensionando = New Panel
 
@@ -188,13 +188,13 @@ Public Class Principal
 
         'splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 137, 189, 158)
         'splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 240, 201, 135)
-        splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 243, 243, 243)
-        splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 215, 216, 218)
+        splitconteiner_Esq.Panel1.BackColor = Color.FromArgb(255, 243, 240, 243)
+        splitconteiner_Esq.Panel2.BackColor = Color.FromArgb(255, 240, 240, 246)
         splitconteiner_Esq.Panel1.AutoScroll = True
         splitconteiner_Esq.Panel2.AutoScroll = True
 
-        splitconteiner_Dir.Panel1.BackColor = Color.FromArgb(255, 247, 247, 246)
-        splitconteiner_Dir.Panel2.BackColor = Color.FromArgb(255, 215, 216, 218)
+        splitconteiner_Dir.Panel1.BackColor = Color.FromArgb(255, 238, 242, 246)
+        splitconteiner_Dir.Panel2.BackColor = Color.FromArgb(255, 247, 247, 255)
         splitconteiner_Dir.Panel1.AutoScroll = True
         splitconteiner_Dir.Panel2.AutoScroll = True
 
@@ -216,8 +216,8 @@ Public Class Principal
 
         lbl_usuarioLogado.Text = "Logado como: " & usuario.usuario_user
 
-        Me.StatusStrip.BackColor = Color.FromArgb(255, 210, 218, 231)
-        Me.MenuStripPrincipal.BackColor = Color.FromArgb(255, 215, 216, 218)
+        Me.StatusStrip.BackColor = Color.FromArgb(255, 228, 231, 231)
+        Me.MenuStripPrincipal.BackColor = Color.FromArgb(255, 210, 216, 230)
         Me.MenuStripPrincipal.Items.Add(mi_demanda)
         Me.MenuStripPrincipal.Items.Add(mi_eventos)
         Me.MenuStripPrincipal.Items.Add(mi_dispositivos)

@@ -16,23 +16,24 @@ Public Class Evento
         .Size = New Size(26, 26),
         .Location = New Point(234, 17)
     }
-    Dim lbl_hora As New Label With {
+    Dim lbl_datahora As New Label With {
         .Location = New Point(10, 0),
         .Size = New Size(250, 18),
         .TextAlign = ContentAlignment.MiddleCenter,
         .ForeColor = Color.FromArgb(255, 15, 15, 15)
-        '222, 175, 167)
     }
     Dim txt_descricao As New Label With {
         .Location = New Point(6, 18),
         .Size = New Size(220, 36),
-        .BackColor = Color.FromArgb(100, 247, 247, 255)
+        .BackColor = Color.FromArgb(255, 253, 253, 253)
     }
     Friend Sub New(ByRef _spanel As Panel, ByVal _id As Integer, ByVal _datahora As String, ByVal _descricao As String, ByVal _frequencia As Integer, ByVal _allday As Boolean, ByVal _proximo As Boolean, ByVal _checado As Boolean, ByVal _posicaoY As Integer)
         id = _id
         frequencia = _frequencia
-        lbl_hora.Text = If(_allday, _datahora.Substring(0, 15), _datahora)
+        lbl_datahora.Text = If(_allday, _datahora.Substring(0, 15), _datahora)
         txt_descricao.Text = _descricao
+
+        lbl_datahora.Font = New Font(lbl_datahora.Font.FontFamily, 9, FontStyle.Bold)
 
         If _proximo And Not _allday Then
             btn_checar.Enabled = False
@@ -44,7 +45,7 @@ Public Class Evento
         AddHandler btn_checar.Click, AddressOf checkar
 
         panel.Location = New Point(6, _posicaoY)
-        panel.Controls.Add(lbl_hora)
+        panel.Controls.Add(lbl_datahora)
         panel.Controls.Add(txt_descricao)
 
         _spanel.Controls.Add(panel)

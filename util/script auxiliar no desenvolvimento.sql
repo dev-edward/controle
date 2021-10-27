@@ -55,11 +55,6 @@ or
 DATEADD(dd, 0, DATEDIFF(dd,0,evento_ultimocheck)) = DATEADD(dd, 0, DATEDIFF(dd,0,GETDATE()))
 )
 order by 'checado'
-
-update tb_evento set evento_ultimocheck  = null where evento_id = 1
-select * from tb_evento
-
-insert into tb_evento(evento_datahora,evento_descricao,evento_frequencia,evento_allday,evento_ativo) values('25/04/2021 12:00','Teste de Evento 1',2,0,1)
 --> lista de eventos <--
 
 --> Demandas <--
