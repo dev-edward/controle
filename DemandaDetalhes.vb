@@ -9,15 +9,6 @@ Public Class DemandaDetalhes
     Dim novoid As Integer
     Dim temprevisao As Integer
     Dim panel As New Panel
-    Dim lbl_id As New Label
-    Dim lbl_dataCadastro As New Label
-    Dim lbl_dataCadastroValor As New Label
-    Dim lbl_userCadastro As New Label
-    Dim lbl_userCadastroValor As New Label
-    Dim lbl_dataAlteracao As New Label
-    Dim lbl_dataAlteracaoValor As New Label
-    Dim lbl_useralteracao As New Label
-    Dim lbl_useralteracaoValor As New Label
     Dim lbl_titulo As New Label
     Dim txt_titulo As New TextBox
     Dim lbl_detalhes As New Label
@@ -75,54 +66,23 @@ Public Class DemandaDetalhes
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
 
         'texto dos labels
-        lbl_dataCadastro.Text = "Data do Cadastro:"
-        lbl_userCadastro.Text = "Usuário que cadastrou"
-        lbl_dataAlteracao.Text = "Data da última alteração"
-        lbl_useralteracao.Text = "Usuário que alterou"
         btn_notas.Text = "Notas"
         btn_cancelar.Text = "Cancelar"
         btn_modificar.Text = "Editar"
 
         'fonte dos controles
-        lbl_id.Font = fontemenor
-        lbl_dataCadastro.Font = fontemenor
-        lbl_dataCadastroValor.Font = fontemenor
-        lbl_userCadastro.Font = fontemenor
-        lbl_userCadastroValor.Font = fontemenor
-        lbl_dataAlteracao.Font = fontemenor
-        lbl_dataAlteracaoValor.Font = fontemenor
-        lbl_useralteracao.Font = fontemenor
-        lbl_useralteracaoValor.Font = fontemenor
         btn_notas.Font = fonte
         btn_cancelar.Font = fonte
         btn_modificar.Font = fonte
 
         'tamanho dos controles
-        lbl_id.Size = New Size(largura1, altura2)
-        lbl_dataCadastro.Size = New Size(largura1, altura2)
-        lbl_dataCadastroValor.Size = New Size(largura1, altura2)
-        lbl_userCadastro.Size = New Size(largura1, altura2)
-        lbl_userCadastroValor.Size = New Size(largura1, altura2)
-        lbl_dataAlteracao.Size = New Size(largura1, altura2)
-        lbl_dataAlteracaoValor.Size = New Size(largura1, altura2)
-        lbl_useralteracao.Size = New Size(largura1, altura2)
-        lbl_useralteracaoValor.Size = New Size(largura1, altura2)
         btn_notas.Size = New Size(largura1, altura3)
         btn_cancelar.Size = New Size(largura1, altura3)
         btn_modificar.Size = New Size(largura1, altura3)
         btn_salvar.Size = New Size(largura1, altura3)
 
         'posição dos controles
-        lbl_id.Location = New Point(0, 0)
-        lbl_dataCadastro.Location = New Point(0, altura2)
-        lbl_dataCadastroValor.Location = New Point(0, lbl_dataCadastro.Location.Y + altura2)
-        lbl_userCadastro.Location = New Point(0, lbl_dataCadastroValor.Location.Y + altura2)
-        lbl_userCadastroValor.Location = New Point(0, lbl_userCadastro.Location.Y + altura2)
-        lbl_dataAlteracao.Location = New Point(largura1, altura2)
-        lbl_dataAlteracaoValor.Location = New Point(largura1, lbl_dataAlteracao.Location.Y + altura2)
-        lbl_useralteracao.Location = New Point(largura1, lbl_dataAlteracaoValor.Location.Y + altura2)
-        lbl_useralteracaoValor.Location = New Point(largura1, lbl_useralteracao.Location.Y + altura2)
-        lbl_titulo.Location = New Point(posicao, lbl_useralteracaoValor.Location.Y + altura2)
+
 
         configurarForm()
 
@@ -132,15 +92,6 @@ Public Class DemandaDetalhes
         btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
 
         'configurações específicas
-        lbl_id.TextAlign = ContentAlignment.MiddleCenter
-        lbl_dataCadastro.TextAlign = ContentAlignment.MiddleCenter
-        lbl_userCadastro.TextAlign = ContentAlignment.MiddleCenter
-        lbl_dataCadastroValor.TextAlign = ContentAlignment.MiddleCenter
-        lbl_userCadastroValor.TextAlign = ContentAlignment.MiddleCenter
-        lbl_dataAlteracao.TextAlign = ContentAlignment.MiddleCenter
-        lbl_useralteracao.TextAlign = ContentAlignment.MiddleCenter
-        lbl_dataAlteracaoValor.TextAlign = ContentAlignment.MiddleCenter
-        lbl_useralteracaoValor.TextAlign = ContentAlignment.MiddleCenter
         btn_salvar.Visible = False
         txt_titulo.ReadOnly = True
         txt_detalhes.ReadOnly = True
@@ -155,15 +106,6 @@ Public Class DemandaDetalhes
         AddHandler btn_salvar.Click, AddressOf btn_alterar_Click
 
         'adicionando controles ao panel
-        panel.Controls.Add(lbl_id)
-        panel.Controls.Add(lbl_dataCadastro)
-        panel.Controls.Add(lbl_dataCadastroValor)
-        panel.Controls.Add(lbl_userCadastro)
-        panel.Controls.Add(lbl_userCadastroValor)
-        panel.Controls.Add(lbl_dataAlteracao)
-        panel.Controls.Add(lbl_dataAlteracaoValor)
-        panel.Controls.Add(lbl_useralteracao)
-        panel.Controls.Add(lbl_useralteracaoValor)
         panel.Controls.Add(btn_notas)
         panel.Controls.Add(btn_cancelar)
         panel.Controls.Add(btn_modificar)
@@ -255,10 +197,6 @@ Public Class DemandaDetalhes
         consulta = conexao.CreateCommand
         consulta.CommandText = "select 
                                         demanda_id,
-                                        demanda_dtcadastro, 
-                                        demanda_usercadastro, 
-                                        demanda_dtalteracao, 
-                                        demanda_useralteracao, 
                                         demanda_titulo, 
                                         demanda_detalhes, 
                                         demanda_temprevisao, 
@@ -272,11 +210,6 @@ Public Class DemandaDetalhes
 
         'conteudo dos controles extraido do BD
         pk = myReader.GetValue("demanda_id")
-        lbl_id.Text = "PK: " & pk
-        lbl_dataCadastroValor.Text = If(myReader.IsDBNull("demanda_dtcadastro"), "", myReader.GetDateTime("demanda_dtcadastro"))
-        lbl_userCadastroValor.Text = If(myReader.IsDBNull("demanda_usercadastro"), "", myReader.GetValue("demanda_usercadastro"))
-        lbl_dataAlteracaoValor.Text = If(myReader.IsDBNull("demanda_dtalteracao"), "", myReader.GetDateTime("demanda_dtalteracao"))
-        lbl_useralteracaoValor.Text = If(myReader.IsDBNull("demanda_useralteracao"), "", myReader.GetValue("demanda_useralteracao"))
         txt_titulo.Text = If(myReader.IsDBNull("demanda_titulo"), "", myReader.GetString("demanda_titulo"))
         txt_detalhes.Text = If(myReader.IsDBNull("demanda_detalhes"), "", myReader.GetString("demanda_detalhes"))
         temprevisao = If(myReader.IsDBNull("demanda_temprevisao"), 0, myReader.GetValue("demanda_temprevisao"))

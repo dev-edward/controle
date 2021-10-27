@@ -45,7 +45,7 @@
 
     'fonte padrão
     Dim fonte As New Font("Microsoft Sans Serif", 12)
-    Dim cor_botao = Color.FromArgb(255, 157, 162, 187)
+    Dim cor_botao = Color.FromArgb(255, 110, 120, 148)
 
     Friend Sub New(ByRef _lista As DemandaLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
 
