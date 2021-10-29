@@ -29,12 +29,15 @@ Partial Class teste
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TrackBar2 = New System.Windows.Forms.TrackBar()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TrackBar1 = New System.Windows.Forms.TrackBar()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -84,6 +87,8 @@ Partial Class teste
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.ComboBox1)
+        Me.TabPage1.Controls.Add(Me.TrackBar2)
         Me.TabPage1.Controls.Add(Me.Panel1)
         Me.TabPage1.Controls.Add(Me.TrackBar1)
         Me.TabPage1.Controls.Add(Me.DataGridView1)
@@ -94,6 +99,24 @@ Partial Class teste
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TrackBar2
+        '
+        Me.TrackBar2.AutoSize = False
+        Me.TrackBar2.Location = New System.Drawing.Point(275, 85)
+        Me.TrackBar2.Maximum = 4
+        Me.TrackBar2.Name = "TrackBar2"
+        Me.TrackBar2.Size = New System.Drawing.Size(200, 32)
+        Me.TrackBar2.TabIndex = 3
+        Me.TrackBar2.Value = 2
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.AntiqueWhite
+        Me.Panel1.Location = New System.Drawing.Point(8, 58)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(200, 100)
+        Me.Panel1.TabIndex = 5
         '
         'TrackBar1
         '
@@ -115,13 +138,14 @@ Partial Class teste
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'Panel1
+        'ComboBox1
         '
-        Me.Panel1.BackColor = System.Drawing.Color.AntiqueWhite
-        Me.Panel1.Location = New System.Drawing.Point(135, 203)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(200, 100)
-        Me.Panel1.TabIndex = 5
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(275, 134)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(121, 23)
+        Me.ComboBox1.TabIndex = 6
+        Me.ComboBox1.Text = "asdas"
         '
         'teste
         '
@@ -135,6 +159,7 @@ Partial Class teste
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        CType(Me.TrackBar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -150,4 +175,6 @@ Partial Class teste
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TrackBar1 As TrackBar
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents TrackBar2 As TrackBar
+    Friend WithEvents ComboBox1 As ComboBox
 End Class

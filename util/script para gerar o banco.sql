@@ -76,7 +76,6 @@ CREATE TABLE tb_estoque
 CREATE TABLE tb_demanda
 (/*informações da tabela inseridas*/
 	demanda_id INT PRIMARY KEY IDENTITY,
-	--afazer_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	demanda_dtcadastro DATETIME DEFAULT GETDATE(),
 	demanda_usercadastro TINYINT,
 	demanda_dtalteracao DATETIME,
@@ -434,6 +433,12 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',2,'Em andamento')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',3,'Feito')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_status',4,'Descartado')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',1,'Descartável')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',2,'Baixa')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',3,'Normal')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',4,'Alta')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_demanda','demanda_prioridade',5,'Urgente')
 --
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',1,'Computador')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_tipo',2,'Notebook')

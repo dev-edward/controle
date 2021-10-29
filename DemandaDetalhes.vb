@@ -5,37 +5,134 @@ Public Class DemandaDetalhes
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
 
-    Dim pk As Integer
-    Dim novoid As Integer
-    Dim temprevisao As Integer
-    Dim panel As New Panel
-    Dim lbl_titulo As New Label
-    Dim txt_titulo As New TextBox
-    Dim lbl_detalhes As New Label
-    Dim txt_detalhes As New RichTextBox
-    Dim lbl_previsao As New Label
-    Dim WithEvents cbx_previsao As New CheckBox
-    Dim lbl_semprevisao As New Label
-    Dim dtp_previsao As New DateTimePicker
-    Dim lbl_estado As New Label
-    Dim cbx_estado As New ComboBox
-    Dim btn_notas As New Button
-    Dim btn_cancelar As New Button
-    Dim btn_modificar As New Button
-    Dim btn_salvar As New Button
-
-    Dim demandaAtual As Demanda
-
+    'fontes
+    Dim fonte As New Font("Microsoft Sans Serif", 12)
+    Dim fontemenor As New Font("Microsoft Sans Serif", 8)
+    'medidas padrão
     Dim largura1 As Integer = 150
     Dim largura2 As Integer = 260
     Dim posicao As Integer = (largura1 * 2 - largura2) / 2
     Dim altura1 As Integer = 30
-    Dim altura2 As Integer = 15
     Dim altura3 As Integer = 40
 
-    'fontes
-    Dim fonte As New Font("Microsoft Sans Serif", 12)
-    Dim fontemenor As New Font("Microsoft Sans Serif", 8)
+    Dim pk As Integer
+    Dim novoid As Integer
+    Dim temprevisao As Integer
+
+    Dim panel As New Panel With {
+        .Size = New Size(302, 480),
+        .Location = New Point(10, 10)
+    }
+    Dim lbl_titulo As New Label With {
+        .Text = "Título",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Location = New Point(posicao, 0)
+    }
+    Dim txt_titulo As New TextBox With{
+        .Font = fonte,
+        .Size = New Size(largura2, altura1)
+    }
+    Dim lbl_detalhes As New Label With{
+        .Text = "Detalhes",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim txt_detalhes As New RichTextBox With{
+        .Font = fontemenor,
+        .Size = New Size(largura2, 50),
+        .Multiline = True
+    }
+    Dim lbl_previsao As New Label With{
+        .Text = "Previsao",
+        .Font = fonte,
+        .Size = New Size(largura2 - 12, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim WithEvents cbx_previsao As New CheckBox With{
+        .Font = fonte,
+        .Size = New Size(12, altura1),
+        .CheckAlign = ContentAlignment.MiddleCenter,
+        .FlatStyle = FlatStyle.Flat
+    }
+    Dim lbl_semprevisao As New Label With{
+        .Text = "Indeterminado",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim dtp_previsao As New DateTimePicker With{
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .Format = DateTimePickerFormat.Short,
+        .Visible = False
+    }
+    Dim lbl_estado As New Label With{
+        .Text = "Estado",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim cbx_estado As New ComboBox With {
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .DropDownStyle = ComboBoxStyle.DropDownList
+    }
+    Dim lbl_encarregado As New Label With {
+        .Text = "Encarregado",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim cbx_encarregado As New ComboBox With {
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .DropDownStyle = ComboBoxStyle.DropDownList
+    }
+    Dim lbl_prioridade As New Label With {
+        .Text = "Prioridade",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim WithEvents tkb_prioridade As New TrackBar With {
+        .Maximum = 4,
+        .LargeChange = 1,
+        .Value = 2,
+        .AutoSize = False,
+        .Size = New Size(largura2, altura1)
+    }
+    Dim lbl_prioridadeValor As New Label With {
+        .Text = "Normal",
+        .Font = fonte,
+        .Size = New Size(largura2, altura1),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim btn_notas As New Button With{
+        .Text = "Notas",
+        .Font = fonte,
+        .Size = New Size(largura1, altura3)
+    }
+    Dim btn_cancelar As New Button With{
+        .Text = "Cancelar",
+        .Font = fonte,
+        .Size = New Size(largura1, altura3)
+    }
+    Dim btn_modificar As New Button With{
+        .Text = "Editar",
+        .Font = fonte,
+        .Size = New Size(largura1, altura3)
+    }
+    Dim btn_salvar As New Button With {
+        .Text = "Salvar",
+        .Font = fonte,
+        .Size = New Size(largura1, altura3)
+    }
+
+
+    Dim demandaAtual As Demanda
 
     Friend Sub New()
         classesAbertas.setAtualDetalhes(Me, True)
@@ -44,7 +141,6 @@ Public Class DemandaDetalhes
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        lbl_titulo.Location = New Point(posicao, 0)
         btn_salvar.Size = New Size(largura2, altura3)
         AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
 
@@ -52,7 +148,7 @@ Public Class DemandaDetalhes
 
         cbx_estado.SelectedIndex = 0
 
-        btn_salvar.Location = New Point(posicao, cbx_estado.Location.Y + altura1 + 20)
+        btn_salvar.Location = New Point(posicao, lbl_prioridadeValor.Location.Y + altura1 + 20)
     End Sub
     Friend Sub New(ByRef _demandaAtual As Demanda)
         classesAbertas.setAtualDetalhes(Me, False)
@@ -65,31 +161,12 @@ Public Class DemandaDetalhes
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
 
-        'texto dos labels
-        btn_notas.Text = "Notas"
-        btn_cancelar.Text = "Cancelar"
-        btn_modificar.Text = "Editar"
-
-        'fonte dos controles
-        btn_notas.Font = fonte
-        btn_cancelar.Font = fonte
-        btn_modificar.Font = fonte
-
-        'tamanho dos controles
-        btn_notas.Size = New Size(largura1, altura3)
-        btn_cancelar.Size = New Size(largura1, altura3)
-        btn_modificar.Size = New Size(largura1, altura3)
-        btn_salvar.Size = New Size(largura1, altura3)
-
-        'posição dos controles
-
-
         configurarForm()
 
-        btn_notas.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
-        btn_cancelar.Location = New Point(0, cbx_estado.Location.Y + altura1 + 20)
-        btn_modificar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
-        btn_salvar.Location = New Point(largura1, cbx_estado.Location.Y + altura1 + 20)
+        btn_notas.Location = New Point(0, lbl_prioridadeValor.Location.Y + altura1 + 20)
+        btn_cancelar.Location = New Point(0, lbl_prioridadeValor.Location.Y + altura1 + 20)
+        btn_modificar.Location = New Point(largura1, lbl_prioridadeValor.Location.Y + altura1 + 20)
+        btn_salvar.Location = New Point(largura1, lbl_prioridadeValor.Location.Y + altura1 + 20)
 
         'configurações específicas
         btn_salvar.Visible = False
@@ -98,6 +175,8 @@ Public Class DemandaDetalhes
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
+        cbx_encarregado.Enabled = False
+        tkb_prioridade.Enabled = False
         btn_cancelar.Visible = False
 
         AddHandler btn_notas.Click, AddressOf btn_notas_Click
@@ -115,42 +194,7 @@ Public Class DemandaDetalhes
     Private Sub configurarForm()
         Me.ShowIcon = False
 
-        'texto dos controles
-        lbl_titulo.Text = "Título"
-        lbl_previsao.Text = "Previsao"
-        lbl_semprevisao.Text = "Indeterminado"
-        lbl_estado.Text = "Estado"
-        lbl_detalhes.Text = "Detalhes"
-        btn_salvar.Text = "Salvar"
-
-        'fonte dos controles
-        lbl_titulo.Font = fonte
-        txt_titulo.Font = fonte
-        lbl_detalhes.Font = fonte
-        txt_detalhes.Font = fontemenor
-        lbl_previsao.Font = fonte
-        cbx_previsao.Font = fonte
-        lbl_semprevisao.Font = fonte
-        dtp_previsao.Font = fonte
-        lbl_estado.Font = fonte
-        cbx_estado.Font = fonte
-        btn_salvar.Font = fonte
-
-        'tamanho dos controles
-        panel.Size = New Size(302, 400)
-        lbl_titulo.Size = New Size(largura2, altura1)
-        txt_titulo.Size = New Size(largura2, altura1)
-        lbl_detalhes.Size = New Size(largura2, altura1)
-        txt_detalhes.Size = New Size(largura2, 50)
-        lbl_previsao.Size = New Size(largura2 - 12, altura1)
-        cbx_previsao.Size = New Size(12, altura1)
-        lbl_semprevisao.Size = New Size(largura2, altura1)
-        dtp_previsao.Size = New Size(largura2, altura1)
-        lbl_estado.Size = New Size(largura2, altura1)
-        cbx_estado.Size = New Size(largura2, altura1)
-
         'posição dos controles
-        panel.Location = New Point(10, 10)
         txt_titulo.Location = New Point(posicao, lbl_titulo.Location.Y + altura1)
         lbl_detalhes.Location = New Point(posicao, txt_titulo.Location.Y + altura1)
         txt_detalhes.Location = New Point(posicao, lbl_detalhes.Location.Y + altura1)
@@ -161,20 +205,13 @@ Public Class DemandaDetalhes
         lbl_estado.Location = New Point(posicao, dtp_previsao.Location.Y + altura1)
         cbx_estado.Location = New Point(posicao, lbl_estado.Location.Y + altura1)
 
-        'configurações especificas
-        'panel.BorderStyle = BorderStyle.FixedSingle
-        lbl_titulo.TextAlign = ContentAlignment.MiddleCenter
-        lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
-        cbx_previsao.CheckAlign = ContentAlignment.MiddleCenter
-        lbl_semprevisao.TextAlign = ContentAlignment.MiddleCenter
-        lbl_detalhes.TextAlign = ContentAlignment.MiddleCenter
-        lbl_estado.TextAlign = ContentAlignment.MiddleCenter
+        lbl_encarregado.Location = New Point(posicao, cbx_estado.Location.Y + altura1)
+        cbx_encarregado.Location = New Point(posicao, lbl_encarregado.Location.Y + altura1)
+        lbl_prioridade.Location = New Point(posicao, cbx_encarregado.Location.Y + altura1)
+        tkb_prioridade.Location = New Point(posicao, lbl_prioridade.Location.Y + altura1)
+        lbl_prioridadeValor.Location = New Point(posicao, tkb_prioridade.Location.Y + altura1)
+
         cbx_estado.Items.AddRange({"Aguardando", "Em andamento", "Feito", "Descartado"})
-        dtp_previsao.Format = DateTimePickerFormat.Short
-        dtp_previsao.Visible = False
-        txt_detalhes.Multiline = True
-        cbx_estado.DropDownStyle = ComboBoxStyle.DropDownList
-        cbx_previsao.FlatStyle = FlatStyle.Flat
 
         'adicionando controles ao panel
         panel.Controls.Add(lbl_titulo)
@@ -187,6 +224,11 @@ Public Class DemandaDetalhes
         panel.Controls.Add(dtp_previsao)
         panel.Controls.Add(lbl_estado)
         panel.Controls.Add(cbx_estado)
+        panel.Controls.Add(lbl_encarregado)
+        panel.Controls.Add(cbx_encarregado)
+        panel.Controls.Add(lbl_prioridade)
+        panel.Controls.Add(tkb_prioridade)
+        panel.Controls.Add(lbl_prioridadeValor)
         panel.Controls.Add(btn_salvar)
 
         Me.Controls.Add(panel)
@@ -201,8 +243,12 @@ Public Class DemandaDetalhes
                                         demanda_detalhes, 
                                         demanda_temprevisao, 
                                         demanda_previsao, 
-                                        demanda_status 
-                                from tb_demanda where demanda_id=" & _pk
+                                        demanda_status,
+                                        encarregado.usuario_user as demanda_encarregado,
+                                        demanda_prioridade
+                                from tb_demanda 
+								left join tb_usuario encarregado on tb_demanda.demanda_encarregado = encarregado.usuario_id
+								where demanda_id=" & _pk
         conexao.Open()
         myReader = consulta.ExecuteReader()
 
@@ -224,6 +270,8 @@ Public Class DemandaDetalhes
         End If
         dtp_previsao.Value = If(myReader.IsDBNull("demanda_previsao"), "", myReader.GetDateTime("demanda_previsao"))
         cbx_estado.SelectedIndex = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status") - 1)
+        cbx_encarregado.Text = If(myReader.IsDBNull("demanda_encarregado"), "", myReader.GetString("demanda_encarregado"))
+        tkb_prioridade.Value = If(myReader.IsDBNull("demanda_prioridade"), 2, myReader.GetValue("demanda_prioridade") - 1)
 
         myReader.Close()
         conexao.Close()
@@ -232,7 +280,7 @@ Public Class DemandaDetalhes
     Private Sub DetalhesDemanda_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
-        Me.ClientSize = New Size(320, 420)
+        Me.ClientSize = New Size(320, 490)
 
     End Sub
     Private Sub cbx_previsao_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_previsao.CheckedChanged
@@ -245,6 +293,21 @@ Public Class DemandaDetalhes
             dtp_previsao.Visible = False
             dtp_previsao.Value = DateTime.Now.AddDays(30)
         End If
+
+    End Sub
+    Private Sub tkb_prioridade_ValueChanged(sender As Object, e As EventArgs) Handles tkb_prioridade.ValueChanged
+        Select Case tkb_prioridade.Value
+            Case 0
+                lbl_prioridadeValor.Text = "Descartável"
+            Case 1
+                lbl_prioridadeValor.Text = "Baixa"
+            Case 2
+                lbl_prioridadeValor.Text = "Normal"
+            Case 3
+                lbl_prioridadeValor.Text = "Alta"
+            Case 4
+                lbl_prioridadeValor.Text = "Urgente"
+        End Select
 
     End Sub
 
@@ -263,10 +326,12 @@ Public Class DemandaDetalhes
         btn_cancelar.Visible = True
         btn_salvar.Visible = True
         txt_titulo.ReadOnly = False
+        txt_detalhes.ReadOnly = False
         cbx_previsao.Enabled = True
         dtp_previsao.Enabled = True
         cbx_estado.Enabled = True
-        txt_detalhes.ReadOnly = False
+        cbx_encarregado.Enabled = True
+        tkb_prioridade.Enabled = True
 
     End Sub
     Private Sub btn_cancelar_Click()
@@ -279,6 +344,8 @@ Public Class DemandaDetalhes
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
+        cbx_encarregado.Enabled = False
+        tkb_prioridade.Enabled = False
         atualizarDados(pk)
 
     End Sub
@@ -327,6 +394,8 @@ Public Class DemandaDetalhes
         cbx_previsao.Enabled = False
         dtp_previsao.Enabled = False
         cbx_estado.Enabled = False
+        cbx_encarregado.Enabled = False
+        tkb_prioridade.Enabled = False
 
         atualizarDados(pk)
     End Sub
@@ -354,8 +423,8 @@ Public Class DemandaDetalhes
             consulta.Parameters.AddWithValue("@temprevisao", If(cbx_previsao.Checked, 1, 0))
             consulta.Parameters.AddWithValue("@previsao", dtp_previsao.Value)
             consulta.Parameters.AddWithValue("@status", cbx_estado.SelectedIndex + 1)
-            'consulta.Parameters.AddWithValue("@encarregado", cbx_encarregado.SelectedIndex + 1)
-            'consulta.Parameters.AddWithValue("@prioridade", cbx_prioridade.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@encarregado", cbx_encarregado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@prioridade", tkb_prioridade.Value + 1)
 
             conexao.Open()
 
