@@ -4,7 +4,7 @@
     <_LastSelectedProfileId>C:\Users\edward.huayta\source\repos\controle\My Project\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="DemandaDetalhes.vb">
+    <Compile Update="FormsCadastrosAlteracoes\DemandaDetalhes.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="DemandaEstado.vb">

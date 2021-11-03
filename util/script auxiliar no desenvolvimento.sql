@@ -9,6 +9,7 @@ alter table tb_evento add evento_ultimocheck DATETIME
 alter table tb_evento drop column evento_dtinicio 
 alter table tb_evento add evento_ativo TINYINT 
 alter table tb_evento alter column evento_data tinyint
+alter table tb_usuario alter column usuario_nome NVARCHAR(35)
 --> alter table <--
 
 --> lista de demandas <--

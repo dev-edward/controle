@@ -52,7 +52,7 @@ CREATE TABLE tb_usuario
 	usuario_id INT PRIMARY KEY IDENTITY,
 	--usuario_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	usuario_user VARCHAR(15),
-	usuario_nome VARCHAR(30),
+	usuario_nome VARCHAR(35),
 	usuario_senha VARCHAR(35)
 )
 CREATE TABLE tb_anotacao
@@ -553,6 +553,8 @@ insert into tb_telefone(telefone_numero,telefone_pessoa,telefone_local) values('
 
 -- Usuários
 insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('edward','Edward Cahua Huayta','senha')
+insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('paulo','Paulo Henrique Gonçalves Santos','senha')
+insert into tb_usuario(usuario_user,usuario_nome,usuario_senha) values('andre','André Luis Ruffo Veroneze','senha')
 
 -- Estoque
 insert into tb_estoque(estoque_nome,estoque_descricao,estoque_tag,estoque_quantidade,estoque_localizacao) values('Toner T06','Toner usado em impressoras da canon','SuprimentoImpressora',12,'Sala em frente à secretaria')

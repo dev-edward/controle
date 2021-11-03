@@ -24,12 +24,13 @@ Partial Class DemandaDetalhes
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'AfazerDetalhes
+        'DemandaDetalhes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(244, 381)
-        Me.Name = "AfazerDetalhes"
+        Me.Name = "DemandaDetalhes"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.ResumeLayout(False)
 
     End Sub

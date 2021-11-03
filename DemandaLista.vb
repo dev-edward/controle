@@ -4,7 +4,7 @@ Public Class DemandaLista
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
-    Dim conteiner As New Panel
+    Friend conteiner As New Panel
     Dim controles As New Panel
     Dim btn_ordenar As New Button
     Dim btn_previsao As New Button
@@ -36,11 +36,13 @@ Public Class DemandaLista
     Dim sql As String
 
     Friend Sub New()
+        classesAbertas.setAtualListaDemandas(Me)
         spanel = Principal.splitconteiner_Esq.Panel1
         iniciar()
 
     End Sub
     Friend Sub New(ByRef _spanel As Panel)
+        classesAbertas.setAtualListaDemandas(Me)
         spanel = _spanel
         iniciar()
 
@@ -49,7 +51,6 @@ Public Class DemandaLista
         Dim btn_adicionar As New Button
         Dim btn_atualizar As New Button
         Dim btn_filtro As New Button
-
         Dim btn_retorna As New Button
         Dim lbl_pagina As New Label
         Dim btn_avanca As New Button
@@ -187,7 +188,7 @@ Public Class DemandaLista
             encarregado = If(myReader.IsDBNull("demanda_encarregado"), 0, myReader.GetValue("demanda_encarregado"))
             prioridade = If(myReader.IsDBNull("demanda_prioridade"), 0, myReader.GetValue("demanda_prioridade"))
 
-            Dim demandas As New Demanda(Me, conteiner, id, titulo, temprevisao, previsao, estado, qtdNotas, panelY)
+            Dim demandas As New Demanda(Me, id, titulo, temprevisao, previsao, estado, qtdNotas, panelY)
             panelY += 56
 
         Loop
@@ -253,6 +254,12 @@ Public Class DemandaLista
         End If
         s_filtro = Not s_filtro
 
+    End Sub
+
+    Friend Sub MoverPanels()
+        For Each pnl As Control In conteiner.Controls
+            pnl.Top += 56
+        Next
     End Sub
 
 End Class

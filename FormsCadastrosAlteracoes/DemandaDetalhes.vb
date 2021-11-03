@@ -8,6 +8,7 @@ Public Class DemandaDetalhes
     'fontes
     Dim fonte As New Font("Microsoft Sans Serif", 12)
     Dim fontemenor As New Font("Microsoft Sans Serif", 8)
+
     'medidas padrão
     Dim largura1 As Integer = 150
     Dim largura2 As Integer = 260
@@ -149,6 +150,11 @@ Public Class DemandaDetalhes
         cbx_estado.SelectedIndex = 0
 
         btn_salvar.Location = New Point(posicao, lbl_prioridadeValor.Location.Y + altura1 + 20)
+
+        cbx_encarregado.SelectedItem = usuario.usuario_user
+
+
+
     End Sub
     Friend Sub New(ByRef _demandaAtual As Demanda)
         classesAbertas.setAtualDetalhes(Me, False)
@@ -213,6 +219,19 @@ Public Class DemandaDetalhes
 
         cbx_estado.Items.AddRange({"Aguardando", "Em andamento", "Feito", "Descartado"})
 
+        'carregando usuarios
+        conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+        consulta = conexao.CreateCommand
+        consulta.CommandText = "select usuario_user from tb_usuario"
+        conexao.Open()
+        myReader = consulta.ExecuteReader()
+        Do While myReader.Read()
+            cbx_encarregado.Items.Add(myReader.GetString(0))
+        Loop
+
+        myReader.Close()
+        conexao.Close()
+
         'adicionando controles ao panel
         panel.Controls.Add(lbl_titulo)
         panel.Controls.Add(txt_titulo)
@@ -275,13 +294,11 @@ Public Class DemandaDetalhes
 
         myReader.Close()
         conexao.Close()
-
     End Sub
     Private Sub DetalhesDemanda_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.ClientSize = New Size(320, 490)
-
     End Sub
     Private Sub cbx_previsao_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_previsao.CheckedChanged
         If cbx_previsao.Checked Then
@@ -293,7 +310,6 @@ Public Class DemandaDetalhes
             dtp_previsao.Visible = False
             dtp_previsao.Value = DateTime.Now.AddDays(30)
         End If
-
     End Sub
     Private Sub tkb_prioridade_ValueChanged(sender As Object, e As EventArgs) Handles tkb_prioridade.ValueChanged
         Select Case tkb_prioridade.Value
@@ -432,9 +448,14 @@ Public Class DemandaDetalhes
             myReader.Read()
             novoid = myReader.GetValue(0)
 
+            classesAbertas.atualListaDemandas.MoverPanels()
+
+            demandaAtual = New Demanda(classesAbertas.atualListaDemandas, novoid, txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value, cbx_estado.SelectedIndex + 1, 0, 0)
+
             If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
                 Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
             End If
+
             Dim verDetalhes = New DemandaDetalhes(demandaAtual)
             verDetalhes.Show()
 

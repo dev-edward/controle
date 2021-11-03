@@ -2,12 +2,47 @@
     Friend pk As Integer
     Friend estado As Integer
     Friend qtdNotas As Integer
-    Dim panel As New Panel
-    Dim txt_titulo As New TextBox
-    Dim lbl_previsao As New Label
-    Dim btn_vermais As New Button
-    Dim btn_notas As New Button
-    Dim btn_estado As New Button
+    Dim fonte As New Font("Microsoft Sans Serif", 12)
+    Dim cor_botao = Color.FromArgb(255, 110, 120, 148)
+    Dim panel As New Panel With {
+        .Size = New Size(280, 54)
+    }
+    Dim txt_titulo As New TextBox With {
+        .Font = fonte,
+        .Size = New Size(274, 26),
+        .Location = New Point(4, 0),
+        .ReadOnly = True
+    }
+    Dim lbl_previsao As New Label With {
+        .Size = New Size(98, 26),
+        .Location = New Point(4, 27),
+        .TextAlign = ContentAlignment.MiddleCenter
+    }
+    Dim btn_vermais As New Button With {
+        .Size = New Size(56, 26),
+        .Location = New Point(98, 27),
+        .BackColor = cor_botao,
+        .BackgroundImage = img.vermais,
+        .BackgroundImageLayout = ImageLayout.Zoom,
+        .FlatStyle = FlatStyle.Popup
+    }
+    Dim btn_notas As New Button With {
+        .Size = New Size(56, 26),
+        .Location = New Point(158, 27),
+        .BackColor = cor_botao,
+        .ForeColor = Color.FromArgb(255, 255, 255, 255),
+        .TextAlign = ContentAlignment.TopRight,
+        .Font = New Font("Impact", 10),
+        .BackgroundImage = img.notas,
+        .BackgroundImageLayout = ImageLayout.Zoom,
+        .FlatStyle = FlatStyle.Popup
+    }
+    Dim btn_estado As New Button With {
+        .Size = New Size(56, 26),
+        .Location = New Point(218, 27),
+        .BackColor = cor_botao,
+        .FlatStyle = FlatStyle.Popup
+    }
 
     'Friend Property valor_pk() As Integer
     '    Get
@@ -44,10 +79,8 @@
     'End Property
 
     'fonte padrão
-    Dim fonte As New Font("Microsoft Sans Serif", 12)
-    Dim cor_botao = Color.FromArgb(255, 110, 120, 148)
 
-    Friend Sub New(ByRef _lista As DemandaLista, ByRef _conteiner As Panel, ByVal _id As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
+    Friend Sub New(ByRef _lista As DemandaLista, ByVal _id As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
 
         'adicionando controles no panel
         panel.Controls.Add(txt_titulo)
@@ -56,65 +89,28 @@
         panel.Controls.Add(btn_notas)
         panel.Controls.Add(btn_estado)
 
-        'colocando fonte 12 para todos os itens
-        txt_titulo.Font = fonte
-
-        'conteudo dos controles extraido do BD
         pk = _id
         estado = _estado
         qtdNotas = _qtdNotas
         txt_titulo.Text = _titulo
         lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
 
-        'tamanho dos controles
-        panel.Size = New Size(280, 54)
-        txt_titulo.Size = New Size(274, 26)
-        lbl_previsao.Size = New Size(98, 26)
-        btn_vermais.Size = New Size(56, 26)
-        btn_notas.Size = New Size(56, 26)
-        btn_estado.Size = New Size(56, 26)
-
-        'posição dos controles
+        '.Location = New Point(0, 0),
         panel.Location = New Point(0, _panelY)
-        txt_titulo.Location = New Point(4, 0)
-        lbl_previsao.Location = New Point(4, 27)
-        btn_vermais.Location = New Point(98, 27)
-        btn_notas.Location = New Point(158, 27)
-        btn_estado.Location = New Point(218, 27)
 
-        'configurações especificas
-        'panel.BorderStyle = BorderStyle.FixedSingle
-        txt_titulo.ReadOnly = True
-        lbl_previsao.TextAlign = ContentAlignment.MiddleCenter
-        btn_vermais.BackColor = cor_botao
-        btn_notas.BackColor = cor_botao
-        btn_estado.BackColor = cor_botao
         btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
-        btn_notas.ForeColor = Color.FromArgb(255, 255, 255, 255)
-        btn_notas.TextAlign = ContentAlignment.TopRight
-        btn_notas.Font = New Font("Impact", 10)
-        btn_vermais.BackgroundImage = img.vermais
-        btn_vermais.BackgroundImageLayout = ImageLayout.Zoom
-        btn_notas.BackgroundImage = img.notas
-        btn_notas.BackgroundImageLayout = ImageLayout.Zoom
 
         setEstado(estado)
-
-        btn_vermais.FlatStyle = FlatStyle.Popup
-        btn_notas.FlatStyle = FlatStyle.Popup
-        btn_estado.FlatStyle = FlatStyle.Popup
-
 
         'vinculando funções aos botões
         AddHandler btn_vermais.Click, AddressOf btn_vermais_Click
         AddHandler btn_notas.Click, AddressOf btn_notas_Click
         AddHandler btn_estado.Click, AddressOf btn_estado_Click
 
-        _conteiner.Controls.Add(panel)
+        _lista.conteiner.Controls.Add(panel)
 
     End Sub
     Private Sub btn_vermais_Click()
-
         If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And Not classesAbertas.cadastrodemanda Then
             classesAbertas.atualdetalhes.atualizarDados(pk)
             Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
@@ -125,7 +121,6 @@
             Dim verDetalhes = New DemandaDetalhes(Me)
             verDetalhes.Show()
         End If
-
     End Sub
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
@@ -154,6 +149,7 @@
                 btn_estado.BackgroundImage = img.descartado
         End Select
         btn_estado.BackgroundImageLayout = ImageLayout.Zoom
+
     End Sub
     Friend Sub setDados(ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime)
         setEstado(estado)
