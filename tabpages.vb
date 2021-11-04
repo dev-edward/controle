@@ -23,11 +23,11 @@ Public Class tabpages
         .Dock = DockStyle.Fill,
         .AllowUserToAddRows = False,
         .AllowUserToDeleteRows = False,
-        .AllowUserToOrderColumns = True,
+        .AllowUserToOrderColumns = False,
         .AllowUserToResizeRows = False,
+        .AllowUserToResizeColumns = True,
         .AlternatingRowsDefaultCellStyle = cs,
         .ReadOnly = True,
-        .AllowUserToResizeColumns = True,
         .RowHeadersWidth = 20
     }
     Dim ts_tab As New ToolStrip With {
@@ -256,7 +256,6 @@ Public Class tabpages
             tabpg.Controls.Add(ts_tab)
             myReader.Close()
 
-
         Catch ex As Exception
             MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
         Finally
@@ -280,5 +279,6 @@ Public Class tabpages
     End Sub
     Private Sub novo()
         MessageBox.Show("Teste")
+        Dim CadEditForm = New CadastrarEditar(tabela)
     End Sub
 End Class
