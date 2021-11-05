@@ -201,16 +201,11 @@ Public Class DemandaLista
         conteiner.Width = 260
     End Sub
     Private Sub novo()
-        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And classesAbertas.cadastrodemanda Then
-            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
-
-        Else
-            If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And Not classesAbertas.cadastrodemanda Then
-                Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
-            End If
-            Dim verDetalhes = New DemandaDetalhes()
-            verDetalhes.Show()
+        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
         End If
+        Dim verDetalhes = New DemandaDetalhes()
+        verDetalhes.Show()
 
     End Sub
     Private Sub porData()
@@ -242,9 +237,7 @@ Public Class DemandaLista
             filtro_itens = If(cbx_status2.Checked, filtro_itens + ",2", filtro_itens)
             filtro_itens = If(cbx_status3.Checked, filtro_itens + ",3", filtro_itens)
             filtro_itens = If(cbx_status4.Checked, filtro_itens + ",4", filtro_itens)
-            'If cbx_status1.Checked Or cbx_status2.Checked Or cbx_status3.Checked Or cbx_status4.Checked Then
 
-            'End If
             sql_filtro = " where demanda_status in(" & filtro_itens & ")"
             panel_filtro.Visible = False
 

@@ -19,17 +19,31 @@ Public Class listarNotas
         .Size = New Size(280, 40),
         .TextAlign = ContentAlignment.MiddleCenter
     }
+    Dim posicaoInicial As New Point(Screen.FromControl(Principal).WorkingArea.X + 620, Screen.FromControl(Principal).WorkingArea.Y + 150)
 
-
-    Friend Sub New(ByRef _demandaAtual As Demanda)
-        classesAbertas.setAtualNotas(Me)
+    Friend Sub New(ByVal _pkitem As Integer, ByVal _tabela As String)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
-
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
+
+        classesAbertas.setAtualNotas(Me)
+        Me.Location = posicaoInicial
+        pkitem = _pkitem
+        tabela = _tabela
+
+    End Sub
+
+    Friend Sub New(ByRef _demandaAtual As Demanda)
+        ' Esta chamada é requerida pelo designer.
+        InitializeComponent()
+        ' Adicione qualquer inicialização após a chamada InitializeComponent().
+
+        classesAbertas.setAtualNotas(Me)
+        Me.Location = posicaoInicial
         demandaAtual = _demandaAtual
         pkitem = demandaAtual.pk
         tabela = "demanda"
+
     End Sub
 
     Private Sub listarNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -62,11 +76,6 @@ Public Class listarNotas
 
         atualizarLista()
 
-    End Sub
-    Friend Sub atualizarNovaLista(ByRef _demandaAtual As Demanda)
-        demandaAtual = _demandaAtual
-        pkitem = demandaAtual.pk
-        atualizarLista()
     End Sub
     Friend Sub atualizarLista()
 

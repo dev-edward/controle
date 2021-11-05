@@ -1,11 +1,23 @@
 ﻿Public Class CadastrarEditar
     Dim tabela As String
 
-    Sub New(ByVal _tabela As String)
+    Sub New(ByVal _tabela As String, ByVal _cadastro As Boolean, Optional ByVal _pk As Integer = 0)
         tabela = _tabela
         Select Case tabela
             Case "Demandas"
-                Dim cadastrarDemanda = New DemandaDetalhes()
+                If _cadastro Then
+                    If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+                        Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
+                    End If
+                    Dim verDetalhes = New DemandaDetalhes()
+                    verDetalhes.Show()
+                Else
+                    If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+                        Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
+                    End If
+                    Dim verDetalhes = New DemandaDetalhes(_pk)
+                    verDetalhes.Show()
+                End If
 
             Case "Eventos"
 

@@ -44,42 +44,6 @@
         .FlatStyle = FlatStyle.Popup
     }
 
-    'Friend Property valor_pk() As Integer
-    '    Get
-    '        Return pk
-    '    End Get
-    '    Set(ByVal value As Integer)
-    '        pk = value
-    '    End Set
-    'End Property
-    'Friend Property valor_fk() As Integer
-    '    Get
-    '        Return fk
-    '    End Get
-    '    Set(ByVal value As Integer)
-    '        fk = value
-    '    End Set
-    'End Property
-    'Friend Property valor_estado() As Integer
-    '    Get
-    '        Return estado
-    '    End Get
-    '    Set(ByVal value As Integer)
-    '        estado = value
-    '    End Set
-    'End Property
-    'Friend Property valor_qtdNotas() As Integer
-    '    Get
-    '        Return qtdNotas
-    '    End Get
-    '    Set(ByVal value As Integer)
-    '        qtdNotas = value
-    '        btn_notas.Text = qtdNotas
-    '    End Set
-    'End Property
-
-    'fonte padrão
-
     Friend Sub New(ByRef _lista As DemandaLista, ByVal _id As Integer, ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime, ByVal _estado As Integer, ByVal _qtdNotas As Integer, ByVal _panelY As Integer)
 
         'adicionando controles no panel
@@ -97,9 +61,7 @@
 
         '.Location = New Point(0, 0),
         panel.Location = New Point(0, _panelY)
-
         btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
-
         setEstado(estado)
 
         'vinculando funções aos botões
@@ -111,25 +73,18 @@
 
     End Sub
     Private Sub btn_vermais_Click()
-        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And Not classesAbertas.cadastrodemanda Then
-            classesAbertas.atualdetalhes.atualizarDados(pk)
-            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
-        Else
-            If Application.OpenForms.OfType(Of DemandaDetalhes).Any() And classesAbertas.cadastrodemanda Then
-                Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
-            End If
-            Dim verDetalhes = New DemandaDetalhes(Me)
-            verDetalhes.Show()
+        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().Close()
         End If
+        Dim verDetalhes = New DemandaDetalhes(Me)
+        verDetalhes.Show()
     End Sub
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            classesAbertas.atualnotas.atualizarNovaLista(Me)
-            Application.OpenForms.OfType(Of listarNotas).First().BringToFront()
-        Else
-            Dim notas = New listarNotas(Me)
-            notas.Show()
+            Application.OpenForms.OfType(Of listarNotas).First().Close()
         End If
+        Dim notas = New listarNotas(Me)
+        notas.Show()
     End Sub
     Private Sub btn_estado_Click()
         Dim status As New DemandaEstado(Me)

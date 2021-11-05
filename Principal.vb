@@ -38,14 +38,13 @@ Public Class Principal
 
     'Public WithEvents splitconteiner_Esq As New SplitContainer
     Friend splitconteiner_Esq As New SplitContainer With {
-            .Orientation = System.Windows.Forms.Orientation.Horizontal,
-            .Dock = DockStyle.Fill
-        }
+        .Orientation = System.Windows.Forms.Orientation.Horizontal,
+        .Dock = DockStyle.Fill
+    }
     Friend splitconteiner_Dir As New SplitContainer With {
-            .Orientation = System.Windows.Forms.Orientation.Horizontal,
-            .Dock = DockStyle.Fill
-        }
-
+        .Orientation = System.Windows.Forms.Orientation.Horizontal,
+        .Dock = DockStyle.Fill
+    }
     Friend WithEvents tabCentro As New TabControl With {
         .Dock = DockStyle.Fill,
         .Margin = New Padding(0, 0, 0, 0),
@@ -53,9 +52,7 @@ Public Class Principal
         .Padding = New Point(50, 6),
         .BackColor = Color.White
     }
-
-
-    Dim LateralEsquerda As New Form With {
+    Friend LateralEsquerda As New Form With {
             .FormBorderStyle = FormBorderStyle.None,
             .ControlBox = False,
             .StartPosition = FormStartPosition.Manual,
@@ -65,14 +62,13 @@ Public Class Principal
             .Text = " ",
             .BackColor = Color.FromArgb(255, 40, 85, 110)
         }
-    'Dim WithEvents FormCentral As New Form With {
     Dim FormCentral As New Form With {
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
             .StartPosition = FormStartPosition.Manual,
             .AutoScroll = True
         }
-    Dim LateralDireita As New Form With {
+    Friend LateralDireita As New Form With {
             .ControlBox = False,
             .FormBorderStyle = FormBorderStyle.None,
             .StartPosition = FormStartPosition.Manual,

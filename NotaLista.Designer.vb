@@ -30,6 +30,7 @@ Partial Class listarNotas
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(324, 361)
         Me.Name = "listarNotas"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "notas"
         Me.ResumeLayout(False)
 

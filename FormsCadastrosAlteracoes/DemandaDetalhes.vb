@@ -16,9 +16,13 @@ Public Class DemandaDetalhes
     Dim altura1 As Integer = 30
     Dim altura3 As Integer = 40
 
+    Dim posicaoInicial1 As New Point(Screen.FromControl(Principal.LateralEsquerda).WorkingArea.X + 310, Screen.FromControl(Principal.LateralEsquerda).WorkingArea.Y + 120)
+    Dim posicaoInicial2 As New Point(Screen.FromControl(Principal).WorkingArea.X + 310, Screen.FromControl(Principal).WorkingArea.Y + 120)
+
     Dim pk As Integer
     Dim novoid As Integer
     Dim temprevisao As Integer
+    Dim notas As listarNotas
 
     Dim panel As New Panel With {
         .Size = New Size(302, 480),
@@ -132,43 +136,55 @@ Public Class DemandaDetalhes
         .Size = New Size(largura1, altura3)
     }
 
-
     Dim demandaAtual As Demanda
 
     Friend Sub New()
-        classesAbertas.setAtualDetalhes(Me, True)
-        Me.Text = "Cadastrar nova demanda"
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
-
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
+
+        classesAbertas.setAtualDetalhes(Me)
+        Me.Text = "Cadastrar nova demanda"
+        Me.Location = posicaoInicial1
+
         btn_salvar.Size = New Size(largura2, altura3)
         AddHandler btn_salvar.Click, AddressOf btn_salvar_Click
 
-        configurarForm()
-
+        ajusteComum3()
         cbx_estado.SelectedIndex = 0
-
         btn_salvar.Location = New Point(posicao, lbl_prioridadeValor.Location.Y + altura1 + 20)
-
         cbx_encarregado.SelectedItem = usuario.usuario_user
 
+    End Sub
+    Friend Sub New(ByRef _pk As Integer)
+        ' Esta chamada é requerida pelo designer.
+        InitializeComponent()
+        ' Adicione qualquer inicialização após a chamada InitializeComponent().
 
+        Me.Text = "Detalhes da demanda"
+        Me.Location = posicaoInicial2
+        pk = _pk
 
+        ajusteComum3()
+        ajusteComum2()
     End Sub
     Friend Sub New(ByRef _demandaAtual As Demanda)
-        classesAbertas.setAtualDetalhes(Me, False)
-        Me.Text = "Detalhes do afazer"
+        ' Esta chamada é requerida pelo designer.
+        InitializeComponent()
+        ' Adicione qualquer inicialização após a chamada InitializeComponent().
+
+        classesAbertas.setAtualDetalhes(Me)
+        Me.Text = "Detalhes da demanda"
+        Me.Location = posicaoInicial1
+
         demandaAtual = _demandaAtual
         pk = demandaAtual.pk
 
-        ' Esta chamada é requerida pelo designer.
-        InitializeComponent()
+        ajusteComum3()
+        ajusteComum2()
 
-        ' Adicione qualquer inicialização após a chamada InitializeComponent().
-
-        configurarForm()
-
+    End Sub
+    Private Sub ajusteComum2()
         btn_notas.Location = New Point(0, lbl_prioridadeValor.Location.Y + altura1 + 20)
         btn_cancelar.Location = New Point(0, lbl_prioridadeValor.Location.Y + altura1 + 20)
         btn_modificar.Location = New Point(largura1, lbl_prioridadeValor.Location.Y + altura1 + 20)
@@ -195,9 +211,9 @@ Public Class DemandaDetalhes
         panel.Controls.Add(btn_cancelar)
         panel.Controls.Add(btn_modificar)
 
-        atualizarDados(pk)
+        atualizarDados()
     End Sub
-    Private Sub configurarForm()
+    Private Sub ajusteComum3()
         Me.ShowIcon = False
 
         'posição dos controles
@@ -252,7 +268,7 @@ Public Class DemandaDetalhes
 
         Me.Controls.Add(panel)
     End Sub
-    Friend Sub atualizarDados(ByVal _pk As Integer)
+    Private Sub atualizarDados()
         'extração de conteúdo do BD
         conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
         consulta = conexao.CreateCommand
@@ -267,10 +283,10 @@ Public Class DemandaDetalhes
                                         demanda_prioridade
                                 from tb_demanda 
 								left join tb_usuario encarregado on tb_demanda.demanda_encarregado = encarregado.usuario_id
-								where demanda_id=" & _pk
+								where demanda_id= " & pk
+
         conexao.Open()
         myReader = consulta.ExecuteReader()
-
         myReader.Read()
 
         'conteudo dos controles extraido do BD
@@ -329,14 +345,20 @@ Public Class DemandaDetalhes
 
     Private Sub btn_notas_Click()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
-            classesAbertas.atualnotas.atualizarNovaLista(demandaAtual)
-            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
-        Else
-            Dim notas = New listarNotas(demandaAtual)
-            notas.Show()
+            Application.OpenForms.OfType(Of listarNotas).First().Close()
         End If
+        If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
+            Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
+        End If
+        If demandaAtual IsNot Nothing Then
+            notas = New listarNotas(demandaAtual)
+        Else
+            notas = New listarNotas(pk, "demanda")
+        End If
+        notas.Show()
     End Sub
     Private Sub btn_modificar_Click()
+        Me.Text = "Editando demanda..."
         btn_notas.Visible = False
         btn_modificar.Visible = False
         btn_cancelar.Visible = True
@@ -351,6 +373,7 @@ Public Class DemandaDetalhes
 
     End Sub
     Private Sub btn_cancelar_Click()
+        Me.Text = "Detalhes da demanda"
         btn_cancelar.Visible = False
         btn_salvar.Visible = False
         btn_notas.Visible = True
@@ -362,14 +385,23 @@ Public Class DemandaDetalhes
         cbx_estado.Enabled = False
         cbx_encarregado.Enabled = False
         tkb_prioridade.Enabled = False
-        atualizarDados(pk)
+        atualizarDados()
 
     End Sub
     Private Sub btn_alterar_Click()
+
+        Me.Text = "Detalhes da demanda"
         btn_cancelar.Visible = False
         btn_salvar.Visible = False
         btn_notas.Visible = True
         btn_modificar.Visible = True
+        txt_titulo.ReadOnly = True
+        txt_detalhes.ReadOnly = True
+        cbx_previsao.Enabled = False
+        dtp_previsao.Enabled = False
+        cbx_estado.Enabled = False
+        cbx_encarregado.Enabled = False
+        tkb_prioridade.Enabled = False
 
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
@@ -396,24 +428,18 @@ Public Class DemandaDetalhes
             conexao.Open()
 
             consulta.ExecuteNonQuery()
+            If demandaAtual IsNot Nothing Then
+                demandaAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
+                demandaAtual.setEstado(cbx_estado.SelectedIndex + 1)
+            End If
 
-            demandaAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
-            demandaAtual.setEstado(cbx_estado.SelectedIndex + 1)
         Catch ex As Exception
-            MessageBox.Show("Erro ao atualizar: " & ex.Message, "Insert Records")
+            MessageBox.Show("Erro ao atualizar demanda: " & ex.Message, "Classe DemandaDetalhes")
         Finally
             conexao.Close()
         End Try
 
-        txt_titulo.ReadOnly = True
-        txt_detalhes.ReadOnly = True
-        cbx_previsao.Enabled = False
-        dtp_previsao.Enabled = False
-        cbx_estado.Enabled = False
-        cbx_encarregado.Enabled = False
-        tkb_prioridade.Enabled = False
-
-        atualizarDados(pk)
+        atualizarDados()
     End Sub
     Private Sub btn_salvar_Click()
         Try
@@ -460,7 +486,7 @@ Public Class DemandaDetalhes
             verDetalhes.Show()
 
         Catch ex As Exception
-            MessageBox.Show("Erro ao Cadastrar: " & ex.Message, "Insert Records")
+            MessageBox.Show("Erro ao Cadastrar Demanda: " & ex.Message, "Classe DemandaDetalhes")
         Finally
             conexao.Close()
         End Try

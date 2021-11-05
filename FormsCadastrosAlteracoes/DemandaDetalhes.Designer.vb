@@ -30,7 +30,7 @@ Partial Class DemandaDetalhes
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(244, 381)
         Me.Name = "DemandaDetalhes"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.ResumeLayout(False)
 
     End Sub

@@ -1,3 +1,8 @@
+--> Fazer depois
+-- formatar todas as datas no seguinte formato:
+-- format(evento_datahora,'dd/MM/yyyy HH:mm','pt-br')
+-- e atualizar instruções no Visual Studio
+
 --> informações de tabelas <--
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
@@ -89,11 +94,25 @@ select
 evento_id as 'ID',
 evento_descricao as 'Descrição',
 evento_datahora as 'Data do evento',
-evento_ultimocheck as 'Último Checado',
-evento_frequencia as 'Frequência',
-evento_allday as 'O dia inteiro',
-evento_ativo as 'Ativo'
+evento_ultimocheck as 'Última data Checado',
+case
+	when evento_frequencia = 0 then 'Apenas uma vez'
+	when evento_frequencia = 0 then 'Diário'
+	when evento_frequencia = 0 then 'Semanal'
+	when evento_frequencia = 0 then 'Mensal'
+	when evento_frequencia = 0 then 'Anual'
+end as 'Frequência',
+case 
+	when evento_allday = 0 or evento_allday is null then 'Não' 
+	else 'Sim' 
+end as 'O dia inteiro',
+case 
+	when evento_ativo = 0 or evento_ativo is null then 'Não' 
+	else 'Sim' 
+end as 'Ativo'
 from tb_evento
+
+select * from tb_evento
 --> Evento <--
 
 --> Dispositivos <--

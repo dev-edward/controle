@@ -19,7 +19,7 @@ Public Class tabpages
         .BorderStyle = BorderStyle.Fixed3D,
         .Margin = New Padding(0, 0, 0, 0)
         }
-    Dim dgv_tabpg As New DataGridView With {
+    Dim WithEvents dgv_tabpg As New DataGridView With {
         .Dock = DockStyle.Fill,
         .AllowUserToAddRows = False,
         .AllowUserToDeleteRows = False,
@@ -38,10 +38,7 @@ Public Class tabpages
         .Alignment = ToolStripItemAlignment.Right
     }
     Dim mi_novo As New ToolStripButton("", img.mais, AddressOf novo)
-    Dim mi_atualizar As New ToolStripButton("", img.refresh, AddressOf novo)
-    'dgv_tabpg.EditMode = DataGridViewEditMode.EditProgrammatically
-    'dgv_tabpg.Columns(0).ReadOnly = False
-    'dgv_tabpg.Columns(1).ReadOnly = True
+    Dim mi_atualizar As New ToolStripButton("", img.refresh, AddressOf atualizar)
     Dim larguraColunas As New Dictionary(Of Integer, DataGridViewAutoSizeColumnsMode)
 
     Sub New(ByVal _tabela As String, Optional ByVal _opcao As Integer = 0)
@@ -262,6 +259,11 @@ Public Class tabpages
             conexao.Close()
         End Try
     End Sub
+    Private Sub dgv_tabpg_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_tabpg.CellDoubleClick
+        If e.RowIndex >= 0 And e.ColumnIndex >= 0 Then
+            Dim CadEditForm = New CadastrarEditar(tabela, False, dgv_tabpg(0, e.RowIndex).Value)
+        End If
+    End Sub
     Private Sub tabpg_alteralargura(sender As Object, e As EventArgs) Handles tabpg.SizeChanged
         label.Width = tabpg.Width
     End Sub
@@ -278,7 +280,9 @@ Public Class tabpages
         'dt.Dispose()
     End Sub
     Private Sub novo()
-        MessageBox.Show("Teste")
-        Dim CadEditForm = New CadastrarEditar(tabela)
+        Dim CadEditForm = New CadastrarEditar(tabela, True)
+    End Sub
+    Private Sub atualizar()
+        MessageBox.Show("Atualizaar")
     End Sub
 End Class
