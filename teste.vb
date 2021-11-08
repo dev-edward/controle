@@ -83,18 +83,6 @@ Public Class teste
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-        x += 1
-        If x = 1 Then
-            TabControl1.TabPages(0).BorderStyle = BorderStyle.FixedSingle
-        ElseIf x = 2 Then
-            TabControl1.TabPages(0).BorderStyle = BorderStyle.Fixed3D
-        ElseIf x = 3 Then
-            TabControl1.TabPages(0).BorderStyle = BorderStyle.None
-            x = 0
-        End If
-    End Sub
-
     'Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
     '    If e.RowIndex >= 0 And e.ColumnIndex > 0 Then
     '        id = DataGridView1(1, e.RowIndex).Value

@@ -20,7 +20,11 @@
                 End If
 
             Case "Eventos"
-
+                If _cadastro Then
+                    Dim cadastroEvento As New EventoCadastroAlteracao()
+                Else
+                    Dim cadastroEvento As New EventoCadastroAlteracao(_pk)
+                End If
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
 
                 'If _opcao > 0 Then

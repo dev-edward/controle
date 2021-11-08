@@ -262,6 +262,7 @@ Public Class tabpages
     Private Sub dgv_tabpg_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_tabpg.CellDoubleClick
         If e.RowIndex >= 0 And e.ColumnIndex >= 0 Then
             Dim CadEditForm = New CadastrarEditar(tabela, False, dgv_tabpg(0, e.RowIndex).Value)
+            Debug.WriteLine(dgv_tabpg(0, e.RowIndex).Value)
         End If
     End Sub
     Private Sub tabpg_alteralargura(sender As Object, e As EventArgs) Handles tabpg.SizeChanged
