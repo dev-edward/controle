@@ -58,7 +58,7 @@ Public Class EventoCadastroAlteracao
     Dim WithEvents cbx_allday As New CheckBox With {
         .Text = "Qualquer horario",
         .Font = fonte,
-        .Size = New Size(160, 30),
+        .Size = New Size(180, 30),
         .Location = New Point(29, 190),
         .CheckAlign = ContentAlignment.MiddleLeft,
         .TextAlign = ContentAlignment.MiddleCenter,
@@ -67,8 +67,8 @@ Public Class EventoCadastroAlteracao
     Dim cbx_ativo As New CheckBox With {
         .Text = "Ativo",
         .Font = fonte,
-        .Size = New Size(100, 30),
-        .Location = New Point(190, 190),
+        .Size = New Size(80, 30),
+        .Location = New Point(210, 190),
         .CheckAlign = ContentAlignment.MiddleLeft,
         .TextAlign = ContentAlignment.MiddleCenter,
         .FlatStyle = FlatStyle.Flat,
@@ -80,11 +80,54 @@ Public Class EventoCadastroAlteracao
         .Size = New Size(260, 40),
         .Location = New Point(30, 250)
     }
+    Dim btn_notas As New Button With {
+        .Text = "Notas",
+        .Font = fonte,
+        .Size = New Size(130, 40),
+        .Location = New Point(30, 250),
+        .Visible = False
+    }
+    Dim btn_editar As New Button With {
+        .Text = "Editar",
+        .Font = fonte,
+        .Size = New Size(130, 40),
+        .Location = New Point(160, 250),
+        .Visible = False
+    }
+    Dim btn_cancelar As New Button With {
+        .Text = "Cancelar",
+        .Font = fonte,
+        .Size = New Size(130, 40),
+        .Location = New Point(160, 250)
+    }
+    Dim btn_alterar As New Button With {
+        .Text = "Salvar",
+        .Font = fonte,
+        .Size = New Size(130, 40),
+        .Location = New Point(30, 250)
+    }
     Friend Sub New()
-
-        cmb_frequencia.Items.AddRange({"Uma vez", "Diário", "Semanal", "Mensal", "Anual"})
+        carregarControles()
+        frm_evento.Controls.Add(btn_salvar)
         cmb_frequencia.SelectedIndex = 0
-
+        AddHandler btn_salvar.Click, AddressOf salvar
+    End Sub
+    Friend Sub New(ByVal _pk As Integer)
+        pk = _pk
+        alternarReadOnly()
+        carregarControles()
+        carregarDados()
+        frm_evento.Controls.Add(btn_notas)
+        frm_evento.Controls.Add(btn_editar)
+        frm_evento.Controls.Add(btn_cancelar)
+        frm_evento.Controls.Add(btn_alterar)
+        AddHandler btn_notas.Click, AddressOf notas
+        AddHandler btn_editar.Click, AddressOf alternarReadOnly
+        AddHandler btn_cancelar.Click, AddressOf alternarReadOnly
+        AddHandler btn_alterar.Click, AddressOf alterar
+    End Sub
+    Private Sub carregarControles()
+        cmb_frequencia.Items.AddRange({"Uma vez", "Diário", "Semanal", "Mensal", "Anual"})
         frm_evento.Controls.Add(lbl_descricao)
         frm_evento.Controls.Add(txt_descricao)
         frm_evento.Controls.Add(lbl_data)
@@ -93,12 +136,7 @@ Public Class EventoCadastroAlteracao
         frm_evento.Controls.Add(cmb_frequencia)
         frm_evento.Controls.Add(cbx_allday)
         frm_evento.Controls.Add(cbx_ativo)
-        frm_evento.Controls.Add(btn_salvar)
         frm_evento.Show()
-    End Sub
-    Friend Sub New(ByVal _pk As Boolean)
-        pk = _pk
-        carregarDados()
     End Sub
     Private Sub cbx_allday_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_allday.CheckedChanged
         If cbx_allday.Checked Then
@@ -108,7 +146,15 @@ Public Class EventoCadastroAlteracao
         End If
     End Sub
     Private Sub alternarReadOnly()
-
+        txt_descricao.ReadOnly = Not txt_descricao.ReadOnly
+        dtp_data.Enabled = Not dtp_data.Enabled
+        cmb_frequencia.Enabled = Not cmb_frequencia.Enabled
+        cbx_allday.Enabled = Not cbx_allday.Enabled
+        cbx_ativo.Enabled = Not cbx_ativo.Enabled
+        btn_notas.Visible = Not btn_notas.Visible
+        btn_editar.Visible = Not btn_editar.Visible
+        btn_cancelar.Visible = Not btn_cancelar.Visible
+        btn_alterar.Visible = Not btn_alterar.Visible
     End Sub
     Private Sub carregarDados()
         Try
@@ -147,5 +193,14 @@ Public Class EventoCadastroAlteracao
         Finally
             conexao.Close()
         End Try
+    End Sub
+    Private Sub salvar()
+
+    End Sub
+    Private Sub notas()
+
+    End Sub
+    Private Sub alterar()
+
     End Sub
 End Class
