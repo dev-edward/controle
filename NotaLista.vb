@@ -129,7 +129,7 @@ Public Class listarNotas
                 txt_novaNota.Text = ""
 
             Catch ex As Exception
-                MessageBox.Show("Erro adicionar nova nota: " & ex.Message, "Insert Records")
+                MessageBox.Show("Erro ao adicionar nova nota: " & ex.Message, "Insert Records")
             Finally
                 conexao.Close()
             End Try

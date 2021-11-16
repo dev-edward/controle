@@ -38,7 +38,7 @@ Public Class tabpages
         .Alignment = ToolStripItemAlignment.Right
     }
     Dim mi_novo As New ToolStripButton("", img.mais, AddressOf novo)
-    Dim mi_atualizar As New ToolStripButton("", img.refresh, AddressOf atualizar)
+    Dim mi_atualizar As New ToolStripButton("", img.refresh, AddressOf carregarDados)
     Dim larguraColunas As New Dictionary(Of Integer, DataGridViewAutoSizeColumnsMode)
 
     Sub New(ByVal _tabela As String, Optional ByVal _opcao As Integer = 0)
@@ -87,6 +87,7 @@ Public Class tabpages
                     evento_allday as 'O dia inteiro',
                     evento_ativo as 'Ativo'
                     from tb_evento"
+                larguraColunas.Add(0, 40)
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
                 sql = "select 
@@ -122,6 +123,7 @@ Public Class tabpages
                 If _opcao > 0 Then
                     sql += " where dispositivo_tipo = " & _opcao
                 End If
+                larguraColunas.Add(0, 40)
 
             Case "Impressoras"
                 sql = "select 
@@ -152,6 +154,7 @@ Public Class tabpages
                     left join tb_usuario ucadastro on impressora_usercadastro = ucadastro.usuario_id
                     left join tb_usuario ualteracao on impressora_usercadastro = ualteracao.usuario_id
                     left join tb_estoque suprimento on impressora_suprimento = suprimento.estoque_id"
+                larguraColunas.Add(0, 40)
 
             Case "Nobreaks"
 
@@ -168,6 +171,8 @@ Public Class tabpages
                     tipo.valor_valor as 'Tipo'
                     from tb_telefone
                     inner join meta_valor tipo on valor_tabela = 'tb_telefone' and valor_coluna = 'telefone_tipo' and telefone_tipo = tipo.valor_numero"
+                larguraColunas.Add(0, 40)
+
             Case "Emails"
                 sql = "select
                     email_id as 'ID',
@@ -187,6 +192,7 @@ Public Class tabpages
                     email_outlook_ass_servico as 'Serviço na Assinatura Outlook'
                     from tb_email
                     inner join meta_valor on valor_tabela = 'tb_email' and valor_coluna = 'email_grupo' and email_grupo = meta_valor.valor_numero"
+                larguraColunas.Add(0, 40)
 
             Case "Skypes"
                 sql = "select
@@ -199,6 +205,7 @@ Public Class tabpages
                     case when skype_senha is not null then
                     '********' end as 'Senha'
                     from tb_skype"
+                larguraColunas.Add(0, 40)
 
             Case "TotvsRM"
 
@@ -213,6 +220,7 @@ Public Class tabpages
                     estoque_quantidade as 'Quantidade',
                     estoque_localizacao as 'Local armazenado'
                     from tb_estoque"
+                larguraColunas.Add(0, 40)
 
             Case "Software"
 
@@ -220,23 +228,23 @@ Public Class tabpages
                 MessageBox.Show("Tabela: " & tabela & " não encontrada, por favor comunique este erro")
         End Select
         If sql <> "" Then
-            iniciar()
+            Principal.tabCentro.TabPages.Add(tabpg)
+            carregarDados()
         End If
     End Sub
-    Private Sub iniciar()
+    Private Sub carregarDados()
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
             consulta = conexao.CreateCommand
             consulta.CommandText = sql
 
+            dt.Clear()
             conexao.Open()
 
             myReader = consulta.ExecuteReader()
-            Principal.tabCentro.TabPages.Add(tabpg)
             If myReader.HasRows Then
                 dt.Load(myReader)
-
                 tabpg.Controls.Add(dgv_tabpg)
 
                 dgv_tabpg.AutoGenerateColumns = True
@@ -254,7 +262,7 @@ Public Class tabpages
             myReader.Close()
 
         Catch ex As Exception
-            MessageBox.Show("Error while connecting to SQL Server." & ex.Message)
+            MessageBox.Show("Erro ao carregar dados: " & ex.Message, "Classe tabpages")
         Finally
             conexao.Close()
         End Try
@@ -282,7 +290,5 @@ Public Class tabpages
     Private Sub novo()
         Dim CadEditForm = New CadastrarEditar(tabela, True)
     End Sub
-    Private Sub atualizar()
-        MessageBox.Show("Atualizaar")
-    End Sub
+
 End Class

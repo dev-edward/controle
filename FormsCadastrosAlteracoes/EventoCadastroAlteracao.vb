@@ -4,16 +4,17 @@ Public Class EventoCadastroAlteracao
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
 
+    Private novoid As Integer
     Dim tamanho As New Size(260, 30)
     Dim fonte As New Font("Microsoft Sans Serif", 12)
-
     Dim pk As Integer
+
     Dim frm_evento As New Form With {
-        .Name = "EventoCadAlt",
         .Text = "Cadastrar evento",
-        .ClientSize = New Size(320, 320),
+        .ClientSize = New Size(320, 300),
         .FormBorderStyle = FormBorderStyle.FixedSingle,
         .MaximizeBox = False,
+        .StartPosition = FormStartPosition.Manual,
         .Location = New Point(Screen.FromControl(Principal).WorkingArea.X + 310, Screen.FromControl(Principal).WorkingArea.Y + 120)
     }
     Dim lbl_descricao As New Label With {
@@ -39,7 +40,7 @@ Public Class EventoCadastroAlteracao
         .Size = tamanho,
         .Font = fonte,
         .Format = DateTimePickerFormat.Custom,
-        .CustomFormat = "dd/MM/yy HH:mm",
+        .CustomFormat = "dd/MM/yyyy HH:mm",
         .Location = New Point(29, 100)
     }
     Dim lbl_frequencia As New Label With {
@@ -81,11 +82,15 @@ Public Class EventoCadastroAlteracao
         .Location = New Point(30, 250)
     }
     Dim btn_notas As New Button With {
-        .Text = "Notas",
-        .Font = fonte,
+        .Text = "                        1",
         .Size = New Size(130, 40),
         .Location = New Point(30, 250),
-        .Visible = False
+        .Visible = False,
+        .ForeColor = Color.FromArgb(255, 15, 15, 15),
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .Font = New Font("Impact", 10),
+        .BackgroundImage = img.notas,
+        .BackgroundImageLayout = ImageLayout.Zoom
     }
     Dim btn_editar As New Button With {
         .Text = "Editar",
@@ -107,12 +112,20 @@ Public Class EventoCadastroAlteracao
         .Location = New Point(30, 250)
     }
     Friend Sub New()
+        If classesAbertas.atualCadAltEventos IsNot Nothing Then
+            classesAbertas.atualCadAltEventos.Close()
+        End If
+        classesAbertas.setAtualCadAltEventos(frm_evento)
         carregarControles()
         frm_evento.Controls.Add(btn_salvar)
         cmb_frequencia.SelectedIndex = 0
         AddHandler btn_salvar.Click, AddressOf salvar
     End Sub
     Friend Sub New(ByVal _pk As Integer)
+        If classesAbertas.atualCadAltEventos IsNot Nothing Then
+            classesAbertas.atualCadAltEventos.Close()
+        End If
+        classesAbertas.setAtualCadAltEventos(frm_evento)
         pk = _pk
         alternarReadOnly()
         carregarControles()
@@ -122,8 +135,8 @@ Public Class EventoCadastroAlteracao
         frm_evento.Controls.Add(btn_cancelar)
         frm_evento.Controls.Add(btn_alterar)
         AddHandler btn_notas.Click, AddressOf notas
-        AddHandler btn_editar.Click, AddressOf alternarReadOnly
-        AddHandler btn_cancelar.Click, AddressOf alternarReadOnly
+        AddHandler btn_editar.Click, AddressOf editarCancelar
+        AddHandler btn_cancelar.Click, AddressOf editarCancelar
         AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
     Private Sub carregarControles()
@@ -140,9 +153,9 @@ Public Class EventoCadastroAlteracao
     End Sub
     Private Sub cbx_allday_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_allday.CheckedChanged
         If cbx_allday.Checked Then
-            dtp_data.CustomFormat = "dd/MM/yy"
+            dtp_data.CustomFormat = "dd/MM/yyyy"
         Else
-            dtp_data.CustomFormat = "dd/MM/yy HH:mm"
+            dtp_data.CustomFormat = "dd/MM/yyyy HH:mm"
         End If
     End Sub
     Private Sub alternarReadOnly()
@@ -180,13 +193,17 @@ Public Class EventoCadastroAlteracao
 
             If myReader.GetValue("evento_allday") > 0 Then
                 cbx_allday.Checked = True
-                dtp_data.CustomFormat = "dd/MM/yy"
+                dtp_data.CustomFormat = "dd/MM/yyyy"
+            Else
+                cbx_allday.Checked = False
+                dtp_data.CustomFormat = "dd/MM/yyyy HH:mm"
             End If
             If myReader.GetValue("evento_ativo") > 0 Then
                 cbx_ativo.Checked = True
+            Else
+                cbx_ativo.Checked = False
             End If
-
-            Debug.WriteLine(pk)
+            myReader.Close()
 
         Catch ex As Exception
             MessageBox.Show("Erro ao carregar evento: " & ex.Message, "Classe EventoCadastroAlteração")
@@ -195,12 +212,92 @@ Public Class EventoCadastroAlteracao
         End Try
     End Sub
     Private Sub salvar()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            consulta = conexao.CreateCommand
+
+            consulta.CommandText = "insert into tb_evento(evento_usercadastro,evento_descricao,evento_datahora,evento_frequencia,evento_allday,evento_ativo)
+                                    values(
+                                        @usercadastro,
+                                        @descricao,
+                                        @datahora,
+                                        @frequencia,
+                                        @allday,
+                                        @ativo
+                                    )
+                                    select scope_identity()"
+
+            consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@descricao", txt_descricao.Text)
+            consulta.Parameters.AddWithValue("@datahora", dtp_data.Value)
+            consulta.Parameters.AddWithValue("@frequencia", cmb_frequencia.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@allday", If(cbx_allday.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@ativo", If(cbx_ativo.Checked, 1, 0))
+
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+            novoid = myReader.GetValue(0)
+
+            Dim verEvento = New EventoCadastroAlteracao(novoid)
+            myReader.Close()
+        Catch ex As Exception
+            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteração")
+        Finally
+            conexao.Close()
+        End Try
     End Sub
     Private Sub notas()
+        If Application.OpenForms.OfType(Of listarNotas).Any() Then
+            Application.OpenForms.OfType(Of listarNotas).First().Close()
+        End If
+        If classesAbertas.atualCadAltEventos IsNot Nothing Then
+            classesAbertas.atualCadAltEventos.BringToFront()
+        End If
 
+        Dim notas = New listarNotas(pk, "evento")
+
+        notas.Show()
+    End Sub
+    Private Sub editarCancelar()
+        alternarReadOnly()
+        carregarDados()
     End Sub
     Private Sub alterar()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "update tb_evento set 
+                                    evento_dtalteracao = GETDATE(),
+                                    evento_useralteracao = @useralteracao,
+                                    evento_descricao = @descricao,
+                                    evento_datahora = @datahora,
+                                    evento_frequencia = @frequencia,
+                                    evento_allday = @allday,
+                                    evento_ativo = @ativo
+                                    where evento_id = @id"
+
+            consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@descricao", txt_descricao.Text)
+            consulta.Parameters.AddWithValue("@datahora", dtp_data.Value)
+            consulta.Parameters.AddWithValue("@frequencia", cmb_frequencia.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@allday", If(cbx_allday.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@ativo", If(cbx_ativo.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@id", pk)
+
+            conexao.Open()
+
+            consulta.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao atualizar evento: " & ex.Message, "Classe DemandaDetalhes")
+        Finally
+            conexao.Close()
+        End Try
+
+        carregarDados()
     End Sub
 End Class

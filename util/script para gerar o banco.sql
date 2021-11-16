@@ -97,7 +97,10 @@ CREATE TABLE tb_evento
 	evento_frequencia TINYINT,
 	evento_allday TINYINT,
 	evento_ativo TINYINT,
-	evento_notificadohj tinyint
+	evento_dtcadastro DATETIME DEFAULT GETDATE(),
+	evento_usercadastro TINYINT,
+	evento_dtalteracao DATETIME,
+	evento_useralteracao TINYINT
 )
 CREATE TABLE tb_telefone
 (/*informações da tabela inseridas*/

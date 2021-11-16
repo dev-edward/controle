@@ -484,7 +484,7 @@ Public Class DemandaDetalhes
 
             Dim verDetalhes = New DemandaDetalhes(demandaAtual)
             verDetalhes.Show()
-
+            myReader.Close()
         Catch ex As Exception
             MessageBox.Show("Erro ao Cadastrar Demanda: " & ex.Message, "Classe DemandaDetalhes")
         Finally

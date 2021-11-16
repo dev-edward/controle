@@ -115,6 +115,31 @@ from tb_evento
 select * from tb_evento
 --> Evento <--
 
+--> Salvar evento <--
+insert into tb_evento(evento_usercadastro,evento_descricao,evento_datahora,evento_frequencia,evento_allday,evento_ativo)
+values(
+@usercadastro,
+@descricao,
+@datahora,
+@frequencia,
+@allday,
+@ativo
+)
+--> Salvar evento <--
+
+--> Alterar evento <--
+update tb_evento set 
+evento_dtalteracao = GETDATE(),
+evento_useralteracao = @useralteracao,
+evento_descricao = @descricao,
+evento_datahora = @datahora,
+evento_frequencia = @frequencia,
+evento_allday = @allday,
+evento_ativo = @ativo
+where evento_id = @id
+--> Alterar evento <--
+select * from tb_evento
+
 --> Dispositivos <--
 select 
 dispositivo_id as 'ID',
