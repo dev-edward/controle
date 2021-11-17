@@ -174,6 +174,25 @@ left join tb_usuario ualteracao on dispositivo_usercadastro = ualteracao.usuario
 where dispositivo_tipo = 1
 --> Dispositivos <--
 
+--> Salvar dispositivo <--
+INSERT INTO tb_dispositivo(
+dispositivo_usercadastro,dispositivo_tipo,dispositivo_posto,dispositivo_marcamodelo,dispositivo_hostname,dispositivo_ip,dispositivo_macadress,dispositivo_os,dispositivo_qtdmemoriaram,dispositivo_processador,dispositivo_armazenamento,dispositivo_bateria)
+VALUES(
+@usercadastro,
+@tipo,
+@posto,
+@marcamodelo,
+@hostname,
+@ip,
+@macadress,
+@os,
+@qtdmemoriaram,
+@processador,
+@armazenamento,
+@bateria
+)
+--> Salvar dispositivo <--
+select * from tb_dispositivo
 --> Impressoras <--
 select 
 impressora_id as 'ID',

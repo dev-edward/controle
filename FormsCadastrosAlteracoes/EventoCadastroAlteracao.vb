@@ -244,7 +244,7 @@ Public Class EventoCadastroAlteracao
             Dim verEvento = New EventoCadastroAlteracao(novoid)
             myReader.Close()
         Catch ex As Exception
-            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteração")
+            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")
         Finally
             conexao.Close()
         End Try

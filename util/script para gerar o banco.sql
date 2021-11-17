@@ -154,21 +154,21 @@ CREATE TABLE tb_dispositivo
 	--dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
 	--dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
 	--dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
-	dispositivo_usercadastro TINYINT,
-	dispositivo_dtalteracao DATETIME,
-	dispositivo_useralteracao TINYINT,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
 	dispositivo_marcamodelo NVARCHAR(30),
-	dispositivo_nome NVARCHAR(20),
+	dispositivo_hostname NVARCHAR(20),
 	dispositivo_ip NVARCHAR(16),
 	dispositivo_macadress NVARCHAR(20),
-	dispositivo_os NVARCHAR(20),
+	dispositivo_os NVARCHAR(30),
 	dispositivo_qtdmemoriaram TINYINT,
 	dispositivo_processador NVARCHAR(20),
 	dispositivo_armazenamento NVARCHAR(30),
-	dispositivo_bateria NVARCHAR(30)
+	dispositivo_bateria NVARCHAR(30),
+	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
+	dispositivo_usercadastro TINYINT,
+	dispositivo_dtalteracao DATETIME,
+	dispositivo_useralteracao TINYINT
 )
 
 CREATE TABLE tb_impressora

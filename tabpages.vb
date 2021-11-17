@@ -104,7 +104,7 @@ Public Class tabpages
 	                    else 'Sim' 
                     end as 'É posto informático',
                     dispositivo_marcamodelo as 'Marca e Modelo',
-                    dispositivo_nome as 'Nome/hostname',
+                    dispositivo_hostname as 'Nome/hostname',
                     dispositivo_ip as 'IP',
                     dispositivo_macadress as 'Endereço MAC',
                     dispositivo_os as 'Sistema Operacional',
