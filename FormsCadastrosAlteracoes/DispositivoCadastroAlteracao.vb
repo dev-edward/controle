@@ -125,7 +125,7 @@ Public Class DispositivoCadastroAlteracao
         .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_processador.Location.Y)
     }
     Dim lbl_armazenamento As New Label With {
-        .Text = "Sistema Operacional: ",
+        .Text = "Armazenamento: ",
         .Font = fonte,
         .Size = tamanholbl,
         .TextAlign = ContentAlignment.TopRight,
@@ -196,6 +196,8 @@ Public Class DispositivoCadastroAlteracao
 
         pk = _pk
         carregarControles()
+        alternarReadOnly()
+        carregarDados()
         frm_dispositivo.Controls.Add(btn_notas)
         frm_dispositivo.Controls.Add(btn_editar)
         frm_dispositivo.Controls.Add(btn_alterar)
@@ -235,6 +237,66 @@ Public Class DispositivoCadastroAlteracao
         frm_dispositivo.Controls.Add(txt_bateria)
         frm_dispositivo.Show()
 
+    End Sub
+    Private Sub carregarDados()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "select 
+                                        dispositivo_tipo,
+                                        dispositivo_posto, 
+                                        dispositivo_marcamodelo, 
+                                        dispositivo_hostname, 
+                                        dispositivo_ip, 
+                                        dispositivo_macadress,
+                                        dispositivo_os,
+                                        dispositivo_qtdmemoriaram,
+                                        dispositivo_processador,
+                                        dispositivo_armazenamento,
+                                        dispositivo_bateria
+                                    from tb_dispositivo 
+								    where dispositivo_id= " & pk
+
+            conexao.Open()
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+
+            cmb_tipo.SelectedIndex = If(myReader.IsDBNull("dispositivo_tipo"), "", myReader.GetValue("dispositivo_tipo") - 1)
+            cbx_posto.Checked = If(myReader.IsDBNull("dispositivo_posto"), 0, myReader.GetValue("dispositivo_posto"))
+            txt_marcaModelo.Text = If(myReader.IsDBNull("dispositivo_marcamodelo"), "", myReader.GetString("dispositivo_marcamodelo"))
+            txt_hostname.Text = If(myReader.IsDBNull("dispositivo_hostname"), "", myReader.GetString("dispositivo_hostname"))
+            txt_ip.Text = If(myReader.IsDBNull("dispositivo_ip"), "", myReader.GetString("dispositivo_ip"))
+            txt_mac.Text = If(myReader.IsDBNull("dispositivo_macadress"), "", myReader.GetString("dispositivo_macadress"))
+            txt_os.Text = If(myReader.IsDBNull("dispositivo_os"), "", myReader.GetString("dispositivo_os"))
+            nud_ram.Value = If(myReader.IsDBNull("dispositivo_qtdmemoriaram"), 0, myReader.GetValue("dispositivo_qtdmemoriaram"))
+            txt_processador.Text = If(myReader.IsDBNull("dispositivo_processador"), "", myReader.GetString("dispositivo_processador"))
+            txt_armazenamento.Text = If(myReader.IsDBNull("dispositivo_armazenamento"), "", myReader.GetString("dispositivo_armazenamento"))
+            txt_bateria.Text = If(myReader.IsDBNull("dispositivo_bateria"), "", myReader.GetString("dispositivo_bateria"))
+
+            myReader.Close()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao carregar Dispositivo: " & ex.Message, "Classe DispositivoCadastroAlteração")
+        Finally
+            conexao.Close()
+        End Try
+    End Sub
+    Private Sub alternarReadOnly()
+        cmb_tipo.Enabled = Not cmb_tipo.Enabled
+        cbx_posto.Enabled = Not cbx_posto.Enabled
+        txt_marcaModelo.ReadOnly = Not txt_marcaModelo.ReadOnly
+        txt_hostname.ReadOnly = Not txt_hostname.ReadOnly
+        txt_ip.ReadOnly = Not txt_ip.ReadOnly
+        txt_mac.ReadOnly = Not txt_mac.ReadOnly
+        txt_os.ReadOnly = Not txt_os.ReadOnly
+        nud_ram.Enabled = Not nud_ram.Enabled
+        txt_processador.ReadOnly = Not txt_processador.ReadOnly
+        txt_armazenamento.ReadOnly = Not txt_armazenamento.ReadOnly
+        txt_bateria.ReadOnly = Not txt_bateria.ReadOnly
+        btn_notas.Visible = Not btn_notas.Visible
+        btn_editar.Visible = Not btn_editar.Visible
+        btn_cancelar.Visible = Not btn_cancelar.Visible
+        btn_alterar.Visible = Not btn_alterar.Visible
     End Sub
     Private Sub salvar()
         Try
@@ -281,7 +343,7 @@ Public Class DispositivoCadastroAlteracao
             myReader.Close()
             Dim verDispositivo = New DispositivoCadastroAlteracao(novoid)
         Catch ex As Exception
-            MessageBox.Show("Erro ao Cadastrar dispositivo: " & ex.Message, "Classe DispositivoCadastroAlteracao")
+            MessageBox.Show("Erro ao cadastrar dispositivo: " & ex.Message, "Classe DispositivoCadastroAlteracao")
         Finally
             conexao.Close()
         End Try
@@ -290,9 +352,54 @@ Public Class DispositivoCadastroAlteracao
 
     End Sub
     Private Sub editarCancelar()
-
+        alternarReadOnly()
+        carregarDados()
     End Sub
     Private Sub alterar()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "UPDATE tb_dispositivo SET
+                                    dispositivo_dtalteracao = GETDATE(),
+                                    dispositivo_useralteracao = @useralteracao,
+                                    dispositivo_tipo = @tipo,
+                                    dispositivo_posto = @posto,
+                                    dispositivo_marcamodelo = @marcamodelo,
+                                    dispositivo_hostname = @hostname,
+                                    dispositivo_ip = @ip
+                                    dispositivo_macadress = @macadress,
+                                    dispositivo_os = @os,
+                                    dispositivo_qtdmemoriaram = @qtdmemoriaram,
+                                    dispositivo_processador = @processador,
+                                    dispositivo_armazenamento = @armazenamento,
+                                    dispositivo_bateria = @bateria
+                                    where dispositivo_id = @id"
+
+            consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@tipo", cmb_tipo.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@posto", cbx_posto.Checked)
+            consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
+            consulta.Parameters.AddWithValue("@hostname", txt_hostname.Text)
+            consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
+            consulta.Parameters.AddWithValue("@macadress", txt_mac.Text)
+            consulta.Parameters.AddWithValue("@os", txt_os.Text)
+            consulta.Parameters.AddWithValue("@qtdmemoriaram", nud_ram.Value)
+            consulta.Parameters.AddWithValue("@processador", txt_processador.Text)
+            consulta.Parameters.AddWithValue("@armazenamento", txt_armazenamento.Text)
+            consulta.Parameters.AddWithValue("@bateria", txt_bateria.Text)
+            consulta.Parameters.AddWithValue("@id", pk)
+
+            conexao.Open()
+
+            consulta.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao atualizar evento: " & ex.Message, "Classe DemandaDetalhes")
+        Finally
+            conexao.Close()
+        End Try
+
+        carregarDados()
     End Sub
 End Class

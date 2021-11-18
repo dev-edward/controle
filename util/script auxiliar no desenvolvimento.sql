@@ -192,7 +192,30 @@ VALUES(
 @bateria
 )
 --> Salvar dispositivo <--
+
+--> Alterar dispositivo <--
+UPDATE tb_dispositivo SET
+dispositivo_dtalteracao = GETDATE(),
+dispositivo_useralteracao = @useralteracao,
+dispositivo_tipo = @tipo,
+dispositivo_posto = @posto,
+dispositivo_marcamodelo = @marcamodelo,
+dispositivo_hostname = @hostname,
+dispositivo_ip = @ip
+dispositivo_macadress = @macadress,
+dispositivo_os = @os,
+dispositivo_qtdmemoriaram = @qtdmemoriaram,
+dispositivo_processador = @processador,
+dispositivo_armazenamento = @armazenamento,
+dispositivo_bateria = @bateria
+where dispositivo_id = @id
+
+
+update tb_dispositivo set dispositivo_posto=1 where dispositivo_id = 1
 select * from tb_dispositivo
+
+--> Alterar dispositivo <--
+
 --> Impressoras <--
 select 
 impressora_id as 'ID',
