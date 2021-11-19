@@ -3,16 +3,38 @@ Public Class listarNotas
     Private conexao As SqlConnection
     Private consulta As SqlCommand
     Private myReader As SqlDataReader
+
     Dim pkitem As Integer
     Dim tabela As String
+    Dim btnnotas As Button
     Dim num As Integer
     Dim idnota As Integer
     Dim textoNota As String
     Dim posicaoY As Integer
-    Dim conteiner As New Panel
-    Dim txt_novaNota As New RichTextBox
-    Dim btn_addNota As New Button
-    Dim demandaAtual As Demanda
+    Dim lbl_maxchar As New Label With {
+        .Size = New Size(50, 16),
+        .BackColor = Color.Azure,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .BorderStyle = BorderStyle.FixedSingle
+    }
+    Dim conteiner As New Panel With {
+        .Location = New Point(10, 10),
+        .Size = New Size(300, 350),
+        .BorderStyle = BorderStyle.FixedSingle,
+        .AutoScroll = True
+    }
+    Dim WithEvents txt_novaNota As New RichTextBox With {
+        .Location = New Point(10, 370),
+        .Size = New Size(240, 40),
+        .MaxLength = 10
+    }
+    Dim btn_addNota As New Button With {
+        .Location = New Point(260, 375),
+        .Size = New Size(50, 30),
+        .BackgroundImage = img.mais,
+        .BackgroundImageLayout = ImageLayout.Zoom,
+        .FlatStyle = FlatStyle.Popup
+    }
     Dim label As New Label With {
         .Text = "Este item ainda não possui notas",
         .Location = New Point(0, 40),
@@ -21,7 +43,7 @@ Public Class listarNotas
     }
     Dim posicaoInicial As New Point(Screen.FromControl(Principal).WorkingArea.X + 620, Screen.FromControl(Principal).WorkingArea.Y + 150)
 
-    Friend Sub New(ByVal _pkitem As Integer, ByVal _tabela As String)
+    Friend Sub New(ByVal _pkitem As Integer, ByVal _tabela As String, ByRef _btnnotas As Button)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
@@ -30,45 +52,19 @@ Public Class listarNotas
         Me.Location = posicaoInicial
         pkitem = _pkitem
         tabela = _tabela
+        btnnotas = _btnnotas
 
     End Sub
-
-    Friend Sub New(ByRef _demandaAtual As Demanda)
-        ' Esta chamada é requerida pelo designer.
-        InitializeComponent()
-        ' Adicione qualquer inicialização após a chamada InitializeComponent().
-
-        classesAbertas.setAtualNotas(Me)
-        Me.Location = posicaoInicial
-        demandaAtual = _demandaAtual
-        pkitem = demandaAtual.pk
-        tabela = "demanda"
-
-    End Sub
-
     Private Sub listarNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.ClientSize = New Size(320, 420)
 
-        'posição dos controles
-        conteiner.Location = New Point(10, 10)
-        txt_novaNota.Location = New Point(10, 370)
-        btn_addNota.Location = New Point(260, 375)
-
-        'tamanho dos controles
-        conteiner.Size = New Size(300, 350)
-        txt_novaNota.Size = New Size(240, 40)
-        btn_addNota.Size = New Size(50, 30)
-
-        'específicos
-        conteiner.BorderStyle = BorderStyle.FixedSingle
-        btn_addNota.BackgroundImage = img.mais
-        btn_addNota.BackgroundImageLayout = ImageLayout.Zoom
-        btn_addNota.FlatStyle = FlatStyle.Popup
-        conteiner.AutoScroll = True
-
         AddHandler btn_addNota.Click, AddressOf addNota
+
+        AddHandler txt_novaNota.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_novaNota.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_novaNota.LostFocus, AddressOf txt_LostFocus
 
         Me.Controls.Add(txt_novaNota)
         Me.Controls.Add(btn_addNota)
@@ -103,10 +99,11 @@ Public Class listarNotas
             Else
                 conteiner.Controls.Add(label)
             End If
-            If demandaAtual IsNot Nothing Then
-                demandaAtual.setQtdNotas(num)
-            End If
+            'If demandaAtual IsNot Nothing Then
+            '    demandaAtual.setQtdNotas(num)
+            'End If
             myReader.Close()
+            btnnotas.Text = If(num > 0, num, "")
         Catch ex As Exception
             MessageBox.Show("Erro ao obter notas 01: " & ex.Message, "Insert Records")
         Finally
@@ -136,5 +133,22 @@ Public Class listarNotas
 
             atualizarLista()
         End If
+    End Sub
+    Private Sub txt_KeyUp(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        If (sender.TextLength > 0 And Not lbl_maxchar.Visible) Then
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_GotFocus(sender As Object, e As EventArgs)
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y - 16)
+        Me.Controls.Add(lbl_maxchar)
+        lbl_maxchar.BringToFront()
+        If (sender.TextLength = 0) Then
+            lbl_maxchar.Visible = False
+        End If
+    End Sub
+    Private Sub txt_LostFocus(sender As Object, e As EventArgs)
+        Me.Controls.Remove(lbl_maxchar)
     End Sub
 End Class

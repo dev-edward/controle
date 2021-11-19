@@ -20,9 +20,9 @@ Public Class DemandaDetalhes
     Dim posicaoInicial2 As New Point(Screen.FromControl(Principal).WorkingArea.X + 310, Screen.FromControl(Principal).WorkingArea.Y + 120)
 
     Dim pk As Integer
+    Const tabela As String = "demanda"
     Dim novoid As Integer
     Dim temprevisao As Integer
-    Dim notas As listarNotas
 
     Dim panel As New Panel With {
         .Size = New Size(302, 480),
@@ -115,10 +115,14 @@ Public Class DemandaDetalhes
         .Size = New Size(largura2, altura1),
         .TextAlign = ContentAlignment.MiddleCenter
     }
-    Dim btn_notas As New Button With{
-        .Text = "Notas",
-        .Font = fonte,
-        .Size = New Size(largura1, altura3)
+    Friend btn_notas As New Button With {
+        .Size = New Size(largura1, altura3),
+        .Padding = New Padding(0, 0, largura1 / 4 - 10, 0),
+        .ForeColor = Color.FromArgb(255, 15, 15, 15),
+        .TextAlign = ContentAlignment.MiddleRight,
+        .Font = New Font("Impact", 10),
+        .BackgroundImage = img.notas,
+        .BackgroundImageLayout = ImageLayout.Zoom
     }
     Dim btn_cancelar As New Button With{
         .Text = "Cancelar",
@@ -350,11 +354,9 @@ Public Class DemandaDetalhes
         If Application.OpenForms.OfType(Of DemandaDetalhes).Any() Then
             Application.OpenForms.OfType(Of DemandaDetalhes).First().BringToFront()
         End If
-        If demandaAtual IsNot Nothing Then
-            notas = New listarNotas(demandaAtual)
-        Else
-            notas = New listarNotas(pk, "demanda")
-        End If
+
+        Dim notas = New listarNotas(pk, tabela, btn_notas)
+
         notas.Show()
     End Sub
     Private Sub btn_modificar_Click()

@@ -22,6 +22,7 @@ Partial Class teste
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(teste))
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
@@ -36,6 +37,8 @@ Partial Class teste
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -153,11 +156,35 @@ Partial Class teste
         Me.NumericUpDown1.Size = New System.Drawing.Size(120, 23)
         Me.NumericUpDown1.TabIndex = 13
         '
+        'Button1
+        '
+        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button1.Location = New System.Drawing.Point(98, 309)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(121, 40)
+        Me.Button1.TabIndex = 14
+        Me.Button1.Text = "1"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(73, 322)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(41, 15)
+        Me.Label7.TabIndex = 0
+        Me.Label7.Text = "Label7"
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(378, 397)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.NumericUpDown1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label6)
@@ -194,4 +221,6 @@ Partial Class teste
     Friend WithEvents TextBox5 As TextBox
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents NumericUpDown1 As NumericUpDown
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Label7 As Label
 End Class

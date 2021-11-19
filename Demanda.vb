@@ -1,5 +1,6 @@
 ﻿Public Class Demanda
     Friend pk As Integer
+    Const tabela As String = "demanda"
     Friend estado As Integer
     Friend qtdNotas As Integer
     Dim fonte As New Font("Microsoft Sans Serif", 12)
@@ -26,7 +27,7 @@
         .BackgroundImageLayout = ImageLayout.Zoom,
         .FlatStyle = FlatStyle.Popup
     }
-    Dim btn_notas As New Button With {
+    Friend btn_notas As New Button With {
         .Size = New Size(56, 26),
         .Location = New Point(158, 27),
         .BackColor = cor_botao,
@@ -83,7 +84,7 @@
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
             Application.OpenForms.OfType(Of listarNotas).First().Close()
         End If
-        Dim notas = New listarNotas(Me)
+        Dim notas = New listarNotas(pk, tabela, btn_notas)
         notas.Show()
     End Sub
     Private Sub btn_estado_Click()
@@ -111,8 +112,8 @@
         txt_titulo.Text = _titulo
         lbl_previsao.Text = If(_temprevisao > 0, _previsao, "Indeterminado")
     End Sub
-    Friend Sub setQtdNotas(ByVal _qtdNotas As Integer)
-        qtdNotas = _qtdNotas
-        btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
-    End Sub
+    'Friend Sub setQtdNotas(ByVal _qtdNotas As Integer)
+    '    qtdNotas = _qtdNotas
+    '    btn_notas.Text = If(qtdNotas > 0, qtdNotas, "")
+    'End Sub
 End Class

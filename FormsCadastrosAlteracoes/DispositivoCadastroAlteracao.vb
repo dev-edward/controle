@@ -6,6 +6,7 @@ Public Class DispositivoCadastroAlteracao
 
     Private novoid As Integer
     Dim pk As Integer
+    Const tabela As String = "dispositivo"
     Dim tamanholbl As New Size(170, 30)
     Dim fonte As New Font("Microsoft Sans Serif", 11)
 
@@ -208,10 +209,10 @@ Public Class DispositivoCadastroAlteracao
         AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
     Private Sub carregarControles()
-        If classesAbertas.atualCadAltEventos IsNot Nothing Then
-            classesAbertas.atualCadAltEventos.Close()
+        If classesAbertas.atualCadAltDispositivos IsNot Nothing Then
+            classesAbertas.atualCadAltDispositivos.Close()
         End If
-        classesAbertas.setAtualCadAltEventos(frm_dispositivo)
+        classesAbertas.setAtualCadAltDispositivos(frm_dispositivo)
 
         cmb_tipo.Items.AddRange({"Computador", "Notebook", "Chromebook", "Tablet", "Celular"})
         frm_dispositivo.Controls.Add(lbl_tipo)
@@ -253,9 +254,13 @@ Public Class DispositivoCadastroAlteracao
                                         dispositivo_qtdmemoriaram,
                                         dispositivo_processador,
                                         dispositivo_armazenamento,
-                                        dispositivo_bateria
+                                        dispositivo_bateria,
+	                                    (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
                                     from tb_dispositivo 
-								    where dispositivo_id= " & pk
+                                    where dispositivo_id = @id"
+
+            consulta.Parameters.AddWithValue("@id", pk)
+            consulta.Parameters.AddWithValue("@tabela", tabela)
 
             conexao.Open()
             myReader = consulta.ExecuteReader()
@@ -272,6 +277,7 @@ Public Class DispositivoCadastroAlteracao
             txt_processador.Text = If(myReader.IsDBNull("dispositivo_processador"), "", myReader.GetString("dispositivo_processador"))
             txt_armazenamento.Text = If(myReader.IsDBNull("dispositivo_armazenamento"), "", myReader.GetString("dispositivo_armazenamento"))
             txt_bateria.Text = If(myReader.IsDBNull("dispositivo_bateria"), "", myReader.GetString("dispositivo_bateria"))
+            btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
 
             myReader.Close()
 
@@ -349,7 +355,16 @@ Public Class DispositivoCadastroAlteracao
         End Try
     End Sub
     Private Sub notas()
+        If Application.OpenForms.OfType(Of listarNotas).Any() Then
+            Application.OpenForms.OfType(Of listarNotas).First().Close()
+        End If
+        If classesAbertas.atualCadAltDispositivos IsNot Nothing Then
+            classesAbertas.atualCadAltDispositivos.BringToFront()
+        End If
 
+        Dim notas = New listarNotas(pk, tabela, btn_notas)
+
+        notas.Show()
     End Sub
     Private Sub editarCancelar()
         alternarReadOnly()

@@ -111,9 +111,20 @@ case
 	else 'Sim' 
 end as 'Ativo'
 from tb_evento
-
-select * from tb_evento
 --> Evento <--
+
+--> Form Evento <--
+select 
+        evento_id,
+        evento_descricao, 
+        evento_datahora, 
+        evento_frequencia, 
+        evento_allday, 
+        evento_ativo,
+		(select sum(case when nota_pkitem = @id and nota_tabela = 'evento' and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_evento 
+where evento_id = @id
+--> Form Evento <--
 
 --> Salvar evento <--
 insert into tb_evento(evento_usercadastro,evento_descricao,evento_datahora,evento_frequencia,evento_allday,evento_ativo)
@@ -173,6 +184,24 @@ left join tb_usuario ualteracao on dispositivo_usercadastro = ualteracao.usuario
 
 where dispositivo_tipo = 1
 --> Dispositivos <--
+
+--> Form dispositivo <--
+select 
+    dispositivo_tipo,
+    dispositivo_posto, 
+    dispositivo_marcamodelo, 
+    dispositivo_hostname, 
+    dispositivo_ip, 
+    dispositivo_macadress,
+    dispositivo_os,
+    dispositivo_qtdmemoriaram,
+    dispositivo_processador,
+    dispositivo_armazenamento,
+    dispositivo_bateria,
+	(select sum(case when nota_pkitem = @id and nota_tabela = 'dispositivo' and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_dispositivo 
+where dispositivo_id = @id
+--> Form dispositivo <--
 
 --> Salvar dispositivo <--
 INSERT INTO tb_dispositivo(

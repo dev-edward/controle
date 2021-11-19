@@ -8,6 +8,7 @@ Public Class EventoCadastroAlteracao
     Dim tamanho As New Size(260, 30)
     Dim fonte As New Font("Microsoft Sans Serif", 12)
     Dim pk As Integer
+    Const tabela As String = "evento"
 
     Dim frm_evento As New Form With {
         .Text = "Cadastrar evento",
@@ -82,12 +83,11 @@ Public Class EventoCadastroAlteracao
         .Location = New Point(30, 250)
     }
     Dim btn_notas As New Button With {
-        .Text = "                        1",
         .Size = New Size(130, 40),
         .Location = New Point(30, 250),
         .Visible = False,
         .ForeColor = Color.FromArgb(255, 15, 15, 15),
-        .TextAlign = ContentAlignment.MiddleCenter,
+        .TextAlign = ContentAlignment.MiddleRight,
         .Font = New Font("Impact", 10),
         .BackgroundImage = img.notas,
         .BackgroundImageLayout = ImageLayout.Zoom
@@ -112,20 +112,12 @@ Public Class EventoCadastroAlteracao
         .Location = New Point(30, 250)
     }
     Friend Sub New()
-        If classesAbertas.atualCadAltEventos IsNot Nothing Then
-            classesAbertas.atualCadAltEventos.Close()
-        End If
-        classesAbertas.setAtualCadAltEventos(frm_evento)
         carregarControles()
         frm_evento.Controls.Add(btn_salvar)
         cmb_frequencia.SelectedIndex = 0
         AddHandler btn_salvar.Click, AddressOf salvar
     End Sub
     Friend Sub New(ByVal _pk As Integer)
-        If classesAbertas.atualCadAltEventos IsNot Nothing Then
-            classesAbertas.atualCadAltEventos.Close()
-        End If
-        classesAbertas.setAtualCadAltEventos(frm_evento)
         pk = _pk
         alternarReadOnly()
         carregarControles()
@@ -140,6 +132,11 @@ Public Class EventoCadastroAlteracao
         AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
     Private Sub carregarControles()
+        If classesAbertas.atualCadAltEventos IsNot Nothing Then
+            classesAbertas.atualCadAltEventos.Close()
+        End If
+        classesAbertas.setAtualCadAltEventos(frm_evento)
+
         cmb_frequencia.Items.AddRange({"Uma vez", "Diário", "Semanal", "Mensal", "Anual"})
         frm_evento.Controls.Add(lbl_descricao)
         frm_evento.Controls.Add(txt_descricao)
@@ -179,9 +176,13 @@ Public Class EventoCadastroAlteracao
                                         evento_datahora, 
                                         evento_frequencia, 
                                         evento_allday, 
-                                        evento_ativo
+                                        evento_ativo,
+		                                (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
                                 from tb_evento 
-								where evento_id= " & pk
+								where evento_id = @id"
+
+            consulta.Parameters.AddWithValue("@id", pk)
+            consulta.Parameters.AddWithValue("@tabela", tabela)
 
             conexao.Open()
             myReader = consulta.ExecuteReader()
@@ -190,19 +191,17 @@ Public Class EventoCadastroAlteracao
             txt_descricao.Text = myReader.GetString("evento_descricao")
             dtp_data.Value = myReader.GetDateTime("evento_datahora")
             cmb_frequencia.SelectedIndex = myReader.GetValue("evento_frequencia") - 1
+            cbx_ativo.Checked = If(myReader.IsDBNull("evento_ativo"), 0, myReader.GetValue("evento_ativo"))
+            cbx_allday.Checked = If(myReader.IsDBNull("evento_allday"), 0, myReader.GetValue("evento_allday"))
+            btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
 
-            If myReader.GetValue("evento_allday") > 0 Then
-                cbx_allday.Checked = True
+            If cbx_allday.Checked Then
                 dtp_data.CustomFormat = "dd/MM/yyyy"
             Else
-                cbx_allday.Checked = False
                 dtp_data.CustomFormat = "dd/MM/yyyy HH:mm"
             End If
-            If myReader.GetValue("evento_ativo") > 0 Then
-                cbx_ativo.Checked = True
-            Else
-                cbx_ativo.Checked = False
-            End If
+
+
             myReader.Close()
 
         Catch ex As Exception
@@ -257,7 +256,7 @@ Public Class EventoCadastroAlteracao
             classesAbertas.atualCadAltEventos.BringToFront()
         End If
 
-        Dim notas = New listarNotas(pk, "evento")
+        Dim notas = New listarNotas(pk, tabela, btn_notas)
 
         notas.Show()
     End Sub
