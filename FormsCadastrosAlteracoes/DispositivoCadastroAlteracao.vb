@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Net.IPAddress
+Imports System.Data.SqlClient
 Public Class DispositivoCadastroAlteracao
     Private conexao As SqlConnection
     Private consulta As SqlCommand
@@ -10,8 +11,14 @@ Public Class DispositivoCadastroAlteracao
     Dim tamanholbl As New Size(170, 30)
     Dim fonte As New Font("Microsoft Sans Serif", 11)
 
+    Dim lbl_maxchar As New Label With {
+        .Size = New Size(50, 16),
+        .BackColor = Color.Azure,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .BorderStyle = BorderStyle.FixedSingle
+    }
     Dim frm_dispositivo As New Form With {
-        .Text = "Cadastrar dispositivo",
+        .Text = "Cadastrar novo dispositivo",
         .ClientSize = New Size(420, 400),
         .FormBorderStyle = FormBorderStyle.FixedSingle,
         .MaximizeBox = False,
@@ -50,7 +57,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_marcaModelo As New TextBox With {
         .Size = New Size(170, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_marcaModelo.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_marcaModelo.Location.Y),
+        .MaxLength = 32
     }
     Dim lbl_hostname As New Label With {
         .Text = "Hostname: ",
@@ -62,7 +70,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_hostname As New TextBox With {
         .Size = New Size(200, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_hostname.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_hostname.Location.Y),
+        .MaxLength = 24
     }
     Dim lbl_ip As New Label With {
         .Text = "IP: ",
@@ -71,10 +80,12 @@ Public Class DispositivoCadastroAlteracao
         .TextAlign = ContentAlignment.TopRight,
         .Location = New Point(lbl_tipo.Location.X, lbl_hostname.Location.Y + tamanholbl.Height)
     }
-    Dim txt_ip As New TextBox With {
+    Dim txt_ip As New MaskedTextBox With {
         .Size = New Size(160, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_ip.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_ip.Location.Y),
+        .MaxLength = 15,
+        .Mask = "###.###.###.###"
     }
     Dim lbl_mac As New Label With {
         .Text = "Mac Adress: ",
@@ -83,10 +94,11 @@ Public Class DispositivoCadastroAlteracao
         .TextAlign = ContentAlignment.TopRight,
         .Location = New Point(lbl_tipo.Location.X, lbl_ip.Location.Y + tamanholbl.Height)
     }
-    Dim txt_mac As New TextBox With {
+    Dim txt_mac As New MaskedTextBox With {
         .Size = New Size(180, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_mac.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_mac.Location.Y),
+        .Mask = "aa:aa:aa:aa:aa:aa"
     }
     Dim lbl_os As New Label With {
         .Text = "Sistema Operacional: ",
@@ -98,7 +110,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_os As New TextBox With {
         .Size = New Size(200, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_os.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_os.Location.Y),
+        .MaxLength = 32
     }
     Dim lbl_ram As New Label With {
         .Text = "Memória ram em GB: ",
@@ -123,7 +136,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_processador As New TextBox With {
         .Size = New Size(200, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_processador.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_processador.Location.Y),
+        .MaxLength = 24
     }
     Dim lbl_armazenamento As New Label With {
         .Text = "Armazenamento: ",
@@ -135,7 +149,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_armazenamento As New TextBox With {
         .Size = New Size(160, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_armazenamento.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_armazenamento.Location.Y),
+        .MaxLength = 32
     }
     Dim lbl_bateria As New Label With {
         .Text = "Bateria: ",
@@ -147,7 +162,8 @@ Public Class DispositivoCadastroAlteracao
     Dim txt_bateria As New TextBox With {
         .Size = New Size(180, 30),
         .Font = fonte,
-        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_bateria.Location.Y)
+        .Location = New Point(lbl_tipo.Location.X + tamanholbl.Width, lbl_bateria.Location.Y),
+        .MaxLength = 32
     }
     Dim btn_salvar As New Button With {
         .Text = "Salvar",
@@ -185,16 +201,17 @@ Public Class DispositivoCadastroAlteracao
         .Size = New Size(160, 40),
         .Location = New Point(45, txt_bateria.Location.Y + tamanholbl.Height + 10)
     }
-
-    Friend Sub New()
-
+    Friend Sub New(ByVal _dispositivo As String)
         carregarControles()
         frm_dispositivo.Controls.Add(btn_salvar)
-        cmb_tipo.SelectedIndex = 0
+        If _dispositivo = "Dispositivos" Then
+            cmb_tipo.SelectedIndex = 0
+        Else
+            cmb_tipo.SelectedItem = _dispositivo
+        End If
         AddHandler btn_salvar.Click, AddressOf salvar
     End Sub
     Friend Sub New(ByVal _pk As Integer)
-
         pk = _pk
         carregarControles()
         alternarReadOnly()
@@ -213,6 +230,28 @@ Public Class DispositivoCadastroAlteracao
             classesAbertas.atualCadAltDispositivos.Close()
         End If
         classesAbertas.setAtualCadAltDispositivos(frm_dispositivo)
+
+        AddHandler txt_marcaModelo.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_marcaModelo.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_marcaModelo.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_hostname.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_hostname.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_hostname.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_mac.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_mac.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_mac.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_os.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_os.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_os.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_processador.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_processador.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_processador.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_armazenamento.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_armazenamento.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_armazenamento.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_bateria.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_bateria.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_bateria.LostFocus, AddressOf txt_LostFocus
 
         cmb_tipo.Items.AddRange({"Computador", "Notebook", "Chromebook", "Tablet", "Celular"})
         frm_dispositivo.Controls.Add(lbl_tipo)
@@ -416,5 +455,26 @@ Public Class DispositivoCadastroAlteracao
         End Try
 
         carregarDados()
+    End Sub
+
+    Private Sub txt_KeyUp(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        If (sender.TextLength > 0 And Not lbl_maxchar.Visible) Then
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_GotFocus(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y - 16)
+        frm_dispositivo.Controls.Add(lbl_maxchar)
+        lbl_maxchar.BringToFront()
+        If (sender.TextLength = 0) Then
+            lbl_maxchar.Visible = False
+        Else
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_LostFocus(sender As Object, e As EventArgs)
+        frm_dispositivo.Controls.Remove(lbl_maxchar)
     End Sub
 End Class

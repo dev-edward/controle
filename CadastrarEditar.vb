@@ -27,7 +27,7 @@
                 End If
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
                 If _cadastro Then
-                    Dim cadastroEvento As New DispositivoCadastroAlteracao()
+                    Dim cadastroEvento As New DispositivoCadastroAlteracao(tabela)
                 Else
                     Dim cadastroEvento As New DispositivoCadastroAlteracao(_pk)
                 End If

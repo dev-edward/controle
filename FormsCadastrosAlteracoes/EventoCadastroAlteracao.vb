@@ -10,8 +10,14 @@ Public Class EventoCadastroAlteracao
     Dim pk As Integer
     Const tabela As String = "evento"
 
+    Dim lbl_maxchar As New Label With {
+        .Size = New Size(50, 16),
+        .BackColor = Color.Azure,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .BorderStyle = BorderStyle.FixedSingle
+    }
     Dim frm_evento As New Form With {
-        .Text = "Cadastrar evento",
+        .Text = "Cadastrar novo evento",
         .ClientSize = New Size(320, 300),
         .FormBorderStyle = FormBorderStyle.FixedSingle,
         .MaximizeBox = False,
@@ -28,7 +34,8 @@ Public Class EventoCadastroAlteracao
     Dim txt_descricao As New TextBox With {
         .Size = tamanho,
         .Font = fonte,
-        .Location = New Point(29, 40)
+        .Location = New Point(29, 40),
+        .MaxLength = 128
     }
     Dim lbl_data As New Label With {
         .Text = "Data e horario do evento",
@@ -130,12 +137,18 @@ Public Class EventoCadastroAlteracao
         AddHandler btn_editar.Click, AddressOf editarCancelar
         AddHandler btn_cancelar.Click, AddressOf editarCancelar
         AddHandler btn_alterar.Click, AddressOf alterar
+
+
     End Sub
     Private Sub carregarControles()
         If classesAbertas.atualCadAltEventos IsNot Nothing Then
             classesAbertas.atualCadAltEventos.Close()
         End If
         classesAbertas.setAtualCadAltEventos(frm_evento)
+
+        AddHandler txt_descricao.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_descricao.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_descricao.LostFocus, AddressOf txt_LostFocus
 
         cmb_frequencia.Items.AddRange({"Uma vez", "Diário", "Semanal", "Mensal", "Anual"})
         frm_evento.Controls.Add(lbl_descricao)
@@ -156,6 +169,7 @@ Public Class EventoCadastroAlteracao
         End If
     End Sub
     Private Sub alternarReadOnly()
+        frm_evento.Text = If(frm_evento.Text = "Detalhes do evento", "Editando evento...", "Detalhes do evento")
         txt_descricao.ReadOnly = Not txt_descricao.ReadOnly
         dtp_data.Enabled = Not dtp_data.Enabled
         cmb_frequencia.Enabled = Not cmb_frequencia.Enabled
@@ -298,5 +312,22 @@ Public Class EventoCadastroAlteracao
         End Try
 
         carregarDados()
+    End Sub
+    Private Sub txt_KeyUp(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        If (sender.TextLength > 0 And Not lbl_maxchar.Visible) Then
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_GotFocus(sender As Object, e As EventArgs)
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y - 16)
+        frm_evento.Controls.Add(lbl_maxchar)
+        lbl_maxchar.BringToFront()
+        If (sender.TextLength = 0) Then
+            lbl_maxchar.Visible = False
+        End If
+    End Sub
+    Private Sub txt_LostFocus(sender As Object, e As EventArgs)
+        frm_evento.Controls.Remove(lbl_maxchar)
     End Sub
 End Class

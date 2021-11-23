@@ -284,10 +284,14 @@ Public Class DemandaDetalhes
                                         demanda_previsao, 
                                         demanda_status,
                                         encarregado.usuario_user as demanda_encarregado,
-                                        demanda_prioridade
+                                        demanda_prioridade,
+                                        (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
                                 from tb_demanda 
 								left join tb_usuario encarregado on tb_demanda.demanda_encarregado = encarregado.usuario_id
-								where demanda_id= " & pk
+								where demanda_id = @id"
+
+        consulta.Parameters.AddWithValue("@id", pk)
+        consulta.Parameters.AddWithValue("@tabela", tabela)
 
         conexao.Open()
         myReader = consulta.ExecuteReader()
@@ -311,6 +315,7 @@ Public Class DemandaDetalhes
         cbx_estado.SelectedIndex = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status") - 1)
         cbx_encarregado.Text = If(myReader.IsDBNull("demanda_encarregado"), "", myReader.GetString("demanda_encarregado"))
         tkb_prioridade.Value = If(myReader.IsDBNull("demanda_prioridade"), 2, myReader.GetValue("demanda_prioridade") - 1)
+        btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
 
         myReader.Close()
         conexao.Close()

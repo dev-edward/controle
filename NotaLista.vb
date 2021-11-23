@@ -26,7 +26,7 @@ Public Class listarNotas
     Dim WithEvents txt_novaNota As New RichTextBox With {
         .Location = New Point(10, 370),
         .Size = New Size(240, 40),
-        .MaxLength = 10
+        .MaxLength = 256
     }
     Dim btn_addNota As New Button With {
         .Location = New Point(260, 375),

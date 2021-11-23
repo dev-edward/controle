@@ -105,7 +105,6 @@
                 btn_estado.BackgroundImage = img.descartado
         End Select
         btn_estado.BackgroundImageLayout = ImageLayout.Zoom
-
     End Sub
     Friend Sub setDados(ByVal _titulo As String, ByVal _temprevisao As Integer, ByVal _previsao As DateTime)
         setEstado(estado)

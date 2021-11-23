@@ -91,7 +91,7 @@ CREATE TABLE tb_demanda
 CREATE TABLE tb_evento
 (
 	evento_id INT PRIMARY KEY IDENTITY,
-	evento_descricao NVARCHAR(256),
+	evento_descricao NVARCHAR(128),
 	evento_datahora DATETIME,
 	evento_ultimocheck DATETIME,
 	evento_frequencia TINYINT,
@@ -151,45 +151,40 @@ CREATE TABLE tb_pessoa
 CREATE TABLE tb_dispositivo
 (/*informações da tabela inseridas*/
 	dispositivo_id INT PRIMARY KEY IDENTITY,
-	--dispositivo_fkpessoa INT FOREIGN KEY REFERENCES tb_pessoa(pessoa_id),
-	--dispositivo_fksala INT FOREIGN KEY REFERENCES tb_sala(sala_id),
-	--dispositivo_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
 	dispositivo_tipo TINYINT,
 	dispositivo_posto TINYINT,
-	dispositivo_marcamodelo NVARCHAR(30),
-	dispositivo_hostname NVARCHAR(20),
+	dispositivo_marcamodelo NVARCHAR(32),
+	dispositivo_hostname NVARCHAR(24),
 	dispositivo_ip NVARCHAR(16),
-	dispositivo_macadress NVARCHAR(20),
-	dispositivo_os NVARCHAR(30),
+	dispositivo_macadress NVARCHAR(18),
+	dispositivo_os NVARCHAR(32),
 	dispositivo_qtdmemoriaram TINYINT,
-	dispositivo_processador NVARCHAR(20),
-	dispositivo_armazenamento NVARCHAR(30),
-	dispositivo_bateria NVARCHAR(30),
+	dispositivo_processador NVARCHAR(24),
+	dispositivo_armazenamento NVARCHAR(32),
+	dispositivo_bateria NVARCHAR(32),
 	dispositivo_dtcadastro DATETIME DEFAULT GETDATE(),
 	dispositivo_usercadastro TINYINT,
 	dispositivo_dtalteracao DATETIME,
 	dispositivo_useralteracao TINYINT
 )
-
 CREATE TABLE tb_impressora
 (/*informações da tabela inseridas*/
 	impressora_id INT PRIMARY KEY IDENTITY,
-	--impressora_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
-	impressora_usercadastro TINYINT,
-	impressora_dtalteracao DATETIME,
-	impressora_useralteracao TINYINT,
-	impressora_marcamodelo NVARCHAR(20),
 	impressora_nserie NVARCHAR(12),
 	impressora_nnota NVARCHAR(16),
 	impressora_nproduto NVARCHAR(16),
+	impressora_marcamodelo NVARCHAR(24),
 	impressora_suprimento INT FOREIGN KEY REFERENCES tb_estoque(estoque_id),
+	impressora_ip NVARCHAR(15),
 	impressora_corimpressao TINYINT,
 	impressora_local NVARCHAR(20),
 	impressora_estado TINYINT,
-	impressora_ip NVARCHAR(15),
 	impressora_dtentrada DATETIME,
-	impressora_dtsaida DATETIME
+	impressora_dtsaida DATETIME,
+	impressora_dtcadastro DATETIME DEFAULT GETDATE(),
+	impressora_usercadastro TINYINT,
+	impressora_dtalteracao DATETIME,
+	impressora_useralteracao TINYINT
 )
 CREATE TABLE tb_nobreak
 (

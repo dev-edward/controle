@@ -39,6 +39,8 @@ Partial Class teste
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label7 = New System.Windows.Forms.Label()
+        Me.MaskedTextBox1 = New System.Windows.Forms.MaskedTextBox()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -161,7 +163,7 @@ Partial Class teste
         Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
         Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.Location = New System.Drawing.Point(98, 309)
+        Me.Button1.Location = New System.Drawing.Point(107, 239)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(121, 40)
         Me.Button1.TabIndex = 14
@@ -172,17 +174,34 @@ Partial Class teste
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(73, 322)
+        Me.Label7.Location = New System.Drawing.Point(82, 252)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(41, 15)
         Me.Label7.TabIndex = 0
         Me.Label7.Text = "Label7"
         '
+        'MaskedTextBox1
+        '
+        Me.MaskedTextBox1.Location = New System.Drawing.Point(247, 123)
+        Me.MaskedTextBox1.Name = "MaskedTextBox1"
+        Me.MaskedTextBox1.Size = New System.Drawing.Size(100, 23)
+        Me.MaskedTextBox1.TabIndex = 15
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(67, 285)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(200, 23)
+        Me.DateTimePicker1.TabIndex = 16
+        '
         'teste
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(378, 397)
+        Me.ClientSize = New System.Drawing.Size(378, 309)
+        Me.Controls.Add(Me.DateTimePicker1)
+        Me.Controls.Add(Me.MaskedTextBox1)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.NumericUpDown1)
@@ -223,4 +242,6 @@ Partial Class teste
     Friend WithEvents NumericUpDown1 As NumericUpDown
     Friend WithEvents Button1 As Button
     Friend WithEvents Label7 As Label
+    Friend WithEvents MaskedTextBox1 As MaskedTextBox
+    Friend WithEvents DateTimePicker1 As DateTimePicker
 End Class

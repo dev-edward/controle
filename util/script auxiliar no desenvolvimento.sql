@@ -121,7 +121,7 @@ select
         evento_frequencia, 
         evento_allday, 
         evento_ativo,
-		(select sum(case when nota_pkitem = @id and nota_tabela = 'evento' and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+		(select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
 from tb_evento 
 where evento_id = @id
 --> Form Evento <--
