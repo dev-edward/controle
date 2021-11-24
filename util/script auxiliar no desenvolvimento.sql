@@ -276,6 +276,33 @@ left join tb_usuario ualteracao on impressora_usercadastro = ualteracao.usuario_
 left join tb_estoque suprimento on impressora_suprimento = suprimento.estoque_id
 --> Impressoras <--
 
+--> Form Impressoras <--
+select 
+impressora_id,
+impressora_nserie,
+impressora_nnota,
+impressora_nproduto,
+impressora_marcamodelo,
+tb_estoque.estoque_nome,
+case 
+when impressora_corimpressao = 0 then 0
+when impressora_corimpressao = 1 then 1
+end as 'impressora_corimpressao',
+tb_local.local_nome,
+case
+when impressora_estado = 1 then 'Ativo'
+when impressora_estado = 2 then 'Inativo'
+when impressora_estado = 3 then 'Devolvido'
+end,
+impressora_dtentrada,
+impressora_dtsaida,
+(select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_impressora
+left join tb_estoque on tb_impressora.impressora_suprimento = tb_estoque.estoque_id
+left join tb_local on tb_impressora.impressora_local = tb_local.local_id
+where impressora_id = @id
+--> Form Impressoras <--
+
 --> Telefone <--
 select
 telefone_id as 'ID',

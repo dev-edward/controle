@@ -6,6 +6,7 @@
     Public Shared atualEventos As EventoLista
     Public Shared atualCadAltEventos As Form
     Public Shared atualCadAltDispositivos As Form
+    Public Shared atualCadAltImpressoras As Form
 
 
     Shared Sub setAtualListaDemandas(ByRef _atualListaDemandas As DemandaLista)
@@ -28,5 +29,8 @@
     End Sub
     Shared Sub setAtualCadAltDispositivos(ByRef _atualCadAltDispositivos As Form)
         atualCadAltDispositivos = _atualCadAltDispositivos
+    End Sub
+    Shared Sub setAtualCadAltImpressoras(ByRef _atualCadAltImpressoras As Form)
+        atualCadAltImpressoras = _atualCadAltImpressoras
     End Sub
 End Class

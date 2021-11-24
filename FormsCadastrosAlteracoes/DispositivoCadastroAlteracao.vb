@@ -172,7 +172,6 @@ Public Class DispositivoCadastroAlteracao
         .Location = New Point(45, txt_bateria.Location.Y + tamanholbl.Height + 10)
     }
     Dim btn_notas As New Button With {
-        .Text = "                        1",
         .Size = New Size(160, 40),
         .Visible = False,
         .ForeColor = Color.FromArgb(255, 15, 15, 15),
@@ -327,6 +326,7 @@ Public Class DispositivoCadastroAlteracao
         End Try
     End Sub
     Private Sub alternarReadOnly()
+        frm_dispositivo.Text = If(frm_dispositivo.Text = "Detalhes do dispositivo", "Editando dispositivo...", "Detalhes do dispositivo")
         cmb_tipo.Enabled = Not cmb_tipo.Enabled
         cbx_posto.Enabled = Not cbx_posto.Enabled
         txt_marcaModelo.ReadOnly = Not txt_marcaModelo.ReadOnly

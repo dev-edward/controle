@@ -133,13 +133,13 @@ CREATE TABLE tb_skype
 	skype_email NVARCHAR(40),
 	skype_senha NVARCHAR(12)
 )
-CREATE TABLE tb_sala
+CREATE TABLE tb_local
 (
-	sala_id INT PRIMARY KEY IDENTITY,
-	--sala_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	sala_nome NVARCHAR(20),
-	sala_bloco NVARCHAR(20),
-	sala_descricao NVARCHAR(30)
+	local_id INT PRIMARY KEY IDENTITY,
+	local_nome NVARCHAR(24),
+	local_bloco NVARCHAR(1),
+	local_andar TINYINT,
+	local_descricao NVARCHAR(64)
 )
 CREATE TABLE tb_pessoa
 (
@@ -177,7 +177,7 @@ CREATE TABLE tb_impressora
 	impressora_suprimento INT FOREIGN KEY REFERENCES tb_estoque(estoque_id),
 	impressora_ip NVARCHAR(15),
 	impressora_corimpressao TINYINT,
-	impressora_local NVARCHAR(20),
+	impressora_local INT,
 	impressora_estado TINYINT,
 	impressora_dtentrada DATETIME,
 	impressora_dtsaida DATETIME,
@@ -399,7 +399,7 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nproduto','Número de produto da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco(1) ou colorido(2)','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','O local que a impressora está sendo usada','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','FK do local em que a impressora está sendo usada','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_ip','IP da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_dtentrada','Data em que a impressora foi adquirida','1')
@@ -559,7 +559,7 @@ insert into tb_estoque(estoque_nome,estoque_descricao,estoque_tag,estoque_quanti
 select * from tb_estoque
 
 -- Impressoras
-insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressão,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,'SECRETARIA',1,'192.0.1.184','20/01/2021',null)
+insert into tb_impressora(impressora_marcamodelo,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_suprimento,impressora_corimpressao,impressora_local,impressora_estado,impressora_ip,impressora_dtentrada,impressora_dtsaida)values('Canon IR1643IF','2TQ05853','000021624','3630C003AA',1,1,1,1,'192.0.1.184','20/01/2021',null)
 
 -- E-mails
 insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
@@ -610,3 +610,7 @@ values('EDWARD CAHUA HUAYTA','TECNOLOGIA DA INFORMAÇÃO','ti3@ifsj.org.br',null,'
 insert into tb_email(email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo,email_outlook_nome,email_outlook_ass_nome,email_outlook_ass_servico)
 values('ANDREA TAMASSAKI ARAUJO DA SILVA','Compras','compras@saojosevm.org.br','&L6B!53r7T9','saoojosevm.org.br',1,1,null,null,null)
 --
+
+-- Locais
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('STI','A',2,'Tecnologia da Informção')

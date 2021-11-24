@@ -32,7 +32,11 @@
                     Dim cadastroEvento As New DispositivoCadastroAlteracao(_pk)
                 End If
             Case "Impressoras"
-
+                If _cadastro Then
+                    Dim cadastroImpressora As New ImpressoraCadastroAlteracao()
+                Else
+                    Dim cadastroImpressora As New ImpressoraCadastroAlteracao(_pk)
+                End If
             Case "Nobreaks"
 
             Case "Projetores"
