@@ -277,6 +277,8 @@ left join tb_estoque suprimento on impressora_suprimento = suprimento.estoque_id
 --> Impressoras <--
 
 --> Form Impressoras <--
+declare @id as int=2
+declare @tabela as nvarchar = 'impressora'
 select 
 impressora_id,
 impressora_nserie,
@@ -289,11 +291,7 @@ when impressora_corimpressao = 0 then 0
 when impressora_corimpressao = 1 then 1
 end as 'impressora_corimpressao',
 tb_local.local_nome,
-case
-when impressora_estado = 1 then 'Ativo'
-when impressora_estado = 2 then 'Inativo'
-when impressora_estado = 3 then 'Devolvido'
-end,
+impressora_estado,
 impressora_dtentrada,
 impressora_dtsaida,
 (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
@@ -361,6 +359,3 @@ from tb_estoque
 
 --> Software <--
 --> Software <--
-
-insert into tb_usuario(usuario_user,usuario_senha,usuario_nome) values('paulo','senha','Paulo Henrique dos Santos')
-insert into tb_usuario(usuario_user,usuario_senha,usuario_nome) values('andre','senha','André luis Ruffo Veroneze')

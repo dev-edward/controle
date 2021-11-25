@@ -207,7 +207,7 @@ Public Class EventoCadastroAlteracao
             cmb_frequencia.SelectedIndex = myReader.GetValue("evento_frequencia") - 1
             cbx_ativo.Checked = If(myReader.IsDBNull("evento_ativo"), 0, myReader.GetValue("evento_ativo"))
             cbx_allday.Checked = If(myReader.IsDBNull("evento_allday"), 0, myReader.GetValue("evento_allday"))
-            btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
+            btn_notas.Text = If(myReader.GetValue("qtd_notas") > 0, myReader.GetValue("qtd_notas"), "")
 
             If cbx_allday.Checked Then
                 dtp_data.CustomFormat = "dd/MM/yyyy"

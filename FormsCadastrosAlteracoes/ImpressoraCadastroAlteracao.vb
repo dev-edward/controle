@@ -141,31 +141,33 @@ Public Class ImpressoraCadastroAlteracao
         .DropDownStyle = ComboBoxStyle.DropDownList,
         .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, lbl_estado.Location.Y)
     }
-    Dim lbl_dtentrada As New Label With {
+    Dim cbx_dtentrada As New CheckBox With {
         .Text = "Data de entrada: ",
         .Font = fonte,
         .Size = tamanholbl,
-        .TextAlign = ContentAlignment.MiddleRight,
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .CheckAlign = ContentAlignment.MiddleRight,
         .Location = New Point(lbl_nserie.Location.X, lbl_estado.Location.Y + tamanholbl.Height)
     }
     Dim dtp_dtentrada As New DateTimePicker With {
         .Font = fonte,
         .Size = tamanholbl,
         .Format = DateTimePickerFormat.Short,
-        .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, lbl_dtentrada.Location.Y)
+        .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, cbx_dtentrada.Location.Y)
     }
-    Dim lbl_dtsaida As New Label With {
+    Dim cbx_dtsaida As New CheckBox With {
         .Text = "Data de saída: ",
         .Font = fonte,
         .Size = tamanholbl,
-        .TextAlign = ContentAlignment.MiddleRight,
-        .Location = New Point(lbl_nserie.Location.X, lbl_dtentrada.Location.Y + tamanholbl.Height)
+        .TextAlign = ContentAlignment.MiddleCenter,
+        .CheckAlign = ContentAlignment.MiddleRight,
+        .Location = New Point(lbl_nserie.Location.X, cbx_dtentrada.Location.Y + tamanholbl.Height)
     }
     Dim dtp_dtsaida As New DateTimePicker With {
         .Font = fonte,
         .Size = tamanholbl,
         .Format = DateTimePickerFormat.Short,
-        .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, lbl_dtsaida.Location.Y)
+        .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, cbx_dtsaida.Location.Y)
     }
 
 
@@ -173,7 +175,7 @@ Public Class ImpressoraCadastroAlteracao
         .Text = "Salvar",
         .Font = fonte,
         .Size = New Size(320, 40),
-        .Location = New Point(10, lbl_dtsaida.Location.Y + tamanholbl.Height + 10)
+        .Location = New Point(10, cbx_dtsaida.Location.Y + tamanholbl.Height + 10)
     }
     Dim btn_notas As New Button With {
         .Size = tamanhobtn,
@@ -183,26 +185,26 @@ Public Class ImpressoraCadastroAlteracao
         .Font = New Font("Impact", 10),
         .BackgroundImage = img.notas,
         .BackgroundImageLayout = ImageLayout.Zoom,
-        .Location = New Point(10, lbl_dtsaida.Location.Y + tamanholbl.Height + 10)
+        .Location = New Point(10, cbx_dtsaida.Location.Y + tamanholbl.Height + 10)
     }
     Dim btn_editar As New Button With {
         .Text = "Editar",
         .Font = fonte,
         .Size = tamanhobtn,
         .Visible = False,
-        .Location = New Point(170, lbl_dtsaida.Location.Y + tamanholbl.Height + 10)
+        .Location = New Point(170, cbx_dtsaida.Location.Y + tamanholbl.Height + 10)
     }
     Dim btn_cancelar As New Button With {
         .Text = "Cancelar",
         .Font = fonte,
         .Size = tamanhobtn,
-        .Location = New Point(170, lbl_dtsaida.Location.Y + tamanholbl.Height + 10)
+        .Location = New Point(170, cbx_dtsaida.Location.Y + tamanholbl.Height + 10)
     }
     Dim btn_alterar As New Button With {
         .Text = "Salvar",
         .Font = fonte,
         .Size = tamanhobtn,
-        .Location = New Point(10, lbl_dtsaida.Location.Y + tamanholbl.Height + 10)
+        .Location = New Point(10, cbx_dtsaida.Location.Y + tamanholbl.Height + 10)
     }
     Friend Sub New()
         iniciar()
@@ -210,12 +212,18 @@ Public Class ImpressoraCadastroAlteracao
         AddHandler btn_salvar.Click, AddressOf salvar
     End Sub
     Friend Sub New(ByVal _pk As Integer)
+        pk = _pk
         iniciar()
+        carregarDados()
+        alternarReadOnly()
         frm_impressora.Controls.Add(btn_notas)
         frm_impressora.Controls.Add(btn_editar)
         frm_impressora.Controls.Add(btn_cancelar)
         frm_impressora.Controls.Add(btn_alterar)
-        alternarReadOnly()
+        AddHandler btn_notas.Click, AddressOf notas
+        AddHandler btn_editar.Click, AddressOf editarCancelar
+        AddHandler btn_cancelar.Click, AddressOf editarCancelar
+        AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
     Private Sub iniciar()
         If classesAbertas.atualCadAltImpressoras IsNot Nothing Then
@@ -260,9 +268,9 @@ Public Class ImpressoraCadastroAlteracao
         frm_impressora.Controls.Add(cmb_local)
         frm_impressora.Controls.Add(lbl_estado)
         frm_impressora.Controls.Add(cmb_estado)
-        frm_impressora.Controls.Add(lbl_dtentrada)
+        frm_impressora.Controls.Add(cbx_dtentrada)
         frm_impressora.Controls.Add(dtp_dtentrada)
-        frm_impressora.Controls.Add(lbl_dtsaida)
+        frm_impressora.Controls.Add(cbx_dtsaida)
         frm_impressora.Controls.Add(dtp_dtsaida)
 
         frm_impressora.Show()
@@ -280,8 +288,14 @@ Public Class ImpressoraCadastroAlteracao
         rbt_peb.Enabled = Not rbt_peb.Enabled
         cmb_local.Enabled = Not cmb_local.Enabled
         cmb_estado.Enabled = Not cmb_estado.Enabled
+        cbx_dtentrada.Enabled = Not cbx_dtentrada.Enabled
         dtp_dtentrada.Enabled = Not dtp_dtentrada.Enabled
+        cbx_dtsaida.Enabled = Not cbx_dtsaida.Enabled
         dtp_dtsaida.Enabled = Not dtp_dtsaida.Enabled
+        btn_notas.Visible = Not btn_notas.Visible
+        btn_editar.Visible = Not btn_editar.Visible
+        btn_alterar.Visible = Not btn_alterar.Visible
+        btn_cancelar.Visible = Not btn_cancelar.Visible
     End Sub
     Private Sub carregarDados()
         Try
@@ -297,13 +311,9 @@ Public Class ImpressoraCadastroAlteracao
                                         case 
                                         when impressora_corimpressao = 0 then 0
                                         when impressora_corimpressao = 1 then 1
-                                        end,
+                                        end as 'impressora_corimpressao',
                                         tb_local.local_nome,
-                                        case
-                                        when impressora_estado = 1 then 'Ativo'
-                                        when impressora_estado = 2 then 'Inativo'
-                                        when impressora_estado = 3 then 'Devolvido'
-                                        end,
+                                        impressora_estado,
                                         impressora_dtentrada,
                                         impressora_dtsaida,
                                         (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
@@ -335,22 +345,28 @@ Public Class ImpressoraCadastroAlteracao
                     rbt_cor.Checked = True
                 End If
             End If
+            cmb_local.SelectedItem = If(myReader.IsDBNull("local_nome"), "", myReader.GetString("local_nome"))
+            cmb_estado.SelectedIndex = If(myReader.IsDBNull("impressora_estado"), 0, myReader.GetValue("impressora_estado") - 1)
 
-
-            txt_descricao.Text = myReader.GetString("evento_descricao")
-            dtp_data.Value = myReader.GetDateTime("evento_datahora")
-            cmb_frequencia.SelectedIndex = myReader.GetValue("evento_frequencia") - 1
-            cbx_ativo.Checked = If(myReader.IsDBNull("evento_ativo"), 0, myReader.GetValue("evento_ativo"))
-            cbx_allday.Checked = If(myReader.IsDBNull("evento_allday"), 0, myReader.GetValue("evento_allday"))
-            btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
-
-
-
-            If cbx_allday.Checked Then
-                dtp_data.CustomFormat = "dd/MM/yyyy"
+            If (myReader.IsDBNull("impressora_dtentrada")) Then
+                cbx_dtentrada.Checked = False
+                dtp_dtentrada.Visible = False
             Else
-                dtp_data.CustomFormat = "dd/MM/yyyy HH:mm"
+                cbx_dtentrada.Checked = true
+                dtp_dtentrada.Visible = True
+                dtp_dtentrada.Value = myReader.GetDateTime("impressora_dtentrada")
             End If
+
+            If (myReader.IsDBNull("impressora_dtsaida")) Then
+                cbx_dtsaida.Checked = False
+                dtp_dtsaida.Visible = False
+            Else
+                cbx_dtsaida.Checked = True
+                dtp_dtsaida.Visible = True
+                dtp_dtsaida.Value = myReader.GetDateTime("impressora_dtsaida")
+            End If
+
+            btn_notas.Text = If(myReader.GetValue("qtd_notas") > 0, myReader.GetValue("qtd_notas"), "")
 
 
             myReader.Close()
@@ -362,6 +378,15 @@ Public Class ImpressoraCadastroAlteracao
         End Try
     End Sub
     Private Sub salvar()
+
+    End Sub
+    Private Sub notas()
+
+    End Sub
+    Private Sub editarCancelar()
+
+    End Sub
+    Private Sub alterar()
 
     End Sub
 End Class

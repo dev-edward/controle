@@ -315,7 +315,7 @@ Public Class DispositivoCadastroAlteracao
             txt_processador.Text = If(myReader.IsDBNull("dispositivo_processador"), "", myReader.GetString("dispositivo_processador"))
             txt_armazenamento.Text = If(myReader.IsDBNull("dispositivo_armazenamento"), "", myReader.GetString("dispositivo_armazenamento"))
             txt_bateria.Text = If(myReader.IsDBNull("dispositivo_bateria"), "", myReader.GetString("dispositivo_bateria"))
-            btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
+            btn_notas.Text = If(myReader.GetValue("qtd_notas") > 0, myReader.GetValue("qtd_notas"), "")
 
             myReader.Close()
 

@@ -13,7 +13,7 @@ Public Class EventoLista
     Dim checado As Boolean
     Dim proximo As Boolean
     Dim lbl_label As New Label With {
-        .Text = "Telefones não encontrados",
+        .Text = "Nenhum evento encontrado",
         .Location = New Point(0, 40),
         .Size = New Size(280, 40),
         .TextAlign = ContentAlignment.MiddleCenter

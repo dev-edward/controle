@@ -182,7 +182,7 @@ Public Class DemandaLista
             id = myReader.GetInt32("demanda_id")
             titulo = If(myReader.IsDBNull("demanda_titulo"), "", myReader.GetString("demanda_titulo"))
             temprevisao = If(myReader.IsDBNull("demanda_temprevisao"), 0, myReader.GetValue("demanda_temprevisao"))
-            previsao = If(myReader.IsDBNull("demanda_previsao"), 0, myReader.GetValue("demanda_previsao"))
+            previsao = If(myReader.IsDBNull("demanda_previsao"), Nothing, myReader.GetValue("demanda_previsao"))
             estado = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status"))
             qtdNotas = If(myReader.IsDBNull("qtd_notas"), 0, myReader.GetInt32("qtd_notas"))
             encarregado = If(myReader.IsDBNull("demanda_encarregado"), 0, myReader.GetValue("demanda_encarregado"))

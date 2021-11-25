@@ -68,7 +68,7 @@ Public Class DemandaDetalhes
         .Size = New Size(largura2, altura1),
         .TextAlign = ContentAlignment.MiddleCenter
     }
-    Dim dtp_previsao As New DateTimePicker With{
+    Dim WithEvents dtp_previsao As New DateTimePicker With {
         .Font = fonte,
         .Size = New Size(largura2, altura1),
         .Format = DateTimePickerFormat.Short,
@@ -293,6 +293,8 @@ Public Class DemandaDetalhes
         consulta.Parameters.AddWithValue("@id", pk)
         consulta.Parameters.AddWithValue("@tabela", tabela)
 
+
+
         conexao.Open()
         myReader = consulta.ExecuteReader()
         myReader.Read()
@@ -311,11 +313,14 @@ Public Class DemandaDetalhes
             dtp_previsao.Visible = False
             cbx_previsao.Checked = False
         End If
-        dtp_previsao.Value = If(myReader.IsDBNull("demanda_previsao"), "", myReader.GetDateTime("demanda_previsao"))
+
+        dtp_previsao.Value = If(myReader.IsDBNull("demanda_previsao"), dtp_previsao.MinDate, myReader.GetDateTime("demanda_previsao"))
+
+
         cbx_estado.SelectedIndex = If(myReader.IsDBNull("demanda_status"), 0, myReader.GetValue("demanda_status") - 1)
         cbx_encarregado.Text = If(myReader.IsDBNull("demanda_encarregado"), "", myReader.GetString("demanda_encarregado"))
         tkb_prioridade.Value = If(myReader.IsDBNull("demanda_prioridade"), 2, myReader.GetValue("demanda_prioridade") - 1)
-        btn_notas.Text = Space(24) & myReader.GetValue("qtd_notas")
+        btn_notas.Text = If(myReader.GetValue("qtd_notas") > 0, myReader.GetValue("qtd_notas"), "")
 
         myReader.Close()
         conexao.Close()
@@ -335,6 +340,9 @@ Public Class DemandaDetalhes
             dtp_previsao.Visible = False
             dtp_previsao.Value = DateTime.Now.AddDays(30)
         End If
+    End Sub
+    Private Sub dtp_previsao_ValueChanged(sender As Object, e As EventArgs) Handles dtp_previsao.ValueChanged
+        dtp_previsao.Format = DateTimePickerFormat.Short
     End Sub
     Private Sub tkb_prioridade_ValueChanged(sender As Object, e As EventArgs) Handles tkb_prioridade.ValueChanged
         Select Case tkb_prioridade.Value
@@ -435,10 +443,10 @@ Public Class DemandaDetalhes
             conexao.Open()
 
             consulta.ExecuteNonQuery()
-            If demandaAtual IsNot Nothing Then
-                demandaAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
-                demandaAtual.setEstado(cbx_estado.SelectedIndex + 1)
-            End If
+            'If demandaAtual IsNot Nothing Then
+            '    demandaAtual.setDados(txt_titulo.Text, If(cbx_previsao.Checked, 1, 0), dtp_previsao.Value)
+            '    demandaAtual.setEstado(cbx_estado.SelectedIndex + 1)
+            'End If
 
         Catch ex As Exception
             MessageBox.Show("Erro ao atualizar demanda: " & ex.Message, "Classe DemandaDetalhes")
