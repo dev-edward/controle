@@ -66,8 +66,7 @@ CREATE TABLE tb_anotacao
 CREATE TABLE tb_estoque
 (/*informações da tabela inseridas*/
 	estoque_id INT PRIMARY KEY IDENTITY,
-	--estoque_fkitem INT FOREIGN KEY REFERENCES tb_item(item_id) NOT NULL,
-	estoque_nome NVARCHAR(20),
+	estoque_nome NVARCHAR(20) UNIQUE,
 	estoque_descricao NVARCHAR(60),
 	estoque_tag NVARCHAR(20),
 	estoque_quantidade INT,
@@ -480,8 +479,6 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',0,'Não')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_ativo',1,'Sim')
 --
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_notificadohj',0,'Não')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_notificadohj',1,'Sim')
 
 
 /**************************************/

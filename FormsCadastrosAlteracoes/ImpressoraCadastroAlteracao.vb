@@ -141,11 +141,11 @@ Public Class ImpressoraCadastroAlteracao
         .DropDownStyle = ComboBoxStyle.DropDownList,
         .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, lbl_estado.Location.Y)
     }
-    Dim cbx_dtentrada As New CheckBox With {
+    Dim WithEvents cbx_dtentrada As New CheckBox With {
         .Text = "Data de entrada: ",
         .Font = fonte,
         .Size = tamanholbl,
-        .TextAlign = ContentAlignment.MiddleCenter,
+        .TextAlign = ContentAlignment.MiddleRight,
         .CheckAlign = ContentAlignment.MiddleRight,
         .Location = New Point(lbl_nserie.Location.X, lbl_estado.Location.Y + tamanholbl.Height)
     }
@@ -155,11 +155,11 @@ Public Class ImpressoraCadastroAlteracao
         .Format = DateTimePickerFormat.Short,
         .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, cbx_dtentrada.Location.Y)
     }
-    Dim cbx_dtsaida As New CheckBox With {
+    Dim WithEvents cbx_dtsaida As New CheckBox With {
         .Text = "Data de saída: ",
         .Font = fonte,
         .Size = tamanholbl,
-        .TextAlign = ContentAlignment.MiddleCenter,
+        .TextAlign = ContentAlignment.MiddleRight,
         .CheckAlign = ContentAlignment.MiddleRight,
         .Location = New Point(lbl_nserie.Location.X, cbx_dtentrada.Location.Y + tamanholbl.Height)
     }
@@ -243,6 +243,7 @@ Public Class ImpressoraCadastroAlteracao
             Do While myReader.Read()
                 cmb_suprimento.Items.Add(myReader.GetString(0))
             Loop
+
             myReader.Close()
         Catch ex As Exception
             MessageBox.Show("Não foi possivel carregar lista de suprimentos: " & ex.Message, "Classe ImpressoraCadastroAlteracao")
@@ -296,6 +297,7 @@ Public Class ImpressoraCadastroAlteracao
         btn_editar.Visible = Not btn_editar.Visible
         btn_alterar.Visible = Not btn_alterar.Visible
         btn_cancelar.Visible = Not btn_cancelar.Visible
+
     End Sub
     Private Sub carregarDados()
         Try
@@ -352,7 +354,7 @@ Public Class ImpressoraCadastroAlteracao
                 cbx_dtentrada.Checked = False
                 dtp_dtentrada.Visible = False
             Else
-                cbx_dtentrada.Checked = true
+                cbx_dtentrada.Checked = True
                 dtp_dtentrada.Visible = True
                 dtp_dtentrada.Value = myReader.GetDateTime("impressora_dtentrada")
             End If
@@ -377,14 +379,85 @@ Public Class ImpressoraCadastroAlteracao
             conexao.Close()
         End Try
     End Sub
+    Private Sub cbx_dtentrada_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_dtentrada.CheckedChanged
+        dtp_dtentrada.Visible = sender.checked
+    End Sub
+    Private Sub cbx_dtsaida_CheckedChanged(sender As Object, e As EventArgs) Handles cbx_dtsaida.CheckedChanged
+        dtp_dtsaida.Visible = sender.checked
+    End Sub
     Private Sub salvar()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            consulta = conexao.CreateCommand
+
+            consulta.CommandText = "INSERT INTO tb_impressora(
+                                        impressora_usercadastro,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_marcamodelo,impressora_suprimento,impressora_ip,impressora_corimpressao,impressora_local,impressora_estado,impressora_dtentrada,impressora_dtsaida
+                                    )
+                                    VALUES(
+                                        @usercadastro,
+                                        @nserie,
+                                        @nnota,
+                                        @nproduto,
+                                        @marcamodelo,
+                                        (select estoque_id from tb_estoque where estoque_nome = @suprimento),
+                                        @ip,
+                                        @corimpressao,
+                                        (select local_id from tb_local where local_nome = @local),
+                                        @estado,
+                                        @dtentrada,
+                                        @dtsaida
+                                    )
+                                    select scope_identity()"
+
+            consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@nserie", txt_nserie.Text)
+            consulta.Parameters.AddWithValue("@nnota", txt_nnota.Text)
+            consulta.Parameters.AddWithValue("@nproduto", txt_nproduto.Text)
+            consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
+            consulta.Parameters.AddWithValue("@suprimento", cmb_suprimento.SelectedItem)
+            consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
+
+
+
+            If rbt_cor.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 1)
+            ElseIf rbt_peb.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 0)
+            Else
+                consulta.Parameters.AddWithValue("@corimpressao", Nothing)
+            End If
+
+            consulta.Parameters.AddWithValue("@local", cmb_local.SelectedItem)
+
+            consulta.Parameters.AddWithValue("@local", cmb_local.Text)
+
+
+
+            consulta.Parameters.AddWithValue("@frequencia", cmb_frequencia.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@allday", If(cbx_allday.Checked, 1, 0))
+            consulta.Parameters.AddWithValue("@ativo", If(cbx_ativo.Checked, 1, 0))
+
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+            novoid = myReader.GetValue(0)
+
+            Dim verEvento = New EventoCadastroAlteracao(novoid)
+            myReader.Close()
+        Catch ex As Exception
+            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")
+        Finally
+            conexao.Close()
+        End Try
     End Sub
     Private Sub notas()
 
     End Sub
     Private Sub editarCancelar()
-
+        alternarReadOnly()
+        carregarDados()
     End Sub
     Private Sub alterar()
 

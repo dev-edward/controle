@@ -6,7 +6,7 @@
 --> informações de tabelas <--
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = N'tb_evento'
+WHERE TABLE_NAME = N'meta_valor'
 --> informações de tabelas <--
 
 --> alter table <--
@@ -299,7 +299,27 @@ from tb_impressora
 left join tb_estoque on tb_impressora.impressora_suprimento = tb_estoque.estoque_id
 left join tb_local on tb_impressora.impressora_local = tb_local.local_id
 where impressora_id = @id
---> Form Impressoras <--
+--> Form Impressora <--
+
+--> Salvar Impressora <--
+INSERT INTO tb_impressora(
+impressora_usercadastro,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_marcamodelo,impressora_suprimento,impressora_ip,impressora_corimpressao,impressora_local,impressora_estado,impressora_dtentrada,impressora_dtsaida
+)
+VALUES(
+@usercadastro,
+@nserie,
+@nnota,
+@nproduto,
+@marcamodelo,
+(select estoque_id from tb_estoque where estoque_nome = @suprimento),
+@ip,
+@corimpressao,
+(select local_id from tb_local where local_nome = @local),
+@estado,
+@dtentrada,
+@dtsaida
+)
+--> Salvar Impressora <--
 
 --> Telefone <--
 select

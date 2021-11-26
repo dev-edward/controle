@@ -64,7 +64,7 @@ Public Class tabpages
 	                    when demanda_status = 4 then 'Descartado' 
 	                    end as 'Status',
                     u3.usuario_user as 'Encarregado',
-                    demanda_prioridade as 'Prioridade',
+                    prioridade.valor_valor as 'Prioridade',
                     Convert(varchar(16),demanda_dtcadastro, 120) as 'Cadastro',
                     u1.usuario_user as 'Cadastrado por',
                     Convert(varchar(16),demanda_dtalteracao, 120) as 'Alteração',
@@ -72,7 +72,9 @@ Public Class tabpages
                     from tb_demanda 
                     left join tb_usuario u1 on demanda_usercadastro = u1.usuario_id
                     left join tb_usuario u2 on demanda_useralteracao = u2.usuario_id
-                    left join tb_usuario u3 on demanda_encarregado = u3.usuario_id"
+                    left join tb_usuario u3 on demanda_encarregado = u3.usuario_id
+                    left join meta_valor prioridade on valor_tabela = 'tb_demanda' and valor_coluna = 'demanda_prioridade' and demanda_prioridade = prioridade.valor_numero"
+
                 larguraColunas.Add(0, 40)
                 larguraColunas.Add(2, 120)
                 larguraColunas.Add(6, 70)
@@ -87,6 +89,7 @@ Public Class tabpages
                     evento_allday as 'O dia inteiro',
                     evento_ativo as 'Ativo'
                     from tb_evento"
+
                 larguraColunas.Add(0, 40)
 
             Case "Dispositivos", "Computador", "Notebook", "Chromebook", "Tablet", "Celular"
