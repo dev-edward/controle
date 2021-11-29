@@ -6,7 +6,7 @@
 --> informações de tabelas <--
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = N'meta_valor'
+WHERE TABLE_NAME = N'tb_estoque'
 --> informações de tabelas <--
 
 --> alter table <--
@@ -239,10 +239,8 @@ dispositivo_armazenamento = @armazenamento,
 dispositivo_bateria = @bateria
 where dispositivo_id = @id
 
-
 update tb_dispositivo set dispositivo_posto=1 where dispositivo_id = 1
 select * from tb_dispositivo
-
 --> Alterar dispositivo <--
 
 --> Impressoras <--

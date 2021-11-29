@@ -610,4 +610,4 @@ values('ANDREA TAMASSAKI ARAUJO DA SILVA','Compras','compras@saojosevm.org.br','
 
 -- Locais
 insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
-values('STI','A',2,'Tecnologia da Informção')
+values('STI','A',2,'Tecnologia da Informação')
