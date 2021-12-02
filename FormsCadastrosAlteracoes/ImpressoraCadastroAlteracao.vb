@@ -11,8 +11,8 @@ Public Class ImpressoraCadastroAlteracao
     Dim pk As Integer
     Const tabela As String = "impressora"
 
-    Dim suprimentos As New Dictionary(Of Integer, String)
-    Dim locais As New Dictionary(Of Integer, String)
+    Dim suprimentos As New Dictionary(Of String, Integer)
+    Dim locais As New Dictionary(Of String, Integer)
 
     Dim lbl_maxchar As New Label With {
         .Size = New Size(50, 16),
@@ -150,7 +150,8 @@ Public Class ImpressoraCadastroAlteracao
         .Size = tamanholbl,
         .TextAlign = ContentAlignment.MiddleRight,
         .CheckAlign = ContentAlignment.MiddleRight,
-        .Location = New Point(lbl_nserie.Location.X, lbl_estado.Location.Y + tamanholbl.Height)
+        .Location = New Point(lbl_nserie.Location.X, lbl_estado.Location.Y + tamanholbl.Height),
+        .Checked = True
     }
     Dim dtp_dtentrada As New DateTimePicker With {
         .Font = fonte,
@@ -164,7 +165,8 @@ Public Class ImpressoraCadastroAlteracao
         .Size = tamanholbl,
         .TextAlign = ContentAlignment.MiddleRight,
         .CheckAlign = ContentAlignment.MiddleRight,
-        .Location = New Point(lbl_nserie.Location.X, cbx_dtentrada.Location.Y + tamanholbl.Height)
+        .Location = New Point(lbl_nserie.Location.X, cbx_dtentrada.Location.Y + tamanholbl.Height),
+        .Checked = True
     }
     Dim dtp_dtsaida As New DateTimePicker With {
         .Font = fonte,
@@ -172,8 +174,6 @@ Public Class ImpressoraCadastroAlteracao
         .Format = DateTimePickerFormat.Short,
         .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, cbx_dtsaida.Location.Y)
     }
-
-
     Dim btn_salvar As New Button With {
         .Text = "Salvar",
         .Font = fonte,
@@ -244,11 +244,12 @@ Public Class ImpressoraCadastroAlteracao
             conexao.Open()
             myReader = consulta.ExecuteReader()
             Do While myReader.Read()
-                suprimentos.Add(myReader.GetValue("estoque_id"), myReader.GetString("estoque_nome"))
+                suprimentos.Add(myReader.GetString("estoque_nome"), myReader.GetValue("estoque_id"))
+                cmb_suprimento.Items.Add(suprimentos.Last.Key)
             Loop
-            For Each kvp As KeyValuePair(Of Integer, String) In suprimentos
-                cmb_suprimento.Items.Add(kvp.Value)
-            Next
+            'For Each kvp As KeyValuePair(Of String, Integer) In suprimentos
+            '    cmb_suprimento.Items.Add(kvp.Key)
+            'Next
 
             myReader.Close()
         Catch ex As Exception
@@ -261,16 +262,17 @@ Public Class ImpressoraCadastroAlteracao
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select local_nome from tb_local"
+            consulta.CommandText = "select local_id, local_nome from tb_local"
             conexao.Open()
             myReader = consulta.ExecuteReader()
             Do While myReader.Read()
-                cmb_local.Items.Add(myReader.GetString(0))
+                locais.Add(myReader.GetString("local_nome"), myReader.GetValue("local_id"))
+                cmb_local.Items.Add(locais.Last.Key)
             Loop
 
             myReader.Close()
         Catch ex As Exception
-            MessageBox.Show("Não foi possivel carregar lista de suprimentos: " & ex.Message, "Classe ImpressoraCadastroAlteracao")
+            MessageBox.Show("Não foi possivel carregar lista de locais: " & ex.Message, "Classe ImpressoraCadastroAlteracao")
         Finally
             conexao.Close()
         End Try
@@ -409,69 +411,70 @@ Public Class ImpressoraCadastroAlteracao
         dtp_dtsaida.Visible = sender.checked
     End Sub
     Private Sub salvar()
-        MessageBox.Show(suprimentos.ContainsValue(cmb_suprimento.Text))
 
-        'Try
-        '    conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
-        '    consulta = conexao.CreateCommand
+            consulta = conexao.CreateCommand
 
-        '    consulta.CommandText = "INSERT INTO tb_impressora(
-        '                                impressora_usercadastro,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_marcamodelo,impressora_suprimento,impressora_ip,impressora_corimpressao,impressora_local,impressora_estado,impressora_dtentrada,impressora_dtsaida
-        '                            )
-        '                            VALUES(
-        '                                @usercadastro,
-        '                                @nserie,
-        '                                @nnota,
-        '                                @nproduto,
-        '                                @marcamodelo,
-        '                                (select estoque_id from tb_estoque where estoque_nome = @suprimento),
-        '                                @ip,
-        '                                @corimpressao,
-        '                                (select local_id from tb_local where local_nome = @local),
-        '                                @estado,
-        '                                @dtentrada,
-        '                                @dtsaida
-        '                            )
-        '                            select scope_identity()"
+            consulta.CommandText = "INSERT INTO tb_impressora(
+                                        impressora_usercadastro,impressora_nserie,impressora_nnota,impressora_nproduto,impressora_marcamodelo,impressora_suprimento,impressora_ip,impressora_corimpressao,impressora_local,impressora_estado,impressora_dtentrada,impressora_dtsaida
+                                    )
+                                    VALUES(
+                                        @usercadastro,
+                                        @nserie,
+                                        @nnota,
+                                        @nproduto,
+                                        @marcamodelo,
+                                        @suprimento,
+                                        @ip,
+                                        @corimpressao,
+                                        @local,
+                                        @estado,
+                                        @dtentrada,
+                                        @dtsaida
+                                    )
+                                    select scope_identity()"
 
-        '    consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
-        '    consulta.Parameters.AddWithValue("@nserie", txt_nserie.Text)
-        '    consulta.Parameters.AddWithValue("@nnota", txt_nnota.Text)
-        '    consulta.Parameters.AddWithValue("@nproduto", txt_nproduto.Text)
-        '    consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
+            consulta.Parameters.AddWithValue("@usercadastro", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@nserie", txt_nserie.Text)
+            consulta.Parameters.AddWithValue("@nnota", txt_nnota.Text)
+            consulta.Parameters.AddWithValue("@nproduto", txt_nproduto.Text)
+            consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
 
-        '    consulta.Parameters.AddWithValue("@suprimento", cmb_suprimento.SelectedItem)
+            consulta.Parameters.AddWithValue("@suprimento", If(cmb_suprimento.SelectedItem IsNot Nothing, suprimentos.Item(cmb_suprimento.SelectedItem), Nothing))
 
-        '    consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
 
-        '    If rbt_cor.Checked Then
-        '        consulta.Parameters.AddWithValue("@corimpressao", 1)
-        '    ElseIf rbt_peb.Checked Then
-        '        consulta.Parameters.AddWithValue("@corimpressao", 0)
-        '    Else
-        '        consulta.Parameters.AddWithValue("@corimpressao", Nothing)
-        '    End If
 
-        '    consulta.Parameters.AddWithValue("@local", If(cmb_local.SelectedItem IsNot Nothing, cmb_local.SelectedItem, MessageBox.Show("selecione o local")))
+            consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
 
-        '    consulta.Parameters.AddWithValue("@estado", cmb_estado.SelectedIndex + 1)
-        '    consulta.Parameters.AddWithValue("@dtentrada", If(cbx_dtentrada.Checked, dtp_dtentrada.Value, Nothing))
-        '    consulta.Parameters.AddWithValue("@dtsaida", If(cbx_dtentrada.Checked, dtp_dtsaida.Value, Nothing))
+            If rbt_cor.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 1)
+            ElseIf rbt_peb.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 0)
+            Else
+                consulta.Parameters.AddWithValue("@corimpressao", Nothing)
+            End If
 
-        '    conexao.Open()
+            consulta.Parameters.AddWithValue("@suprimento", If(cmb_local.SelectedItem IsNot Nothing, locais.Item(cmb_local.SelectedItem), Nothing))
 
-        '    myReader = consulta.ExecuteReader()
-        '    myReader.Read()
-        '    novoid = myReader.GetValue(0)
+            consulta.Parameters.AddWithValue("@estado", cmb_estado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@dtentrada", If(cbx_dtentrada.Checked, dtp_dtentrada.Value, Nothing))
+            consulta.Parameters.AddWithValue("@dtsaida", If(cbx_dtentrada.Checked, dtp_dtsaida.Value, Nothing))
 
-        '    Dim verEvento = New EventoCadastroAlteracao(novoid)
-        '    myReader.Close()
-        'Catch ex As Exception
-        '    MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")
-        'Finally
-        '    conexao.Close()
-        'End Try
+            conexao.Open()
+
+            myReader = consulta.ExecuteReader()
+            myReader.Read()
+            novoid = myReader.GetValue(0)
+
+            Dim verEvento = New EventoCadastroAlteracao(novoid)
+            myReader.Close()
+        Catch ex As Exception
+            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")
+        Finally
+            conexao.Close()
+        End Try
     End Sub
     Private Sub notas()
         If Application.OpenForms.OfType(Of listarNotas).Any() Then
