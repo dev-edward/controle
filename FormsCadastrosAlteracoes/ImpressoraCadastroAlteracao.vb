@@ -336,6 +336,7 @@ Public Class ImpressoraCadastroAlteracao
                                         impressora_nproduto,
                                         impressora_marcamodelo,
                                         tb_estoque.estoque_nome,
+                                        impressora_ip,
                                         case 
                                         when impressora_corimpressao = 0 then 0
                                         when impressora_corimpressao = 1 then 1
@@ -363,6 +364,9 @@ Public Class ImpressoraCadastroAlteracao
             txt_marcaModelo.Text = If(myReader.IsDBNull("impressora_marcamodelo"), "", myReader.GetString("impressora_marcamodelo"))
 
             cmb_suprimento.SelectedItem = If(myReader.IsDBNull("estoque_nome"), "", myReader.GetString("estoque_nome"))
+
+            txt_ip.Text = If(myReader.IsDBNull("impressora_ip"), "", myReader.GetString("impressora_ip"))
+
             If (myReader.IsDBNull("impressora_corimpressao")) Then
                 rbt_cor.Checked = False
                 rbt_peb.Checked = False
@@ -373,6 +377,7 @@ Public Class ImpressoraCadastroAlteracao
                     rbt_cor.Checked = True
                 End If
             End If
+
             cmb_local.SelectedItem = If(myReader.IsDBNull("local_nome"), "", myReader.GetString("local_nome"))
             cmb_estado.SelectedIndex = If(myReader.IsDBNull("impressora_estado"), 0, myReader.GetValue("impressora_estado") - 1)
 
@@ -442,7 +447,7 @@ Public Class ImpressoraCadastroAlteracao
             consulta.Parameters.AddWithValue("@nproduto", txt_nproduto.Text)
             consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
 
-            consulta.Parameters.AddWithValue("@suprimento", If(cmb_suprimento.SelectedItem IsNot Nothing, suprimentos.Item(cmb_suprimento.SelectedItem), Nothing))
+            consulta.Parameters.AddWithValue("@suprimento", If(cmb_suprimento.SelectedItem IsNot Nothing, suprimentos.Item(cmb_suprimento.SelectedItem), DBNull.Value))
 
 
 
@@ -453,14 +458,14 @@ Public Class ImpressoraCadastroAlteracao
             ElseIf rbt_peb.Checked Then
                 consulta.Parameters.AddWithValue("@corimpressao", 0)
             Else
-                consulta.Parameters.AddWithValue("@corimpressao", Nothing)
+                consulta.Parameters.AddWithValue("@corimpressao", DBNull.Value)
             End If
 
-            consulta.Parameters.AddWithValue("@suprimento", If(cmb_local.SelectedItem IsNot Nothing, locais.Item(cmb_local.SelectedItem), Nothing))
+            consulta.Parameters.AddWithValue("@local", If(cmb_local.SelectedItem IsNot Nothing, locais.Item(cmb_local.SelectedItem), DBNull.Value))
 
             consulta.Parameters.AddWithValue("@estado", cmb_estado.SelectedIndex + 1)
-            consulta.Parameters.AddWithValue("@dtentrada", If(cbx_dtentrada.Checked, dtp_dtentrada.Value, Nothing))
-            consulta.Parameters.AddWithValue("@dtsaida", If(cbx_dtentrada.Checked, dtp_dtsaida.Value, Nothing))
+            consulta.Parameters.AddWithValue("@dtentrada", If(cbx_dtentrada.Checked, dtp_dtentrada.Value, DBNull.Value))
+            consulta.Parameters.AddWithValue("@dtsaida", If(cbx_dtsaida.Checked, dtp_dtsaida.Value, DBNull.Value))
 
             conexao.Open()
 
@@ -468,7 +473,7 @@ Public Class ImpressoraCadastroAlteracao
             myReader.Read()
             novoid = myReader.GetValue(0)
 
-            Dim verEvento = New EventoCadastroAlteracao(novoid)
+            Dim verEvento = New ImpressoraCadastroAlteracao(novoid)
             myReader.Close()
         Catch ex As Exception
             MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")

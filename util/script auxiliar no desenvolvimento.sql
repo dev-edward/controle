@@ -275,7 +275,7 @@ left join tb_estoque suprimento on impressora_suprimento = suprimento.estoque_id
 --> Impressoras <--
 
 --> Form Impressoras <--
-declare @id as int=2
+declare @id as int=1
 declare @tabela as nvarchar = 'impressora'
 select 
 impressora_id,
@@ -284,6 +284,7 @@ impressora_nnota,
 impressora_nproduto,
 impressora_marcamodelo,
 tb_estoque.estoque_nome,
+impressora_ip,
 case 
 when impressora_corimpressao = 0 then 0
 when impressora_corimpressao = 1 then 1

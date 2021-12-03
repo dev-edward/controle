@@ -611,3 +611,56 @@ values('ANDREA TAMASSAKI ARAUJO DA SILVA','Compras','compras@saojosevm.org.br','
 -- Locais
 insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
 values('STI','A',2,'Tecnologia da Informação')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Biblioteca',null,1,'Biblioteca da escola')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Casa das Irmãs',null,2,'Casa das Irmã, em frente à escola')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Casa São Jose',null,null,'Sede em Santo André')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Contas a receber','A',1,'Tecnologia da Informação')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Diretoria ADM','A',2,'Sala da Eloisa')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Educação Infantil',null,1,'Sala da coordenação infantil, sala da Ariane')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('EFAI','B',0,'Sala da coordenação do EFAI, sala da Suzanete')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('EM/EFAF','C',1,'Sala da coordenação EM/EFAF, sala da Bruna/Amanda')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Escritório','A',1,'Sala do Financeiro')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Marketing','A',2,'Sala do marketing junto com o de compras')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Pastoral','B',1,'Sala da pastoral ao lado da reprografia')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('RH','A',2,'Sala dos Recursos Humanos')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Reprografia','B',1,'Sala da Reprografia')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Secretaria','A',1,'Sala da secretaria')
+
+insert into tb_local(local_nome,local_bloco,local_andar,local_descricao)
+values('Social','A',1,'Sala da assistencia social')
+
+
+
+
+
+
+
+
