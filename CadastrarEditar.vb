@@ -44,7 +44,11 @@
             Case "Cameras"
 
             Case "Telefones"
-
+                If _cadastro Then
+                    Dim cadastroTelefone As New TelefoneCadastroAlteracao()
+                Else
+                    Dim detalheTelefone As New TelefoneCadastroAlteracao(_pk)
+                End If
             Case "Emails"
 
             Case "Skypes"

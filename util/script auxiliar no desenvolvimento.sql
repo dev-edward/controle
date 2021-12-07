@@ -285,10 +285,7 @@ impressora_nproduto,
 impressora_marcamodelo,
 tb_estoque.estoque_nome,
 impressora_ip,
-case 
-when impressora_corimpressao = 0 then 0
-when impressora_corimpressao = 1 then 1
-end as 'impressora_corimpressao',
+impressora_corimpressao,
 tb_local.local_nome,
 impressora_estado,
 impressora_dtentrada,
@@ -320,6 +317,24 @@ VALUES(
 )
 --> Salvar Impressora <--
 
+--> Alterar Impressora <--
+UPDATE tb_impressora SET
+impressora_dtalteracao = GETDATE(),
+impressora_useralteracao = @useralteracao,
+impressora_nserie = @nserie,
+impressora_nnota = @nnota,
+impressora_nproduto = @nproduto,
+impressora_marcamodelo = @marcamodelo,
+impressora_suprimento = @suprimento,
+impressora_ip = @ip,
+impressora_corimpressao = @corimpresao,
+impressora_local = @local,
+impressora_estado = @estado,
+impressora_dtentrada = @entrada,
+impressora_dtsaida = @saida
+where impressora_id = @id
+--> Alterar Impressora <--
+
 --> Telefone <--
 select
 telefone_id as 'ID',
@@ -330,6 +345,23 @@ tipo.valor_valor as 'Tipo'
 from tb_telefone
 left join meta_valor tipo on valor_tabela = 'tb_telefone' and valor_coluna = 'telefone_tipo' and telefone_tipo = tipo.valor_numero
 --> Telefone <--
+
+--> Form Telefone <--
+select
+telefone_numero,
+telefone_pessoa,
+telefone_local,
+meta_valor.valor_valor as 'tipo',
+(select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_telefone
+left join meta_valor on tb_telefone.telefone_tipo = meta_valor.valor_numero
+and meta_valor.valor_tabela = 'tb_telefone' 
+and meta_valor.valor_coluna = 'telefone_tipo'
+where telefone_id = @id
+
+
+select * from meta_valor
+--> Form Telefone <--
 
 --> E-mails <--
 select

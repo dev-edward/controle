@@ -62,3 +62,4 @@ C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.DemandaD
 C:\Users\E-Corp\source\repos\controle\obj\Debug\net5.0-windows\Controle.DemandaEstado.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.DemandaDetalhes.resources
 C:\Users\edward.huayta\source\repos\controle\obj\Debug\net5.0-windows\Controle.DemandaEstado.resources
+C:\Users\edward.huayta\source\repos\controle\bin\Debug\net5.0-windows\Controle.dll.config

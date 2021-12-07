@@ -141,9 +141,6 @@ Public Class EventoCadastroAlteracao
 
     End Sub
     Private Sub carregarControles()
-        If classesAbertas.atualCadAltEventos IsNot Nothing Then
-            classesAbertas.atualCadAltEventos.Close()
-        End If
         classesAbertas.setAtualCadAltEventos(frm_evento)
 
         AddHandler txt_descricao.KeyUp, AddressOf txt_KeyUp
@@ -279,6 +276,7 @@ Public Class EventoCadastroAlteracao
         carregarDados()
     End Sub
     Private Sub alterar()
+        alternarReadOnly()
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
@@ -306,7 +304,7 @@ Public Class EventoCadastroAlteracao
             consulta.ExecuteNonQuery()
 
         Catch ex As Exception
-            MessageBox.Show("Erro ao atualizar evento: " & ex.Message, "Classe DemandaDetalhes")
+            MessageBox.Show("Erro ao atualizar evento: " & ex.Message, "Classe EventoCadastroAlteracao")
         Finally
             conexao.Close()
         End Try
@@ -320,11 +318,14 @@ Public Class EventoCadastroAlteracao
         End If
     End Sub
     Private Sub txt_GotFocus(sender As Object, e As EventArgs)
-        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y - 16)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y + 24)
         frm_evento.Controls.Add(lbl_maxchar)
         lbl_maxchar.BringToFront()
         If (sender.TextLength = 0) Then
             lbl_maxchar.Visible = False
+        Else
+            lbl_maxchar.Visible = True
         End If
     End Sub
     Private Sub txt_LostFocus(sender As Object, e As EventArgs)

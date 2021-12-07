@@ -334,31 +334,31 @@ Public Class Principal
     End Sub
     Private Sub mi_camera_Click()
         If tabCentro.TabPages("Cameras") Is Nothing Then
-            Dim tab_projetor As New tabpages("Cameras")
+            Dim tab_camera As New tabpages("Cameras")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Cameras")
     End Sub
     Private Sub si_telefone_Click()
         If tabCentro.TabPages("Telefones") Is Nothing Then
-            Dim tab_projetor As New tabpages("Telefones")
+            Dim tab_telefone As New tabpages("Telefones")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Telefones")
     End Sub
     Private Sub si_email_Click()
         If tabCentro.TabPages("Emails") Is Nothing Then
-            Dim tab_projetor As New tabpages("Emails")
+            Dim tab_email As New tabpages("Emails")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Emails")
     End Sub
     Private Sub si_skype_Click()
         If tabCentro.TabPages("Skypes") Is Nothing Then
-            Dim tab_projetor As New tabpages("Skypes")
+            Dim tab_skype As New tabpages("Skypes")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Skypes")
     End Sub
     Private Sub si_totvsrm_Click()
         If tabCentro.TabPages("TotvsRM") Is Nothing Then
-            Dim tab_projetor As New tabpages("TotvsRM")
+            Dim tab_totvsrm As New tabpages("TotvsRM")
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("TotvsRM")
     End Sub

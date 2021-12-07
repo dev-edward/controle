@@ -173,7 +173,7 @@ Public Class tabpages
                     telefone_local as 'Local',
                     tipo.valor_valor as 'Tipo'
                     from tb_telefone
-                    inner join meta_valor tipo on valor_tabela = 'tb_telefone' and valor_coluna = 'telefone_tipo' and telefone_tipo = tipo.valor_numero"
+                    left join meta_valor tipo on valor_tabela = 'tb_telefone' and valor_coluna = 'telefone_tipo' and telefone_tipo = tipo.valor_numero"
                 larguraColunas.Add(0, 40)
 
             Case "Emails"

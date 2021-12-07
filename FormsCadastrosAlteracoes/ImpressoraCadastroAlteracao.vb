@@ -229,14 +229,24 @@ Public Class ImpressoraCadastroAlteracao
         AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
     Private Sub iniciar()
-        If classesAbertas.atualCadAltImpressoras IsNot Nothing Then
-            classesAbertas.atualCadAltImpressoras.Close()
-        End If
         classesAbertas.setAtualCadAltImpressoras(frm_impressora)
+
+        AddHandler txt_nserie.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_nserie.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_nserie.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_nnota.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_nnota.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_nnota.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_nproduto.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_nproduto.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_nproduto.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_marcaModelo.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_marcaModelo.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_marcaModelo.LostFocus, AddressOf txt_LostFocus
 
         cmb_estado.Items.AddRange({"Ativo", "Inativo", "Devolvido"})
 
-        ''carregando suprimentos
+        'carregando suprimentos
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
@@ -337,10 +347,7 @@ Public Class ImpressoraCadastroAlteracao
                                         impressora_marcamodelo,
                                         tb_estoque.estoque_nome,
                                         impressora_ip,
-                                        case 
-                                        when impressora_corimpressao = 0 then 0
-                                        when impressora_corimpressao = 1 then 1
-                                        end as 'impressora_corimpressao',
+                                        impressora_corimpressao,
                                         tb_local.local_nome,
                                         impressora_estado,
                                         impressora_dtentrada,
@@ -449,8 +456,6 @@ Public Class ImpressoraCadastroAlteracao
 
             consulta.Parameters.AddWithValue("@suprimento", If(cmb_suprimento.SelectedItem IsNot Nothing, suprimentos.Item(cmb_suprimento.SelectedItem), DBNull.Value))
 
-
-
             consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
 
             If rbt_cor.Checked Then
@@ -498,6 +503,80 @@ Public Class ImpressoraCadastroAlteracao
         carregarDados()
     End Sub
     Private Sub alterar()
+        alternarReadOnly()
+        Try
+            conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
+            consulta = conexao.CreateCommand
+            consulta.CommandText = "UPDATE tb_impressora SET
+                                    impressora_dtalteracao = GETDATE(),
+                                    impressora_useralteracao = @useralteracao,
+                                    impressora_nserie = @nserie,
+                                    impressora_nnota = @nnota,
+                                    impressora_nproduto = @nproduto,
+                                    impressora_marcamodelo = @marcamodelo,
+                                    impressora_suprimento = @suprimento,
+                                    impressora_ip = @ip,
+                                    impressora_corimpressao = @corimpressao,
+                                    impressora_local = @local,
+                                    impressora_estado = @estado,
+                                    impressora_dtentrada = @dtentrada,
+                                    impressora_dtsaida = @dtsaida
+                                    where impressora_id = @id"
+
+            consulta.Parameters.AddWithValue("@useralteracao", usuario.usuario_id)
+            consulta.Parameters.AddWithValue("@nserie", txt_nserie.Text)
+            consulta.Parameters.AddWithValue("@nnota", txt_nnota.Text)
+            consulta.Parameters.AddWithValue("@nproduto", txt_nproduto.Text)
+            consulta.Parameters.AddWithValue("@marcamodelo", txt_marcaModelo.Text)
+            consulta.Parameters.AddWithValue("@suprimento", If(cmb_suprimento.SelectedItem IsNot Nothing, suprimentos.Item(cmb_suprimento.SelectedItem), DBNull.Value))
+            consulta.Parameters.AddWithValue("@ip", txt_ip.Text)
+
+            If rbt_cor.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 1)
+            ElseIf rbt_peb.Checked Then
+                consulta.Parameters.AddWithValue("@corimpressao", 0)
+            Else
+                consulta.Parameters.AddWithValue("@corimpressao", DBNull.Value)
+            End If
+
+            consulta.Parameters.AddWithValue("@local", If(cmb_local.SelectedItem IsNot Nothing, locais.Item(cmb_local.SelectedItem), DBNull.Value))
+            consulta.Parameters.AddWithValue("@estado", cmb_estado.SelectedIndex + 1)
+            consulta.Parameters.AddWithValue("@dtentrada", If(cbx_dtentrada.Checked, dtp_dtentrada.Value, DBNull.Value))
+            consulta.Parameters.AddWithValue("@dtsaida", If(cbx_dtsaida.Checked, dtp_dtsaida.Value, DBNull.Value))
+            consulta.Parameters.AddWithValue("@id", pk)
+
+            conexao.Open()
+
+            consulta.ExecuteNonQuery()
+
+        Catch ex As Exception
+            MessageBox.Show("Erro ao atualizar impressora: " & ex.Message, "Classe IpressoraCadastroAlteracao")
+        Finally
+            conexao.Close()
+        End Try
+
+        carregarDados()
+    End Sub
+
+    Private Sub txt_KeyUp(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        If (sender.TextLength > 0 And Not lbl_maxchar.Visible) Then
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_GotFocus(sender As Object, e As EventArgs)
+        lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y + 24)
+        frm_impressora.Controls.Add(lbl_maxchar)
+        lbl_maxchar.BringToFront()
+        If (sender.TextLength = 0) Then
+            lbl_maxchar.Visible = False
+        Else
+            lbl_maxchar.Visible = True
+        End If
+    End Sub
+    Private Sub txt_LostFocus(sender As Object, e As EventArgs)
+        frm_impressora.Controls.Remove(lbl_maxchar)
     End Sub
 End Class

@@ -201,18 +201,16 @@ Public Class DispositivoCadastroAlteracao
         .Location = New Point(45, txt_bateria.Location.Y + tamanholbl.Height + 10)
     }
     Friend Sub New(ByVal _dispositivo As String)
-        carregarControles()
+        iniciar()
         frm_dispositivo.Controls.Add(btn_salvar)
-        If _dispositivo = "Dispositivos" Then
-            cmb_tipo.SelectedIndex = 0
-        Else
+        If _dispositivo <> "Dispositivos" Then
             cmb_tipo.SelectedItem = _dispositivo
         End If
         AddHandler btn_salvar.Click, AddressOf salvar
     End Sub
     Friend Sub New(ByVal _pk As Integer)
         pk = _pk
-        carregarControles()
+        iniciar()
         alternarReadOnly()
         carregarDados()
         frm_dispositivo.Controls.Add(btn_notas)
@@ -224,10 +222,7 @@ Public Class DispositivoCadastroAlteracao
         AddHandler btn_cancelar.Click, AddressOf editarCancelar
         AddHandler btn_alterar.Click, AddressOf alterar
     End Sub
-    Private Sub carregarControles()
-        If classesAbertas.atualCadAltDispositivos IsNot Nothing Then
-            classesAbertas.atualCadAltDispositivos.Close()
-        End If
+    Private Sub iniciar()
         classesAbertas.setAtualCadAltDispositivos(frm_dispositivo)
 
         AddHandler txt_marcaModelo.KeyUp, AddressOf txt_KeyUp
@@ -410,6 +405,7 @@ Public Class DispositivoCadastroAlteracao
         carregarDados()
     End Sub
     Private Sub alterar()
+        alternarReadOnly()
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
 
@@ -465,7 +461,7 @@ Public Class DispositivoCadastroAlteracao
     End Sub
     Private Sub txt_GotFocus(sender As Object, e As EventArgs)
         lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
-        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y - 16)
+        lbl_maxchar.Location = New Point(sender.location.x + 6, sender.location.y + 24)
         frm_dispositivo.Controls.Add(lbl_maxchar)
         lbl_maxchar.BringToFront()
         If (sender.TextLength = 0) Then
