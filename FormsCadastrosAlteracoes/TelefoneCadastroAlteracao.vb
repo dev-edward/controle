@@ -190,8 +190,8 @@ Public Class TelefoneCadastroAlteracao
             myReader = consulta.ExecuteReader()
             myReader.Read()
 
-            txt_numero.Text = if(myReader.GetString("telefone_numero"),",myReader.GetString("telefone_numero"))
-            txt_pessoa.Text = myReader.GetString("telefone_pessoa")
+            txt_numero.Text = If(myReader.IsDBNull("telefone_numero"), "", myReader.GetString("telefone_numero"))
+            txt_pessoa.Text = If(myReader.IsDBNull("telefone_pessoa"), "", myReader.GetString("telefone_pessoa"))
             txt_local.Text = myReader.GetString("telefone_local")
             cmb_tipo.SelectedItem = If(myReader.IsDBNull("tipo"), "", myReader.GetString("tipo"))
 
