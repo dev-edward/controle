@@ -100,11 +100,11 @@ Public Class ImpressoraCadastroAlteracao
         .TextAlign = ContentAlignment.MiddleRight,
         .Location = New Point(lbl_nserie.Location.X, lbl_suprimento.Location.Y + tamanholbl.Height)
     }
-    Dim txt_ip As New MaskedTextBox With {
+    Dim WithEvents txt_ip As New TextBox With {
         .Size = New Size(140, 30),
         .Font = fonte,
         .Location = New Point(lbl_nserie.Location.X + tamanholbl.Width, lbl_ip.Location.Y),
-        .Mask = "###.###.###.###"
+        .MaxLength = 15
     }
     Dim rbt_cor As New RadioButton With {
         .Text = "Colorido",
@@ -478,10 +478,10 @@ Public Class ImpressoraCadastroAlteracao
             myReader.Read()
             novoid = myReader.GetValue(0)
 
-            Dim verEvento = New ImpressoraCadastroAlteracao(novoid)
+            Dim verImpressora = New ImpressoraCadastroAlteracao(novoid)
             myReader.Close()
         Catch ex As Exception
-            MessageBox.Show("Erro ao Cadastrar Evento: " & ex.Message, "Classe EventoCadastroAlteracao")
+            MessageBox.Show("Erro ao Cadastrar Impressora: " & ex.Message, "Classe ImpressoraCadastroAlteracao")
         Finally
             conexao.Close()
         End Try
@@ -558,7 +558,9 @@ Public Class ImpressoraCadastroAlteracao
 
         carregarDados()
     End Sub
-
+    Private Sub txt_ip_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_ip.KeyPress
+        e.Handled = Not (Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = 8)
+    End Sub
     Private Sub txt_KeyUp(sender As Object, e As EventArgs)
         lbl_maxchar.Text = "(" & sender.TextLength & "/" & sender.MaxLength & ")"
         If (sender.TextLength > 0 And Not lbl_maxchar.Visible) Then

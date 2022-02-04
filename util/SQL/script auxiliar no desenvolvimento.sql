@@ -358,11 +358,25 @@ left join meta_valor on tb_telefone.telefone_tipo = meta_valor.valor_numero
 and meta_valor.valor_tabela = 'tb_telefone' 
 and meta_valor.valor_coluna = 'telefone_tipo'
 where telefone_id = @id
-
-
-select * from meta_valor
 --> Form Telefone <--
 
+--> Salvar Telefone <--
+insert into tb_telefone(telefone_id, telefone_numero, telefone_pessoa, telefone_local, telefone_tipo)
+values(
+@numero,
+@pessoa,
+@local,
+@tipo
+)
+--> Salvar Telefone <--
+--> Alterar Telefone <--
+UPDATE tb_telefone SET
+telefone_numero = @numero,
+telefone_pessoa = @pessoa,
+telefone_local = @local,
+telefone_tipo = @tipo
+where telefone_id = @id
+--> Alterar Telefone <--
 --> E-mails <--
 select
 email_id as 'ID',
@@ -383,7 +397,24 @@ email_outlook_ass_servico as 'Serviço na Assinatura Outlook'
 from tb_email
 left join meta_valor on valor_tabela = 'tb_email' and valor_coluna = 'email_grupo' and email_grupo = meta_valor.valor_numero  
 --> E-mails <--
-
+--> Form E-mails <--
+select
+email_id,
+email_nome,
+email_setor,
+email_email,
+email_senha,
+email_dominio,
+email_estado,
+email_grupo,
+email_outlook_nome,
+email_outlook_ass_nome,
+email_outlook_ass_servico
+from 
+tb_email
+where 
+email_id=@id
+--> Form E-mails <--
 --> Skype <--
 select
 skype_id as 'ID',

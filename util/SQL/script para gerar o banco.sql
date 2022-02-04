@@ -115,7 +115,7 @@ CREATE TABLE tb_email
 	email_nome NVARCHAR(40),
 	email_setor NVARCHAR(30),
 	email_email NVARCHAR(40),
-	email_senha NVARCHAR(16),
+	email_senha NVARCHAR(20),
 	email_dominio NVARCHAR(20),
 	email_estado TINYINT,
 	email_grupo TINYINT,
@@ -468,6 +468,7 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',1,'Ramal')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',2,'Telefone')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',3,'Celular')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_telefone','telefone_tipo',4,'Whatsapp')
 --
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',1,'Uma vez')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_evento','evento_frequencia',2,'Diário')
