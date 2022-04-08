@@ -135,6 +135,16 @@ Public Class TelefoneCadastroAlteracao
     Private Sub iniciar()
         classesAbertas.setAtualCadAltTelefones(frm_telefone)
 
+        AddHandler txt_numero.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_numero.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_numero.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_pessoa.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_pessoa.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_pessoa.LostFocus, AddressOf txt_LostFocus
+        AddHandler txt_local.KeyUp, AddressOf txt_KeyUp
+        AddHandler txt_local.GotFocus, AddressOf txt_GotFocus
+        AddHandler txt_local.LostFocus, AddressOf txt_LostFocus
+
         cmb_tipo.Items.Add("Ramal")
         cmb_tipo.Items.Add("Telefone")
         cmb_tipo.Items.Add("Celular")

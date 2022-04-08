@@ -50,8 +50,11 @@
                     Dim detalheTelefone As New TelefoneCadastroAlteracao(_pk)
                 End If
             Case "Emails"
-
-
+                If _cadastro Then
+                    Dim cadastroEmail As New EmailCadastroAlteracao()
+                Else
+                    Dim detalheEmail As New EmailCadastroAlteracao(_pk)
+                End If
             Case "Skypes"
 
             Case "TotvsRM"
