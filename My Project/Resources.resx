@@ -145,6 +145,12 @@
   <data name="notas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\64x64\notas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="olho_aberto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\64x64\olho-aberto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="olho_fechado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\img\64x64\olho-fechado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="orig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\img\background\orig.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

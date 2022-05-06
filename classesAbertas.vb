@@ -9,7 +9,7 @@
     Public Shared atualCadAltImpressoras As Form
     Public Shared atualCadAltTelefones As Form
     Public Shared atualCadAltEmails As Form
-
+    Public Shared atualCadAltEstoque As Form
 
     Shared Sub setAtualListaDemandas(ByRef _atualListaDemandas As DemandaLista)
         atualListaDemandas = _atualListaDemandas
@@ -55,6 +55,12 @@
             atualCadAltEmails.Close()
         End If
         atualCadAltEmails = _atualCadAltEmails
+    End Sub
+    Shared Sub setAtualCadAltEstoque(ByRef _atualCadAltEstoque As Form)
+        If atualCadAltEstoque IsNot Nothing Then
+            atualCadAltEstoque.Close()
+        End If
+        atualCadAltEstoque = _atualCadAltEstoque
     End Sub
 
 End Class

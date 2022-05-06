@@ -106,8 +106,10 @@ Partial Class teste
         '
         Me.TextBox3.Location = New System.Drawing.Point(98, 123)
         Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.TextBox3.Size = New System.Drawing.Size(121, 23)
         Me.TextBox3.TabIndex = 6
+        Me.TextBox3.Text = "1234567890"
         '
         'Label5
         '

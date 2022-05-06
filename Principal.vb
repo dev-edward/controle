@@ -100,7 +100,7 @@ Public Class Principal
     Dim mi_contas As New ToolStripMenuItem("Contas")
     Dim si_telefone As New ToolStripMenuItem("Telefone")
     Dim si_email As New ToolStripMenuItem("E-mail")
-    Dim si_skype As New ToolStripMenuItem("Skype")
+    'Dim si_skype As New ToolStripMenuItem("Skype")
     Dim si_totvsrm As New ToolStripMenuItem("Totvs RM")
 
     Dim mi_pessoas As New ToolStripMenuItem("Pessoas")
@@ -154,7 +154,7 @@ Public Class Principal
         mi_dispositivos.DropDownItems.Add(si_celular)
         mi_contas.DropDownItems.Add(si_telefone)
         mi_contas.DropDownItems.Add(si_email)
-        mi_contas.DropDownItems.Add(si_skype)
+        'mi_contas.DropDownItems.Add(si_skype)
         'mi_contas.DropDownItems.Add(si_totvsrm)
         AddHandler mi_demanda.Click, AddressOf mi_demanda_Click
         AddHandler mi_eventos.Click, AddressOf mi_eventos_Click
@@ -170,7 +170,7 @@ Public Class Principal
         AddHandler mi_camera.Click, AddressOf mi_camera_Click
         AddHandler si_email.Click, AddressOf si_email_Click
         AddHandler si_telefone.Click, AddressOf si_telefone_Click
-        AddHandler si_skype.Click, AddressOf si_skype_Click
+        'AddHandler si_skype.Click, AddressOf si_skype_Click
         AddHandler si_totvsrm.Click, AddressOf si_totvsrm_Click
         AddHandler mi_pessoas.Click, AddressOf mi_pessoas_Click
         AddHandler mi_estoque.Click, AddressOf mi_estoque_Click
@@ -350,12 +350,12 @@ Public Class Principal
         End If
         tabCentro.SelectedTab = tabCentro.TabPages("Emails")
     End Sub
-    Private Sub si_skype_Click()
-        If tabCentro.TabPages("Skypes") Is Nothing Then
-            Dim tab_skype As New tabpages("Skypes")
-        End If
-        tabCentro.SelectedTab = tabCentro.TabPages("Skypes")
-    End Sub
+    'Private Sub si_skype_Click()
+    '    If tabCentro.TabPages("Skypes") Is Nothing Then
+    '        Dim tab_skype As New tabpages("Skypes")
+    '    End If
+    '    tabCentro.SelectedTab = tabCentro.TabPages("Skypes")
+    'End Sub
     Private Sub si_totvsrm_Click()
         If tabCentro.TabPages("TotvsRM") Is Nothing Then
             Dim tab_totvsrm As New tabpages("TotvsRM")

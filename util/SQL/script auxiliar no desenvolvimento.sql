@@ -385,36 +385,66 @@ email_setor as 'Setor',
 email_email as 'E-mail',
 case when email_senha is not null then
 '********' end as 'Senha',
-email_dominio as 'Domínio',
+right (email_email,len(email_email)-charIndex('@',email_email)) as 'Domínio',
 case 
 	when email_estado = 0 or email_estado is null then 'Inativo' 
 	else 'Ativo' 
 end as 'Estado',
-meta_valor.valor_valor as 'Grupo',
-email_outlook_nome as 'Nome no Outlook',
-email_outlook_ass_nome as 'Nome na Assinatura Outlook',
-email_outlook_ass_servico as 'Serviço na Assinatura Outlook'
+grupo.valor_valor as 'Grupo'
 from tb_email
-left join meta_valor on valor_tabela = 'tb_email' and valor_coluna = 'email_grupo' and email_grupo = meta_valor.valor_numero  
+left join meta_valor grupo on grupo.valor_tabela = 'tb_email' and grupo.valor_coluna = 'email_grupo' and email_grupo = grupo.valor_numero
 --> E-mails <--
 --> Form E-mails <--
+declare @id as int = 1
+declare @tabela as varchar(10) = 'telefone'
 select
-email_id,
 email_nome,
 email_setor,
 email_email,
 email_senha,
-email_dominio,
+dominio.valor_valor as 'dominio',
 email_estado,
-email_grupo,
-email_outlook_nome,
-email_outlook_ass_nome,
-email_outlook_ass_servico
-from 
-tb_email
-where 
-email_id=@id
+grupo.valor_valor as 'grupo',
+(select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_email
+left join meta_valor dominio
+on dominio.valor_tabela = 'tb_email'
+and dominio.valor_coluna = 'email_dominio'
+and tb_email.email_dominio = dominio.valor_numero
+left join meta_valor grupo
+on grupo.valor_tabela = 'tb_email'
+and grupo.valor_coluna = 'email_grupo'
+and tb_email.email_dominio = grupo.valor_numero
+where email_id = @id
+
+select valor_numero,valor_valor from meta_valor where valor_tabela='tb_email' and valor_coluna = 'email_dominio'
 --> Form E-mails <--
+--> Salvar E-mail <--
+INSERT INTO tb_email(
+	email_nome,email_setor,email_email,email_senha,email_dominio,email_estado,email_grupo
+)
+VALUES(
+	@nome,
+	@setor,
+	@email,
+	@senha,
+	@dominio,
+	@estado,
+	@grupo
+)
+select SCOPE_IDENTITY()
+--> Salvar E-mail <--
+--> Alterar E-mail <--
+UPDATE tb_email SET
+email_nome = @nome,
+email_setor = @setor,
+email_email = @email,
+email_senha = @senha,
+email_dominio = @dominio,
+email_estado = @estado,
+email_grupo = @grupo
+where email_id = @id
+--> Alterar E-mail <--
 --> Skype <--
 select
 skype_id as 'ID',
@@ -438,6 +468,36 @@ estoque_quantidade as 'Quantidade',
 estoque_localizacao as 'Local armazenado'
 from tb_estoque
 --> Estoque <--
-
+--> Form Estoque <--
+select
+estoque_nome,
+estoque_descricao,
+estoque_tag,
+estoque_quantidade,
+estoque_localizacao,
+(select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_estoque
+where estoque_id = @id
+--> Form Estoque <--
+--> Salvar Estoque <--
+insert into tb_estoque 
+(estoque_nome, estoque_descricao, estoque_tag, estoque_quantidade, estoque_localizacao)
+VALUES(
+@nome,
+@descricao,
+@tag,
+@quantidade,
+localizacao
+)
+--> Salvar Estoque <--
+--> Alterar Estoque <--
+UPDATE tb_estoque SET
+estoque_nome = @nome,
+estoque_descricao = @descricao,
+estoque_tag = @tag,
+estoque_quantidade = @quantidade,
+estoque_localizacao = @localizacao
+where estoque_id = @id
+--> Alterar Estoque <--
 --> Software <--
 --> Software <--

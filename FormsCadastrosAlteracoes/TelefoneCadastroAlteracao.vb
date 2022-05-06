@@ -213,7 +213,7 @@ Public Class TelefoneCadastroAlteracao
             myReader.Close()
 
         Catch ex As Exception
-            MessageBox.Show("Erro ao carregar impressora: " & ex.Message, "Classe TelefoneCadastroAlteracao")
+            MessageBox.Show("Erro ao carregar telefone: " & ex.Message, "Classe TelefoneCadastroAlteracao")
         Finally
             conexao.Close()
         End Try

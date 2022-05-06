@@ -250,11 +250,11 @@ Public Class ImpressoraCadastroAlteracao
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select estoque_id, estoque_nome from tb_estoque where estoque_tag = 'SuprimentoImpressora'"
+            consulta.CommandText = "select valor_numero, valor_valor from meta_valor where valor_tabela='tb_email' and valor_coluna = 'email_grupo'"
             conexao.Open()
             myReader = consulta.ExecuteReader()
             Do While myReader.Read()
-                suprimentos.Add(myReader.GetString("estoque_nome"), myReader.GetValue("estoque_id"))
+                suprimentos.Add(myReader.GetString("valor_valor"), myReader.GetValue("valor_numero"))
                 cmb_suprimento.Items.Add(suprimentos.Last.Key)
             Loop
             'For Each kvp As KeyValuePair(Of String, Integer) In suprimentos
@@ -345,7 +345,7 @@ Public Class ImpressoraCadastroAlteracao
                                         impressora_nnota,
                                         impressora_nproduto,
                                         impressora_marcamodelo,
-                                        tb_estoque.estoque_nome,
+                                        suprimento.valor_valor as 'suprimento',
                                         impressora_ip,
                                         impressora_corimpressao,
                                         tb_local.local_nome,
@@ -354,7 +354,10 @@ Public Class ImpressoraCadastroAlteracao
                                         impressora_dtsaida,
                                         (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
                                     from tb_impressora
-                                    left join tb_estoque on tb_impressora.impressora_suprimento = tb_estoque.estoque_id
+                                    left join meta_valor suprimento
+                                        on suprimento.valor_tabela = 'tb_impressora'
+                                        and suprimento.valor_coluna = 'impressora_suprimento'
+                                        and tb_impressora.impressora_suprimento = suprimento.valor_numero
                                     left join tb_local on tb_impressora.impressora_local = tb_local.local_id
                                     where impressora_id = @id"
 
@@ -370,7 +373,7 @@ Public Class ImpressoraCadastroAlteracao
             txt_nproduto.Text = If(myReader.IsDBNull("impressora_nproduto"), "", myReader.GetString("impressora_nproduto"))
             txt_marcaModelo.Text = If(myReader.IsDBNull("impressora_marcamodelo"), "", myReader.GetString("impressora_marcamodelo"))
 
-            cmb_suprimento.SelectedItem = If(myReader.IsDBNull("estoque_nome"), "", myReader.GetString("estoque_nome"))
+            cmb_suprimento.SelectedItem = If(myReader.IsDBNull("suprimento"), "", myReader.GetString("suprimento"))
 
             txt_ip.Text = If(myReader.IsDBNull("impressora_ip"), "", myReader.GetString("impressora_ip"))
 

@@ -68,7 +68,7 @@ CREATE TABLE tb_estoque
 	estoque_id INT PRIMARY KEY IDENTITY,
 	estoque_nome NVARCHAR(20) UNIQUE,
 	estoque_descricao NVARCHAR(60),
-	estoque_tag NVARCHAR(20),
+	--estoque_tag NVARCHAR(20),
 	estoque_quantidade INT,
 	estoque_localizacao NVARCHAR(40)
 )
@@ -116,12 +116,8 @@ CREATE TABLE tb_email
 	email_setor NVARCHAR(30),
 	email_email NVARCHAR(40),
 	email_senha NVARCHAR(20),
-	email_dominio NVARCHAR(20),
 	email_estado TINYINT,
-	email_grupo TINYINT,
-	email_outlook_nome NVARCHAR(40),
-	email_outlook_ass_nome NVARCHAR(40),
-	email_outlook_ass_servico NVARCHAR(40)
+	email_grupo TINYINT
 )
 CREATE TABLE tb_skype
 (
@@ -174,7 +170,7 @@ CREATE TABLE tb_impressora
 	impressora_nnota NVARCHAR(16),
 	impressora_nproduto NVARCHAR(16),
 	impressora_marcamodelo NVARCHAR(24),
-	impressora_suprimento INT FOREIGN KEY REFERENCES tb_estoque(estoque_id),
+	impressora_suprimento TINYINT,
 	impressora_ip NVARCHAR(15),
 	impressora_corimpressao TINYINT,
 	impressora_local INT,
@@ -353,9 +349,6 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_dominio','Dominio do e-mail','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_estado','Estado do email','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_grupo','Grupo a que pertence o dono do e-mail','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_nome','O nome colocado na configuração do Outlook','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_ass_nome','O nome que aparece na assinatura do Outlook','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_email','email_outlook_ass_servico','Departamento/Serviço que aparece na assinatura do Outlook','1')
 
 /** Tabela de tb_skype **/
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_skype','#','Armazena as contas de skype de funcionários e outros','1')
@@ -398,7 +391,7 @@ insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)va
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nserie','Número de serie da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nnota','Número da nota da impressora','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_nproduto','Número de produto da impressora','1')
-insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','FK do suprimento(toner,cartucho,..)','1')
+insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_suprimento','suprimento da impressora(toner,cartucho,..)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_corimpressão','Indica se imprime apenas em preto e branco(1) ou colorido(2)','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_local','FK do local em que a impressora está sendo usada','1')
 insert into meta_dicionario (dic_tabela,dic_coluna,dic_descricao,dic_inclusao)values('tb_impressora','impressora_estado','Indica em qual estado a impressora está(ex:ativo,substituido,devolvido,..)','1')
@@ -447,6 +440,10 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 --
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_posto',0,'não')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_dispositivo','dispositivo_posto',1,'sim')
+--
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_suprimento',1,'Toner T06')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_suprimento',2,'Toner T07')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_suprimento',3,'Toner T10')
 --
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',0,'Preto & Branco')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',1,'Colorido')

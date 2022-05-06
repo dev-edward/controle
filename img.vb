@@ -50,8 +50,8 @@
     Public Shared topmoston = Controle.My.Resources.topmoston
     Public Shared cadeado = Controle.My.Resources.cadeado
     Public Shared sair = Controle.My.Resources._exit
-
-
+    Public Shared olho_fechado = Controle.My.Resources.olho_fechado
+    Public Shared olho_aberto = Controle.My.Resources.olho_aberto
 
 
 End Class

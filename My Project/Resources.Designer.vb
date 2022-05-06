@@ -163,6 +163,26 @@ Namespace My.Resources
         '''<summary>
         '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property olho_aberto() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("olho_aberto", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property olho_fechado() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("olho_fechado", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property orig() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("orig", resourceCulture)

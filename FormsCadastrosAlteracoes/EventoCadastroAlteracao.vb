@@ -138,7 +138,6 @@ Public Class EventoCadastroAlteracao
         AddHandler btn_cancelar.Click, AddressOf editarCancelar
         AddHandler btn_alterar.Click, AddressOf alterar
 
-
     End Sub
     Private Sub carregarControles()
         classesAbertas.setAtualCadAltEventos(frm_evento)
