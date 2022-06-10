@@ -178,6 +178,7 @@ Public Class EstoqueCadastroAlteracao
             txt_nome.Text = If(myReader.IsDBNull("estoque_nome"), "", myReader.GetString("estoque_nome"))
             txt_descricao.Text = If(myReader.IsDBNull("estoque_descricao"), "", myReader.GetString("estoque_descricao"))
             nud_quantidade.Value = If(myReader.IsDBNull("estoque_quantidade"), "", myReader.GetValue("estoque_quantidade"))
+            txt_localizacao.Text = If(myReader.IsDBNull("estoque_localizacao"), "", myReader.GetString("estoque_localizacao"))
 
             btn_notas.Text = If(myReader.GetValue("qtd_notas") > 0, myReader.GetValue("qtd_notas"), "")
 
@@ -199,6 +200,10 @@ Public Class EstoqueCadastroAlteracao
         txt_descricao.Enabled = Not txt_descricao.Enabled
         nud_quantidade.Enabled = Not nud_quantidade.Enabled
         txt_localizacao.Enabled = Not txt_localizacao.Enabled
+        btn_notas.Visible = Not btn_notas.Visible
+        btn_editar.Visible = Not btn_editar.Visible
+        btn_alterar.Visible = Not btn_alterar.Visible
+        btn_cancelar.Visible = Not btn_cancelar.Visible
 
     End Sub
     Private Sub notas()
@@ -226,7 +231,7 @@ Public Class EstoqueCadastroAlteracao
                                         @descricao,
                                         @tag,
                                         @quantidade,
-                                        localizacao
+                                        @localizacao
                                     )
                                     select SCOPE_IDENTITY()"
 
@@ -265,7 +270,7 @@ Public Class EstoqueCadastroAlteracao
             consulta.Parameters.AddWithValue("@nome", txt_nome.Text)
             consulta.Parameters.AddWithValue("@descricao", txt_descricao.Text)
             consulta.Parameters.AddWithValue("@quantidade", nud_quantidade.Value)
-            consulta.Parameters.AddWithValue("@localizacao", nud_quantidade.Value)
+            consulta.Parameters.AddWithValue("@localizacao", txt_localizacao.Value)
 
             consulta.Parameters.AddWithValue("@id", pk)
 

@@ -62,7 +62,11 @@
             Case "Pessoas"
 
             Case "Estoque"
-
+                If _cadastro Then
+                    Dim cadastroEstoque As New EstoqueCadastroAlteracao()
+                Else
+                    Dim detalheEstoque As New EstoqueCadastroAlteracao(_pk)
+                End If
             Case "Software"
 
             Case Else
