@@ -70,7 +70,11 @@ CREATE TABLE tb_estoque
 	estoque_descricao NVARCHAR(60),
 	--estoque_tag NVARCHAR(20),
 	estoque_quantidade INT,
-	estoque_localizacao NVARCHAR(40)
+	estoque_localizacao NVARCHAR(40),
+	estoque_dtcadastro DATETIME DEFAULT GETDATE(),
+	estoque_usercadastro TINYINT,
+	estoque_dtalteracao DATETIME,
+	estoque_useralteracao TINYINT
 )
 CREATE TABLE tb_demanda
 (/*informações da tabela inseridas*/
@@ -445,8 +449,8 @@ insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) value
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_suprimento',2,'Toner T07')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_suprimento',3,'Toner T10')
 --
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',0,'Preto & Branco')
-insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressão',1,'Colorido')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressao',0,'Preto & Branco')
+insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_corimpressao',1,'Colorido')
 --
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_estado',1,'Ativo')
 insert into meta_valor(valor_tabela,valor_coluna,valor_numero,valor_valor) values('tb_impressora','impressora_estado',2,'Inativo')

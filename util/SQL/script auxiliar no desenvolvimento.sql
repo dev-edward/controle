@@ -250,17 +250,10 @@ impressora_marcamodelo as 'Marca & Modelo',
 impressora_nserie as 'Nº Serie',
 impressora_nnota as 'Nº Nota',
 impressora_nproduto as 'Nº Produto',
-suprimento.estoque_nome as 'Suprimento',
-case 
-	when impressora_corimpressao = 0 or impressora_corimpressao is null then 'Preto & Branco' 
-	else 'Colorido' 
-end as 'P/B ou Colorido',
-impressora_local as 'Local da impressora',
-case 
-	when impressora_estado = 1 then 'Ativo' 
-	when impressora_estado = 2 then 'Inativo' 
-	when impressora_estado = 3 then 'Devolvido' 
-end as 'Status',
+tb_local.local_nome as 'Local da impressora',
+suprimento.valor_valor as 'Suprimento',
+cor.valor_valor as 'P/B ou Colorido',
+estado.valor_valor as 'Status',
 impressora_ip as 'IP da impressora',
 Convert(varchar(16),impressora_dtentrada, 103) as 'Data de entrada',
 Convert(varchar(16),impressora_dtsaida, 103) as 'Data de saida',
@@ -269,9 +262,22 @@ ucadastro.usuario_user as 'Cadastrado por',
 Convert(varchar(16),impressora_dtalteracao, 120) as 'Alteração',
 ualteracao.usuario_user as 'Alterado por'
 from tb_impressora
+left join meta_valor cor 
+	on cor.valor_tabela = 'tb_impressora'
+	and cor.valor_coluna = 'impressora_corimpressao'
+	and tb_impressora.impressora_corimpressao = cor.valor_numero
+left join meta_valor estado 
+	on estado.valor_tabela = 'tb_impressora'
+	and estado.valor_coluna = 'impressora_estado'
+	and tb_impressora.impressora_estado = estado.valor_numero
+left join meta_valor suprimento
+    on suprimento.valor_tabela = 'tb_impressora'
+    and suprimento.valor_coluna = 'impressora_suprimento'
+    and tb_impressora.impressora_suprimento = suprimento.valor_numero
 left join tb_usuario ucadastro on impressora_usercadastro = ucadastro.usuario_id
 left join tb_usuario ualteracao on impressora_usercadastro = ualteracao.usuario_id
-left join tb_estoque suprimento on impressora_suprimento = suprimento.estoque_id
+left join tb_local on tb_impressora.impressora_local = tb_local.local_id
+
 --> Impressoras <--
 
 --> Form Impressoras <--
@@ -463,7 +469,6 @@ Select
 estoque_id as 'ID',
 estoque_nome as 'Nome',
 estoque_descricao as 'Descrição',
-estoque_tag as 'Tag',
 estoque_quantidade as 'Quantidade',
 estoque_localizacao as 'Local armazenado'
 from tb_estoque
@@ -472,7 +477,6 @@ from tb_estoque
 select
 estoque_nome,
 estoque_descricao,
-estoque_tag,
 estoque_quantidade,
 estoque_localizacao,
 (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'

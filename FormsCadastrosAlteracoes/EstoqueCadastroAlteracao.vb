@@ -19,7 +19,7 @@ Public Class EstoqueCadastroAlteracao
     }
     Dim frm_estoque As New Form With {
         .Text = "Cadastrar novo item",
-        .ClientSize = New Size(300, 440),
+        .ClientSize = New Size(300, 300),
         .FormBorderStyle = FormBorderStyle.FixedSingle,
         .MaximizeBox = False,
         .StartPosition = FormStartPosition.Manual,
@@ -60,7 +60,7 @@ Public Class EstoqueCadastroAlteracao
     }
     Dim nud_quantidade As New NumericUpDown With {
         .Font = fonte,
-        .Size = New Size(234, 26),
+        .Size = tamanholbl,
         .Location = New Point(lbl_nome.Location.X, lbl_quantidade.Location.Y + tamanholbl.Height)
     }
     Dim lbl_localizacao As New Label With {
@@ -72,7 +72,7 @@ Public Class EstoqueCadastroAlteracao
     }
     Dim txt_localizacao As New TextBox With {
         .Font = fonte,
-        .Size = New Size(234, 26),
+        .Size = tamanholbl,
         .MaxLength = 40,
         .Location = New Point(lbl_nome.Location.X, lbl_localizacao.Location.Y + tamanholbl.Height)
     }
@@ -229,7 +229,6 @@ Public Class EstoqueCadastroAlteracao
                                     VALUES(
                                         @nome,
                                         @descricao,
-                                        @tag,
                                         @quantidade,
                                         @localizacao
                                     )
@@ -270,7 +269,7 @@ Public Class EstoqueCadastroAlteracao
             consulta.Parameters.AddWithValue("@nome", txt_nome.Text)
             consulta.Parameters.AddWithValue("@descricao", txt_descricao.Text)
             consulta.Parameters.AddWithValue("@quantidade", nud_quantidade.Value)
-            consulta.Parameters.AddWithValue("@localizacao", txt_localizacao.Value)
+            consulta.Parameters.AddWithValue("@localizacao", txt_localizacao.Text)
 
             consulta.Parameters.AddWithValue("@id", pk)
 

@@ -250,7 +250,7 @@ Public Class ImpressoraCadastroAlteracao
         Try
             conexao = New SqlConnection(globalConexao.initial & globalConexao.data)
             consulta = conexao.CreateCommand
-            consulta.CommandText = "select valor_numero, valor_valor from meta_valor where valor_tabela='tb_email' and valor_coluna = 'email_grupo'"
+            consulta.CommandText = "select valor_numero, valor_valor from meta_valor where valor_tabela='tb_impressora' and valor_coluna = 'impressora_suprimento'"
             conexao.Open()
             myReader = consulta.ExecuteReader()
             Do While myReader.Read()
