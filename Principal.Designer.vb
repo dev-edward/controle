@@ -24,6 +24,7 @@ Partial Class Principal
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Principal))
         Me.MenuStripPrincipal = New System.Windows.Forms.MenuStrip()
         Me.ToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
@@ -64,12 +65,14 @@ Partial Class Principal
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.MenuStripPrincipal)
         Me.DoubleBuffered = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.IsMdiContainer = True
         Me.MainMenuStrip = Me.MenuStripPrincipal
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.MinimumSize = New System.Drawing.Size(480, 320)
         Me.Name = "Principal"
         Me.Opacity = 0.5R
+        Me.ShowIcon = False
         Me.Text = "Controle"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.StatusStrip.ResumeLayout(False)

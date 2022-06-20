@@ -16,12 +16,12 @@ Public Class Login
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AddHandler btn_entrar.Click, AddressOf btn_entrar_Click
 
-        ''''''''''''''''Para teste apenas''''''''''''''''
-        Dim usuario = New usuario(1, "edward", "EdwardCH", True)
-        Me.Close()
-        Principal.Opacity = 1
-        Principal.Show()
-        ''''''''''''''''Para teste apenas''''''''''''''''
+        '''''''''''''''''Para teste apenas''''''''''''''''
+        'Dim usuario = New usuario(1, "edward", "EdwardCH", True)
+        'Me.Close()
+        'Principal.Opacity = 1
+        'Principal.Show()
+        '''''''''''''''''Para teste apenas''''''''''''''''
     End Sub
 
     Private Sub btn_entrar_Click()

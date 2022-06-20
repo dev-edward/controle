@@ -1,5 +1,5 @@
 ﻿Imports System.Windows.Forms
-Imports System.Data.SqlClient
+'Imports System.Data.SqlClient
 Public Class Principal
 
     Dim separa_esq As Boolean
@@ -178,7 +178,7 @@ Public Class Principal
         AddHandler mi_bloquear.Click, AddressOf mi_bloquear_Click
         AddHandler mi_desconectar.Click, AddressOf mi_desconectar_Click
 
-        redimensionando.BackgroundImage = Image.FromFile("..\..\..\util\rezise-icon2.png")
+        redimensionando.BackgroundImage = Image.FromFile("img\rezise-icon.png")
         redimensionando.BackgroundImageLayout = ImageLayout.Center
         redimensionando.Dock = DockStyle.Fill
 
