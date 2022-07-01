@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		img\64x64\zoom-with-plus-sign.png = img\64x64\zoom-with-plus-sign.png
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstaladorControle", "..\InstaladorControle\InstaladorControle.vdproj", "{036FB0E8-BABF-4FC2-96A6-9CDFC4F60561}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupControle", "..\SetupControle\SetupControle.vdproj", "{25CFACC8-A23D-4905-BC2C-EC46A87776A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +45,8 @@ Global
 		{3C50B399-9462-4C06-B280-34F417DF6FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C50B399-9462-4C06-B280-34F417DF6FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C50B399-9462-4C06-B280-34F417DF6FC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{036FB0E8-BABF-4FC2-96A6-9CDFC4F60561}.Debug|Any CPU.ActiveCfg = Debug
-		{036FB0E8-BABF-4FC2-96A6-9CDFC4F60561}.Release|Any CPU.ActiveCfg = Release
+		{25CFACC8-A23D-4905-BC2C-EC46A87776A2}.Debug|Any CPU.ActiveCfg = Debug
+		{25CFACC8-A23D-4905-BC2C-EC46A87776A2}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

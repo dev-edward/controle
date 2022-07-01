@@ -89,6 +89,47 @@ left join tb_usuario u3 on demanda_encarregado = u3.usuario_id
 left join meta_valor prioridade on valor_tabela = 'tb_demanda' and valor_coluna = 'demanda_prioridade' and demanda_prioridade = prioridade.valor_numero
 --> Demandas <--
 
+--> Form Demanda <--
+select 
+        demanda_id,
+        demanda_titulo, 
+        demanda_detalhes, 
+        demanda_temprevisao, 
+        demanda_previsao, 
+        demanda_status,
+        encarregado.usuario_user as demanda_encarregado,
+        demanda_prioridade,
+        (select sum(case when nota_pkitem = @id and nota_tabela = @tabela and nota_excluido is null then 1 else 0 end) from tb_anotacao) as 'qtd_notas'
+from tb_demanda 
+left join tb_usuario encarregado on tb_demanda.demanda_encarregado = encarregado.usuario_id
+where demanda_id = @id
+--> Form Demanda <--
+--> Salvar Demanda <--
+insert into tb_demanda(demanda_usercadastro,demanda_titulo,demanda_detalhes,demanda_temprevisao,demanda_previsao,demanda_status,demanda_encarregado,demanda_prioridade) 
+VALUES(
+    @usercadastro,
+    @titulo,
+    @detalhes,
+    @temprevisao,
+    @previsao,
+    @status,
+    @encarregado,
+    @prioridade)
+--> Salvar Demanda <--
+--> Alterar Demanda <--
+UPDATE tb_demanda SET 
+    demanda_dtalteracao = GETDATE(),
+    demanda_useralteracao = @useralteracao,
+    demanda_titulo = @titulo,
+    demanda_detalhes = @detalhes,
+    demanda_temprevisao = @temprevisao,
+    demanda_previsao = @previsao,
+    demanda_status = @status,
+    demanda_encarregado = @encarregado,
+    demanda_prioridade = @prioridade
+WHERE demanda_id = @id
+--> Alterar Demanda <--
+
 --> Evento <--
 select
 evento_id as 'ID',
@@ -96,11 +137,11 @@ evento_descricao as 'Descrição',
 evento_datahora as 'Data do evento',
 evento_ultimocheck as 'Última data Checado',
 case
-	when evento_frequencia = 0 then 'Apenas uma vez'
-	when evento_frequencia = 0 then 'Diário'
-	when evento_frequencia = 0 then 'Semanal'
-	when evento_frequencia = 0 then 'Mensal'
-	when evento_frequencia = 0 then 'Anual'
+	when evento_frequencia = 1 then 'Apenas uma vez'
+	when evento_frequencia = 2 then 'Diário'
+	when evento_frequencia = 3 then 'Semanal'
+	when evento_frequencia = 4 then 'Mensal'
+	when evento_frequencia = 5 then 'Anual'
 end as 'Frequência',
 case 
 	when evento_allday = 0 or evento_allday is null then 'Não' 

@@ -417,7 +417,7 @@ Public Class DispositivoCadastroAlteracao
                                     dispositivo_posto = @posto,
                                     dispositivo_marcamodelo = @marcamodelo,
                                     dispositivo_hostname = @hostname,
-                                    dispositivo_ip = @ip
+                                    dispositivo_ip = @ip,
                                     dispositivo_macadress = @macadress,
                                     dispositivo_os = @os,
                                     dispositivo_qtdmemoriaram = @qtdmemoriaram,
